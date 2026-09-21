@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hospitality SaaS · Unified 4-Tier Omnichannel Live Platform</title>
+<link rel="stylesheet" href="/css/common.css">
+<style>
+  body {
+    background: #090d16;
+    color: #f8fafc;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .master-header {
+    background: #0f172a;
+    border-bottom: 2px solid #0284c7;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .scenario-control-bar {
+    background: #1e293b;
+    border-bottom: 1.5px solid #334155;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+  }
+  .scenario-step-btn {
+    background: #334155;
+    color: #f8fafc;
+    border: 1px solid #475569;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .scenario-step-btn:hover {
+    background: #0284c7;
+    border-color: #38bdf8;
+  }
+  .scenario-step-btn.active {
+    background: #0284c7;
+    border-color: #38bdf8;
+    box-shadow: 0 0 8px rgba(2, 132, 199, 0.6);
+  }
+  .quad-viewport-grid {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 310px 1.15fr 1.15fr 1.35fr;
+    gap: 8px;
+    padding: 8px;
+    background: #020617;
+    overflow: hidden;
+  }
+  .viewport-panel {
+    background: #0f172a;
+    border: 2px solid #334155;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .viewport-header {
+    padding: 5px 10px;
+    background: #1e293b;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #334155;
+  }
+  .viewport-frame {
+    flex-grow: 1;
+    border: none;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+  }
+  .live-toast {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background: #0f172a;
+    color: #fff;
+    border: 2px solid #0284c7;
+    padding: 10px 16px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    font-size: 12px;
+    display: none;
+    z-index: 999;
+  }
+</style>
+</head>
+<body>
+
+<!-- MASTER HEADER -->
+<div class="master-header">
+  <div>
+    <strong style="font-size:15px; color:#38bdf8; letter-spacing:0.5px;">HOSPITALITY SAAS PLATFORM · 4-TIER UNIFIED OMNICHANNEL SUITE</strong>
+    <span style="font-size:11px; color:#94a3b8; margin-left:10px;">Sub-35ms WebSocket Event Bus · Real-Time Cross-Device Synchronization</span>
+  </div>
+  <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+    <span id="ws-status-badge" class="badge badge-green">● REALTIME SYNC (ONLINE)</span>
+    <a href="http://localhost:3001" target="_blank" class="btn btn-sm" style="background:#2563eb; color:#fff; text-decoration:none; padding:4px 9px; border-radius:6px; font-weight:800; font-size:10.5px; display:inline-flex; align-items:center; gap:4px; box-shadow:0 0 10px rgba(37,99,235,0.6);">⚛️ REACT 19 NEXT.JS APP (PORT 3001)</a>
+    <a href="/skeletons.html" target="_blank" class="btn btn-sm" style="background:#475569; color:#fff; text-decoration:none; padding:4px 8px; border-radius:6px; font-weight:700; font-size:10px; display:inline-flex; align-items:center; gap:4px;">📱 CUSTOMER SKELETONS</a>
+    <a href="/kitchen-skeletons.html" target="_blank" class="btn btn-sm" style="background:#475569; color:#fff; text-decoration:none; padding:4px 8px; border-radius:6px; font-weight:700; font-size:10px; display:inline-flex; align-items:center; gap:4px;">🔥 KITCHEN SKELETONS</a>
+    <a href="/waiter-skeletons.html" target="_blank" class="btn btn-sm" style="background:#475569; color:#fff; text-decoration:none; padding:4px 8px; border-radius:6px; font-weight:700; font-size:10px; display:inline-flex; align-items:center; gap:4px;">🧑‍🍳 WAITER SKELETONS</a>
+    <a href="/manager-skeletons.html" target="_blank" class="btn btn-sm" style="background:#0f172a; border:1px solid #38bdf8; color:#38bdf8; text-decoration:none; padding:4px 8px; border-radius:6px; font-weight:700; font-size:10px; display:inline-flex; align-items:center; gap:4px;">👔 MANAGER SKELETONS (12)</a>
+    <button class="btn btn-sm btn-dark" onclick="resetAllDemo()">↺ RESET</button>
+  </div>
+</div>
+
+<!-- SCENARIO GUIDED WALKTHROUGH BAR -->
+<div class="scenario-control-bar">
+  <span style="font-size:11px; font-weight:800; color:#38bdf8; margin-right:4px;">GUIDED 12-STAGE LIFECYCLE:</span>
+  <button class="scenario-step-btn" onclick="runStage(1)">1. SEAT A-04</button>
+  <button class="scenario-step-btn" onclick="runStage(2)">2. JAIN CART</button>
+  <button class="scenario-step-btn" onclick="runStage(3)">3. FIRE KOT</button>
+  <button class="scenario-step-btn" onclick="runStage(4)">4. COOK &amp; JAIN [F7]</button>
+  <button class="scenario-step-btn" onclick="runStage(5)">5. EXPO PASS H-2</button>
+  <button class="scenario-step-btn" style="color:#d8b4fe;" onclick="runStage(6)">6. ⚡ GARAM ROTI (3M)</button>
+  <button class="scenario-step-btn" style="color:#fca5a5;" onclick="runStage(7)">7. CASCADE 86</button>
+  <button class="scenario-step-btn" onclick="runStage(8)">8. VOID SPOILAGE</button>
+  <button class="scenario-step-btn" onclick="runStage(9)">9. CONSOLIDATE BILL</button>
+  <button class="scenario-step-btn" style="color:#86efac;" onclick="runStage(10)">10. DYNAMIC UPI SETTLE</button>
+  <button class="scenario-step-btn" onclick="runStage(11)">11. 1-STAR RECOVERY</button>
+  <button class="scenario-step-btn" onclick="runStage(12)">12. DAY-CLOSE Z-REPORT</button>
+  <button class="btn btn-sm btn-purple" style="margin-left:auto;" onclick="runAutoFullCycle()">▶ RUN AUTO 12-STAGE DEMO</button>
+</div>
+
+<!-- 4 QUAD-SPLIT VIEWPORTS -->
+<div class="quad-viewport-grid">
+  <!-- 1. CUSTOMER MOBILE -->
+  <div class="viewport-panel">
+    <div class="viewport-header" style="color:#38bdf8;">
+      <span>1. CUSTOMER MOBILE (PHONE)</span>
+      <a href="/customer.html?table=A4" target="_blank" style="color:#94a3b8; text-decoration:none; font-size:10px;">[POPOUT ↗]</a>
+    </div>
+    <iframe class="viewport-frame" id="iframe-cust" src="/customer.html?table=A4"></iframe>
+  </div>
+
+  <!-- 2. FLOOR CAPTAIN TABLET -->
+  <div class="viewport-panel">
+    <div class="viewport-header" style="color:#38bdf8;">
+      <span>2. FLOOR CAPTAIN (TABLET)</span>
+      <a href="/captain.html" target="_blank" style="color:#94a3b8; text-decoration:none; font-size:10px;">[POPOUT ↗]</a>
+    </div>
+    <iframe class="viewport-frame" id="iframe-capt" src="/captain.html"></iframe>
+  </div>
+
+  <!-- 3. KITCHEN KDS (INDUSTRIAL) -->
+  <div class="viewport-panel">
+    <div class="viewport-header" style="color:#38bdf8;">
+      <span>3. KITCHEN KDS (BHATTI &amp; KHATAS)</span>
+      <a href="/kds.html" target="_blank" style="color:#94a3b8; text-decoration:none; font-size:10px;">[POPOUT ↗]</a>
+    </div>
+    <iframe class="viewport-frame" id="iframe-kds" src="/kds.html"></iframe>
+  </div>
+
+  <!-- 4. MANAGER & CASHIER POS -->
+  <div class="viewport-panel">
+    <div class="viewport-header" style="color:#38bdf8;">
+      <span>4. MANAGER &amp; CASHIER POS</span>
+      <a href="/manager.html" target="_blank" style="color:#94a3b8; text-decoration:none; font-size:10px;">[POPOUT ↗]</a>
+    </div>
+    <iframe class="viewport-frame" id="iframe-mgr" src="/manager.html"></iframe>
+  </div>
+</div>
+
+<!-- LIVE SCENARIO TOAST -->
+<div id="scenario-toast" class="live-toast"></div>
+
+<script src="/js/socket-client.js"></script>
+<script>
+  let client;
+
+  window.addEventListener('DOMContentLoaded', () => {
+    client = new HospitalityClient((state, action) => {
+      // Optional root listener
+    });
+  });
+
+  function showToast(msg) {
+    const toast = document.getElementById('scenario-toast');
+    toast.innerHTML = msg;
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 4000);
+  }
+
+  function runStage(stageNum) {
+    document.querySelectorAll('.scenario-step-btn').forEach((b, i) => {
+      b.classList.toggle('active', i === stageNum - 1);
+    });
+
+    switch (stageNum) {
+      case 1:
+        client.dispatch('SEAT_TABLE', { tableId: 'A4', covers: 4, dietary: 'Pure Veg & Jain' });
+        showToast('<strong>Stage 01: Table Check-In</strong><br>Table A-04 seated with 4 guests. Captain & Manager screens updated to Blue.');
+        break;
+      case 2:
+        client.dispatch('UPDATE_CART', {
+          tableId: 'A4',
+          cartItems: [
+            { id: "dish_paneer_tikka", name: "Tandoori Paneer Tikka (Jain)", price: 320, qty: 1 },
+            { id: "dish_dal_makhani", name: "Dal Makhani", price: 360, qty: 1 },
+            { id: "dish_butter_naan", name: "Butter Naan", price: 70, qty: 4 }
+          ]
+        });
+        showToast('<strong>Stage 02: Menu & Smart Cart</strong><br>Guest selected Jain dishes. Captain tablet receives live cart preview.');
+        break;
+      case 3:
+        client.dispatch('FIRE_KOT', {
+          tableId: 'A4',
+          items: [
+            { id: "dish_paneer_tikka", name: "Tandoori Paneer Tikka (Jain)", price: 320, qty: 1, khata: "Tandoor", jain: true },
+            { id: "dish_dal_makhani", name: "Dal Makhani", price: 360, qty: 1, khata: "Handi", jain: true },
+            { id: "dish_butter_naan", name: "Butter Naan", price: 70, qty: 4, khata: "Tandoor", jain: true }
+          ],
+          voiceMemo: "Less spicy, extra adrak lachha",
+          isGaramRoti: false
+        });
+        showToast('<strong>Stage 03: KOT Dispatched</strong><br>Fired to Bhatti & Handi Khatas. Table turns Yellow (Cooking).');
+        break;
+      case 4:
+        client.dispatch('CERTIFY_JAIN', { kotId: 'KOT-9801', itemId: 'dish_paneer_tikka' });
+        showToast('<strong>Stage 04: Cooking & Jain Certification</strong><br>Ustad Vikram certified clean cookware via [F7]. Bump unlocked.');
+        break;
+      case 5:
+        client.dispatch('EXPO_DISPATCH', { kotId: 'KOT-9801', shelfSlot: 'H-2', runnerName: 'Rahul' });
+        showToast('<strong>Stage 05: Expo Pass Assembly</strong><br>Plates matched at Hot Pass Shelf H-2. Runner Rahul dispatched.');
+        break;
+      case 6:
+        client.dispatch('FIRE_KOT', {
+          tableId: 'A4',
+          items: [{ id: "dish_butter_naan", name: "Tandoori Butter Naan", price: 70, qty: 2, khata: "Tandoor", jain: true }],
+          voiceMemo: "⚡ Express Garam Naan repeat mid-meal",
+          isGaramRoti: true
+        });
+        showToast('<strong>Stage 06: Garam Roti Repeat Loop</strong><br>1-Tap express bypass injected to position #1 in Tandoor Bhatti with 3-Min SLA!');
+        break;
+      case 7:
+        client.dispatch('TRIGGER_86', { ingredientKey: 'paneer_kg', is86: true });
+        showToast('<strong>Stage 07: Cascade 86 (Out of Stock)</strong><br>Malai Paneer depleted. All paneer dishes disabled across guest phones in 32ms.');
+        break;
+      case 8:
+        client.dispatch('VOID_ITEM', {
+          tableId: 'A4',
+          item: { name: 'Fresh Lime Soda', price: 90 },
+          reason: 'Too sweet (Guest complaint)'
+        });
+        showToast('<strong>Stage 08: Quality Void & Spoilage</strong><br>Manager PIN authorized void. Raw ingredient cost charged to Spoilage Khata.');
+        break;
+      case 9:
+        client.dispatch('REQUEST_BILL', { tableId: 'A4', includeServiceCharge: true });
+        showToast('<strong>Stage 09: Bill Consolidation</strong><br>KOTs aggregated. Dual GST (2.5% CGST + 2.5% SGST) applied. Table A-04 Green.');
+        break;
+      case 10:
+        client.dispatch('SETTLE_PAYMENT', { tableId: 'A4', mode: 'UPI', amount: 1940 });
+        showToast('<strong>Stage 10: Dynamic UPI QR Settlement</strong><br>Bank webhook received (1.8s). Soundbox chimes. Table marked Red (Dirty).');
+        break;
+      case 11:
+        client.dispatch('SUBMIT_RATING', { tableId: 'A4', rating: 2, comment: 'Naan repeat took 4 minutes' });
+        showToast('<strong>Stage 11: Emergency Sentiment Recovery</strong><br>2-Star rating paged Manager tablet! In-person table recovery initiated.');
+        break;
+      case 12:
+        showToast('<strong>Stage 12: Day-Close Z-Report</strong><br>Blind cash count verified (-₹20 variance). Daily register sealed in ledger.');
+        break;
+    }
+  }
+
+  function runAutoFullCycle() {
+    let current = 1;
+    showToast('<strong>▶ Automated 12-Stage Lifecycle Demo Started!</strong><br>Watching all 4 synchronized devices run hands-free...');
+    const timer = setInterval(() => {
+      if (current <= 12) {
+        runStage(current);
+        current++;
+      } else {
+        clearInterval(timer);
+        showToast('<strong>✓ Complete 12-Stage Lifecycle Finished!</strong><br>All 4 systems synchronized in real-time.');
+      }
+    }, 3800);
+  }
+
+  function resetAllDemo() {
+    client.dispatch('RESET_DEMO', {});
+    showToast('Demo reset to initial baseline state.');
+  }
+</script>
+</body>
+</html>

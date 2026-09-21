@@ -1,0 +1,2513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THOOGUDEEPA DONNE BIRYANI MANE — Manager Command Center (16 Screens)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-canvas: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-panel: #f8fafc;
+      --bg-subtle: #f1f5f9;
+      --border-dark: #0f172a;
+      --border-mid: #64748b;
+      --border-light: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-sub: #475569;
+      --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 12px 16px 60px;
+      overflow-x: hidden;
+    }
+
+    /* TOP GLOBAL CONTROLLER */
+    .top-header-bar {
+      width: 100%;
+      max-width: 1420px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-dark);
+      padding: 14px 18px;
+      box-shadow: 4px 4px 0px var(--border-dark);
+      margin-bottom: 16px;
+      position: sticky;
+      top: 10px;
+      z-index: 1000;
+    }
+
+    .header-main-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1.5px dashed var(--border-mid);
+      padding-bottom: 10px;
+    }
+
+    .header-branding { display: flex; align-items: center; gap: 12px; }
+
+    .brand-icon-box {
+      width: 42px;
+      height: 42px;
+      border: 2px solid var(--border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      background: var(--bg-subtle);
+      font-weight: 800;
+      box-shadow: 2px 2px 0px var(--border-dark);
+    }
+
+    .brand-titles h1 {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+    }
+
+    .brand-titles p {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      letter-spacing: 0.04em;
+    }
+
+    .header-mode-controls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+    .mode-btn {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-dark);
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      box-shadow: 2px 2px 0px var(--border-dark);
+      transition: all 0.1s ease;
+      text-decoration: none;
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .mode-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px var(--border-dark);
+    }
+
+    .mode-btn.active {
+      background: var(--border-dark);
+      color: #ffffff;
+    }
+
+    /* SCREEN NAVIGATION TABS BAR (SCREENS 1 TO 16) */
+    .screen-tabs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .screen-tab {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-mid);
+      padding: 5px 9px;
+      font-size: 10.5px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      transition: all 0.1s ease;
+      color: var(--text-sub);
+    }
+
+    .screen-tab:hover {
+      border-color: var(--border-dark);
+      background: var(--bg-subtle);
+      color: var(--text-main);
+    }
+
+    .screen-tab.active {
+      background: var(--border-dark);
+      color: #ffffff;
+      border-color: var(--border-dark);
+      box-shadow: 1px 1px 0px var(--border-dark);
+    }
+
+    .tab-badge {
+      background: var(--bg-subtle);
+      color: var(--text-main);
+      font-size: 9px;
+      font-weight: 800;
+      padding: 1px 4px;
+      border-radius: 2px;
+      border: 1px solid var(--border-mid);
+    }
+
+    .screen-tab.active .tab-badge {
+      background: #ffffff;
+      color: var(--border-dark);
+      border-color: #ffffff;
+    }
+
+    /* TOAST NOTIFICATION CONTAINER */
+    #toastContainer {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    .toast-msg {
+      background: var(--border-dark);
+      color: #ffffff;
+      border: 2px solid #38bdf8;
+      padding: 10px 16px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+      border-radius: 4px;
+      pointer-events: auto;
+      animation: toastIn 0.2s ease-out;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    @keyframes toastIn {
+      from { transform: translateY(12px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* STAGE CANVAS HOUSING */
+    .wire-canvas-container {
+      width: 100%;
+      max-width: 1420px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .manager-stage {
+      width: 100%;
+      min-height: 820px;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-dark);
+      box-shadow: 6px 6px 0px var(--border-dark);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* STAGE TOP STATUS BAR */
+    .stage-status-bar {
+      height: 38px;
+      background: var(--border-dark);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--border-dark);
+      flex-shrink: 0;
+    }
+
+    .stage-status-left, .stage-status-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .stage-pill {
+      background: rgba(255,255,255,0.18);
+      padding: 2px 8px;
+      border-radius: 2px;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    /* STAGE VIEWPORT */
+    .stage-content-viewport {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-panel);
+      position: relative;
+      min-height: 780px;
+    }
+
+    .screen-view {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    /* GENERIC WIREFRAME UTILITY CLASSES */
+    .wf-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .wf-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .wf-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
+    .wf-flex-row { display: flex; align-items: center; gap: 8px; }
+    .wf-flex-between { display: flex; justify-content: space-between; align-items: center; }
+    
+    .wf-box {
+      border: 1.5px solid var(--border-dark);
+      background: var(--bg-surface);
+      padding: 12px;
+      border-radius: 2px;
+    }
+
+    .wf-box-subtle {
+      border: 1.5px solid var(--border-light);
+      background: var(--bg-subtle);
+      padding: 10px;
+      border-radius: 2px;
+    }
+
+    .wf-box-highlight {
+      border: 2px solid var(--border-dark);
+      background: #ffffff;
+      box-shadow: 2px 2px 0px var(--border-dark);
+      padding: 12px;
+      border-radius: 2px;
+    }
+
+    .wf-title-sm {
+      font-size: 11px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 5px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wf-title-md {
+      font-size: 13px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-main);
+    }
+
+    .wf-text-muted {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .wf-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border: 1px solid var(--border-dark);
+      background: var(--bg-surface);
+      text-transform: uppercase;
+      border-radius: 2px;
+    }
+
+    .wf-badge-dark {
+      background: var(--border-dark);
+      color: #ffffff;
+      border-color: var(--border-dark);
+    }
+
+    .wf-btn {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-dark);
+      color: var(--text-main);
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 2px 2px 0px var(--border-dark);
+      transition: all 0.1s ease;
+      white-space: nowrap;
+    }
+
+    .wf-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px var(--border-dark);
+    }
+
+    .wf-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px var(--border-dark);
+    }
+
+    .wf-btn-dark {
+      background: var(--border-dark);
+      color: #ffffff;
+    }
+
+    .wf-btn-sm {
+      padding: 3px 7px;
+      font-size: 10px;
+    }
+
+    .wf-btn-danger {
+      border-color: #b91c1c;
+      color: #b91c1c;
+    }
+
+    .wf-input {
+      width: 100%;
+      border: 1.5px solid var(--border-dark);
+      background: var(--bg-surface);
+      padding: 7px 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-main);
+      outline: none;
+      border-radius: 2px;
+    }
+
+    /* HORIZONTAL QUANTITY STEPPER (FIX FOR USER SCREENSHOT) */
+    .qty-stepper {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid var(--border-dark);
+      background: #ffffff;
+      border-radius: 4px;
+      height: 28px;
+      overflow: hidden;
+      box-shadow: 1px 1px 0px var(--border-dark);
+      vertical-align: middle;
+    }
+
+    .qty-stepper button {
+      width: 26px;
+      height: 100%;
+      border: none;
+      background: var(--bg-subtle);
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.1s;
+      user-select: none;
+    }
+
+    .qty-stepper button:hover {
+      background: var(--border-light);
+    }
+
+    .qty-stepper span {
+      min-width: 26px;
+      padding: 0 4px;
+      text-align: center;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 28px;
+      user-select: none;
+    }
+
+    /* KPI RIBBON */
+    .kpi-ribbon {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--bg-surface);
+      border-bottom: 2px solid var(--border-dark);
+      flex-shrink: 0;
+    }
+
+    .kpi-card {
+      border: 1.5px solid var(--border-dark);
+      padding: 8px 10px;
+      background: var(--bg-panel);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .kpi-val {
+      font-size: 17px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--text-main);
+      margin: 3px 0;
+    }
+
+    .split-main-layout {
+      display: flex;
+      flex: 1;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .layout-left-pane {
+      width: 62%;
+      border-right: 2px solid var(--border-dark);
+      padding: 14px 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--bg-surface);
+    }
+
+    .layout-right-pane {
+      width: 38%;
+      padding: 14px 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--bg-panel);
+    }
+
+    /* DATA TABLE */
+    .data-table-simple {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      table-layout: fixed;
+    }
+
+    .data-table-simple th {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-dark);
+      padding: 6px 8px;
+      text-align: left;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 10.5px;
+    }
+
+    .data-table-simple td {
+      border: 1px solid var(--border-light);
+      padding: 6px 8px;
+      background: var(--bg-surface);
+      vertical-align: middle;
+    }
+
+    .data-table-simple tr:nth-child(even) td {
+      background: var(--bg-panel);
+    }
+
+    /* TABLES MATRIX */
+    .table-matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+
+    .table-card-item {
+      border: 1.5px solid var(--border-dark);
+      background: var(--bg-surface);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      box-shadow: 2px 2px 0px var(--border-dark);
+      position: relative;
+      transition: all 0.1s;
+    }
+
+    .table-card-item:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px var(--border-dark);
+    }
+
+    .table-card-item.selected {
+      background: #f1f5f9;
+      border-width: 2.5px;
+      border-color: #0f172a;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border: 1px solid var(--border-dark);
+      display: inline-block;
+      border-radius: 50%;
+    }
+    .status-dot.occupied { background: #0f172a; }
+    .status-dot.billed { background: #cbd5e1; }
+    .status-dot.cleaning { background: #fef08a; }
+    .status-dot.available { background: #ffffff; }
+
+    /* ALL SCREENS FULL SCROLL VIEW */
+    .all-grid-container {
+      display: none;
+      width: 100%;
+      max-width: 1420px;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .grid-screen-card {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-dark);
+      box-shadow: 6px 6px 0px var(--border-dark);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .grid-screen-header {
+      background: var(--border-dark);
+      color: #ffffff;
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 800;
+    }
+
+    .grid-screen-body {
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-panel);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOAST ALERTS -->
+  <div id="toastContainer"></div>
+
+  <!-- TOP HEADER CONTROLLER -->
+  <header class="top-header-bar">
+    <div class="header-main-row">
+      <div class="header-branding">
+        <div class="brand-icon-box">👔</div>
+        <div class="brand-titles">
+          <h1>THOOGUDEEPA DONNE BIRYANI MANE — MANAGER COMMAND DESK</h1>
+          <p>16-SCREEN RESTAURANT CONTROLLER • INDIAN RUPEES (₹) • REAL-TIME INTERCONNECTED BUSINESS LOGIC</p>
+        </div>
+      </div>
+      <div class="header-mode-controls">
+        <a href="skeletons.html" class="mode-btn">📱 CUSTOMER (1-10)</a>
+        <a href="waiter-skeletons.html" class="mode-btn">🤵 WAITER (1-10)</a>
+        <a href="kitchen-skeletons.html" class="mode-btn">👨‍🍳 KITCHEN (1-3)</a>
+        <button id="btnModeFlow" class="mode-btn active" onclick="setViewMode('flow')">📱 STAGE VIEW</button>
+        <button id="btnModeGrid" class="mode-btn" onclick="setViewMode('grid')">🗂️ ALL 16 SCREENS</button>
+      </div>
+    </div>
+
+    <!-- 16 SCREEN NAVIGATION TABS (REORDERED OPERATIONAL HIERARCHY) -->
+    <nav class="screen-tabs-bar" id="screenTabsBar">
+      <button id="tab-1" class="screen-tab active" onclick="selectScreen(1)"><span class="tab-badge">01</span> LOGIN &amp; FLOAT</button>
+      <button id="tab-2" class="screen-tab" onclick="selectScreen(2)"><span class="tab-badge">02</span> LIVE OVERVIEW</button>
+      <button id="tab-3" class="screen-tab" onclick="selectScreen(3)"><span class="tab-badge">03</span> FLOOR PLAN</button>
+      <button id="tab-4" class="screen-tab" onclick="selectScreen(4)"><span class="tab-badge">04</span> BILLING &amp; POS</button>
+      <button id="tab-5" class="screen-tab" onclick="selectScreen(5)"><span class="tab-badge">05</span> KITCHEN SPEED</button>
+      <button id="tab-6" class="screen-tab" onclick="selectScreen(6)"><span class="tab-badge">06</span> WAITING QUEUE</button>
+      <button id="tab-7" class="screen-tab" onclick="selectScreen(7)"><span class="tab-badge">07</span> STAFF ROSTER</button>
+      <button id="tab-8" class="screen-tab" onclick="selectScreen(8)"><span class="tab-badge">08</span> CALLS &amp; ALERTS</button>
+      <button id="tab-9" class="screen-tab" onclick="selectScreen(9)"><span class="tab-badge">09</span> WAITER CASH</button>
+      <button id="tab-10" class="screen-tab" onclick="selectScreen(10)"><span class="tab-badge">10</span> MENU 86 STOCK</button>
+      <button id="tab-11" class="screen-tab" onclick="selectScreen(11)"><span class="tab-badge">11</span> SALES REPORT</button>
+      <button id="tab-12" class="screen-tab" onclick="selectScreen(12)"><span class="tab-badge">12</span> OFFERS &amp; RULES</button>
+      <button id="tab-13" class="screen-tab" onclick="selectScreen(13)"><span class="tab-badge">13</span> PETTY EXPENSES</button>
+      <button id="tab-14" class="screen-tab" onclick="selectScreen(14)"><span class="tab-badge">14</span> ATTENDANCE &amp; TIPS</button>
+      <button id="tab-15" class="screen-tab" onclick="selectScreen(15)"><span class="tab-badge">15</span> PRINTER HEALTH</button>
+      <button id="tab-16" class="screen-tab" onclick="selectScreen(16)"><span class="tab-badge">16</span> DAY CLOSE Z-REPORT</button>
+    </nav>
+  </header>
+
+  <!-- INTERACTIVE DESKTOP/TABLET STAGE -->
+  <main class="wire-canvas-container" id="interactiveCanvas">
+    <div class="manager-stage" id="managerStage">
+      <!-- TOP STATUS BAR -->
+      <div class="stage-status-bar">
+        <div class="stage-status-left">
+          <span id="stageManagerBadge">👔 [LOGGED IN: MASTER MANJUNATH]</span>
+          <span class="stage-pill" id="stageShiftBadge">[DINNER SERVICE (18:00 - 24:00)]</span>
+          <span class="stage-pill">[TERMINAL: MAIN BILLING 01]</span>
+        </div>
+        <div class="stage-status-right">
+          <span>[ALL PRINTERS &amp; POS READY]</span>
+          <span class="stage-pill" id="liveClock">[21:45:10 IST]</span>
+          <button class="wf-btn wf-btn-sm" style="background:#ffffff; color:#0f172a; padding:2px 8px;" onclick="selectScreen(1)">[LOCK TILL]</button>
+        </div>
+      </div>
+
+      <!-- VIEWPORT FOR INTERACTIVE SCREENS -->
+      <div class="stage-content-viewport" id="stageViewport">
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 1: LOGIN & OPEN SHIFT FLOAT -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-1-view" style="display: flex;">
+          <div style="display:flex; width:100%; height:100%;">
+            <!-- LEFT PANE -->
+            <div style="width:40%; background:var(--bg-surface); border-right:2px solid var(--border-dark); padding:28px 24px; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div class="wf-box-highlight" style="margin-bottom:16px;">
+                  <div class="wf-flex-between" style="margin-bottom:6px;">
+                    <span class="wf-badge wf-badge-dark">[AUTHENTICATION DESK]</span>
+                    <span class="wf-text-muted">SYSTEM v4.2</span>
+                  </div>
+                  <div style="font-size:18px; font-weight:800; font-family:var(--font-mono); margin-bottom:2px;">THOOGUDEEPA DONNE BIRYANI MANE</div>
+                  <div class="wf-text-muted">[MANAGER &amp; CASHIER COMMAND CENTER]</div>
+                </div>
+
+                <div class="wf-box-subtle" style="margin-bottom:14px;">
+                  <div class="wf-title-sm">[SELECT RESTAURANT SHIFT]</div>
+                  <div style="display:flex; flex-direction:column; gap:6px; margin-top:6px;">
+                    <label class="wf-flex-between" style="font-size:11px; font-family:var(--font-mono); cursor:pointer;">
+                      <span><input type="radio" name="shiftRadio" value="DINNER SHIFT (18:00 - 24:00)" checked onchange="updateShiftSelection(this.value)"> [DINNER SHIFT (18:00 - 24:00)]</span>
+                      <span class="wf-badge wf-badge-dark">[CURRENT]</span>
+                    </label>
+                    <label class="wf-flex-between" style="font-size:11px; font-family:var(--font-mono); cursor:pointer;">
+                      <span><input type="radio" name="shiftRadio" value="LUNCH SHIFT (11:30 - 16:00)" onchange="updateShiftSelection(this.value)"> [LUNCH SHIFT (11:30 - 16:00)]</span>
+                      <span class="wf-text-muted">[CLOSED]</span>
+                    </label>
+                    <label class="wf-flex-between" style="font-size:11px; font-family:var(--font-mono); cursor:pointer;">
+                      <span><input type="radio" name="shiftRadio" value="MORNING PREP (06:30 - 10:30)" onchange="updateShiftSelection(this.value)"> [MORNING PREP (06:30 - 10:30)]</span>
+                      <span class="wf-text-muted">[CLOSED]</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="wf-box" style="margin-bottom:14px;">
+                  <div class="wf-title-sm">[OPENING CASH DRAWER FLOAT]</div>
+                  <div class="wf-flex-between" style="margin-top:6px;">
+                    <span class="wf-text-muted">OPENING CASH BALANCE:</span>
+                    <span style="font-size:18px; font-weight:800; font-family:var(--font-mono);" id="displayOpeningFloat">₹ 5,000.00</span>
+                  </div>
+                  <div class="wf-text-muted" style="font-size:10px; margin-top:4px;">[VERIFIED &amp; COUNTED IN CASHIER SAFE]</div>
+                </div>
+              </div>
+
+              <div class="wf-box-subtle">
+                <div class="wf-title-sm">[HARDWARE CONNECTION TEST]</div>
+                <div style="display:flex; flex-direction:column; gap:4px; font-size:10px; font-family:var(--font-mono); margin-top:4px;">
+                  <div class="wf-flex-between"><span>THERMAL BILL PRINTER</span><span class="wf-badge wf-badge-dark">[ONLINE]</span></div>
+                  <div class="wf-flex-between"><span>KITCHEN KOT DISPLAY</span><span class="wf-badge wf-badge-dark">[ONLINE]</span></div>
+                  <div class="wf-flex-between"><span>AUTOMATIC CASH DRAWER</span><span class="wf-badge wf-badge-dark">[LOCKED]</span></div>
+                  <div class="wf-flex-between"><span>EDC CARD SWIPE POS</span><span class="wf-badge wf-badge-dark">[CONNECTED]</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT PANE -->
+            <div style="width:60%; background:var(--bg-panel); padding:32px 36px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+              <div style="width:100%; max-width:440px; text-align:center;">
+                <div class="wf-title-md" style="font-size:16px; margin-bottom:4px;">[MANAGER AUTHENTICATION]</div>
+                <div class="wf-text-muted" style="margin-bottom:18px;">[CHOOSE YOUR PROFILE AND ENTER YOUR 4-DIGIT PIN]</div>
+
+                <div style="margin-bottom:16px; text-align:left;">
+                  <label class="wf-title-sm">[MANAGER / CASHIER ACCOUNT]</label>
+                  <select class="wf-input" id="mgrAccountSelect" onchange="updateManagerSelection(this.value)">
+                    <option value="MANJUNATH (GENERAL MANAGER)">[MANAGER 01: MANJUNATH (GENERAL MANAGER)]</option>
+                    <option value="RAGHAV (FLOOR LEAD)">[MANAGER 02: RAGHAV (FLOOR LEAD)]</option>
+                    <option value="RAMESH (HEAD CASHIER)">[CASHIER 01: RAMESH (HEAD CASHIER)]</option>
+                  </select>
+                </div>
+
+                <!-- PIN DISPLAY -->
+                <div style="display:flex; gap:12px; margin:16px 0; justify-content:center;" id="mgrPinDots">
+                  <div class="status-dot" style="width:20px; height:20px; border-width:2px; background:#0f172a;"></div>
+                  <div class="status-dot" style="width:20px; height:20px; border-width:2px; background:#0f172a;"></div>
+                  <div class="status-dot" style="width:20px; height:20px; border-width:2px; background:#ffffff;"></div>
+                  <div class="status-dot" style="width:20px; height:20px; border-width:2px; background:#ffffff;"></div>
+                </div>
+                <div class="wf-text-muted" id="mgrPinStatus" style="font-size:11px; margin-bottom:14px;">[2 OF 4 DIGITS ENTERED]</div>
+
+                <!-- NUMERIC KEYPAD -->
+                <div style="display:flex; justify-content:center;">
+                  <div style="display:grid; grid-template-columns:repeat(3, 76px); gap:10px;">
+                    <button class="wf-btn" style="height:50px; font-size:18px; font-weight:800;" onclick="pressPin('1')">1</button>
+                    <button class="wf-btn" style="height:50px; font-size:18px; font-weight:800;" onclick="pressPin('2')">2</button>
+                    <button class="wf-btn" style="height:50px; font-size:18px; font-weight:800;" onclick="pressPin('3')">3</button>
+                    <button class="wf-btn" style="height:50px; font-size:18px; font-weight:800;" onclick="pressPin('4')">4</button>
+                    <button class="wf-btn" style="height:50px; font-size:18px; font-weight:800;" onclick="pressPin('5')">5</button>
+                    <button class="wf-btn" style="height:50px; font-size:18px; font-weight:800;" onclick="pressPin('6')">6</button>
+                    <button class="wf-btn" style="height:50px; font-size:18px; font-weight:800;" onclick="pressPin('7')">7</button>
+                    <button class="wf-btn" style="height:50px; font-size:18px; font-weight:800;" onclick="pressPin('8')">8</button>
+                    <button class="wf-btn" style="height:50px; font-size:18px; font-weight:800;" onclick="pressPin('9')">9</button>
+                    <button class="wf-btn" style="height:50px; font-size:14px; font-weight:800;" onclick="clearPin()">CLR</button>
+                    <button class="wf-btn" style="height:50px; font-size:18px; font-weight:800;" onclick="pressPin('0')">0</button>
+                    <button class="wf-btn" style="height:50px; font-size:14px; font-weight:800;" onclick="delPin()">DEL</button>
+                  </div>
+                </div>
+
+                <div style="display:flex; gap:10px; margin-top:20px;">
+                  <button class="wf-btn" style="flex:1; padding:12px;" onclick="clearPin()">[CLEAR]</button>
+                  <button class="wf-btn wf-btn-dark" style="flex:2; padding:12px;" onclick="confirmLogin()">[OPEN RESTAURANT DASHBOARD ➔]</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 2: RESTAURANT LIVE OVERVIEW (MASTER EYE VIEW) -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-2-view">
+          <!-- 6-KPI RIBBON -->
+          <div class="kpi-ribbon">
+            <div class="kpi-card">
+              <div class="wf-title-sm">[TODAY TOTAL SALES]</div>
+              <div class="kpi-val" id="kpiTotalSales">₹ 1,48,500.00</div>
+              <div class="wf-text-muted">[+18% VS YESTERDAY]</div>
+            </div>
+            <div class="kpi-card">
+              <div class="wf-title-sm">[GUESTS SEATED]</div>
+              <div class="kpi-val" id="kpiGuestsSeated">94 GUESTS</div>
+              <div class="wf-text-muted">[28 TABLES TOTAL]</div>
+            </div>
+            <div class="kpi-card">
+              <div class="wf-title-sm">[FLOOR OCCUPANCY]</div>
+              <div class="kpi-val" id="kpiOccupancy">23 OF 28 (82%)</div>
+              <div class="wf-text-muted">[5 READY / CLEANING]</div>
+            </div>
+            <div class="kpi-card">
+              <div class="wf-title-sm">[AVERAGE TABLE BILL]</div>
+              <div class="kpi-val" id="kpiAvgBill">₹ 645.00</div>
+              <div class="wf-text-muted">[PER TABLE AVERAGE]</div>
+            </div>
+            <div class="kpi-card">
+              <div class="wf-title-sm">[KITCHEN FOOD SPEED]</div>
+              <div class="kpi-val" id="kpiKitchenSpeed">11.8 MINS</div>
+              <div class="wf-text-muted">[TARGET: UNDER 15M]</div>
+            </div>
+            <div class="kpi-card">
+              <div class="wf-title-sm">[CASH WITH WAITERS]</div>
+              <div class="kpi-val" id="kpiCashWaiters">₹ 14,500.00</div>
+              <div class="wf-text-muted">[PENDING SETTLEMENT]</div>
+            </div>
+          </div>
+
+          <!-- SPLIT VIEW -->
+          <div class="split-main-layout">
+            <!-- LEFT PANE: 28 TABLES MATRIX -->
+            <div class="layout-left-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-flex-between" style="margin-bottom:8px;">
+                  <div class="wf-title-md">[ALL 28 TABLES LIVE MATRIX]</div>
+                  <div class="wf-flex-row">
+                    <span class="wf-badge wf-badge-dark"><span class="status-dot occupied"></span> 23 OCC</span>
+                    <span class="wf-badge"><span class="status-dot billed"></span> 2 BILL</span>
+                    <span class="wf-badge"><span class="status-dot cleaning"></span> 1 CLN</span>
+                    <span class="wf-badge"><span class="status-dot available"></span> 2 FREE</span>
+                    <button class="wf-btn wf-btn-sm" onclick="selectScreen(3)">[FULL FLOOR PLAN ➔]</button>
+                  </div>
+                </div>
+
+                <div class="table-matrix-grid" id="screen2TableMatrix">
+                  <!-- Dynamically populated via JS -->
+                </div>
+              </div>
+
+              <!-- HOURLY SALES BAR CHART -->
+              <div class="wf-box">
+                <div class="wf-flex-between" style="margin-bottom:8px;">
+                  <div class="wf-title-sm">[HOURLY REVENUE VELOCITY (PEAK DUM BIRYANI HOURS)]</div>
+                  <span class="wf-text-muted">PEAK: 20:00 - 22:00</span>
+                </div>
+                <div style="display:flex; align-items:flex-end; gap:12px; height:80px; padding-top:10px; border-bottom:1.5px solid var(--border-dark);">
+                  <div style="flex:1; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end;"><div style="background:#64748b; width:100%; height:25%; border:1px solid var(--border-dark);"></div><span style="font-size:9px; margin-top:4px;">12:00</span></div>
+                  <div style="flex:1; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end;"><div style="background:#0f172a; width:100%; height:75%; border:1px solid var(--border-dark);"></div><span style="font-size:9px; margin-top:4px;">13:00</span></div>
+                  <div style="flex:1; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end;"><div style="background:#0f172a; width:100%; height:90%; border:1px solid var(--border-dark);"></div><span style="font-size:9px; margin-top:4px;">14:00</span></div>
+                  <div style="flex:1; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end;"><div style="background:#cbd5e1; width:100%; height:30%; border:1px solid var(--border-dark);"></div><span style="font-size:9px; margin-top:4px;">16:00</span></div>
+                  <div style="flex:1; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end;"><div style="background:#64748b; width:100%; height:55%; border:1px solid var(--border-dark);"></div><span style="font-size:9px; margin-top:4px;">19:00</span></div>
+                  <div style="flex:1; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end;"><div style="background:#0f172a; width:100%; height:100%; border:1px solid var(--border-dark);"></div><span style="font-size:9px; margin-top:4px;">20:00</span></div>
+                  <div style="flex:1; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end;"><div style="background:#0f172a; width:100%; height:85%; border:1px solid var(--border-dark);"></div><span style="font-size:9px; margin-top:4px;">21:00</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT PANE: URGENT ALERTS & QUICK COMMANDS -->
+            <div class="layout-right-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-sm">🚨 [ACTIVE FLOOR &amp; KITCHEN ALERTS]</div>
+                <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px;" id="screen2AlertsList">
+                  <div class="wf-box-subtle" style="border-left:3px solid #b91c1c;">
+                    <div class="wf-flex-between"><b>TABLE A-04 ASSISTANCE</b><span class="wf-badge wf-badge-dark">2 MINS</span></div>
+                    <div class="wf-text-muted" style="margin-top:2px;">Requested Extra Gravy &amp; Bill</div>
+                    <div style="margin-top:4px;"><button class="wf-btn wf-btn-sm" onclick="selectScreen(4)">[OPEN BILL IN COUNTER]</button></div>
+                  </div>
+                  <div class="wf-box-subtle" style="border-left:3px solid #0f172a;">
+                    <div class="wf-flex-between"><b>KITCHEN DUM TIMER</b><span class="wf-badge">DUM 3</span></div>
+                    <div class="wf-text-muted" style="margin-top:2px;">Mutton Donne Dum Deg #3 ready to cut</div>
+                    <div style="margin-top:4px;"><button class="wf-btn wf-btn-sm" onclick="selectScreen(5)">[VIEW KITCHEN KDS]</button></div>
+                  </div>
+                  <div class="wf-box-subtle">
+                    <div class="wf-flex-between"><b>WAITING QUEUE TOKEN W-101</b><span class="wf-badge">4 GUESTS</span></div>
+                    <div class="wf-text-muted" style="margin-top:2px;">Waiting 18 mins • Ready for Table T-07</div>
+                    <div style="margin-top:4px;"><button class="wf-btn wf-btn-sm" onclick="selectScreen(6)">[ASSIGN SEAT NOW]</button></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-box">
+                <div class="wf-title-sm">[QUICK MANAGER ACTIONS]</div>
+                <div style="display:flex; flex-direction:column; gap:6px; margin-top:6px;">
+                  <button class="wf-btn wf-btn-dark" style="justify-content:flex-start;" onclick="selectScreen(4)">💵 [OPEN BILLING / CASHIER COUNTER]</button>
+                  <button class="wf-btn" style="justify-content:flex-start;" onclick="selectScreen(9)">🤝 [COLLECT CASH FROM WAITERS (₹ 14,500)]</button>
+                  <button class="wf-btn" style="justify-content:flex-start;" onclick="selectScreen(10)">📦 [MENU 86 INVENTORY STOCK CONTROL]</button>
+                  <button class="wf-btn" style="justify-content:flex-start;" onclick="selectScreen(16)">📊 [NIGHT DAY CLOSE &amp; Z-REPORT]</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 3: ALL TABLES & FLOOR PLAN -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-3-view">
+          <!-- SECTION FILTER BAR -->
+          <div style="padding:10px 16px; background:var(--bg-surface); border-bottom:2px solid var(--border-dark); display:flex; justify-content:space-between; align-items:center;">
+            <div class="wf-flex-row">
+              <span class="wf-title-sm" style="margin:0;">[FLOOR SECTIONS]:</span>
+              <button class="wf-btn wf-btn-sm wf-btn-dark" onclick="filterFloorSection('ALL')">ALL (28)</button>
+              <button class="wf-btn wf-btn-sm" onclick="filterFloorSection('A')">SEC A: FAMILY (8)</button>
+              <button class="wf-btn wf-btn-sm" onclick="filterFloorSection('B')">SEC B: AC HALL (10)</button>
+              <button class="wf-btn wf-btn-sm" onclick="filterFloorSection('C')">SEC C: PATIO (6)</button>
+              <button class="wf-btn wf-btn-sm" onclick="filterFloorSection('VIP')">VIP LOUNGE (4)</button>
+            </div>
+            <div class="wf-flex-row">
+              <span class="wf-badge wf-badge-dark">OCCUPIED: 23</span>
+              <span class="wf-badge">AVAILABLE: 2</span>
+            </div>
+          </div>
+
+          <div class="split-main-layout">
+            <!-- LEFT PANE: FLOOR TABLE CARDS -->
+            <div class="layout-left-pane">
+              <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px;" id="screen3FloorCards">
+                <!-- Populated via JS -->
+              </div>
+            </div>
+
+            <!-- RIGHT PANE: TABLE COMMAND PANEL -->
+            <div class="layout-right-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-flex-between">
+                  <div class="wf-title-md" id="selectedTableTitle">TABLE [A-04] DETAILS</div>
+                  <span class="wf-badge wf-badge-dark" id="selectedTableBadge">OCCUPIED</span>
+                </div>
+                <div class="wf-text-muted" style="margin-top:4px;" id="selectedTableSub">SECTION A: FAMILY • 4 GUESTS • CAPTAIN RAMESH</div>
+
+                <div class="wf-box-subtle" style="margin-top:12px;">
+                  <div class="wf-flex-between"><span>CURRENT BILL:</span><b style="font-size:16px;" id="selectedTableBill">₹ 1,185.00</b></div>
+                  <div class="wf-flex-between" style="margin-top:4px;"><span>SEATED AT:</span><span>21:18 IST (28 MINS)</span></div>
+                  <div class="wf-flex-between" style="margin-top:4px;"><span>ACTIVE KOTs:</span><span>KOT #9812, #9820</span></div>
+                </div>
+
+                <div style="margin-top:14px; display:flex; flex-direction:column; gap:8px;">
+                  <button class="wf-btn wf-btn-dark" style="padding:10px;" onclick="selectScreen(4)">[➔ OPEN BILL IN CASHIER COUNTER (SCREEN 4)]</button>
+                  <button class="wf-btn" style="padding:8px;" onclick="promptMergeTable()">[🔀 MERGE WITH ANOTHER TABLE]</button>
+                  <button class="wf-btn" style="padding:8px;" onclick="promptTransferTable()">[🔄 TRANSFER PARTY TO ANOTHER TABLE]</button>
+                  <button class="wf-btn wf-btn-danger" style="padding:8px;" onclick="vacateCurrentTable()">[🧹 VACATE &amp; MARK READY FOR CLEANING]</button>
+                </div>
+              </div>
+
+              <div class="wf-box">
+                <div class="wf-title-sm">[TABLE RUNNING ITEMS PREVIEW]</div>
+                <div style="display:flex; flex-direction:column; gap:6px; font-size:11px; font-family:var(--font-mono); margin-top:6px;" id="selectedTableItemsList">
+                  <div class="wf-flex-between"><span>• 2x Special Chicken Donne Biryani</span><b>₹ 580.00</b></div>
+                  <div class="wf-flex-between"><span>• 1x Kshatriya Chicken Kebab</span><b>₹ 260.00</b></div>
+                  <div class="wf-flex-between"><span>• 1x Pepper Chicken Dry</span><b>₹ 280.00</b></div>
+                  <div class="wf-flex-between"><span>• 2x Elaneer Payasam</span><b>₹ 240.00</b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 4: BILLING & PAYMENT COUNTER (FIXED FROM USER SCREENSHOT) -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-4-view">
+          <div class="split-main-layout">
+            <!-- LEFT PANE: ITEMIZED INVOICE TABLE -->
+            <div class="layout-left-pane" style="width:62%;">
+              <div class="wf-box-highlight">
+                <div class="wf-flex-between">
+                  <div>
+                    <span class="wf-badge wf-badge-dark">[TAX INVOICE BILL]</span>
+                    <div class="wf-title-md" style="margin-top:4px;">BILL #INV-2026-0894 — <span id="billTableRef">[TABLE A-04]</span></div>
+                  </div>
+                  <div style="text-align:right;">
+                    <span class="wf-text-muted">GSTIN: 29AABCT1234F1Z8</span>
+                    <div style="font-family:var(--font-mono); font-size:10.5px;">CAPTAIN: RAMESH • 21:46 IST</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CLEAN HORIZONTAL STEPPER TABLE (FIXES SCREENSHOT VERTICAL WRAP BUG) -->
+              <table class="data-table-simple">
+                <thead>
+                  <tr>
+                    <th style="width:36%;">FOOD ITEM</th>
+                    <th style="width:18%; text-align:center;">QTY (+ / -)</th>
+                    <th style="width:14%; text-align:right;">RATE</th>
+                    <th style="width:16%; text-align:right;">AMOUNT</th>
+                    <th style="width:16%; text-align:center;">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="billItemsTbody">
+                  <!-- Dynamically rendered via JS with perfectly aligned inline qty-steppers -->
+                </tbody>
+              </table>
+
+              <!-- ADD EXTRA ITEM & CLEAR ACTIONS -->
+              <div class="wf-flex-between" style="margin-top:4px;">
+                <button class="wf-btn wf-btn-dark wf-btn-sm" onclick="addDishToBillPrompt()">[+ ADD EXTRA DISH TO BILL]</button>
+                <button class="wf-btn wf-btn-sm wf-btn-danger" onclick="clearBillItems()">[🗑️ CLEAR ALL ITEMS]</button>
+              </div>
+
+              <!-- DISCOUNT SELECTION PILLS (NO WEIRD MINUS SIGNS) -->
+              <div class="wf-box-subtle" style="margin-top:6px;">
+                <div class="wf-title-sm">[APPLY SPECIAL BILL DISCOUNT]</div>
+                <div style="display:flex; gap:6px; margin-top:6px; flex-wrap:wrap;">
+                  <button class="wf-btn wf-btn-sm" id="discBtn0" onclick="setBillDiscount(0)">NO DISCOUNT</button>
+                  <button class="wf-btn wf-btn-sm" id="discBtn5" onclick="setBillDiscount(5)">5% OFF</button>
+                  <button class="wf-btn wf-btn-sm wf-btn-dark" id="discBtn10" onclick="setBillDiscount(10)">10% REGULAR</button>
+                  <button class="wf-btn wf-btn-sm" id="discBtn15" onclick="setBillDiscount(15)">15% VIP</button>
+                  <button class="wf-btn wf-btn-sm" id="discBtn20" onclick="setBillDiscount(20)">20% MANAGER SPECIAL</button>
+                </div>
+              </div>
+
+              <!-- BILL SPLIT BUTTONS -->
+              <div class="wf-box" style="margin-top:6px;">
+                <div class="wf-flex-between">
+                  <div class="wf-title-sm">[DIVIDE &amp; SPLIT BILL]</div>
+                  <span class="wf-text-muted">SPLIT BY PERSONS OR DISHES</span>
+                </div>
+                <div style="display:flex; gap:6px; margin-top:6px;">
+                  <button class="wf-btn wf-btn-sm" style="flex:1;" onclick="splitBillWays(2)">[SPLIT 2-WAYS]</button>
+                  <button class="wf-btn wf-btn-sm" style="flex:1;" onclick="splitBillWays(4)">[SPLIT 4-WAYS]</button>
+                  <button class="wf-btn wf-btn-sm" style="flex:1;" onclick="splitBillByItem()">[SPLIT BY ITEM]</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT PANE: BILL SUMMARY & RESTAURANT PAYMENT MODES -->
+            <div class="layout-right-pane" style="width:38%;">
+              <div class="wf-box-highlight">
+                <div class="wf-title-md" style="margin-bottom:10px;">[FINAL BILL SUMMARY]</div>
+                
+                <div style="display:flex; flex-direction:column; gap:6px; font-family:var(--font-mono); font-size:12px;">
+                  <div class="wf-flex-between"><span>FOOD SUBTOTAL:</span><span id="sumSubtotal">₹ 1,360.00</span></div>
+                  <div class="wf-flex-between"><span>DISCOUNT (<span id="sumDiscLabel">10%</span>):</span><span id="sumDiscount">- ₹ 136.00</span></div>
+                  <div class="wf-flex-between"><span>GST TAX (5%):</span><span id="sumGst">+ ₹ 61.20</span></div>
+                  <div class="wf-flex-between"><span>SERVICE CHARGE (5%):</span><span id="sumService">+ ₹ 61.20</span></div>
+                  <div class="wf-flex-between" style="border-top:2px solid var(--border-dark); padding-top:8px; margin-top:4px; font-size:18px; font-weight:800;">
+                    <span>NET AMOUNT TO PAY:</span>
+                    <span id="sumNetPay">₹ 1,346.00</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- RESTAURANT PAYMENT METHODS (REPLACED ILLOGICAL HOTEL ROOM WITH AGGREGATOR) -->
+              <div class="wf-box">
+                <div class="wf-title-sm">[PAYMENT METHOD]</div>
+                <div style="display:flex; flex-direction:column; gap:6px; margin-top:6px;">
+                  <button class="wf-btn wf-btn-dark" style="padding:9px; justify-content:flex-start;" onclick="settleBill('CASH')">💵 [CASH PAYMENT &amp; OPEN CASH DRAWER]</button>
+                  <button class="wf-btn" style="padding:9px; justify-content:flex-start;" onclick="settleBill('CARD')">💳 [CARD SWIPE (DEBIT / CREDIT EDC)]</button>
+                  <button class="wf-btn" style="padding:9px; justify-content:flex-start;" onclick="settleBill('UPI')">📱 [SCAN &amp; PAY UPI QR (GPAY/PHONEPE/PAYTM)]</button>
+                  <button class="wf-btn" style="padding:9px; justify-content:flex-start;" onclick="settleBill('AGGREGATOR')">⚡ [FOOD AGGREGATOR (ZOMATO / SWIGGY DINE-IN)]</button>
+                </div>
+              </div>
+
+              <!-- RECEIPT DISPATCH & TABLE CLOSE -->
+              <div class="wf-box-subtle">
+                <div class="wf-title-sm">[DISPATCH RECEIPT &amp; CLOSE TABLE]</div>
+                <div style="display:flex; flex-direction:column; gap:6px; margin-top:6px;">
+                  <button class="wf-btn" style="padding:8px;" onclick="printThermalBill()">🖨️ [PRINT BILL ON THERMAL PRINTER]</button>
+                  <button class="wf-btn" style="padding:8px;" onclick="sendBillWhatsapp()">📲 [SEND DIGITAL BILL ON WHATSAPP]</button>
+                  <button class="wf-btn wf-btn-dark" style="padding:10px;" onclick="settleBill('CASH')">✓ [FINISH PAYMENT &amp; CLOSE TABLE]</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 5: KITCHEN ORDERS LIVE SPEED -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-5-view">
+          <div style="padding:10px 16px; background:var(--bg-surface); border-bottom:2px solid var(--border-dark); display:flex; justify-content:space-between; align-items:center;">
+            <div class="wf-flex-row">
+              <span class="wf-title-sm" style="margin:0;">[KITCHEN SPEED MONITOR]:</span>
+              <span class="wf-badge wf-badge-dark">AVG SPEED: 11.8 MINS</span>
+              <span class="wf-badge">ACTIVE KOTs: 14</span>
+              <span class="wf-badge">PASS DELAYS: 0</span>
+            </div>
+            <button class="wf-btn wf-btn-sm wf-btn-dark" onclick="expediteAllKds()">⚡ [EXPEDITE ALL READY DISHES]</button>
+          </div>
+
+          <div class="split-main-layout">
+            <div class="layout-left-pane">
+              <div class="wf-grid-2">
+                <!-- STATION 1: HANDI DUM BIRYANI -->
+                <div class="wf-box-highlight">
+                  <div class="wf-flex-between">
+                    <b>STATION 1: MILITARY DUM HANDI</b>
+                    <span class="wf-badge wf-badge-dark">HOT PASS</span>
+                  </div>
+                  <div class="wf-text-muted" style="margin:4px 0 8px;">CHEF MANIKANTA • SEEGASAMBA DUM POTS</div>
+                  <div style="display:flex; flex-direction:column; gap:6px; font-size:11px; font-family:var(--font-mono);">
+                    <div class="wf-box-subtle wf-flex-between"><span>[KOT #9822] Table B-02: 3x Chicken Donne</span><span class="wf-badge wf-badge-dark">DUM 4M</span></div>
+                    <div class="wf-box-subtle wf-flex-between"><span>[KOT #9824] Table C-01: 2x Mutton Donne</span><span class="wf-badge wf-badge-dark">PLATED</span></div>
+                    <div class="wf-box-subtle wf-flex-between"><span>[KOT #9825] Table A-01: 4x Special Chicken</span><span class="wf-badge">PREP 6M</span></div>
+                  </div>
+                </div>
+
+                <!-- STATION 2: KADHAI DEEP FRY -->
+                <div class="wf-box-highlight">
+                  <div class="wf-flex-between">
+                    <b>STATION 2: KADHAI CRISPY FRY</b>
+                    <span class="wf-badge wf-badge-dark">KEBABS</span>
+                  </div>
+                  <div class="wf-text-muted" style="margin:4px 0 8px;">CHEF ANBU • OIL ROAST &amp; CRISPY</div>
+                  <div style="display:flex; flex-direction:column; gap:6px; font-size:11px; font-family:var(--font-mono);">
+                    <div class="wf-box-subtle wf-flex-between"><span>[KOT #9823] Table VIP-1: 2x Kshatriya Kebab</span><span class="wf-badge wf-badge-dark">FRYING</span></div>
+                    <div class="wf-box-subtle wf-flex-between"><span>[KOT #9825] Table A-01: 1x Guntur Chicken</span><span class="wf-badge">IN QUEUE</span></div>
+                    <div class="wf-box-subtle wf-flex-between"><span>[KOT #9826] Table B-04: 2x Chicken Lollipop</span><span class="wf-badge">IN QUEUE</span></div>
+                  </div>
+                </div>
+
+                <!-- STATION 3: TAWA ROAST & CURRIES -->
+                <div class="wf-box">
+                  <div class="wf-flex-between">
+                    <b>STATION 3: TAWA &amp; GRAVIES</b>
+                    <span class="wf-badge">TAWA</span>
+                  </div>
+                  <div class="wf-text-muted" style="margin:4px 0 8px;">CHEF KUMAR • PEPPER DRY &amp; GRAVY</div>
+                  <div style="display:flex; flex-direction:column; gap:6px; font-size:11px; font-family:var(--font-mono);">
+                    <div class="wf-box-subtle wf-flex-between"><span>[KOT #9820] Table A-04: 1x Pepper Chicken</span><span class="wf-badge wf-badge-dark">READY</span></div>
+                    <div class="wf-box-subtle wf-flex-between"><span>[KOT #9821] Table B-01: 2x Nati Gravy</span><span class="wf-badge">SIMMER</span></div>
+                  </div>
+                </div>
+
+                <!-- STATION 4: DESSERTS & CONFECTIONS -->
+                <div class="wf-box">
+                  <div class="wf-flex-between">
+                    <b>STATION 4: DESSERTS &amp; BEVERAGES</b>
+                    <span class="wf-badge">COLD</span>
+                  </div>
+                  <div class="wf-text-muted" style="margin:4px 0 8px;">CHEF SANTOSH • ELANEER &amp; JUICES</div>
+                  <div style="display:flex; flex-direction:column; gap:6px; font-size:11px; font-family:var(--font-mono);">
+                    <div class="wf-box-subtle wf-flex-between"><span>[KOT #9820] Table A-04: 2x Elaneer Payasam</span><span class="wf-badge wf-badge-dark">READY</span></div>
+                    <div class="wf-box-subtle wf-flex-between"><span>[KOT #9827] Table C-03: 3x Rose Milk Shake</span><span class="wf-badge">POURING</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT PANE: BOTTLENECK AUDIT -->
+            <div class="layout-right-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-sm">[KITCHEN DELAY AUDIT]</div>
+                <div class="wf-text-muted">TICKETS OVER 14 MINUTES ARE FLAGGED FOR MANAGER EXPEDITION</div>
+                <div style="margin-top:10px; display:flex; flex-direction:column; gap:6px;">
+                  <div class="wf-box-subtle" style="border-left:3px solid #0f172a;">
+                    <div class="wf-flex-between"><b>TABLE B-02 • 13.5 MINS</b><span class="wf-badge">NEAR THRESHOLD</span></div>
+                    <div class="wf-text-muted" style="font-size:10px;">3x Donne Biryani Dum timer finalizing</div>
+                  </div>
+                </div>
+                <button class="wf-btn wf-btn-dark" style="width:100%; margin-top:12px;" onclick="alert('[ALERT SENT TO HEAD CHEF MANIKANTA TO SPEED UP TABLE B-02]')">📢 [PAGE HEAD CHEF TO ACCELERATE]</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 6: WAITING QUEUE & GUEST BOOKINGS -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-6-view">
+          <div class="split-main-layout">
+            <div class="layout-left-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-flex-between">
+                  <div class="wf-title-md">[ACTIVE DINING QUEUE TOKENS]</div>
+                  <span class="wf-badge wf-badge-dark" id="queueTotalBadge">3 PARTIES WAITING</span>
+                </div>
+                <div style="margin-top:12px; display:flex; flex-direction:column; gap:8px;" id="waitingQueueList">
+                  <!-- Populated via JS -->
+                </div>
+              </div>
+            </div>
+
+            <div class="layout-right-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-sm">[+ ISSUE NEW WAITING TOKEN]</div>
+                <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
+                  <div>
+                    <label class="wf-text-muted" style="font-size:10px;">GUEST NAME:</label>
+                    <input class="wf-input" id="newGuestName" placeholder="e.g. Ramesh Kumar">
+                  </div>
+                  <div>
+                    <label class="wf-text-muted" style="font-size:10px;">GUEST COUNT (COVERS):</label>
+                    <input class="wf-input" id="newGuestSize" type="number" value="4">
+                  </div>
+                  <div>
+                    <label class="wf-text-muted" style="font-size:10px;">MOBILE NUMBER (SMS ALERT):</label>
+                    <input class="wf-input" id="newGuestPhone" placeholder="e.g. 9845012345">
+                  </div>
+                  <div>
+                    <label class="wf-text-muted" style="font-size:10px;">SECTION PREFERENCE:</label>
+                    <select class="wf-input" id="newGuestSection">
+                      <option>Section A (Family Dining)</option>
+                      <option>Section B (AC Hall)</option>
+                      <option>Any Available Table</option>
+                    </select>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="padding:10px;" onclick="generateQueueToken()">[+ PRINT TOKEN &amp; SEND SMS]</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 7: CALL WAITER & FLOOR STAFF ROSTER -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-7-view">
+          <div class="split-main-layout">
+            <div class="layout-left-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-flex-between">
+                  <div class="wf-title-md">[ON-DUTY SERVICE CAPTAINS &amp; RUNNERS]</div>
+                  <span class="wf-badge wf-badge-dark">6 STAFF ON FLOOR</span>
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; margin-top:12px;">
+                  <div class="wf-box-subtle">
+                    <div class="wf-flex-between"><b>CAPTAIN RAMESH</b><span class="wf-badge wf-badge-dark">SECTION A</span></div>
+                    <div class="wf-text-muted" style="margin-top:2px;">Tables: A-01, A-02, A-04, A-05</div>
+                    <div class="wf-text-muted" style="margin-top:2px;">Cash in Pocket: ₹ 7,200.00</div>
+                    <button class="wf-btn wf-btn-sm" style="margin-top:8px;" onclick="pageStaff('Captain Ramesh')">📢 [PAGE TO BILLING DESK]</button>
+                  </div>
+                  <div class="wf-box-subtle">
+                    <div class="wf-flex-between"><b>CAPTAIN SURESH</b><span class="wf-badge wf-badge-dark">SECTION B</span></div>
+                    <div class="wf-text-muted" style="margin-top:2px;">Tables: B-01 to B-06 (AC Dining)</div>
+                    <div class="wf-text-muted" style="margin-top:2px;">Cash in Pocket: ₹ 4,300.00</div>
+                    <button class="wf-btn wf-btn-sm" style="margin-top:8px;" onclick="pageStaff('Captain Suresh')">📢 [PAGE TO BILLING DESK]</button>
+                  </div>
+                  <div class="wf-box-subtle">
+                    <div class="wf-flex-between"><b>CAPTAIN VIJAY</b><span class="wf-badge wf-badge-dark">SECTION C</span></div>
+                    <div class="wf-text-muted" style="margin-top:2px;">Tables: C-01 to C-06 (Patio)</div>
+                    <div class="wf-text-muted" style="margin-top:2px;">Cash in Pocket: ₹ 3,000.00</div>
+                    <button class="wf-btn wf-btn-sm" style="margin-top:8px;" onclick="pageStaff('Captain Vijay')">📢 [PAGE TO BILLING DESK]</button>
+                  </div>
+                  <div class="wf-box-subtle">
+                    <div class="wf-flex-between"><b>CAPTAIN ANAND</b><span class="wf-badge wf-badge-dark">VIP LOUNGE</span></div>
+                    <div class="wf-text-muted" style="margin-top:2px;">Tables: VIP-01 to VIP-04</div>
+                    <div class="wf-text-muted" style="margin-top:2px;">Cash in Pocket: ₹ 0.00</div>
+                    <button class="wf-btn wf-btn-sm" style="margin-top:8px;" onclick="pageStaff('Captain Anand')">📢 [PAGE TO BILLING DESK]</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="layout-right-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-sm">[FLOOR PAGER BROADCAST]</div>
+                <div class="wf-text-muted">TRANSMIT INSTANT SOUND CHIME &amp; MESSAGE TO ALL WAITER TABLETS</div>
+                <div style="margin-top:10px; display:flex; flex-direction:column; gap:8px;">
+                  <button class="wf-btn" style="text-align:left;" onclick="broadcastStaffAlert('ALL CAPTAINS: URGENT RUSH AT MAIN ENTRANCE')">📢 [ALL: RUSH AT MAIN ENTRANCE]</button>
+                  <button class="wf-btn" style="text-align:left;" onclick="broadcastStaffAlert('ALL BUSBOYS: CLEAR AND WIPE SECTION B FAST')">🧹 [ALL: FAST TABLE TURNOVER IN SEC B]</button>
+                  <button class="wf-btn" style="text-align:left;" onclick="broadcastStaffAlert('CHEF NOTICE: MUTTON DUM DEG #3 IS NOW OPEN')">🍲 [KITCHEN: MUTTON BIRYANI DEG #3 READY]</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 8: CUSTOMER CALLS & COMPLAINTS -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-8-view">
+          <div class="split-main-layout">
+            <div class="layout-left-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-md">[ACTIVE TABLE QR ASSISTANCE &amp; SERVICE CALLS]</div>
+                <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px;">
+                  <div class="wf-box-subtle" style="border-left:3px solid #b91c1c;">
+                    <div class="wf-flex-between"><b>TABLE A-04 • CALL WAITER</b><span class="wf-badge wf-badge-dark">2 MINS AGO</span></div>
+                    <div class="wf-text-muted" style="margin-top:2px;">Requested Extra Biryani Gravy &amp; Lemons</div>
+                    <div style="margin-top:6px; display:flex; gap:6px;">
+                      <button class="wf-btn wf-btn-sm wf-btn-dark" onclick="resolveCall(this, 'Table A-04')">[RESOLVE CALL]</button>
+                      <button class="wf-btn wf-btn-sm" onclick="selectScreen(4)">[OPEN BILL FOR 10% COMP]</button>
+                    </div>
+                  </div>
+                  <div class="wf-box-subtle">
+                    <div class="wf-flex-between"><b>TABLE B-01 • WATER BOTTLE REFILL</b><span class="wf-badge">JUST NOW</span></div>
+                    <div class="wf-text-muted" style="margin-top:2px;">Requested 2 Fresh Mineral Water Bottles</div>
+                    <div style="margin-top:6px;"><button class="wf-btn wf-btn-sm wf-btn-dark" onclick="resolveCall(this, 'Table B-01')">[RESOLVE CALL]</button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="layout-right-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-sm">[SERVICE ESCALATION RESOLUTION]</div>
+                <div class="wf-text-muted">FOR DISSATISFIED GUESTS, MANAGER CAN ISSUE COMPLIMENTARY DISH OR 10% APOLOGY DISCOUNT DIRECTLY TO TABLE BILL.</div>
+                <button class="wf-btn wf-btn-dark" style="width:100%; margin-top:12px; padding:10px;" onclick="applyApologyDiscount()">[APPLY 10% APOLOGY DISCOUNT TO TABLE A-04 ➔]</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 9: COLLECT CASH FROM WAITERS -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-9-view">
+          <div class="split-main-layout">
+            <div class="layout-left-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-flex-between">
+                  <div class="wf-title-md">[CAPTAIN TABLE-SIDE CASH RECONCILIATION]</div>
+                  <span class="wf-badge wf-badge-dark" id="waiterCashPendingBadge">TOTAL UNSETTLED: ₹ 14,500.00</span>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;" id="waiterSettlementList">
+                  <!-- Populated via JS -->
+                </div>
+              </div>
+            </div>
+
+            <div class="layout-right-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-sm">[DENOMINATION CASH COUNT DESK]</div>
+                <div style="display:flex; flex-direction:column; gap:6px; font-family:var(--font-mono); font-size:11px; margin-top:8px;">
+                  <div class="wf-flex-between"><span>₹ 500 x 28 NOTES:</span><b>₹ 14,000.00</b></div>
+                  <div class="wf-flex-between"><span>₹ 200 x 2 NOTES:</span><b>₹ 400.00</b></div>
+                  <div class="wf-flex-between"><span>₹ 100 x 1 NOTE:</span><b>₹ 100.00</b></div>
+                  <div class="wf-flex-between" style="border-top:1.5px solid var(--border-dark); padding-top:6px; font-size:14px; font-weight:800;">
+                    <span>PHYSICAL CASH COUNTED:</span>
+                    <span>₹ 14,500.00</span>
+                  </div>
+                </div>
+                <button class="wf-btn wf-btn-dark" style="width:100%; margin-top:14px; padding:10px;" onclick="settleAllWaitersCash()">[✓ ACCEPT CASH &amp; DEPOSIT TO MANAGER TILL]</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 10: MENU STOCK & 86 ITEM CONTROLLER -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-10-view">
+          <div style="padding:10px 16px; background:var(--bg-surface); border-bottom:2px solid var(--border-dark); display:flex; justify-content:space-between; align-items:center;">
+            <div class="wf-flex-row">
+              <span class="wf-title-sm" style="margin:0;">[MENU 86 INVENTORY LOCK]:</span>
+              <span class="wf-badge" id="stockLockBadge">🔒 LOCKED (PREVENTS ACCIDENTAL 86)</span>
+            </div>
+            <button class="wf-btn wf-btn-sm wf-btn-dark" id="btnStockLock" onclick="toggleStockLock()">[🔓 UNLOCK TO MODIFY STOCK]</button>
+          </div>
+
+          <div class="split-main-layout">
+            <div class="layout-left-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-md" style="margin-bottom:10px;">[LIVE BIRYANI HANDI PORTION COUNTER &amp; 86 CONTROLLER]</div>
+                <div style="display:flex; flex-direction:column; gap:8px;" id="menu86StockList">
+                  <!-- Populated via JS -->
+                </div>
+              </div>
+            </div>
+
+            <div class="layout-right-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-sm">[DUM BIRYANI POT CAPACITY AUDIT]</div>
+                <div class="wf-text-muted">EACH MILITARY DEG HOLDS APPROX 30 PORTIONS. RE-STOCK ORDERS MUST BE PLACED WITH KITCHEN WHEN HANDI FALLS BELOW 8 PORTIONS.</div>
+                <div style="margin-top:12px; display:flex; flex-direction:column; gap:8px;">
+                  <button class="wf-btn" onclick="alert('[FIRED KITCHEN ALERT: START PREPPING NEXT CHICKEN BIRYANI DUM HANDI #5]')">🍲 [PREP NEXT CHICKEN BIRYANI HANDI #5]</button>
+                  <button class="wf-btn" onclick="alert('[FIRED KITCHEN ALERT: START PREPPING NEXT MUTTON DUM HANDI #4]')">🍲 [PREP NEXT MUTTON BIRYANI HANDI #4]</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 11: TODAY SALES & REVENUE REPORT -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-11-view">
+          <div class="split-main-layout">
+            <div class="layout-left-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-flex-between">
+                  <div class="wf-title-md">[TODAY CATEGORY SALES BREAKDOWN]</div>
+                  <span class="wf-badge wf-badge-dark" id="salesReportGrossBadge">GROSS: ₹ 1,48,500.00</span>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
+                  <div>
+                    <div class="wf-flex-between" style="font-size:11px; font-family:var(--font-mono); margin-bottom:3px;"><span>DONNE BIRYANIS (62%):</span><b>₹ 92,070.00</b></div>
+                    <div style="height:12px; background:var(--border-dark); width:62%;"></div>
+                  </div>
+                  <div>
+                    <div class="wf-flex-between" style="font-size:11px; font-family:var(--font-mono); margin-bottom:3px;"><span>STARTERS &amp; KEBABS (22%):</span><b>₹ 32,670.00</b></div>
+                    <div style="height:12px; background:#64748b; width:22%;"></div>
+                  </div>
+                  <div>
+                    <div class="wf-flex-between" style="font-size:11px; font-family:var(--font-mono); margin-bottom:3px;"><span>NATI GRAVIES (9%):</span><b>₹ 13,365.00</b></div>
+                    <div style="height:12px; background:#94a3b8; width:9%;"></div>
+                  </div>
+                  <div>
+                    <div class="wf-flex-between" style="font-size:11px; font-family:var(--font-mono); margin-bottom:3px;"><span>DESSERTS &amp; DRINKS (7%):</span><b>₹ 10,395.00</b></div>
+                    <div style="height:12px; background:#cbd5e1; width:7%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TOP SELLERS -->
+              <div class="wf-box">
+                <div class="wf-title-sm">[TOP-SELLING DISHES TODAY]</div>
+                <div style="display:flex; flex-direction:column; gap:4px; font-size:11px; font-family:var(--font-mono); margin-top:6px;">
+                  <div class="wf-flex-between"><span>1. Special Chicken Donne Biryani</span><b>142 PORTIONS (₹ 41,180)</b></div>
+                  <div class="wf-flex-between"><span>2. Thoogudeepa Mutton Donne Biryani</span><b>88 PORTIONS (₹ 33,440)</b></div>
+                  <div class="wf-flex-between"><span>3. Kshatriya Crispy Chicken Kebab</span><b>74 PORTIONS (₹ 19,240)</b></div>
+                  <div class="wf-flex-between"><span>4. Gunpowder Pepper Chicken Dry</span><b>52 PORTIONS (₹ 14,560)</b></div>
+                  <div class="wf-flex-between"><span>5. Elaneer Payasam (Tender Coconut)</span><b>66 GLASSES (₹ 7,920)</b></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="layout-right-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-sm">[PAYMENT CHANNELS AUDIT]</div>
+                <div style="display:flex; flex-direction:column; gap:6px; font-family:var(--font-mono); font-size:11.5px; margin-top:8px;">
+                  <div class="wf-flex-between"><span>CASH IN DRAWER:</span><b>₹ 62,370.00 (42%)</b></div>
+                  <div class="wf-flex-between"><span>SCAN &amp; PAY UPI QR:</span><b>₹ 56,430.00 (38%)</b></div>
+                  <div class="wf-flex-between"><span>CARD SWIPE EDC:</span><b>₹ 23,760.00 (16%)</b></div>
+                  <div class="wf-flex-between"><span>ZOMATO / SWIGGY:</span><b>₹ 5,940.00 (4%)</b></div>
+                </div>
+                <button class="wf-btn wf-btn-dark" style="width:100%; margin-top:14px; padding:10px;" onclick="selectScreen(16)">[➔ PROCEED TO NIGHT DAY-CLOSE Z-REPORT]</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 12: DISCOUNTS, OFFERS & HAPPY HOUR RULES -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-12-view">
+          <div class="split-main-layout">
+            <div class="layout-left-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-md">[ACTIVE PROMOTIONS &amp; AUTOMATIC BILL RULES]</div>
+                <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px;">
+                  <div class="wf-box-subtle wf-flex-between">
+                    <div>
+                      <b>15% HAPPY HOUR BIRYANI COMBO</b>
+                      <div class="wf-text-muted">Applies 16:00 to 18:30 on Biryani + Starter orders</div>
+                    </div>
+                    <button class="wf-btn wf-btn-sm wf-btn-dark" onclick="togglePromo(this)">[STATUS: ACTIVE]</button>
+                  </div>
+                  <div class="wf-box-subtle wf-flex-between">
+                    <div>
+                      <b>10% CORPORATE TECH-PARK BADGE</b>
+                      <div class="wf-text-muted">Applies on showing IT company badge during lunch</div>
+                    </div>
+                    <button class="wf-btn wf-btn-sm wf-btn-dark" onclick="togglePromo(this)">[STATUS: ACTIVE]</button>
+                  </div>
+                  <div class="wf-box-subtle wf-flex-between">
+                    <div>
+                      <b>COMPLIMENTARY ELANEER PAYASAM</b>
+                      <div class="wf-text-muted">For Birthday &amp; Anniversary celebration tables</div>
+                    </div>
+                    <button class="wf-btn wf-btn-sm wf-btn-dark" onclick="togglePromo(this)">[STATUS: ACTIVE]</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="layout-right-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-sm">[MANAGER OVERRIDE POLICY]</div>
+                <div class="wf-text-muted">DISCOUNTS UP TO 20% CAN BE APPLIED DIRECTLY FROM SCREEN 4 WITHOUT OWNER PIN. DISCOUNTS ABOVE 20% REQUIRE OWNER APPROVAL CODE.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 13: DAILY PETTY CASH & EXPENSES -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-13-view">
+          <div class="split-main-layout">
+            <div class="layout-left-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-flex-between">
+                  <div class="wf-title-md">[TODAY PETTY EXPENSE VOUCHERS]</div>
+                  <span class="wf-badge wf-badge-dark" id="pettyTotalBadge">TOTAL SPENT: ₹ 3,100.00</span>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:6px; margin-top:12px;" id="pettyVouchersList">
+                  <!-- Populated via JS -->
+                </div>
+              </div>
+            </div>
+
+            <div class="layout-right-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-sm">[+ RECORD NEW EXPENSE VOUCHER]</div>
+                <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
+                  <div>
+                    <label class="wf-text-muted" style="font-size:10px;">EXPENSE TITLE / VENDOR:</label>
+                    <input class="wf-input" id="pettyTitle" placeholder="e.g. KR Market Fresh Mint Leaves">
+                  </div>
+                  <div>
+                    <label class="wf-text-muted" style="font-size:10px;">AMOUNT PAID IN CASH (₹):</label>
+                    <input class="wf-input" id="pettyAmount" type="number" placeholder="e.g. 350.00">
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="padding:10px;" onclick="addNewPettyExpense()">[+ LOG VOUCHER &amp; DEDUCT FROM TILL]</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 14: STAFF ATTENDANCE & TIP SHARING -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-14-view">
+          <div class="split-main-layout">
+            <div class="layout-left-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-flex-between">
+                  <div class="wf-title-md">[STAFF ATTENDANCE ROSTER]</div>
+                  <span class="wf-badge wf-badge-dark">10 MEMBERS PRESENT</span>
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px; margin-top:10px;">
+                  <div class="wf-box-subtle"><div class="wf-flex-between"><b>Captain Ramesh</b><span class="wf-badge wf-badge-dark">IN: 17:30</span></div><div class="wf-text-muted">Dinner Shift • Sec A</div></div>
+                  <div class="wf-box-subtle"><div class="wf-flex-between"><b>Captain Suresh</b><span class="wf-badge wf-badge-dark">IN: 17:35</span></div><div class="wf-text-muted">Dinner Shift • Sec B</div></div>
+                  <div class="wf-box-subtle"><div class="wf-flex-between"><b>Captain Vijay</b><span class="wf-badge wf-badge-dark">IN: 17:40</span></div><div class="wf-text-muted">Dinner Shift • Sec C</div></div>
+                  <div class="wf-box-subtle"><div class="wf-flex-between"><b>Head Chef Manikanta</b><span class="wf-badge wf-badge-dark">IN: 16:00</span></div><div class="wf-text-muted">Biryani Dum Master</div></div>
+                  <div class="wf-box-subtle"><div class="wf-flex-between"><b>Fry Chef Anbu</b><span class="wf-badge wf-badge-dark">IN: 16:30</span></div><div class="wf-text-muted">Kebab Fry Station</div></div>
+                  <div class="wf-box-subtle"><div class="wf-flex-between"><b>Cashier Ramesh</b><span class="wf-badge wf-badge-dark">IN: 17:45</span></div><div class="wf-text-muted">Main Billing POS</div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="layout-right-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-sm">[DAILY TIP POOL DISTRIBUTION]</div>
+                <div class="wf-flex-between" style="margin:8px 0;"><span>TOTAL TIPS COLLECTED:</span><b style="font-size:16px;">₹ 3,450.00</b></div>
+                <div class="wf-box-subtle">
+                  <div class="wf-flex-between"><span>EQUAL PER PERSON (10 STAFF):</span><b>₹ 345.00 / STAFF</b></div>
+                </div>
+                <button class="wf-btn wf-btn-dark" style="width:100%; margin-top:12px; padding:10px;" onclick="alert('[TIPS APPROVED: ₹ 345 DISTRIBUTED PER STAFF MEMBER]')">[💸 APPROVE CASH TIP PAYOUT]</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 15: PRINTERS & HARDWARE HEALTH -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-15-view">
+          <div class="split-main-layout">
+            <div class="layout-left-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-md">[RESTAURANT HARDWARE DIAGNOSTIC CENTER]</div>
+                <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px;">
+                  <div class="wf-box-subtle wf-flex-between">
+                    <div><b>COUNTER THERMAL BILL PRINTER (80MM USB)</b><div class="wf-text-muted">PAPER ROLL: 82% • ESC/POS USB001</div></div>
+                    <button class="wf-btn wf-btn-sm wf-btn-dark" onclick="testPrintDevice('Counter Bill Printer')">[TEST PRINT INVOICE]</button>
+                  </div>
+                  <div class="wf-box-subtle wf-flex-between">
+                    <div><b>KITCHEN KOT PRINTER 1 (DUM SECTION / LAN)</b><div class="wf-text-muted">IP: 192.168.1.120 • PORT 9100</div></div>
+                    <button class="wf-btn wf-btn-sm" onclick="testPrintDevice('Kitchen KOT Printer 1')">[TEST KOT PRINT]</button>
+                  </div>
+                  <div class="wf-box-subtle wf-flex-between">
+                    <div><b>KITCHEN KOT PRINTER 2 (KEBAB SECTION / LAN)</b><div class="wf-text-muted">IP: 192.168.1.121 • PORT 9100</div></div>
+                    <button class="wf-btn wf-btn-sm" onclick="testPrintDevice('Kitchen KOT Printer 2')">[TEST KOT PRINT]</button>
+                  </div>
+                  <div class="wf-box-subtle wf-flex-between">
+                    <div><b>ANDROID EDC CARD MACHINE (BLUETOOTH)</b><div class="wf-text-muted">PINELABS P2000 • BATTERY 88%</div></div>
+                    <button class="wf-btn wf-btn-sm" onclick="testPrintDevice('EDC Terminal')">[PING TERMINAL]</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="layout-right-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-sm">[NETWORK &amp; ROUTER STATUS]</div>
+                <div class="wf-flex-between" style="margin-top:6px;"><span>PRIMARY FIBER:</span><span class="wf-badge wf-badge-dark">ONLINE (240 MBPS)</span></div>
+                <div class="wf-flex-between" style="margin-top:6px;"><span>CONNECTED TABLE QR USERS:</span><b>42 ACTIVE</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- SCREEN 16: DAY CLOSE & FINAL ACCOUNTS (NIGHT Z-REPORT) -->
+        <!-- =================================================================== -->
+        <div class="screen-view" id="screen-16-view">
+          <div class="split-main-layout">
+            <div class="layout-left-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-flex-between">
+                  <div class="wf-title-md">[END-OF-DAY MASTER Z-REPORT CASH AUDIT]</div>
+                  <span class="wf-badge wf-badge-dark">SHIFT: DINNER SERVICE</span>
+                </div>
+
+                <div style="display:flex; flex-direction:column; gap:6px; font-family:var(--font-mono); font-size:12px; margin-top:12px;">
+                  <div class="wf-flex-between"><span>1. OPENING CASH FLOAT (SCREEN 1):</span><b id="zOpeningFloat">₹ 5,000.00</b></div>
+                  <div class="wf-flex-between"><span>2. COUNTER CASH SALES (SCREEN 4):</span><b id="zCounterCash">+ ₹ 28,450.00</b></div>
+                  <div class="wf-flex-between"><span>3. CAPTAIN CASH COLLECTED (SCREEN 9):</span><b id="zWaitersCash">+ ₹ 14,500.00</b></div>
+                  <div class="wf-flex-between"><span>4. PETTY EXPENSES DEDUCTED (SCREEN 13):</span><b id="zPettyCash">- ₹ 3,100.00</b></div>
+                  <div class="wf-flex-between" style="border-top:2px solid var(--border-dark); padding-top:8px; margin-top:4px; font-size:16px; font-weight:800;">
+                    <span>EXPECTED CASH IN DRAWER:</span>
+                    <span id="zExpectedCash">₹ 44,850.00</span>
+                  </div>
+                </div>
+
+                <div class="wf-box-subtle" style="margin-top:14px;">
+                  <div class="wf-flex-between">
+                    <span>PHYSICAL CASH COUNTED IN SAFE:</span>
+                    <input class="wf-input" style="width:140px; text-align:right; font-weight:800;" id="inputPhysicalCash" value="44850" oninput="calculateZVariance(this.value)">
+                  </div>
+                  <div class="wf-flex-between" style="margin-top:8px; font-weight:800; font-family:var(--font-mono);">
+                    <span>CASH VARIANCE / SHORTAGE:</span>
+                    <span id="zVarianceLabel" style="color:#0f172a;">₹ 0.00 (PERFECT MATCH ✓)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-box">
+                <div class="wf-title-sm">[DIGITAL RECONCILIATIONS]</div>
+                <div style="display:flex; flex-direction:column; gap:4px; font-size:11px; font-family:var(--font-mono); margin-top:6px;">
+                  <div class="wf-flex-between"><span>UPI QR SETTLEMENTS:</span><b>₹ 58,400.00</b></div>
+                  <div class="wf-flex-between"><span>CARD EDC SWIPES:</span><b>₹ 24,100.00</b></div>
+                  <div class="wf-flex-between"><span>FOOD AGGREGATORS (ZOMATO/SWIGGY):</span><b>₹ 5,940.00</b></div>
+                  <div class="wf-flex-between" style="border-top:1.5px solid var(--border-dark); padding-top:4px; font-weight:800;"><span>TOTAL GROSS SHIFT SALES:</span><b id="zGrossTotal">₹ 1,48,500.00</b></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="layout-right-pane">
+              <div class="wf-box-highlight">
+                <div class="wf-title-sm">[FINALIZE &amp; LOCK RESTAURANT TILL]</div>
+                <div class="wf-text-muted">ONCE LOCKED, NO FURTHER KOT OR BILL ADJUSTMENTS CAN BE PERFORMED. SUMMARY IS EMAILED TO THE OWNER.</div>
+                <div style="display:flex; flex-direction:column; gap:8px; margin-top:14px;">
+                  <button class="wf-btn wf-btn-dark" style="padding:11px;" onclick="printZReport()">🖨️ [PRINT MASTER Z-REPORT SLIP]</button>
+                  <button class="wf-btn" style="padding:9px;" onclick="alert('[SUMMARY AUDIT PDF DISPATCHED TO OWNER hemalatha20032003@gmail.com]')">📧 [SEND NIGHT AUDIT TO OWNER EMAIL]</button>
+                  <button class="wf-btn wf-btn-danger" style="padding:11px; margin-top:4px;" onclick="lockNightShift()">🔒 [CONFIRM &amp; LOCK NIGHT SHIFT]</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /stageViewport -->
+    </div><!-- /managerStage -->
+  </main>
+
+  <!-- ALL 16 SCREENS FULL SCROLL VIEW CONTAINER -->
+  <section class="all-grid-container" id="allGridContainer">
+    <!-- Populated via JavaScript on click -->
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- REACTIVE STATE & INTERCONNECTION SCRIPT ENGINE -->
+  <!-- =================================================================== -->
+  <script>
+    // CENTRAL REACTIVE APPLICATION STATE
+    const AppState = {
+      activeScreen: 1,
+      viewMode: 'flow',
+      managerName: 'MANJUNATH (GENERAL MANAGER)',
+      shiftName: 'DINNER SHIFT (18:00 - 24:00)',
+      openingFloat: 5000,
+      todaySales: 148500,
+      guestsSeated: 94,
+      tablesOccupied: 23,
+      totalTables: 28,
+      cashWithWaiters: 14500,
+      counterCashSales: 28450,
+      isStockLocked: true,
+
+      // Bill in Screen 4
+      bill: {
+        tableNum: 'A-04',
+        captainName: 'Captain Ramesh',
+        discountPercent: 10,
+        serviceChargePercent: 5,
+        items: [
+          { id: 1, name: 'Special Chicken Donne Biryani', kot: '#9812', rate: 290, qty: 2, isFree: false },
+          { id: 2, name: 'Kshatriya Crispy Chicken Kebab (8 Pcs)', kot: '#9812', rate: 260, qty: 1, isFree: false },
+          { id: 3, name: 'Gunpowder Pepper Chicken Dry', kot: '#9820', rate: 280, qty: 1, isFree: false },
+          { id: 4, name: 'Elaneer Payasam (Tender Coconut)', kot: '#9820', rate: 120, qty: 2, isFree: false },
+        ]
+      },
+
+      // Waiters in Screen 9
+      waiters: [
+        { id: 'w1', name: 'Captain Ramesh', section: 'Section A', cash: 7200, upi: 4800, settled: false },
+        { id: 'w2', name: 'Captain Suresh', section: 'Section B', cash: 4300, upi: 5100, settled: false },
+        { id: 'w3', name: 'Captain Vijay', section: 'Section C', cash: 3000, upi: 3200, settled: false },
+      ],
+
+      // Petty Vouchers in Screen 13
+      pettyVouchers: [
+        { id: 'PV-01', title: 'Fresh Mint & Coriander Leaves (KR Market)', amount: 380, time: '14:20' },
+        { id: 'PV-02', title: 'Emergency LPG Gas Cylinder Refill', amount: 1850, time: '16:45' },
+        { id: 'PV-03', title: 'Block Ice for Desserts & Beverages', amount: 220, time: '18:10' },
+        { id: 'PV-04', title: 'Donne Takeaway Boxes & Bags', amount: 650, time: '19:30' },
+      ],
+
+      // Waiting Queue in Screen 6
+      queue: [
+        { token: 'W-101', name: 'Praveen K', size: 4, phone: '98450*****', waitTime: '18 mins', section: 'Section A' },
+        { token: 'W-102', name: 'Siddharth M', size: 6, phone: '98801*****', waitTime: '12 mins', section: 'AC Hall' },
+        { token: 'W-103', name: 'Kiran Rao', size: 2, phone: '99002*****', waitTime: '06 mins', section: 'Any Available' },
+      ],
+
+      // Menu 86 in Screen 10
+      stock: [
+        { id: 's1', name: 'Special Chicken Donne Biryani (Handi #4)', category: 'Biryani', portions: 22, is86: false },
+        { id: 's2', name: 'Thoogudeepa Mutton Donne Biryani (Handi #3)', category: 'Biryani', portions: 6, is86: false },
+        { id: 's3', name: 'Kshatriya Crispy Chicken Kebab', category: 'Starters', portions: 18, is86: false },
+        { id: 's4', name: 'Nati Koli Biryani (Country Chicken)', category: 'Biryani', portions: 0, is86: true },
+        { id: 's5', name: 'Elaneer Payasam (Tender Coconut)', category: 'Desserts', portions: 12, is86: false },
+      ],
+
+      // Floor Tables
+      floorTables: [
+        { num: 'A-01', status: 'OCCUPIED', covers: 4, bill: 840, server: 'Ramesh', section: 'A' },
+        { num: 'A-02', status: 'OCCUPIED', covers: 2, bill: 420, server: 'Ramesh', section: 'A' },
+        { num: 'A-03', status: 'BILLED', covers: 6, bill: 1900, server: 'Ramesh', section: 'A' },
+        { num: 'A-04', status: 'OCCUPIED', covers: 4, bill: 1360, server: 'Ramesh', section: 'A' },
+        { num: 'A-05', status: 'OCCUPIED', covers: 2, bill: 550, server: 'Ramesh', section: 'A' },
+        { num: 'A-06', status: 'CLEANING', covers: 4, bill: 0, server: 'Ramesh', section: 'A' },
+        { num: 'A-07', status: 'READY', covers: 4, bill: 0, server: 'Ramesh', section: 'A' },
+        { num: 'B-01', status: 'OCCUPIED', covers: 4, bill: 1100, server: 'Suresh', section: 'B' },
+        { num: 'B-02', status: 'OCCUPIED', covers: 6, bill: 2150, server: 'Suresh', section: 'B' },
+        { num: 'B-03', status: 'OCCUPIED', covers: 2, bill: 680, server: 'Suresh', section: 'B' },
+        { num: 'B-04', status: 'OCCUPIED', covers: 4, bill: 1420, server: 'Suresh', section: 'B' },
+        { num: 'B-05', status: 'READY', covers: 4, bill: 0, server: 'Suresh', section: 'B' },
+        { num: 'C-01', status: 'OCCUPIED', covers: 4, bill: 1250, server: 'Vijay', section: 'C' },
+        { num: 'C-02', status: 'OCCUPIED', covers: 2, bill: 580, server: 'Vijay', section: 'C' },
+        { num: 'C-03', status: 'BILLED', covers: 4, bill: 1400, server: 'Vijay', section: 'C' },
+        { num: 'VIP-1', status: 'OCCUPIED', covers: 8, bill: 3800, server: 'Anand', section: 'VIP' },
+      ]
+    };
+
+    // TOAST DISPLAY HELPER
+    function showToast(msg) {
+      const c = document.getElementById('toastContainer');
+      if (!c) return;
+      const t = document.createElement('div');
+      t.className = 'toast-msg';
+      t.innerHTML = '<span>🔔</span> ' + msg;
+      c.appendChild(t);
+      setTimeout(() => { t.remove(); }, 3500);
+    }
+
+    // CLOCK
+    setInterval(() => {
+      const el = document.getElementById('liveClock');
+      if (el) {
+        const now = new Date();
+        el.textContent = '[' + now.toTimeString().split(' ')[0] + ' IST]';
+      }
+    }, 1000);
+
+    // SCREEN SWITCHER
+    function selectScreen(num) {
+      AppState.activeScreen = num;
+      document.querySelectorAll('.screen-view').forEach(v => v.style.display = 'none');
+      const target = document.getElementById('screen-' + num + '-view');
+      if (target) target.style.display = 'flex';
+
+      document.querySelectorAll('.screen-tab').forEach((tab, idx) => {
+        if (idx + 1 === num) tab.classList.add('active');
+        else tab.classList.remove('active');
+      });
+
+      // Refresh screens that need dynamic re-rendering
+      if (num === 2) renderScreen2TableMatrix();
+      if (num === 3) renderScreen3FloorCards();
+      if (num === 4) renderScreen4Bill();
+      if (num === 6) renderWaitingQueue();
+      if (num === 9) renderWaiterSettlement();
+      if (num === 10) renderMenu86Stock();
+      if (num === 13) renderPettyVouchers();
+      if (num === 16) updateZReport();
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // VIEW MODE SWITCH (STAGE VS GRID)
+    function setViewMode(mode) {
+      AppState.viewMode = mode;
+      const stage = document.getElementById('interactiveCanvas');
+      const grid = document.getElementById('allGridContainer');
+      const btnFlow = document.getElementById('btnModeFlow');
+      const btnGrid = document.getElementById('btnModeGrid');
+
+      if (mode === 'flow') {
+        stage.style.display = 'flex';
+        grid.style.display = 'none';
+        btnFlow.classList.add('active');
+        btnGrid.classList.remove('active');
+        selectScreen(AppState.activeScreen);
+      } else {
+        stage.style.display = 'none';
+        grid.style.display = 'flex';
+        btnFlow.classList.remove('active');
+        btnGrid.classList.add('active');
+        renderAll16Grid();
+      }
+    }
+
+    // SCREEN 1: LOGIN ACTIONS
+    let pinEntered = '24';
+    function renderPinDisplay() {
+      const dots = document.getElementById('mgrPinDots');
+      const status = document.getElementById('mgrPinStatus');
+      if (!dots) return;
+      dots.innerHTML = '';
+      for (let i = 0; i < 4; i++) {
+        const d = document.createElement('div');
+        d.className = 'status-dot';
+        d.style.width = '20px';
+        d.style.height = '20px';
+        d.style.borderWidth = '2px';
+        d.style.background = i < pinEntered.length ? '#0f172a' : '#ffffff';
+        dots.appendChild(d);
+      }
+      if (status) status.textContent = '[' + pinEntered.length + ' OF 4 DIGITS ENTERED]';
+    }
+
+    function pressPin(d) {
+      if (pinEntered.length < 4) {
+        pinEntered += d;
+        renderPinDisplay();
+      }
+    }
+
+    function clearPin() {
+      pinEntered = '';
+      renderPinDisplay();
+    }
+
+    function delPin() {
+      pinEntered = pinEntered.slice(0, -1);
+      renderPinDisplay();
+    }
+
+    function updateShiftSelection(val) {
+      AppState.shiftName = val;
+      const b = document.getElementById('stageShiftBadge');
+      if (b) b.textContent = '[' + val + ']';
+      showToast('Shift changed to ' + val);
+    }
+
+    function updateManagerSelection(val) {
+      AppState.managerName = val;
+      const b = document.getElementById('stageManagerBadge');
+      if (b) b.textContent = '👔 [LOGGED IN: ' + val + ']';
+    }
+
+    function confirmLogin() {
+      showToast('Authenticated as ' + AppState.managerName + '. Opening Dashboard.');
+      selectScreen(2);
+    }
+
+    // SCREEN 2: TABLE MATRIX
+    function renderScreen2TableMatrix() {
+      const c = document.getElementById('screen2TableMatrix');
+      if (!c) return;
+      c.innerHTML = '';
+      AppState.floorTables.forEach(t => {
+        const item = document.createElement('div');
+        item.className = 'table-card-item' + (t.num === 'A-04' ? ' selected' : '');
+        item.onclick = () => { selectScreen(3); };
+        const badgeClass = t.status === 'OCCUPIED' ? 'wf-badge-dark' : '';
+        item.innerHTML = `
+          <div class="wf-flex-between"><b>${t.num}</b><span class="wf-badge ${badgeClass}">${t.status.slice(0,4)}</span></div>
+          <div class="wf-text-muted" style="font-size:9px;">${t.status === 'OCCUPIED' ? t.covers + 'G • ₹' + t.bill : t.status}</div>
+        `;
+        c.appendChild(item);
+      });
+    }
+
+    // SCREEN 3: FLOOR CARDS
+    function renderScreen3FloorCards() {
+      const c = document.getElementById('screen3FloorCards');
+      if (!c) return;
+      c.innerHTML = '';
+      AppState.floorTables.forEach(t => {
+        const card = document.createElement('div');
+        card.className = 'wf-box-subtle' + (t.num === 'A-04' ? ' wf-box-highlight' : '');
+        card.style.cursor = 'pointer';
+        card.onclick = () => {
+          document.getElementById('selectedTableTitle').textContent = 'TABLE [' + t.num + '] DETAILS';
+          document.getElementById('selectedTableBadge').textContent = t.status;
+          document.getElementById('selectedTableBill').textContent = '₹ ' + t.bill.toFixed(2);
+          showToast('Selected Table ' + t.num);
+        };
+        card.innerHTML = `
+          <div class="wf-flex-between"><b>TABLE ${t.num}</b><span class="wf-badge ${t.status === 'OCCUPIED' ? 'wf-badge-dark' : ''}">${t.status}</span></div>
+          <div class="wf-text-muted" style="font-size:10px; margin-top:4px;">${t.covers} Covers • ${t.server}</div>
+          <div style="font-weight:800; font-family:var(--font-mono); margin-top:4px;">₹ ${t.bill.toFixed(2)}</div>
+        `;
+        c.appendChild(card);
+      });
+    }
+
+    function filterFloorSection(sec) {
+      showToast('Filtering Section: ' + sec);
+    }
+
+    function promptMergeTable() {
+      alert('[MERGE TABLE A-04 WITH A-05: TOTAL COMBINED BILL = ₹ 1,910.00]');
+      showToast('Merged Table A-04 with Table A-05');
+    }
+
+    function promptTransferTable() {
+      alert('[TABLE A-04 TRANSFERRED TO TABLE B-05]');
+      showToast('Transferred Party from Table A-04 to B-05');
+    }
+
+    function vacateCurrentTable() {
+      const t = AppState.floorTables.find(tbl => tbl.num === 'A-04');
+      if (t) {
+        t.status = 'READY';
+        t.bill = 0;
+        t.covers = 0;
+      }
+      AppState.tablesOccupied = Math.max(0, AppState.tablesOccupied - 1);
+      updateKpis();
+      renderScreen3FloorCards();
+      renderScreen2TableMatrix();
+      showToast('Table A-04 Vacated and marked ready!');
+    }
+
+    // SCREEN 4: BILLING LOGIC (HORIZONTAL STEPPERS, DYNAMIC AMOUNTS)
+    function renderScreen4Bill() {
+      const tbody = document.getElementById('billItemsTbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      let subtotal = 0;
+
+      AppState.bill.items.forEach(it => {
+        const itemTotal = it.isFree ? 0 : (it.rate * it.qty);
+        subtotal += itemTotal;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <b>${it.name}</b><br>
+            <span class="wf-text-muted">KOT ${it.kot} ${it.isFree ? '• [COMPED DISH]' : ''}</span>
+          </td>
+          <td style="text-align:center;">
+            <div class="qty-stepper">
+              <button onclick="changeBillQty(${it.id}, -1)">-</button>
+              <span>${it.qty}</span>
+              <button onclick="changeBillQty(${it.id}, 1)">+</button>
+            </div>
+          </td>
+          <td style="text-align:right;">₹ ${it.rate.toFixed(2)}</td>
+          <td style="text-align:right; font-weight:800;">₹ ${itemTotal.toFixed(2)}</td>
+          <td style="text-align:center; white-space:nowrap;">
+            <button class="wf-btn wf-btn-sm wf-btn-danger" onclick="removeBillItem(${it.id})">✕ REM</button>
+            <button class="wf-btn wf-btn-sm ${it.isFree ? 'wf-btn-dark' : ''}" style="margin-left:4px;" onclick="toggleBillFree(${it.id})">${it.isFree ? '★ FREE' : 'COMP'}</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const discAmount = (subtotal * AppState.bill.discountPercent) / 100;
+      const afterDisc = subtotal - discAmount;
+      const gstAmount = (afterDisc * 0.05);
+      const serviceAmount = (afterDisc * (AppState.bill.serviceChargePercent / 100));
+      const netPay = Math.round(afterDisc + gstAmount + serviceAmount);
+
+      document.getElementById('sumSubtotal').textContent = '₹ ' + subtotal.toFixed(2);
+      document.getElementById('sumDiscLabel').textContent = AppState.bill.discountPercent + '%';
+      document.getElementById('sumDiscount').textContent = '- ₹ ' + discAmount.toFixed(2);
+      document.getElementById('sumGst').textContent = '+ ₹ ' + gstAmount.toFixed(2);
+      document.getElementById('sumService').textContent = '+ ₹ ' + serviceAmount.toFixed(2);
+      document.getElementById('sumNetPay').textContent = '₹ ' + netPay.toFixed(2);
+    }
+
+    function changeBillQty(itemId, delta) {
+      const it = AppState.bill.items.find(i => i.id === itemId);
+      if (it) {
+        it.qty += delta;
+        if (it.qty <= 0) {
+          AppState.bill.items = AppState.bill.items.filter(i => i.id !== itemId);
+        }
+        renderScreen4Bill();
+        showToast('Updated ' + it.name + ' Qty');
+      }
+    }
+
+    function toggleBillFree(itemId) {
+      const it = AppState.bill.items.find(i => i.id === itemId);
+      if (it) {
+        it.isFree = !it.isFree;
+        renderScreen4Bill();
+        showToast(it.name + (it.isFree ? ' marked COMPED (FREE)' : ' restored to regular price'));
+      }
+    }
+
+    function removeBillItem(itemId) {
+      AppState.bill.items = AppState.bill.items.filter(i => i.id !== itemId);
+      renderScreen4Bill();
+      showToast('Item removed from bill');
+    }
+
+    function clearBillItems() {
+      if (confirm('Clear all food items from this bill?')) {
+        AppState.bill.items = [];
+        renderScreen4Bill();
+        showToast('All items cleared from bill');
+      }
+    }
+
+    function addDishToBillPrompt() {
+      const name = prompt('Enter Dish Name to add:', 'Kshatriya Chicken Kebab');
+      if (name) {
+        AppState.bill.items.push({
+          id: Date.now(),
+          name: name,
+          kot: '#9828',
+          rate: 260,
+          qty: 1,
+          isFree: false
+        });
+        renderScreen4Bill();
+        showToast('Added ' + name + ' to bill');
+      }
+    }
+
+    function setBillDiscount(pct) {
+      AppState.bill.discountPercent = pct;
+      [0, 5, 10, 15, 20].forEach(p => {
+        const btn = document.getElementById('discBtn' + p);
+        if (btn) {
+          if (p === pct) btn.classList.add('wf-btn-dark');
+          else btn.classList.remove('wf-btn-dark');
+        }
+      });
+      renderScreen4Bill();
+      showToast('Applied ' + pct + '% Bill Discount');
+    }
+
+    function splitBillWays(ways) {
+      const net = parseFloat(document.getElementById('sumNetPay').textContent.replace(/[^0-9.]/g, '')) || 1346;
+      const each = Math.round(net / ways);
+      alert('[BILL SPLIT ' + ways + '-WAYS: ₹ ' + each + '.00 PER PERSON]');
+      showToast('Split bill into ' + ways + ' equal shares of ₹' + each);
+    }
+
+    function splitBillByItem() {
+      alert('[SPLIT BY ITEM DIALOG: SELECT DISHES FOR INVOICE A AND INVOICE B]');
+      showToast('Opening Itemized Bill Splitter');
+    }
+
+    // SETTLE BILL & CROSS-SCREEN INTERCONNECTION
+    function settleBill(mode) {
+      const net = parseFloat(document.getElementById('sumNetPay').textContent.replace(/[^0-9.]/g, '')) || 1346;
+      AppState.todaySales += net;
+      if (mode === 'CASH') {
+        AppState.counterCashSales += net;
+      }
+      
+      // Update Table status in Screen 2 & 3
+      const t = AppState.floorTables.find(tbl => tbl.num === 'A-04');
+      if (t) {
+        t.status = 'CLEANING';
+        t.bill = 0;
+      }
+      AppState.tablesOccupied = Math.max(0, AppState.tablesOccupied - 1);
+
+      updateKpis();
+      updateZReport();
+
+      showToast('✓ Paid ₹' + net.toFixed(2) + ' via ' + mode + '! Table A-04 Closed. Sales updated across all screens!');
+      alert('[✓ PAYMENT OF ₹ ' + net.toFixed(2) + ' RECEIVED VIA ' + mode + ' - Table A-04 bill closed. Revenue updated on Screen 2, Screen 11, and Screen 16.]');
+      selectScreen(2);
+    }
+
+    function printThermalBill() {
+      showToast('🖨️ Thermal Invoice dispatched to Counter Printer (80mm USB)');
+    }
+
+    function sendBillWhatsapp() {
+      const phone = prompt('Enter customer mobile number for WhatsApp Bill:', '9845012345');
+      if (phone) {
+        showToast('📲 Tax Invoice PDF dispatched to WhatsApp: +91 ' + phone);
+      }
+    }
+
+    // SCREEN 5: KITCHEN SPEED
+    function expediteAllKds() {
+      showToast('⚡ Kitchen expedited! Marked ready dishes sent to waiter pass.');
+      alert('[ALL READY DISHES NOTIFIED TO SERVICE RUNNERS]');
+    }
+
+    // SCREEN 6: WAITING QUEUE
+    function renderWaitingQueue() {
+      const c = document.getElementById('waitingQueueList');
+      if (!c) return;
+      c.innerHTML = '';
+      AppState.queue.forEach((q, idx) => {
+        const box = document.createElement('div');
+        box.className = 'wf-box-subtle wf-flex-between';
+        box.innerHTML = `
+          <div>
+            <b>TOKEN ${q.token}: ${q.name} (${q.size} GUESTS)</b>
+            <div class="wf-text-muted" style="margin-top:2px;">Phone: ${q.phone} • Waiting: ${q.waitTime} • ${q.section}</div>
+          </div>
+          <div class="wf-flex-row">
+            <button class="wf-btn wf-btn-sm wf-btn-dark" onclick="seatQueueGuest('${q.token}')">[ASSIGN TABLE T-07 ➔]</button>
+            <button class="wf-btn wf-btn-sm" onclick="sendQueueSms('${q.token}', '${q.phone}')">SMS READY</button>
+          </div>
+        `;
+        c.appendChild(box);
+      });
+      document.getElementById('queueTotalBadge').textContent = AppState.queue.length + ' PARTIES WAITING';
+    }
+
+    function seatQueueGuest(token) {
+      AppState.queue = AppState.queue.filter(q => q.token !== token);
+      AppState.guestsSeated += 4;
+      AppState.tablesOccupied = Math.min(AppState.totalTables, AppState.tablesOccupied + 1);
+      
+      const t = AppState.floorTables.find(tbl => tbl.num === 'A-07' || tbl.status === 'READY');
+      if (t) {
+        t.status = 'OCCUPIED';
+        t.covers = 4;
+        t.bill = 0;
+      }
+      
+      updateKpis();
+      renderWaitingQueue();
+      showToast('Guest ' + token + ' seated at Table T-07! Occupancy updated on Screen 2 & 3.');
+      alert('[GUEST ' + token + ' SEATED AT TABLE T-07 - Occupancy incremented. Waiting queue updated.]');
+    }
+
+    function sendQueueSms(token, phone) {
+      showToast('SMS dispatched to ' + phone + ': "Your table at Thoogudeepa Donne Biryani is ready!"');
+    }
+
+    function generateQueueToken() {
+      const name = document.getElementById('newGuestName').value || 'Praveen';
+      const size = parseInt(document.getElementById('newGuestSize').value) || 4;
+      const phone = document.getElementById('newGuestPhone').value || '9845012345';
+      const sec = document.getElementById('newGuestSection').value;
+
+      const tok = 'W-' + (100 + AppState.queue.length + 1);
+      AppState.queue.push({
+        token: tok,
+        name: name,
+        size: size,
+        phone: phone,
+        waitTime: 'Just arrived',
+        section: sec
+      });
+
+      renderWaitingQueue();
+      showToast('Generated Token ' + tok + ' for ' + name);
+      alert('[TOKEN ' + tok + ' GENERATED - Printed token slip & SMS notification sent to ' + phone + ']');
+    }
+
+    // SCREEN 7: CALL STAFF
+    function pageStaff(staffName) {
+      showToast('📢 Chime paged to ' + staffName + ': Report to Billing Desk immediately.');
+    }
+
+    function broadcastStaffAlert(msg) {
+      showToast('📢 BROADCAST TO ALL TABLETS: ' + msg);
+      alert('[BROADCAST TRANSMITTED TO ALL 10 TABLETS: "' + msg + '"]');
+    }
+
+    // SCREEN 8: CALLS & COMPLAINTS
+    function resolveCall(btn, tbl) {
+      btn.closest('.wf-box-subtle').style.display = 'none';
+      showToast('Resolved call for ' + tbl);
+    }
+
+    function applyApologyDiscount() {
+      AppState.bill.discountPercent = 10;
+      showToast('Applied 10% Apology Discount to Table A-04 bill in Screen 4!');
+      selectScreen(4);
+    }
+
+    // SCREEN 9: WAITER CASH SETTLEMENT
+    function renderWaiterSettlement() {
+      const c = document.getElementById('waiterSettlementList');
+      if (!c) return;
+      c.innerHTML = '';
+      let pendingTotal = 0;
+
+      AppState.waiters.forEach(w => {
+        if (!w.settled) pendingTotal += w.cash;
+        const box = document.createElement('div');
+        box.className = 'wf-box-subtle wf-flex-between';
+        box.innerHTML = `
+          <div>
+            <b>${w.name} (${w.section})</b>
+            <div class="wf-text-muted" style="margin-top:2px;">Cash: ₹ ${w.cash.toFixed(2)} • UPI QR: ₹ ${w.upi.toFixed(2)}</div>
+            <div style="font-weight:800; font-family:var(--font-mono); margin-top:2px;">Pending Cash: ${w.settled ? '₹ 0.00 (SETTLED ✓)' : '₹ ' + w.cash.toFixed(2)}</div>
+          </div>
+          <div>
+            ${w.settled 
+              ? '<span class="wf-badge wf-badge-dark">SETTLED ✓</span>' 
+              : '<button class="wf-btn wf-btn-dark wf-btn-sm" onclick="settleSingleWaiter(\'' + w.id + '\')">[COLLECT ₹ ' + w.cash + ']</button>'}
+          </div>
+        `;
+        c.appendChild(box);
+      });
+
+      document.getElementById('waiterCashPendingBadge').textContent = 'TOTAL UNSETTLED: ₹ ' + pendingTotal.toFixed(2);
+      AppState.cashWithWaiters = pendingTotal;
+      updateKpis();
+    }
+
+    function settleSingleWaiter(wid) {
+      const w = AppState.waiters.find(x => x.id === wid);
+      if (w) {
+        w.settled = true;
+        renderWaiterSettlement();
+        updateZReport();
+        showToast('Collected ₹' + w.cash + ' from ' + w.name + '. Reconciled into Manager Cash Drawer!');
+      }
+    }
+
+    function settleAllWaitersCash() {
+      AppState.waiters.forEach(w => w.settled = true);
+      renderWaiterSettlement();
+      updateZReport();
+      showToast('✓ All waiter cash collected & deposited into safe drawer!');
+      alert('[ALL WAITER CASH COLLECTED: ₹ 14,500.00 - Deposited to main till. Cash with waiters reset to ₹ 0.]');
+    }
+
+    // SCREEN 10: MENU 86 STOCK
+    function toggleStockLock() {
+      AppState.isStockLocked = !AppState.isStockLocked;
+      const b = document.getElementById('stockLockBadge');
+      const btn = document.getElementById('btnStockLock');
+      if (AppState.isStockLocked) {
+        b.textContent = '🔒 LOCKED (SECURITY ACTIVE)';
+        btn.textContent = '[🔓 UNLOCK TO MODIFY STOCK]';
+        showToast('Stock controller locked');
+      } else {
+        b.textContent = '🔓 UNLOCKED (EDITING ENABLED)';
+        btn.textContent = '[🔒 LOCK & COMMIT CHANGES]';
+        showToast('Stock controller unlocked. You can modify portions.');
+      }
+      renderMenu86Stock();
+    }
+
+    function renderMenu86Stock() {
+      const c = document.getElementById('menu86StockList');
+      if (!c) return;
+      c.innerHTML = '';
+      AppState.stock.forEach(s => {
+        const box = document.createElement('div');
+        box.className = 'wf-box-subtle wf-flex-between';
+        box.innerHTML = `
+          <div>
+            <b>${s.name}</b>
+            <div class="wf-text-muted" style="margin-top:2px;">Category: ${s.category} • Remaining: ${s.portions} Portions</div>
+          </div>
+          <div class="wf-flex-row">
+            <button class="wf-btn wf-btn-sm" ${AppState.isStockLocked ? 'disabled style="opacity:0.5;"' : ''} onclick="adjustPortions('${s.id}', -2)">-2</button>
+            <span style="font-weight:800; font-family:var(--font-mono); min-width:24px; text-align:center;">${s.portions}</span>
+            <button class="wf-btn wf-btn-sm" ${AppState.isStockLocked ? 'disabled style="opacity:0.5;"' : ''} onclick="adjustPortions('${s.id}', 2)">+2</button>
+            <button class="wf-btn wf-btn-sm ${s.is86 ? 'wf-btn-danger' : 'wf-btn-dark'}" ${AppState.isStockLocked ? 'disabled style="opacity:0.5;"' : ''} onclick="toggleItem86('${s.id}')">${s.is86 ? '86 SOLD OUT' : 'IN STOCK'}</button>
+          </div>
+        `;
+        c.appendChild(box);
+      });
+    }
+
+    function adjustPortions(id, delta) {
+      if (AppState.isStockLocked) return;
+      const s = AppState.stock.find(x => x.id === id);
+      if (s) {
+        s.portions = Math.max(0, s.portions + delta);
+        if (s.portions === 0) s.is86 = true;
+        renderMenu86Stock();
+        showToast('Adjusted portions for ' + s.name);
+      }
+    }
+
+    function toggleItem86(id) {
+      if (AppState.isStockLocked) return;
+      const s = AppState.stock.find(x => x.id === id);
+      if (s) {
+        s.is86 = !s.is86;
+        renderMenu86Stock();
+        showToast(s.name + (s.is86 ? ' marked 86 (SOLD OUT). Syncing to QR & POS.' : ' marked IN STOCK'));
+      }
+    }
+
+    // SCREEN 12: TOGGLE PROMO
+    function togglePromo(btn) {
+      if (btn.textContent.includes('ACTIVE')) {
+        btn.textContent = '[STATUS: PAUSED]';
+        btn.classList.remove('wf-btn-dark');
+        showToast('Promotion rule paused');
+      } else {
+        btn.textContent = '[STATUS: ACTIVE]';
+        btn.classList.add('wf-btn-dark');
+        showToast('Promotion rule activated');
+      }
+    }
+
+    // SCREEN 13: PETTY CASH
+    function renderPettyVouchers() {
+      const c = document.getElementById('pettyVouchersList');
+      if (!c) return;
+      c.innerHTML = '';
+      let total = 0;
+      AppState.pettyExpenses.forEach(pv => {
+        total += pv.amount;
+        const box = document.createElement('div');
+        box.className = 'wf-box-subtle wf-flex-between';
+        box.innerHTML = `
+          <div>
+            <b>[${pv.id}] ${pv.title}</b>
+            <div class="wf-text-muted" style="font-size:10px;">Time: ${pv.time} • Approved by Manager</div>
+          </div>
+          <b style="font-size:13px; font-family:var(--font-mono);">- ₹ ${pv.amount.toFixed(2)}</b>
+        `;
+        c.appendChild(box);
+      });
+      document.getElementById('pettyTotalBadge').textContent = 'TOTAL SPENT: ₹ ' + total.toFixed(2);
+      updateZReport();
+    }
+
+    function addNewPettyExpense() {
+      const title = document.getElementById('pettyTitle').value;
+      const amount = parseFloat(document.getElementById('pettyAmount').value);
+      if (!title || !amount) {
+        alert('Please enter expense title and amount.');
+        return;
+      }
+      const newId = 'PV-0' + (AppState.pettyExpenses.length + 1);
+      AppState.pettyExpenses.push({
+        id: newId,
+        title: title,
+        amount: amount,
+        time: new Date().toLocaleTimeString().slice(0, 5)
+      });
+      document.getElementById('pettyTitle').value = '';
+      document.getElementById('pettyAmount').value = '';
+      renderPettyVouchers();
+      showToast('Logged petty voucher ' + newId + ': ₹' + amount.toFixed(2) + '. Deducted from till.');
+    }
+
+    // SCREEN 15: HARDWARE TEST PRINT
+    function testPrintDevice(devName) {
+      showToast('🖨️ Test pattern transmitted to ' + devName + '. Response: OK [200]');
+      alert('[TEST SUCCESSFUL: ' + devName + ' - Diagnostic slip printed without errors. Connection status: VERIFIED.]');
+    }
+
+    // SCREEN 16: DAY CLOSE Z-REPORT AUDIT
+    function updateZReport() {
+      const elOpening = document.getElementById('zOpeningFloat');
+      const elCounter = document.getElementById('zCounterCash');
+      const elWaiters = document.getElementById('zWaitersCash');
+      const elPetty = document.getElementById('zPettyCash');
+      const elExpected = document.getElementById('zExpectedCash');
+      const elGross = document.getElementById('zGrossTotal');
+
+      let pettyTotal = AppState.pettyExpenses.reduce((s, x) => s + x.amount, 0);
+      let waitersCash = AppState.waiters.filter(w => w.settled).reduce((s, x) => s + x.cash, 0);
+
+      const expected = AppState.openingFloat + AppState.counterCashSales + waitersCash - pettyTotal;
+
+      if (elOpening) elOpening.textContent = '₹ ' + AppState.openingFloat.toFixed(2);
+      if (elCounter) elCounter.textContent = '+ ₹ ' + AppState.counterCashSales.toFixed(2);
+      if (elWaiters) elWaiters.textContent = '+ ₹ ' + waitersCash.toFixed(2);
+      if (elPetty) elPetty.textContent = '- ₹ ' + pettyTotal.toFixed(2);
+      if (elExpected) elExpected.textContent = '₹ ' + expected.toFixed(2);
+      if (elGross) elGross.textContent = '₹ ' + AppState.todaySales.toFixed(2);
+
+      calculateZVariance(document.getElementById('inputPhysicalCash')?.value || expected);
+    }
+
+    function calculateZVariance(val) {
+      const physical = parseFloat(val) || 0;
+      let pettyTotal = AppState.pettyExpenses.reduce((s, x) => s + x.amount, 0);
+      let waitersCash = AppState.waiters.filter(w => w.settled).reduce((s, x) => s + x.cash, 0);
+      const expected = AppState.openingFloat + AppState.counterCashSales + waitersCash - pettyTotal;
+      const diff = physical - expected;
+
+      const lbl = document.getElementById('zVarianceLabel');
+      if (lbl) {
+        if (Math.abs(diff) < 0.01) {
+          lbl.textContent = '₹ 0.00 (PERFECT RECONCILIATION ✓)';
+          lbl.style.color = '#0f172a';
+        } else if (diff > 0) {
+          lbl.textContent = '+ ₹ ' + diff.toFixed(2) + ' (CASH OVERAGE / EXCESS)';
+          lbl.style.color = '#15803d';
+        } else {
+          lbl.textContent = '- ₹ ' + Math.abs(diff).toFixed(2) + ' (CASH SHORTAGE)';
+          lbl.style.color = '#b91c1c';
+        }
+      }
+    }
+
+    function printZReport() {
+      showToast('🖨️ Master Z-Report Slip Dispatched to Thermal Billing Printer.');
+      alert('[MASTER RESTAURANT Z-REPORT PRINTED - Shift: Dinner Service - Gross Revenue: ₹ ' + AppState.todaySales.toFixed(2) + ' - Expected Cash: ' + document.getElementById('zExpectedCash').textContent + ']');
+    }
+
+    function lockNightShift() {
+      if (confirm('Are you sure you want to CLOSE SHIFT and lock the POS terminal for the night?')) {
+        showToast('🔒 Shift closed and safe locked. Good night!');
+        alert('[RESTAURANT NIGHT TILL SEALED - All accounts balanced. Audit summary dispatched to hemalatha20032003@gmail.com.]');
+        selectScreen(1);
+      }
+    }
+
+    // UPDATE GLOBAL KPIS
+    function updateKpis() {
+      const elSales = document.getElementById('kpiTotalSales');
+      const elGuests = document.getElementById('kpiGuestsSeated');
+      const elOcc = document.getElementById('kpiOccupancy');
+      const elAvg = document.getElementById('kpiAvgBill');
+      const elCashWaiters = document.getElementById('kpiCashWaiters');
+
+      if (elSales) elSales.textContent = '₹ ' + AppState.todaySales.toFixed(2);
+      if (elGuests) elGuests.textContent = AppState.guestsSeated + ' GUESTS';
+      if (elOcc) elOcc.textContent = AppState.tablesOccupied + ' OF ' + AppState.totalTables + ' (' + Math.round((AppState.tablesOccupied / AppState.totalTables)*100) + '%)';
+      if (elAvg) {
+        const avg = Math.round(AppState.todaySales / Math.max(1, AppState.tablesOccupied + 20));
+        elAvg.textContent = '₹ ' + avg.toFixed(2);
+      }
+      if (elCashWaiters) elCashWaiters.textContent = '₹ ' + AppState.cashWithWaiters.toFixed(2);
+    }
+
+    // RENDER ALL 16 SCREENS IN FULL SCROLL GRID
+    function renderAll16Grid() {
+      const c = document.getElementById('allGridContainer');
+      if (!c) return;
+      c.innerHTML = '';
+
+      const screenNames = [
+        '01. LOGIN & OPEN SHIFT FLOAT',
+        '02. RESTAURANT LIVE OVERVIEW',
+        '03. ALL TABLES & FLOOR PLAN',
+        '04. BILLING & PAYMENT COUNTER (FIXED)',
+        '05. KITCHEN ORDERS LIVE SPEED',
+        '06. WAITING QUEUE & BOOKINGS',
+        '07. CALL WAITER & STAFF ROSTER',
+        '08. CUSTOMER CALLS & COMPLAINTS',
+        '09. COLLECT CASH FROM WAITERS',
+        '10. MENU STOCK & 86 CONTROLLER',
+        '11. TODAY SALES REPORT',
+        '12. DISCOUNTS & OFFERS',
+        '13. DAILY PETTY EXPENSES',
+        '14. STAFF ATTENDANCE & TIPS',
+        '15. PRINTERS & HARDWARE HEALTH',
+        '16. DAY CLOSE NIGHT Z-REPORT'
+      ];
+
+      for (let i = 1; i <= 16; i++) {
+        const card = document.createElement('div');
+        card.className = 'grid-screen-card';
+        card.innerHTML = `
+          <div class="grid-screen-header">
+            <span>SCREEN ${i}: ${screenNames[i-1]}</span>
+            <button class="wf-btn wf-btn-sm" style="background:#ffffff; color:#0f172a;" onclick="setViewMode('flow'); selectScreen(${i});">[OPEN INTERACTIVE STAGE ➔]</button>
+          </div>
+          <div class="grid-screen-body" id="gridScreenBody${i}">
+            <!-- Cloned or rendered view -->
+          </div>
+        `;
+        c.appendChild(card);
+
+        // Clone view into grid
+        const src = document.getElementById('screen-' + i + '-view');
+        const dest = card.querySelector('#gridScreenBody' + i);
+        if (src && dest) {
+          const clone = src.cloneNode(true);
+          clone.style.display = 'flex';
+          clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+          clone.removeAttribute('id');
+          dest.appendChild(clone);
+        }
+      }
+    }
+
+    // INITIAL SETUP ON LOAD
+    window.addEventListener('DOMContentLoaded', () => {
+      renderPinDisplay();
+      renderScreen2TableMatrix();
+      renderScreen3FloorCards();
+      renderScreen4Bill();
+      renderWaitingQueue();
+      renderWaiterSettlement();
+      renderMenu86Stock();
+      renderPettyVouchers();
+      updateZReport();
+      selectScreen(1);
+    });
+  </script>
+</body>
+</html>

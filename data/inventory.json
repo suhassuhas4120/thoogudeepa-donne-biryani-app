@@ -1,0 +1,44 @@
+{
+  "paneer_kg": {
+    "name": "Malai Paneer (Fresh Dairy)",
+    "current": 4.2,
+    "par": 5,
+    "unit": "kg",
+    "is86": false
+  },
+  "butter_kg": {
+    "name": "Amul Table Butter Blocks",
+    "current": 14.5,
+    "par": 8,
+    "unit": "kg",
+    "is86": false
+  },
+  "flour_kg": {
+    "name": "Sharbati Wheat & Maida",
+    "current": 48,
+    "par": 25,
+    "unit": "kg",
+    "is86": false
+  },
+  "makhani_gravy_l": {
+    "name": "Red Makhani Base Degchi",
+    "current": 11.4,
+    "par": 10,
+    "unit": "L",
+    "is86": false
+  },
+  "yellow_gravy_l": {
+    "name": "Yellow Onion-Tomato Degchi",
+    "current": 14.2,
+    "par": 10,
+    "unit": "L",
+    "is86": false
+  },
+  "white_gravy_l": {
+    "name": "White Kaju-Magaj Degchi",
+    "current": 3.1,
+    "par": 5,
+    "unit": "L",
+    "is86": false
+  }
+}

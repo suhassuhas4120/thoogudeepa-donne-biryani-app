@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Journey Skeletons &amp; Structural Wireframes (Screens 1 to 10)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* STRICT MONOCHROME WIREFRAME / BLUEPRINT PALETTE (NO COLORS) */
+    :root {
+      --wire-bg: #f8fafc;
+      --wire-card: #ffffff;
+      --wire-border: #94a3b8;
+      --wire-border-dark: #334155;
+      --wire-border-dashed: #cbd5e1;
+      --wire-text: #0f172a;
+      --wire-text-muted: #64748b;
+      --wire-surface-subtle: #f1f5f9;
+      --wire-surface-contrast: #e2e8f0;
+      --wire-black: #000000;
+      --wire-white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0b0f19;
+      color: #f8fafc;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Master Top Control Console */
+    .master-console {
+      width: 100%;
+      max-width: 1400px;
+      background: #111827;
+      border: 1px solid #374151;
+      border-radius: 12px;
+      padding: 14px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .console-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .blueprint-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      background: #1f2937;
+      border: 1px solid #4b5563;
+      padding: 4px 8px;
+      border-radius: 6px;
+      color: #9ca3af;
+      letter-spacing: 0.5px;
+    }
+
+    .console-title {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #f9fafb;
+    }
+
+    .view-mode-switch {
+      display: flex;
+      gap: 6px;
+      background: #1f2937;
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid #374151;
+    }
+
+    .mode-btn {
+      background: transparent;
+      border: none;
+      color: #9ca3af;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      transition: all 0.15s;
+    }
+
+    .mode-btn.active {
+      background: #374151;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    /* Horizontal Screen Tabs */
+    .screen-nav-bar {
+      width: 100%;
+      max-width: 1400px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      scrollbar-width: thin;
+    }
+
+    .screen-tab-btn {
+      white-space: nowrap;
+      background: #1f2937;
+      border: 1px solid #374151;
+      color: #9ca3af;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .screen-tab-btn:hover {
+      background: #374151;
+      color: #ffffff;
+    }
+
+    .screen-tab-btn.active {
+      background: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+    }
+
+    /* Container for Flow Mode (Single Device Frame) */
+    .device-stage {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 40px;
+    }
+
+    /* Container for Grid Mode (All 10 screens side-by-side) */
+    .grid-stage {
+      display: none;
+      width: 100%;
+      max-width: 1440px;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 28px;
+      justify-items: center;
+      margin-bottom: 40px;
+    }
+
+    /* Mobile Frame Wireframe Housing */
+    .phone-mockup {
+      width: 380px;
+      height: 800px;
+      background: #ffffff;
+      border: 4px solid #334155;
+      border-radius: 36px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      color: #0f172a;
+      position: relative;
+    }
+
+    .grid-card-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .grid-card-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 800;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Screen Internals */
+    .screen-housing {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      overflow-y: auto;
+      background: #ffffff;
+      position: relative;
+      font-size: 13px;
+    }
+
+    /* Standardized Wireframe Elements */
+    .wire-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 2px solid var(--wire-border-dark);
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .wire-box {
+      border: 1.5px solid var(--wire-border);
+      background: var(--wire-card);
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .wire-box-dashed {
+      border: 1.5px dashed var(--wire-border);
+      background: var(--wire-surface-subtle);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--wire-text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .wire-pill {
+      border: 1.5px solid var(--wire-border);
+      background: var(--wire-surface-subtle);
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wire-pill.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    .wire-btn {
+      width: 100%;
+      background: #0f172a;
+      color: #ffffff;
+      border: 2px solid #0f172a;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .wire-btn-secondary {
+      background: #ffffff;
+      color: #0f172a;
+      border: 1.5px solid #0f172a;
+    }
+
+    .wire-btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--wire-border);
+      color: var(--wire-text);
+    }
+
+    .wire-input-box {
+      width: 100%;
+      border: 1.5px solid var(--wire-border);
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12.5px;
+      color: #0f172a;
+      font-family: inherit;
+    }
+
+    .wire-call-btn-small {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid #0f172a;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .wire-sticky-bottom-bar {
+      position: sticky;
+      bottom: 0;
+      background: #ffffff;
+      border-top: 2px solid var(--wire-border-dark);
+      padding: 10px 16px;
+      z-index: 20;
+    }
+
+    .wire-badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border: 1px solid var(--wire-border);
+      border-radius: 4px;
+      background: var(--wire-surface-subtle);
+    }
+
+    /* Screen 2 Double Column Grid */
+    .wire-double-column-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 12px 16px;
+    }
+
+    .grid-item-card {
+      border: 1.5px solid var(--wire-border);
+      border-radius: 12px;
+      padding: 8px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .grid-item-img {
+      width: 100%;
+      height: 90px;
+      border-radius: 8px;
+      border: 1px dashed var(--wire-border);
+      background: var(--wire-surface-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--wire-text-muted);
+    }
+
+    .grid-add-btn {
+      width: 100%;
+      border: 1.5px solid #0f172a;
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 6px;
+      padding: 5px 0;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    /* Structural Annotations Overlay */
+    .structure-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      color: #64748b;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Master Console -->
+  <header class="master-console">
+    <div class="console-brand">
+      <span class="blueprint-tag">SYSTEM SKELETON</span>
+      <h1 class="console-title">CUSTOMER FLOW STRUCTURAL WIREFRAMES (10 SCREENS)</h1>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <a href="waiter-skeletons.html" style="text-decoration:none; background:#1f2937; border:1px solid #4b5563; color:#f3f4f6; padding:6px 14px; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; border-radius:6px; display:inline-flex; align-items:center; gap:6px; transition:all 0.15s;"><span>🤵</span> WAITER (10 SCREENS) ➔</a> <a href="kitchen-skeletons.html" style="text-decoration:none; background:#1f2937; border:1px solid #4b5563; color:#f3f4f6; padding:6px 14px; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; border-radius:6px; display:inline-flex; align-items:center; gap:6px; transition:all 0.15s;">
+        <span>📟</span> KITCHEN KDS (TABLET VIEW) ➔
+      </a>
+      <div class="view-mode-switch">
+        <button class="mode-btn active" id="btnModeFlow" onclick="setViewMode('flow')">📱 FLOW VIEW (MOCKUP)</button>
+        <button class="mode-btn" id="btnModeGrid" onclick="setViewMode('grid')">🗂️ ALL SCREENS GRID</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Horizontal Screen Switcher Bar -->
+  <nav class="screen-nav-bar" id="screenNavTabs">
+    <button class="screen-tab-btn active" onclick="showScreen(1, this)">1. WELCOME &amp; WI-FI</button>
+    <button class="screen-tab-btn" onclick="showScreen(2, this)">2. MENU &amp; 2-COL GRID</button>
+    <button class="screen-tab-btn" onclick="showScreen(3, this)">3. ITEM DETAIL</button>
+    <button class="screen-tab-btn" onclick="showScreen(4, this)">4. CART &amp; SPLIT ORDERS</button>
+    <button class="screen-tab-btn" onclick="showScreen(5, this)">5. LIVE TRACKING</button>
+    <button class="screen-tab-btn" onclick="showScreen(6, this)">6. PAYMENT 1 (SPLIT &amp; TIP)</button>
+    <button class="screen-tab-btn" onclick="showScreen(7, this)">7. PAYMENT 2 (GATEWAY &amp; QR)</button>
+    <button class="screen-tab-btn" onclick="showScreen(8, this)">8. CONFIRMATION &amp; REVIEWS</button>
+    <button class="screen-tab-btn" onclick="showScreen(9, this)">9. DIGITAL TAX BILL</button>
+    <button class="screen-tab-btn" onclick="showScreen(10, this)">10. WAITER CALL</button>
+  </nav>
+
+  <!-- ==================================================== -->
+  <!-- SINGLE DEVICE INTERACTIVE STAGE (FLOW VIEW) -->
+  <!-- ==================================================== -->
+  <section class="device-stage" id="deviceStage">
+    <div class="phone-mockup" id="interactivePhone">
+      <!-- Screen 1 to 10 HTML will be rendered here dynamically based on tab -->
+    </div>
+  </section>
+
+  <!-- ==================================================== -->
+  <!-- ALL 10 SCREENS GRID STAGE (CANVAS ARCHITECTURE VIEW) -->
+  <!-- ==================================================== -->
+  <section class="grid-stage" id="gridStage">
+    <!-- Screen 1 to 10 rendered simultaneously side-by-side -->
+  </section>
+
+  <!-- Raw HTML Template Registry for all 10 Screens -->
+  <script>
+    const screensHtml = {
+      1: `
+        <!-- SCREEN 1: WELCOME & CONNECT -->
+        <div class="screen-housing" style="padding: 24px 20px; justify-content: space-between;">
+          <!-- Top: Venue Logo & Name -->
+          <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:12px; margin-top:20px;">
+            <div class="structure-label">[LOGO SPACE]</div>
+            <div class="wire-box-dashed" style="width:90px; height:90px; border-radius:18px; font-size:12px;">
+              [VENUE LOGO]
+            </div>
+
+            <div style="margin-top:6px;">
+              <div class="structure-label">[ESTABLISHMENT / VENUE NAME]</div>
+              <div class="wire-box" style="font-weight:800; font-size:16px; letter-spacing:0.5px; padding:8px 20px;">
+                [ESTABLISHMENT NAME]
+              </div>
+            </div>
+          </div>
+
+          <!-- Middle: Single Wi-Fi Connect & Customer Name -->
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <!-- Single Wi-Fi Connecting Button -->
+            <div>
+              <div class="structure-label">[SINGLE WI-FI CONNECTING BUTTON]</div>
+              <button class="wire-btn" style="background:#ffffff; color:#0f172a; border-style:solid;" onclick="alert('Wi-Fi Connected')">
+                <span>📶</span>
+                <span>[CONNECT TO VENUE WI-FI]</span>
+              </button>
+            </div>
+
+            <!-- Customer Name Input -->
+            <div>
+              <div class="structure-label">[CUSTOMER NAME INPUT]</div>
+              <input type="text" class="wire-input-box" placeholder="[ENTER YOUR NAME]">
+            </div>
+          </div>
+
+          <!-- Bottom: Go To Menu Button & Small Company Logo -->
+          <div style="display:flex; flex-direction:column; gap:16px; margin-bottom:12px;">
+            <div>
+              <div class="structure-label">[GO TO MENU BUTTON]</div>
+              <button class="wire-btn" onclick="showScreen(2)">
+                <span>[PROCEED TO MENU]</span>
+                <span>➔</span>
+              </button>
+            </div>
+
+            <!-- Small Our Company Logo -->
+            <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+              <div class="structure-label">[SMALL OUR COMPANY LOGO]</div>
+              <div class="wire-box-dashed" style="width:140px; height:24px; font-size:9.5px; border-radius:4px;">
+                [POWERED BY PLATFORM]
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+
+      2: `
+        <!-- SCREEN 2: MENU PAGE (DOUBLE COLUMN GRID) -->
+        <div class="screen-housing">
+          <!-- Top Header: Venue, Call Waiter Icon & Small Cart Logo Button -->
+          <div class="wire-header-bar">
+            <div>
+              <div class="structure-label">[VENUE HEADER]</div>
+              <div style="font-weight:800; font-size:14px;">[MENU PAGE]</div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:8px;">
+              <!-- Small Call Icon (Required on Screens 2 to 9) -->
+              <button class="wire-call-btn-small" onclick="showScreen(10)" title="[CALL WAITER]">
+                🔔
+              </button>
+
+              <!-- Small Cart Logo Button -->
+              <button class="wire-call-btn-small" onclick="showScreen(4)" title="[VIEW CART]">
+                🛒
+              </button>
+            </div>
+          </div>
+
+          <!-- Search Tab -->
+          <div style="padding: 10px 16px 6px;">
+            <div class="structure-label">[SEARCH TAB]</div>
+            <input type="text" class="wire-input-box" placeholder="🔍 [SEARCH TAB / SEARCH ITEMS]">
+          </div>
+
+          <!-- Food Categories Tabs -->
+          <div style="padding: 6px 16px;">
+            <div class="structure-label">[FOOD CATEGORIES]</div>
+            <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none;">
+              <span class="wire-pill active">[CATEGORY 1]</span>
+              <span class="wire-pill">[CATEGORY 2]</span>
+              <span class="wire-pill">[CATEGORY 3]</span>
+              <span class="wire-pill">[CATEGORY 4]</span>
+              <span class="wire-pill">[CATEGORY 5]</span>
+            </div>
+          </div>
+
+          <!-- Food Filters -->
+          <div style="padding: 4px 16px 8px;">
+            <div class="structure-label">[FOOD FILTERS]</div>
+            <div style="display:flex; gap:6px; overflow-x:auto; scrollbar-width:none;">
+              <span class="wire-badge">[FILTER 1]</span>
+              <span class="wire-badge">[FILTER 2]</span>
+              <span class="wire-badge">[FILTER 3]</span>
+              <span class="wire-badge">[FILTER 4]</span>
+            </div>
+          </div>
+
+          <!-- Menu Items Double Column (Side-By-Side Grid) -->
+          <div style="padding: 4px 16px 0;">
+            <div class="structure-label">[MENU ITEMS: DOUBLE COLUMN GRID WITH SMALL ADD BUTTON BELOW]</div>
+          </div>
+
+          <div class="wire-double-column-grid" style="flex:1; overflow-y:auto;">
+            <!-- Grid Item 1 -->
+            <div class="grid-item-card" onclick="showScreen(3)">
+              <div class="grid-item-img">[IMAGE SPACE]</div>
+              <div style="font-weight:800; font-size:12px;">[ITEM 1 NAME]</div>
+              <div style="font-size:11px; color:#64748b; font-weight:700;">[PRICE: ₹ XXX]</div>
+              <button class="grid-add-btn" onclick="event.stopPropagation(); alert('Item added')">[+ ADD]</button>
+            </div>
+
+            <!-- Grid Item 2 -->
+            <div class="grid-item-card" onclick="showScreen(3)">
+              <div class="grid-item-img">[IMAGE SPACE]</div>
+              <div style="font-weight:800; font-size:12px;">[ITEM 2 NAME]</div>
+              <div style="font-size:11px; color:#64748b; font-weight:700;">[PRICE: ₹ XXX]</div>
+              <button class="grid-add-btn" onclick="event.stopPropagation(); alert('Item added')">[+ ADD]</button>
+            </div>
+
+            <!-- Grid Item 3 -->
+            <div class="grid-item-card" onclick="showScreen(3)">
+              <div class="grid-item-img">[IMAGE SPACE]</div>
+              <div style="font-weight:800; font-size:12px;">[ITEM 3 NAME]</div>
+              <div style="font-size:11px; color:#64748b; font-weight:700;">[PRICE: ₹ XXX]</div>
+              <button class="grid-add-btn" onclick="event.stopPropagation(); alert('Item added')">[+ ADD]</button>
+            </div>
+
+            <!-- Grid Item 4 -->
+            <div class="grid-item-card" onclick="showScreen(3)">
+              <div class="grid-item-img">[IMAGE SPACE]</div>
+              <div style="font-weight:800; font-size:12px;">[ITEM 4 NAME]</div>
+              <div style="font-size:11px; color:#64748b; font-weight:700;">[PRICE: ₹ XXX]</div>
+              <button class="grid-add-btn" onclick="event.stopPropagation(); alert('Item added')">[+ ADD]</button>
+            </div>
+          </div>
+
+          <!-- Bottom Sticky: Go To Cart Button -->
+          <div class="wire-sticky-bottom-bar">
+            <div class="structure-label">[GO TO CART BUTTON]</div>
+            <button class="wire-btn" onclick="showScreen(4)">
+              <span>🛒 [GO TO CART]</span>
+              <span>➔</span>
+            </button>
+          </div>
+        </div>
+      `,
+
+      3: `
+        <!-- SCREEN 3: DETAILED ITEM PAGE -->
+        <div class="screen-housing">
+          <!-- Top Header: Back, Title & Small Call Icon -->
+          <div class="wire-header-bar">
+            <button class="wire-call-btn-small" onclick="showScreen(2)">←</button>
+            <div style="font-weight:800; font-size:13px;">[ITEM DETAILS PAGE]</div>
+            <!-- Small Call Icon -->
+            <button class="wire-call-btn-small" onclick="showScreen(10)" title="[CALL WAITER]">🔔</button>
+          </div>
+
+          <!-- Scrollable Body -->
+          <div style="padding: 16px; overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:14px;">
+            <!-- Big Item Image Space -->
+            <div>
+              <div class="structure-label">[BIG ITEM IMAGE SPACE]</div>
+              <div class="wire-box-dashed" style="height:180px; width:100%; border-radius:12px; font-size:13px;">
+                [BIG ITEM IMAGE CONTAINER]
+              </div>
+            </div>
+
+            <!-- Item Name & Price -->
+            <div class="wire-box">
+              <div class="structure-label">[ITEM NAME]</div>
+              <div style="font-size:16px; font-weight:800; margin-bottom:4px;">[ITEM NAME PLACEHOLDER]</div>
+              <div style="font-size:14px; font-weight:700; color:#475569;">[PRICE: ₹ XXX]</div>
+            </div>
+
+            <!-- Item Details -->
+            <div class="wire-box">
+              <div class="structure-label">[ITEM DETAILS / DESCRIPTION]</div>
+              <div style="font-size:12px; line-height:1.5; color:#475569;">
+                [DETAILED ITEM DESCRIPTION / INGREDIENTS / PREPARATION SPECIFICATIONS AND PORTION GUIDE]
+              </div>
+            </div>
+
+            <!-- Customisable Options Group 1 -->
+            <div class="wire-box">
+              <div class="structure-label">[CUSTOMISABLE OPTIONS: GROUP 1]</div>
+              <div style="display:flex; flex-direction:column; gap:6px; margin-top:4px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 8px; border:1px solid #cbd5e1; border-radius:6px;">
+                  <span>[OPTION 1A - STANDARD]</span>
+                  <input type="radio" name="opt1" checked>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 8px; border:1px solid #cbd5e1; border-radius:6px;">
+                  <span>[OPTION 1B - CUSTOM LEVEL]</span>
+                  <input type="radio" name="opt1">
+                </div>
+              </div>
+            </div>
+
+            <!-- Customisable Options Group 2: Add-Ons -->
+            <div class="wire-box">
+              <div class="structure-label">[CUSTOMISABLE OPTIONS: ADD-ONS]</div>
+              <div style="display:flex; flex-direction:column; gap:6px; margin-top:4px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 8px; border:1px solid #cbd5e1; border-radius:6px;">
+                  <span>[ADD-ON 1 (+₹ XX)]</span>
+                  <input type="checkbox">
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 8px; border:1px solid #cbd5e1; border-radius:6px;">
+                  <span>[ADD-ON 2 (+₹ XX)]</span>
+                  <input type="checkbox">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Sticky: Go To Cart Button -->
+          <div class="wire-sticky-bottom-bar">
+            <div class="structure-label">[GO TO CART BUTTON]</div>
+            <button class="wire-btn" onclick="showScreen(4)">
+              <span>🛒 [ADD &amp; GO TO CART]</span>
+              <span>➔</span>
+            </button>
+          </div>
+        </div>
+      `,
+
+      4: `
+        <!-- SCREEN 4: CART PAGE -->
+        <div class="screen-housing">
+          <!-- Header with Call Icon -->
+          <div class="wire-header-bar">
+            <button class="wire-call-btn-small" onclick="showScreen(2)">←</button>
+            <div style="font-weight:800; font-size:13px;">[CART PAGE]</div>
+            <!-- Small Call Icon -->
+            <button class="wire-call-btn-small" onclick="showScreen(10)" title="[CALL WAITER]">🔔</button>
+          </div>
+
+          <!-- Cart Items List -->
+          <div style="padding: 14px 16px; overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:12px;">
+            <div class="structure-label">[SELECTED ITEMS LIST WITH IMAGE, PRICE &amp; CUSTOMISED DETAILS]</div>
+
+            <!-- Cart Item 1 -->
+            <div class="wire-box" style="display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; gap:10px; align-items:center;">
+                <div class="wire-box-dashed" style="width:60px; height:60px; flex-shrink:0;">[IMG]</div>
+                <div style="flex:1;">
+                  <div style="font-weight:800; font-size:13px;">[ITEM 1 NAME]</div>
+                  <div style="font-size:11px; color:#475569;">[CUSTOMISED DETAILS: OPTION A + ADDON]</div>
+                  <div style="font-weight:700; font-size:12px; margin-top:2px;">[PRICE: ₹ XXX]</div>
+                </div>
+                <!-- Quantity Stepper (+,-) -->
+                <div style="display:flex; align-items:center; gap:6px; border:1px solid #cbd5e1; border-radius:6px; padding:2px 6px;">
+                  <button style="border:none; background:none; font-weight:800; cursor:pointer;">-</button>
+                  <span style="font-weight:800; font-size:12px;">1</span>
+                  <button style="border:none; background:none; font-weight:800; cursor:pointer;">+</button>
+                </div>
+              </div>
+              <!-- Option to place this item separately -->
+              <button class="wire-btn wire-btn-outline" style="padding:6px; font-size:10.5px;" onclick="alert('Item 1 placed separately')">
+                [ORDER THIS ITEM SEPARATELY]
+              </button>
+            </div>
+
+            <!-- Cart Item 2 -->
+            <div class="wire-box" style="display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; gap:10px; align-items:center;">
+                <div class="wire-box-dashed" style="width:60px; height:60px; flex-shrink:0;">[IMG]</div>
+                <div style="flex:1;">
+                  <div style="font-weight:800; font-size:13px;">[ITEM 2 NAME]</div>
+                  <div style="font-size:11px; color:#475569;">[CUSTOMISED DETAILS: STANDARD]</div>
+                  <div style="font-weight:700; font-size:12px; margin-top:2px;">[PRICE: ₹ XXX]</div>
+                </div>
+                <!-- Quantity Stepper (+,-) -->
+                <div style="display:flex; align-items:center; gap:6px; border:1px solid #cbd5e1; border-radius:6px; padding:2px 6px;">
+                  <button style="border:none; background:none; font-weight:800; cursor:pointer;">-</button>
+                  <span style="font-weight:800; font-size:12px;">2</span>
+                  <button style="border:none; background:none; font-weight:800; cursor:pointer;">+</button>
+                </div>
+              </div>
+              <!-- Option to place this item separately -->
+              <button class="wire-btn wire-btn-outline" style="padding:6px; font-size:10.5px;" onclick="alert('Item 2 placed separately')">
+                [ORDER THIS ITEM SEPARATELY]
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom Sticky: Place Order Button -->
+          <div class="wire-sticky-bottom-bar">
+            <div class="structure-label">[PLACE ALL ORDERS BUTTON]</div>
+            <button class="wire-btn" onclick="showScreen(5)">
+              <span>🔥 [PLACE ORDER (ALL ITEMS)]</span>
+              <span>➔</span>
+            </button>
+          </div>
+        </div>
+      `,
+
+      5: `
+        <!-- SCREEN 5: LIVE TRACKING PAGE -->
+        <div class="screen-housing">
+          <!-- Header with Call Icon -->
+          <div class="wire-header-bar">
+            <div style="font-weight:800; font-size:13px;">[LIVE TRACKING PAGE]</div>
+            <!-- Small Call Icon -->
+            <button class="wire-call-btn-small" onclick="showScreen(10)" title="[CALL WAITER]">🔔</button>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 14px 16px; overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:14px;">
+            <!-- Main Live Tracking Stages: Order Placed -> Served -->
+            <div class="wire-box">
+              <div class="structure-label">[OVERALL ORDER LIVE TRACKING: 4 STAGES]</div>
+              <div style="display:flex; justify-content:space-between; margin-top:10px; position:relative;">
+                <div style="display:flex; flex-direction:column; align-items:center; gap:4px; z-index:2;">
+                  <div style="width:24px; height:24px; border-radius:50%; background:#0f172a; color:#fff; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800;">✓</div>
+                  <span style="font-size:9.5px; font-weight:700;">[PLACED]</span>
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:center; gap:4px; z-index:2;">
+                  <div style="width:24px; height:24px; border-radius:50%; background:#0f172a; color:#fff; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800;">●</div>
+                  <span style="font-size:9.5px; font-weight:700;">[PREP]</span>
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:center; gap:4px; z-index:2;">
+                  <div style="width:24px; height:24px; border-radius:50%; border:2px solid #94a3b8; background:#fff; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800;">○</div>
+                  <span style="font-size:9.5px; font-weight:700;">[PLATED]</span>
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:center; gap:4px; z-index:2;">
+                  <div style="width:24px; height:24px; border-radius:50%; border:2px solid #94a3b8; background:#fff; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800;">○</div>
+                  <span style="font-size:9.5px; font-weight:700;">[SERVED]</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Option to Track Each Item Separately With Prep Modes -->
+            <div class="wire-box">
+              <div class="structure-label">[INDIVIDUAL ITEM TRACKING WITH PREP MODES]</div>
+              
+              <!-- Item 1 Tracking -->
+              <div style="margin-top:8px; padding-bottom:8px; border-bottom:1px dashed #cbd5e1;">
+                <div style="display:flex; justify-content:space-between; font-weight:800; font-size:12px;">
+                  <span>[ITEM 1 NAME]</span>
+                  <span class="wire-badge">[STATUS: IN PREPARATION]</span>
+                </div>
+                <div style="font-size:10px; color:#64748b; margin-top:2px;">[PREP MODE: TANDOOR / OVEN BHATTI]</div>
+              </div>
+
+              <!-- Item 2 Tracking -->
+              <div style="margin-top:8px;">
+                <div style="display:flex; justify-content:space-between; font-weight:800; font-size:12px;">
+                  <span>[ITEM 2 NAME]</span>
+                  <span class="wire-badge">[STATUS: PLATED &amp; READY]</span>
+                </div>
+                <div style="font-size:10px; color:#64748b; margin-top:2px;">[PREP MODE: HANDI / POT SIMMER]</div>
+              </div>
+            </div>
+
+            <!-- Secondary Actions -->
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <div class="structure-label">[OPTION: ADD MORE ITEMS TO SAME BILL]</div>
+              <button class="wire-btn wire-btn-secondary" onclick="showScreen(2)">
+                [+ ADD MORE ITEMS TO SAME BILL]
+              </button>
+
+              <div class="structure-label">[OPTION: SAVE ORDER FOR NEXT TIME]</div>
+              <button class="wire-btn wire-btn-outline" onclick="alert('Order saved as favorite!')">
+                ⭐ [SAVE ORDER FOR NEXT TIME]
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom Sticky: Go To Payment Page Button -->
+          <div class="wire-sticky-bottom-bar">
+            <div class="structure-label">[GO TO PAYMENT PAGE BUTTON]</div>
+            <button class="wire-btn" onclick="showScreen(6)">
+              <span>[PROCEED TO PAYMENT (PAGE 1)]</span>
+              <span>➔</span>
+            </button>
+          </div>
+        </div>
+      `,
+
+      6: `
+        <!-- SCREEN 6: PAYMENT PAGE 1 (SPLIT & TIPS) -->
+        <div class="screen-housing">
+          <!-- Header with Call Icon -->
+          <div class="wire-header-bar">
+            <button class="wire-call-btn-small" onclick="showScreen(5)">←</button>
+            <div style="font-weight:800; font-size:13px;">[PAYMENT PAGE 1: BREAKDOWN &amp; SPLIT]</div>
+            <!-- Small Call Icon -->
+            <button class="wire-call-btn-small" onclick="showScreen(10)" title="[CALL WAITER]">🔔</button>
+          </div>
+
+          <div style="padding: 14px 16px; overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:14px;">
+            <!-- List of Items with Price Breakdown -->
+            <div class="wire-box">
+              <div class="structure-label">[LIST OF ITEMS WITH PRICE BREAKDOWN]</div>
+              <div style="display:flex; justify-content:space-between; margin-top:6px; font-size:12px;">
+                <span>[ITEM 1 × 1]</span>
+                <span>[₹ XXX]</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:12px;">
+                <span>[ITEM 2 × 2]</span>
+                <span>[₹ XXX]</span>
+              </div>
+              <div style="border-top:1px dashed #cbd5e1; margin-top:8px; padding-top:6px;">
+                <div style="display:flex; justify-content:space-between; font-size:11.5px; color:#64748b;">
+                  <span>[SUBTOTAL]</span>
+                  <span>[₹ XXX]</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:11.5px; color:#64748b;">
+                  <span>[TAXES &amp; CHARGES]</span>
+                  <span>[₹ XX]</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-weight:800; font-size:13px; margin-top:4px;">
+                  <span>[TOTAL AMOUNT]</span>
+                  <span>[₹ XXXX]</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Split Payment Option -->
+            <div class="wire-box">
+              <div class="structure-label">[SPLIT PAYMENT OPTIONS]</div>
+              <div style="display:flex; gap:8px; margin-top:6px;">
+                <button class="wire-btn wire-btn-outline" style="font-size:11px; padding:8px;">
+                  [SPLIT BY ITEMS]
+                </button>
+                <button class="wire-btn wire-btn-outline" style="font-size:11px; padding:8px;">
+                  [SPLIT BY NUMBER OF PERSONS]
+                </button>
+              </div>
+            </div>
+
+            <!-- Add Tips to Waiter Option -->
+            <div class="wire-box">
+              <div class="structure-label">[ADD TIPS TO WAITER (PRESETS + CUSTOM)]</div>
+              <div style="display:flex; gap:6px; margin-top:6px;">
+                <span class="wire-pill">[₹ 30]</span>
+                <span class="wire-pill active">[₹ 50]</span>
+                <span class="wire-pill">[₹ 100]</span>
+              </div>
+              <input type="number" class="wire-input-box" style="margin-top:8px;" placeholder="[ENTER CUSTOM TIP AMOUNT]">
+            </div>
+          </div>
+
+          <!-- Bottom Sticky: Go To Payment Page 2 Button -->
+          <div class="wire-sticky-bottom-bar">
+            <div class="structure-label">[GO TO PAYMENT PAGE 2 BUTTON]</div>
+            <button class="wire-btn" onclick="showScreen(7)">
+              <span>[CONTINUE TO PAYMENT (PAGE 2)]</span>
+              <span>➔</span>
+            </button>
+          </div>
+        </div>
+      `,
+
+      7: `
+        <!-- SCREEN 7: PAYMENT PAGE 2 (GATEWAY & QR) -->
+        <div class="screen-housing">
+          <!-- Header with Call Icon -->
+          <div class="wire-header-bar">
+            <button class="wire-call-btn-small" onclick="showScreen(6)">←</button>
+            <div style="font-weight:800; font-size:13px;">[PAYMENT PAGE 2: GATEWAY]</div>
+            <!-- Small Call Icon -->
+            <button class="wire-call-btn-small" onclick="showScreen(10)" title="[CALL WAITER]">🔔</button>
+          </div>
+
+          <div style="padding: 14px 16px; overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:14px;">
+            <!-- QR Scanner Box Placeholder -->
+            <div class="wire-box" style="text-align:center;">
+              <div class="structure-label">[SCANNER / SCAN &amp; PAY QR SPACE]</div>
+              <div class="wire-box-dashed" style="width:140px; height:140px; margin:10px auto; font-size:11px;">
+                [DYNAMIC QR CODE / SCANNER WINDOW]
+              </div>
+              <div style="font-size:11px; color:#64748b;">[SCAN WITH ANY UPI APP TO PAY]</div>
+            </div>
+
+            <!-- Redeem Points Option -->
+            <div class="wire-box">
+              <div class="structure-label">[REDEEM POINTS OPTION]</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+                <div>
+                  <div style="font-weight:800; font-size:12px;">[AVAILABLE: 250 POINTS]</div>
+                  <div style="font-size:10.5px; color:#64748b;">[REDEEM 100 PTS = ₹ 50 OFF]</div>
+                </div>
+                <input type="checkbox">
+              </div>
+            </div>
+
+            <!-- Different Payment Options -->
+            <div class="wire-box">
+              <div class="structure-label">[DIFFERENT PAYMENT OPTIONS]</div>
+              <div style="display:flex; flex-direction:column; gap:6px; margin-top:6px;">
+                <div style="border:1px solid #cbd5e1; border-radius:6px; padding:8px; display:flex; justify-content:space-between; align-items:center;">
+                  <span>[METHOD 1: UPI APPS]</span>
+                  <input type="radio" name="paym" checked>
+                </div>
+                <div style="border:1px solid #cbd5e1; border-radius:6px; padding:8px; display:flex; justify-content:space-between; align-items:center;">
+                  <span>[METHOD 2: DEBIT / CREDIT CARD]</span>
+                  <input type="radio" name="paym">
+                </div>
+                <div style="border:1px solid #cbd5e1; border-radius:6px; padding:8px; display:flex; justify-content:space-between; align-items:center;">
+                  <span>[METHOD 3: NET BANKING]</span>
+                  <input type="radio" name="paym">
+                </div>
+                <div style="border:1px solid #cbd5e1; border-radius:6px; padding:8px; display:flex; justify-content:space-between; align-items:center;">
+                  <span>[METHOD 4: CASH TO SERVER]</span>
+                  <input type="radio" name="paym">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Sticky: Pay Button -->
+          <div class="wire-sticky-bottom-bar">
+            <div class="structure-label">[PAY BUTTON]</div>
+            <button class="wire-btn" onclick="showScreen(8)">
+              <span>🔒 [CONFIRM &amp; PAY ₹ XXXX]</span>
+            </button>
+          </div>
+        </div>
+      `,
+
+      8: `
+        <!-- SCREEN 8: CONFIRMATION & FEEDBACK -->
+        <div class="screen-housing">
+          <!-- Header with Call Icon -->
+          <div class="wire-header-bar">
+            <div style="font-weight:800; font-size:13px;">[CONFIRMATION &amp; REVIEW]</div>
+            <!-- Small Call Icon -->
+            <button class="wire-call-btn-small" onclick="showScreen(10)" title="[CALL WAITER]">🔔</button>
+          </div>
+
+          <div style="padding: 16px; overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:14px;">
+            <!-- Successful Payment Confirmation -->
+            <div class="wire-box" style="text-align:center; padding:18px 10px;">
+              <div class="structure-label">[SUCCESSFUL CONFIRMATION OF PAYMENT]</div>
+              <div style="width:44px; height:44px; border-radius:50%; background:#0f172a; color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px; margin:8px auto;">✓</div>
+              <div style="font-weight:800; font-size:15px;">[PAYMENT SUCCESSFUL]</div>
+              <div style="font-size:11px; color:#64748b; margin-top:2px;">[TRANSACTION ID: #TXN-948271]</div>
+            </div>
+
+            <!-- Direct Google Review Button -->
+            <div>
+              <div class="structure-label">[DIRECT GOOGLE REVIEW BUTTON]</div>
+              <button class="wire-btn wire-btn-outline" onclick="alert('Redirect to Google Review')">
+                <span>⭐</span>
+                <span>[LEAVE A GOOGLE REVIEW]</span>
+              </button>
+            </div>
+
+            <!-- Feedback & Review Option (Custom & Ready) -->
+            <div class="wire-box">
+              <div class="structure-label">[READY FEEDBACK OPTIONS (CHIPS)]</div>
+              <div style="display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 10px;">
+                <span class="wire-badge">[READY FEEDBACK 1]</span>
+                <span class="wire-badge">[READY FEEDBACK 2]</span>
+                <span class="wire-badge">[READY FEEDBACK 3]</span>
+              </div>
+
+              <div class="structure-label">[CUSTOM FEEDBACK OPTION]</div>
+              <input type="text" class="wire-input-box" placeholder="[TYPE YOUR PERSONAL FEEDBACK HERE...]">
+            </div>
+
+            <!-- Social & Direct Web Buttons -->
+            <div style="display:flex; gap:8px;">
+              <div style="flex:1;">
+                <div class="structure-label">[DIRECT INSTAGRAM]</div>
+                <button class="wire-btn wire-btn-outline" style="font-size:11px; padding:10px 4px;">
+                  📷 [INSTAGRAM]
+                </button>
+              </div>
+              <div style="flex:1;">
+                <div class="structure-label">[DIRECT WEBSITE]</div>
+                <button class="wire-btn wire-btn-outline" style="font-size:11px; padding:10px 4px;">
+                  🌐 [WEBSITE]
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Sticky: Go To Bill Page Button -->
+          <div class="wire-sticky-bottom-bar">
+            <div class="structure-label">[GO TO BILL PAGE BUTTON]</div>
+            <button class="wire-btn" onclick="showScreen(9)">
+              <span>📄 [VIEW OFFICIAL BILL &amp; INVOICE]</span>
+              <span>➔</span>
+            </button>
+          </div>
+        </div>
+      `,
+
+      9: `
+        <!-- SCREEN 9: BILL PAGE -->
+        <div class="screen-housing">
+          <!-- Header with Call Icon -->
+          <div class="wire-header-bar">
+            <button class="wire-call-btn-small" onclick="showScreen(8)">←</button>
+            <div style="font-weight:800; font-size:13px;">[DETAILED BILL PAGE]</div>
+            <!-- Small Call Icon -->
+            <button class="wire-call-btn-small" onclick="showScreen(10)" title="[CALL WAITER]">🔔</button>
+          </div>
+
+          <div style="padding: 16px; overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:14px;">
+            <!-- Detailed Payment Bill Breakdown -->
+            <div class="wire-box">
+              <div class="structure-label">[PAYMENT BILL WITH DETAILED BREAKDOWN]</div>
+              <div style="text-align:center; padding-bottom:8px; border-bottom:1px dashed #cbd5e1; margin-bottom:8px;">
+                <div style="font-weight:800; font-size:13px;">[TAX INVOICE / RECEIPT]</div>
+                <div style="font-size:10.5px; color:#64748b;">[INVOICE NO: #INV-2026-8921]</div>
+              </div>
+
+              <!-- Line items -->
+              <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+                <span>[ITEM 1 × 1]</span>
+                <span>[₹ XXX]</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+                <span>[ITEM 2 × 2]</span>
+                <span>[₹ XXX]</span>
+              </div>
+
+              <!-- Breakdown -->
+              <div style="border-top:1px dashed #cbd5e1; margin-top:8px; padding-top:6px; font-size:11.5px; color:#64748b;">
+                <div style="display:flex; justify-content:space-between;">
+                  <span>[SUBTOTAL]</span>
+                  <span>[₹ XXX]</span>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                  <span>[TAX (CGST + SGST)]</span>
+                  <span>[₹ XX]</span>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                  <span>[WAITER TIP]</span>
+                  <span>[₹ XX]</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-weight:800; font-size:13px; color:#0f172a; margin-top:4px;">
+                  <span>[PAID TOTAL]</span>
+                  <span>[₹ XXXX]</span>
+                </div>
+              </div>
+
+              <!-- Paid Mode & Points Earned -->
+              <div style="margin-top:10px; padding-top:8px; border-top:1px dashed #cbd5e1; display:flex; justify-content:space-between; font-size:11px;">
+                <div>
+                  <div class="structure-label">[PAID MODE]</div>
+                  <div style="font-weight:800;">[UPI / INSTANT SETTLEMENT]</div>
+                </div>
+                <div style="text-align:right;">
+                  <div class="structure-label">[POINTS EARNED]</div>
+                  <div style="font-weight:800;">[+50 REWARD PTS]</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Download Bill Option -->
+            <div>
+              <div class="structure-label">[DOWNLOAD BILL OPTION]</div>
+              <button class="wire-btn wire-btn-outline" onclick="alert('Downloading PDF Bill...')">
+                <span>📥</span>
+                <span>[DOWNLOAD PDF BILL]</span>
+              </button>
+            </div>
+
+            <!-- Share Bill Through WhatsApp Button -->
+            <div>
+              <div class="structure-label">[SHARE BILL THROUGH WHATSAPP BUTTON]</div>
+              <button class="wire-btn wire-btn-secondary" onclick="alert('Sharing Bill via WhatsApp...')">
+                <span>💬</span>
+                <span>[SHARE BILL VIA WHATSAPP]</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom Sticky: Back to Start -->
+          <div class="wire-sticky-bottom-bar">
+            <button class="wire-btn" onclick="showScreen(1)">
+              <span>↺ [RETURN TO HOME / WELCOME]</span>
+            </button>
+          </div>
+        </div>
+      `,
+
+      10: `
+        <!-- SCREEN 10: CUSTOMER WAITER CALL PAGE -->
+        <div class="screen-housing">
+          <!-- Header -->
+          <div class="wire-header-bar">
+            <button class="wire-call-btn-small" onclick="showScreen(2)">←</button>
+            <div style="font-weight:800; font-size:13px;">[CUSTOMER WAITER CALL PAGE]</div>
+            <div style="width:32px;"></div>
+          </div>
+
+          <div style="padding: 16px; overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:16px;">
+            <!-- Description -->
+            <div>
+              <div class="structure-label">[READY REQUEST BUTTONS (ONE-TAP PINGS)]</div>
+              <div style="font-size:11.5px; color:#64748b;">Select a request below for immediate server notification:</div>
+            </div>
+
+            <!-- Ready Request Grid: Water, Tissue, Cutlery, Table Clean, Call -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+              <button class="wire-btn wire-btn-outline" style="flex-direction:column; padding:16px 8px; gap:6px;" onclick="notifyWaiter('WATER')">
+                <span style="font-size:22px;">💧</span>
+                <span style="font-size:11px;">[WATER]</span>
+              </button>
+
+              <button class="wire-btn wire-btn-outline" style="flex-direction:column; padding:16px 8px; gap:6px;" onclick="notifyWaiter('TISSUE')">
+                <span style="font-size:22px;">🧻</span>
+                <span style="font-size:11px;">[TISSUE]</span>
+              </button>
+
+              <button class="wire-btn wire-btn-outline" style="flex-direction:column; padding:16px 8px; gap:6px;" onclick="notifyWaiter('CUTLERY')">
+                <span style="font-size:22px;">🍴</span>
+                <span style="font-size:11px;">[CUTLERY]</span>
+              </button>
+
+              <button class="wire-btn wire-btn-outline" style="flex-direction:column; padding:16px 8px; gap:6px;" onclick="notifyWaiter('TABLE CLEAN')">
+                <span style="font-size:22px;">🧹</span>
+                <span style="font-size:11px;">[TABLE CLEAN]</span>
+              </button>
+
+              <button class="wire-btn" style="grid-column:1/-1; padding:14px;" onclick="notifyWaiter('GENERAL CALL')">
+                <span style="font-size:18px;">🛎️</span>
+                <span>[CALL WAITER TO TABLE]</span>
+              </button>
+            </div>
+
+            <!-- Custom Text Option to Waiter -->
+            <div class="wire-box">
+              <div class="structure-label">[CUSTOM TEXT OPTION TO WAITER]</div>
+              <textarea class="wire-input-box" rows="3" placeholder="[TYPE CUSTOM NOTE OR SPECIAL ASSISTANCE REQUEST...]" id="customWaiterText"></textarea>
+              <button class="wire-btn wire-btn-secondary" style="margin-top:8px; padding:10px;" onclick="sendCustomWaiterNote()">
+                <span>✉️</span>
+                <span>[SEND CUSTOM MESSAGE TO WAITER]</span>
+              </button>
+            </div>
+
+            <!-- Real-Time Request Status Confirmation -->
+            <div class="wire-box" id="waiterAckBox" style="display:none; text-align:center; background:#f1f5f9;">
+              <div style="font-weight:800; font-size:12px;">✓ [WAITER NOTIFIED]</div>
+              <div style="font-size:10.5px; color:#64748b;" id="waiterAckText">[REQUEST TRANSMITTED TO FLOOR SERVER]</div>
+            </div>
+          </div>
+
+          <!-- Bottom Sticky: Back to Dining Menu -->
+          <div class="wire-sticky-bottom-bar">
+            <button class="wire-btn" onclick="showScreen(2)">
+              <span>[BACK TO MENU]</span>
+            </button>
+          </div>
+        </div>
+      `
+    };
+
+    let activeScreen = 1;
+
+    function showScreen(screenNum, tabBtn = null) {
+      activeScreen = screenNum;
+
+      // Update interactive single mockup
+      const phoneContainer = document.getElementById('interactivePhone');
+      if (phoneContainer) {
+        phoneContainer.innerHTML = screensHtml[screenNum];
+      }
+
+      // Update screen navigation tabs
+      const tabs = document.querySelectorAll('.screen-tab-btn');
+      tabs.forEach((t, idx) => {
+        if (idx + 1 === screenNum) t.classList.add('active');
+        else t.classList.remove('active');
+      });
+    }
+
+    function setViewMode(mode) {
+      const btnFlow = document.getElementById('btnModeFlow');
+      const btnGrid = document.getElementById('btnModeGrid');
+      const flowStage = document.getElementById('deviceStage');
+      const gridStage = document.getElementById('gridStage');
+
+      if (mode === 'flow') {
+        btnFlow.classList.add('active');
+        btnGrid.classList.remove('active');
+        flowStage.style.display = 'flex';
+        gridStage.style.display = 'none';
+        showScreen(activeScreen);
+      } else {
+        btnGrid.classList.add('active');
+        btnFlow.classList.remove('active');
+        flowStage.style.display = 'none';
+        gridStage.style.display = 'grid';
+        renderGrid();
+      }
+    }
+
+    function renderGrid() {
+      const gridStage = document.getElementById('gridStage');
+      gridStage.innerHTML = '';
+
+      const labels = [
+        '1. WELCOME & WI-FI',
+        '2. MENU & 2-COL GRID',
+        '3. DETAILED ITEM PAGE',
+        '4. CART & SEPARATE ORDERS',
+        '5. LIVE TRACKING',
+        '6. PAYMENT 1 (SPLIT & TIPS)',
+        '7. PAYMENT 2 (GATEWAY & QR)',
+        '8. CONFIRMATION & REVIEWS',
+        '9. DETAILED BILL & SHARE',
+        '10. WAITER CALL CONSOLE'
+      ];
+
+      for (let i = 1; i <= 10; i++) {
+        const wrap = document.createElement('div');
+        wrap.className = 'grid-card-wrap';
+        wrap.innerHTML = `
+          <div class="grid-card-label">${labels[i-1]}</div>
+          <div class="phone-mockup" style="box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+            ${screensHtml[i]}
+          </div>
+        `;
+        gridStage.appendChild(wrap);
+      }
+    }
+
+    function notifyWaiter(serviceType) {
+      const box = document.getElementById('waiterAckBox');
+      const text = document.getElementById('waiterAckText');
+      if (box && text) {
+        box.style.display = 'block';
+        text.innerText = '[' + serviceType + ' REQUEST SENT TO FLOOR SERVER]';
+      }
+      alert('[' + serviceType + ' REQUEST SENT TO FLOOR SERVER]');
+    }
+
+    function sendCustomWaiterNote() {
+      const txt = document.getElementById('customWaiterText');
+      const val = txt ? txt.value.trim() : '';
+      if (!val) {
+        alert('[PLEASE ENTER A MESSAGE]');
+        return;
+      }
+      alert('[CUSTOM MESSAGE TRANSMITTED: ' + val + ']');
+      const box = document.getElementById('waiterAckBox');
+      const text = document.getElementById('waiterAckText');
+      if (box && text) {
+        box.style.display = 'block';
+        text.innerText = '[CUSTOM NOTE SENT: "' + val + '"]';
+      }
+    }
+
+    // Auto initialize to Screen 1
+    window.addEventListener('DOMContentLoaded', () => {
+      showScreen(1);
+    });
+  </script>
+</body>
+</html>

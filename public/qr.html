@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Table QR Stand | Royal Dining & Tandoor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Kannada:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold-primary: #d97706;
+      --gold-light: #fbbf24;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --emerald-600: #059669;
+      --emerald-500: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', 'Noto Sans Kannada', -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #09090b 100%);
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    .top-banner {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 8px 16px rgba(217, 119, 6, 0.3);
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fbbf24;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .table-selector-bar {
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tbl-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tbl-btn.active {
+      background: #d97706;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
+    }
+
+    .main-stage {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      justify-content: center;
+      align-items: flex-start;
+      max-width: 960px;
+      width: 100%;
+    }
+
+    /* Acrylic Stand Simulation */
+    .stand-container {
+      perspective: 1000px;
+    }
+
+    .acrylic-stand {
+      width: 340px;
+      background: linear-gradient(165deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+      border-radius: 24px;
+      padding: 28px 24px;
+      box-shadow: 
+        0 20px 40px -15px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      color: #0f172a;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .acrylic-stand:hover {
+      transform: translateY(-4px);
+    }
+
+    .acrylic-stand::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #d97706, #fbbf24, #10b981);
+    }
+
+    .stand-header {
+      margin-bottom: 16px;
+    }
+
+    .restaurant-name-en {
+      font-family: 'Cinzel', serif;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: #78350f;
+    }
+
+    .restaurant-name-kn {
+      font-size: 13px;
+      font-weight: 700;
+      color: #b45309;
+      margin-top: 2px;
+    }
+
+    .table-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 14px;
+      margin: 12px 0 16px;
+    }
+
+    .qr-frame-box {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 16px;
+      display: inline-block;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+
+    .qr-image-wrapper {
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .qr-image-wrapper img, .qr-image-wrapper svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .qr-center-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .scan-instructions {
+      margin-top: 18px;
+    }
+
+    .instruction-en {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .instruction-kn {
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      margin-top: 3px;
+    }
+
+    .features-strip {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px dashed #cbd5e1;
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .stand-base {
+      width: 380px;
+      height: 18px;
+      background: linear-gradient(180deg, #1e293b, #0f172a);
+      border-radius: 0 0 16px 16px;
+      margin: -2px auto 0;
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.8);
+      border-top: 2px solid #fbbf24;
+    }
+
+    /* Actions Panel */
+    .controls-panel {
+      flex: 1;
+      min-width: 320px;
+      max-width: 520px;
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .panel-header h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-header p {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .action-btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      padding: 16px;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(16, 185, 129, 0.45);
+    }
+
+    .url-display-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .url-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #fbbf24;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .url-value {
+      font-family: monospace;
+      font-size: 13px;
+      color: #38bdf8;
+      word-break: break-all;
+      user-select: all;
+    }
+
+    .wifi-hint-badge {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #7dd3fc;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .simulation-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .sub-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #e2e8f0;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+
+    .sub-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Print Stylesheet */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+      }
+      .top-banner, .controls-panel, .stand-base {
+        display: none !important;
+      }
+      .acrylic-stand {
+        box-shadow: none !important;
+        border: 1px solid #cccccc !important;
+        margin: 40px auto !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Banner -->
+  <div class="top-banner">
+    <div class="brand-logo">
+      <div class="brand-icon">👑</div>
+      <div>
+        <div class="brand-title">ROYAL DINING & TANDOOR</div>
+        <div class="brand-sub">ರಾಜಮನೆತನದ ಊಟ ಮತ್ತು ತಂದೂರ್ • Smart Table System</div>
+      </div>
+    </div>
+    <div class="table-selector-bar">
+      <button class="tbl-btn active" onclick="selectTable('A4', 'Table A-04 (Courtyard)', this)">A-04</button>
+      <button class="tbl-btn" onclick="selectTable('B2', 'Table B-02 (Garden View)', this)">B-02</button>
+      <button class="tbl-btn" onclick="selectTable('T1', 'Table T-01 (Rooftop Terrace)', this)">T-01</button>
+      <button class="tbl-btn" onclick="selectTable('P1', 'Table P-01 (Royal Family Suite)', this)">P-01</button>
+    </div>
+  </div>
+
+  <div class="main-stage">
+    
+    <!-- Table Stand Card (Real-World Acrylic Stand Simulation) -->
+    <div class="stand-container">
+      <div class="acrylic-stand" id="acrylicCard">
+        <div class="stand-header">
+          <div class="restaurant-name-en">ROYAL DINING & TANDOOR</div>
+          <div class="restaurant-name-kn">ರಾಜಮನೆತನದ ಊಟ ಮತ್ತು ತಂದೂರ್</div>
+          <div class="table-badge-pill" id="standTableBadge">
+            <span>🍽️</span>
+            <span id="standTableText">TABLE A-04</span>
+          </div>
+        </div>
+
+        <div class="qr-frame-box">
+          <div class="qr-image-wrapper" id="qrWrapper">
+            <!-- Dynamic QR Code SVG will render here -->
+            <img id="qrImageTag" src="/api/qr?text=http%3A%2F%2Flocalhost%3A3000%2Fcustomer.html%3Ftable%3DA4" alt="Table QR Code" />
+          </div>
+          <div class="qr-center-icon">👑</div>
+        </div>
+
+        <div class="scan-instructions">
+          <div class="instruction-en">Scan with Phone Camera to Order</div>
+          <div class="instruction-kn">ಆದೇಶಿಸಲು ನಿಮ್ಮ ಮೊಬೈಲ್ ಕ್ಯಾಮೆರಾದಿಂದ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</div>
+        </div>
+
+        <div class="features-strip">
+          <div class="feature-item">⚡ 3-Min Roti</div>
+          <div class="feature-item">🟢 Pure Veg / Jain</div>
+          <div class="feature-item">📱 UPI Direct</div>
+        </div>
+      </div>
+      <div class="stand-base"></div>
+    </div>
+
+    <!-- Control & Interaction Hub -->
+    <div class="controls-panel">
+      <div class="panel-header">
+        <h2><span>🚀</span> Real-Time Dining Portal</h2>
+        <p>Scan with your phone or launch the direct customer session below.</p>
+      </div>
+
+      <!-- Direct Instant Launch Button -->
+      <a id="launchDirectBtn" href="/customer.html?table=A4" class="action-btn-primary">
+        <span>📲</span>
+        <span>Open Customer App (Table A-04)</span>
+      </a>
+
+      <!-- Wi-Fi Network URL -->
+      <div class="url-display-card">
+        <div class="url-label">
+          <span>Wi-Fi Phone URL (Scan with Mobile)</span>
+          <span style="color:#10b981;">🟢 Live</span>
+        </div>
+        <div class="url-value" id="wifiUrlDisplay">http://192.168.0.4:3000/customer.html?table=A4</div>
+      </div>
+
+      <!-- Localhost URL -->
+      <div class="url-display-card">
+        <div class="url-label">Localhost URL (Same Machine)</div>
+        <div class="url-value" id="localUrlDisplay">http://localhost:3000/customer.html?table=A4</div>
+      </div>
+
+      <div class="wifi-hint-badge">
+        💡 <strong>Live Mobile Testing:</strong> If your smartphone is connected to the same Wi-Fi network, point your camera at the QR code on your monitor. It will instantly open the high-speed customer ordering web app on your phone!
+      </div>
+
+      <div class="simulation-controls">
+        <button class="sub-btn" onclick="window.print()">
+          <span>🖨️</span>
+          <span>Print Table Stand</span>
+        </button>
+        <button class="sub-btn" onclick="copyActiveUrl()">
+          <span id="copyIcon">📋</span>
+          <span id="copyText">Copy Table URL</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentTable = 'A4';
+    let currentTableName = 'Table A-04 (Courtyard)';
+    const wifiIp = '192.168.0.4';
+    const port = window.location.port || '3000';
+
+    function getUrls(table) {
+      const wifi = 'http://' + wifiIp + ':' + port + '/customer.html?table=' + table;
+      const local = 'http://localhost:' + port + '/customer.html?table=' + table;
+      return { wifi, local };
+    }
+
+    function updateView() {
+      const { wifi, local } = getUrls(currentTable);
+      
+      // Update badge text
+      document.getElementById('standTableText').innerText = 'TABLE ' + currentTable;
+      
+      // Update QR Code image source (using server SVG generator)
+      const qrImg = document.getElementById('qrImageTag');
+      qrImg.src = '/api/qr?text=' + encodeURIComponent(wifi);
+
+      // Update URL displays
+      document.getElementById('wifiUrlDisplay').innerText = wifi;
+      document.getElementById('localUrlDisplay').innerText = local;
+      
+      // Update direct launch button
+      const launchBtn = document.getElementById('launchDirectBtn');
+      launchBtn.href = '/customer.html?table=' + currentTable;
+      launchBtn.innerHTML = '<span>📲</span><span>Open Customer App (Table ' + currentTable + ')</span>';
+    }
+
+    function selectTable(tableId, tableName, btn) {
+      currentTable = tableId;
+      currentTableName = tableName;
+
+      document.querySelectorAll('.tbl-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      updateView();
+    }
+
+    function copyActiveUrl() {
+      const { wifi } = getUrls(currentTable);
+      navigator.clipboard.writeText(wifi).then(() => {
+        document.getElementById('copyText').innerText = 'Copied!';
+        document.getElementById('copyIcon').innerText = '✅';
+        setTimeout(() => {
+          document.getElementById('copyText').innerText = 'Copy Table URL';
+          document.getElementById('copyIcon').innerText = '📋';
+        }, 2000);
+      });
+    }
+
+    // Auto initialize
+    updateView();
+  </script>
+</body>
+</html>

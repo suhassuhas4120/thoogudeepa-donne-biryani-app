@@ -1,0 +1,626 @@
+[
+  {
+    "id": "dish_paneer_tikka",
+    "name": "Tandoori Paneer Tikka",
+    "kannadaName": "ತಂದೂರಿ ಪನೀರ್ ಟಿಕ್ಕಾ",
+    "category": "Starters & Tandoor",
+    "kannadaCategory": "ಸ್ಟಾರ್ಟರ್ಸ್ & ತಂದೂರ್",
+    "price": 320,
+    "veg": true,
+    "jain": true,
+    "khata": "Tandoor",
+    "prepTime": 12,
+    "spicyLevel": 2,
+    "isBestseller": true,
+    "rating": 4.9,
+    "reviews": 412,
+    "calories": "380 kcal",
+    "portion": "Serves 2 (6 pcs)",
+    "image": "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=700&auto=format&fit=crop&q=80",
+    "desc": "Fresh malai cottage cheese marinated in spiced curd, yellow mustard and carom seeds, chargrilled in clay oven.",
+    "kannadaDesc": "ತಾಜಾ ಮಲೈ ಪನೀರ್ ಅನ್ನು ಮಸಾಲೆ ಮೊಸರು ಮತ್ತು ಸಾಸಿವೆಯಲ್ಲಿ ನೆನೆಸಿ, ಮಣ್ಣಿನ ತಂದೂರ್ ಒಲೆಯಲ್ಲಿ ಸುಟ್ಟ ರುಚಿಕರ ಟಿಕ್ಕಾ.",
+    "customizations": {
+      "spiceLevels": [
+        {
+          "id": "mild",
+          "name": "Mild / ಮೃದು",
+          "extra": 0
+        },
+        {
+          "id": "medium",
+          "name": "Medium / ಮಧ್ಯಮ",
+          "extra": 0,
+          "default": true
+        },
+        {
+          "id": "spicy",
+          "name": "Fiery Hot / ತೀರಾ ಖಾರ",
+          "extra": 0
+        }
+      ],
+      "prepStyle": [
+        {
+          "id": "regular",
+          "name": "Chef Regular / ಸಾಮಾನ್ಯ ಶೈಲಿ",
+          "extra": 0,
+          "default": true
+        },
+        {
+          "id": "jain",
+          "name": "Jain Style (No Onion-Garlic) / ಜೈನ ಶೈಲಿ (ಈರುಳ್ಳಿ-ಬೆಳ್ಳುಳ್ಳಿ ರಹಿತ)",
+          "extra": 0
+        }
+      ],
+      "addOns": [
+        {
+          "id": "extra_butter",
+          "name": "Extra Desi White Butter / ಹೆಚ್ಚುವರಿ ಬೆಣ್ಣೆ",
+          "price": 35
+        },
+        {
+          "id": "mint_chutney",
+          "name": "Extra Mint Dip & Lachha / ಪುದೀನಾ ಚಟ್ನಿ",
+          "price": 20
+        }
+      ]
+    },
+    "bom": {
+      "paneer_kg": 0.22,
+      "butter_kg": 0.03
+    }
+  },
+  {
+    "id": "dish_malai_chaap",
+    "name": "Afghani Malai Soya Chaap",
+    "kannadaName": "ಅಫ್ಘಾನಿ ಮಲೈ ಸೋಯಾ ಚಾಪ್",
+    "category": "Starters & Tandoor",
+    "kannadaCategory": "ಸ್ಟಾರ್ಟರ್ಸ್ & ತಂದೂರ್",
+    "price": 290,
+    "veg": true,
+    "jain": false,
+    "khata": "Tandoor",
+    "prepTime": 10,
+    "spicyLevel": 1,
+    "isBestseller": false,
+    "rating": 4.7,
+    "reviews": 285,
+    "calories": "340 kcal",
+    "portion": "Serves 2",
+    "image": "https://images.unsplash.com/photo-1628294895950-9805252327bc?w=700&auto=format&fit=crop&q=80",
+    "desc": "Tender soya chaap enveloped in velvety cashew cream, crushed green cardamom and baked on iron skewers.",
+    "kannadaDesc": "ಗೋಡಂಬಿ ಕ್ರೀಮ್ ಮತ್ತು ಏಲಕ್ಕಿ ಸುವಾಸನೆಯಲ್ಲಿ ಮೃದುವಾಗಿ ಬೇಯಿಸಿದ ರುಚಿಕರ ಸೋಯಾ ಚಾಪ್.",
+    "customizations": {
+      "spiceLevels": [
+        {
+          "id": "mild",
+          "name": "Mild / ಮೃದು",
+          "extra": 0,
+          "default": true
+        },
+        {
+          "id": "medium",
+          "name": "Medium / ಮಧ್ಯಮ",
+          "extra": 0
+        }
+      ],
+      "addOns": [
+        {
+          "id": "extra_cream",
+          "name": "Extra Cream Glaze / ಹೆಚ್ಚುವರಿ ಕ್ರೀಮ್",
+          "price": 30
+        }
+      ]
+    },
+    "bom": {
+      "butter_kg": 0.025,
+      "cream_kg": 0.03
+    }
+  },
+  {
+    "id": "dish_chilli_paneer",
+    "name": "Crispy Chilli Paneer Dry",
+    "kannadaName": "ಕ್ರಿಸ್ಪಿ ಚಿಲ್ಲಿ ಪನೀರ್ ಡ್ರೈ",
+    "category": "Starters & Tandoor",
+    "kannadaCategory": "ಸ್ಟಾರ್ಟರ್ಸ್ & ತಂದೂರ್",
+    "price": 330,
+    "veg": true,
+    "jain": false,
+    "khata": "Tandoor",
+    "prepTime": 9,
+    "spicyLevel": 3,
+    "isBestseller": true,
+    "rating": 4.8,
+    "reviews": 512,
+    "calories": "360 kcal",
+    "portion": "Serves 2",
+    "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=700&auto=format&fit=crop&q=80",
+    "desc": "Wok-tossed golden paneer cubes with bell peppers, spring onions, cracked green chillies and dark soy reduction.",
+    "kannadaDesc": "ಕ್ಯಾಪ್ಸಿಕಂ, ಹಸಿಮೆಣಸಿನಕಾಯಿ ಮತ್ತು ಡಾರ್ಕ್ ಸೋಯಾದೊಂದಿಗೆ ವೋಕ್‌ನಲ್ಲಿ ಹುರಿದ ಗರಿಗರಿಯಾದ ಪನೀರ್ ತುಂಡುಗಳು.",
+    "customizations": {
+      "spiceLevels": [
+        {
+          "id": "medium",
+          "name": "Medium / ಮಧ್ಯಮ",
+          "extra": 0
+        },
+        {
+          "id": "spicy",
+          "name": "Extra Spicy / ಅತ್ಯಂತ ಖಾರ",
+          "extra": 0,
+          "default": true
+        }
+      ]
+    },
+    "bom": {
+      "paneer_kg": 0.2,
+      "oil_l": 0.03
+    }
+  },
+  {
+    "id": "dish_dal_makhani",
+    "name": "Slow-Cooked Dal Makhani",
+    "kannadaName": "ದಾಲ್ ಮಖನಿ (ವೆಲ್ವೆಟ್ ದಾಲ್)",
+    "category": "Handi Curries",
+    "kannadaCategory": "ಕರ್ರಿಗಳು & ಗ್ರೇವಿಗಳು",
+    "price": 360,
+    "veg": true,
+    "jain": true,
+    "khata": "Handi",
+    "prepTime": 14,
+    "spicyLevel": 1,
+    "isBestseller": true,
+    "rating": 4.95,
+    "reviews": 740,
+    "calories": "410 kcal",
+    "portion": "Serves 2-3 (450ml)",
+    "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=700&auto=format&fit=crop&q=80",
+    "desc": "Whole black lentils slow-simmered overnight over charcoal embers, finished with churned butter and fresh cream.",
+    "kannadaDesc": "ಇಡೀ ರಾತ್ರಿ ಇದ್ದಿಲಿನ ಕಿಚ್ಚಿನಲ್ಲಿ ಬೇಯಿಸಿದ ಕಪ್ಪು ಉದ್ದಿನ ಕಾಳು, ಶುದ್ಧ ಬೆಣ್ಣೆ ಮತ್ತು ಕೆನೆಯೊಂದಿಗೆ ತಯಾರಿಸಿದ ಮೇರು ಕೃತಿ.",
+    "customizations": {
+      "spiceLevels": [
+        {
+          "id": "mild",
+          "name": "Mild Butter / ಮೃದು ಬೆಣ್ಣೆ ರುಚಿ",
+          "extra": 0,
+          "default": true
+        },
+        {
+          "id": "medium",
+          "name": "Medium Spiced / ಮಧ್ಯಮ ಮಸಾಲೆ",
+          "extra": 0
+        }
+      ],
+      "prepStyle": [
+        {
+          "id": "regular",
+          "name": "Regular / ಸಾಮಾನ್ಯ",
+          "extra": 0,
+          "default": true
+        },
+        {
+          "id": "jain",
+          "name": "Jain Prep (No Onion/Garlic) / ಜೈನ ಶೈಲಿ",
+          "extra": 0
+        }
+      ],
+      "addOns": [
+        {
+          "id": "extra_butter_dollop",
+          "name": "Dollop of White Butter / ಬೆಣ್ಣೆಯ ಉಂಡೆ",
+          "price": 35
+        }
+      ]
+    },
+    "bom": {
+      "butter_kg": 0.04,
+      "makhani_gravy_l": 0.18
+    }
+  },
+  {
+    "id": "dish_kadai_paneer",
+    "name": "Royal Kadai Paneer",
+    "kannadaName": "ರಾಯಲ್ ಕಡಾಯಿ ಪನೀರ್",
+    "category": "Handi Curries",
+    "kannadaCategory": "ಕರ್ರಿಗಳು & ಗ್ರೇವಿಗಳು",
+    "price": 390,
+    "veg": true,
+    "jain": true,
+    "khata": "Handi",
+    "prepTime": 12,
+    "spicyLevel": 3,
+    "isBestseller": true,
+    "rating": 4.85,
+    "reviews": 620,
+    "calories": "430 kcal",
+    "portion": "Serves 2-3",
+    "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=700&auto=format&fit=crop&q=80",
+    "desc": "Succulent paneer batons tossed with coarsely pounded coriander seeds, Kashmiri chillies and crunchy bell peppers.",
+    "kannadaDesc": "ತಾಜಾ ಕೊತ್ತಂಬರಿ ಬೀಜ, ಕಾಶ್ಮೀರಿ ಮೆಣಸು ಮತ್ತು ದೊಣ್ಣೆ ಮೆಣಸಿನಕಾಯಿಯೊಂದಿಗೆ ಹುರಿದು ತಯಾರಿಸಿದ ಮಸಾಲೆಭರಿತ ಪನೀರ್ ಗ್ರೇವಿ.",
+    "customizations": {
+      "spiceLevels": [
+        {
+          "id": "medium",
+          "name": "Medium / ಮಧ್ಯಮ",
+          "extra": 0
+        },
+        {
+          "id": "spicy",
+          "name": "Chef Spicy / ತೀಕ್ಷ್ಣ ಖಾರ",
+          "extra": 0,
+          "default": true
+        }
+      ],
+      "prepStyle": [
+        {
+          "id": "regular",
+          "name": "Regular / ಸಾಮಾನ್ಯ",
+          "extra": 0,
+          "default": true
+        },
+        {
+          "id": "jain",
+          "name": "Jain Style / ಜೈನ ಶೈಲಿ",
+          "extra": 0
+        }
+      ]
+    },
+    "bom": {
+      "paneer_kg": 0.22,
+      "onion_tomato_gravy_l": 0.2
+    }
+  },
+  {
+    "id": "dish_paneer_butter_masala",
+    "name": "Paneer Butter Masala",
+    "kannadaName": "ಪನೀರ್ ಬಟರ್ ಮಸಾಲಾ",
+    "category": "Handi Curries",
+    "kannadaCategory": "ಕರ್ರಿಗಳು & ಗ್ರೇವಿಗಳು",
+    "price": 380,
+    "veg": true,
+    "jain": true,
+    "khata": "Handi",
+    "prepTime": 12,
+    "spicyLevel": 1,
+    "isBestseller": true,
+    "rating": 4.9,
+    "reviews": 890,
+    "calories": "450 kcal",
+    "portion": "Serves 2-3",
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=700&auto=format&fit=crop&q=80",
+    "desc": "Soft cottage cheese simmered in a silky, sweet & savoury tomato makhani sauce enriched with honey and butter.",
+    "kannadaDesc": "ಟೊಮ್ಯಾಟೊ ಗ್ರೇವಿ, ಜೇನುತುಪ್ಪ ಮತ್ತು ಶುದ್ಧ ಬೆಣ್ಣೆಯೊಂದಿಗೆ ಸವಿಯಾದ ಶ್ರೀಮಂತ ಪನೀರ್ ಗ್ರೇವಿ.",
+    "customizations": {
+      "spiceLevels": [
+        {
+          "id": "mild",
+          "name": "Mild & Rich / ಸೌಮ್ಯ ಕೆನೆ ರುಚಿ",
+          "extra": 0,
+          "default": true
+        },
+        {
+          "id": "medium",
+          "name": "Medium / ಮಧ್ಯಮ",
+          "extra": 0
+        }
+      ]
+    },
+    "bom": {
+      "paneer_kg": 0.22,
+      "butter_kg": 0.04
+    }
+  },
+  {
+    "id": "dish_butter_naan",
+    "name": "Tandoori Butter Naan",
+    "kannadaName": "ತಂದೂರಿ ಬೆಣ್ಣೆ ನಾನ್",
+    "category": "Breads & Roti",
+    "kannadaCategory": "ರೊಟ್ಟಿ & ನಾನ್",
+    "price": 70,
+    "veg": true,
+    "jain": true,
+    "khata": "Tandoor",
+    "prepTime": 3,
+    "spicyLevel": 0,
+    "isBestseller": true,
+    "rating": 4.9,
+    "reviews": 1200,
+    "calories": "190 kcal",
+    "portion": "1 pc (cut into 3)",
+    "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=700&auto=format&fit=crop&q=80",
+    "desc": "Clay tandoor blistered leavened bread, generously brushed with melted salted butter.",
+    "kannadaDesc": "ತಂದೂರ್ ಒಲೆಯಲ್ಲಿ ಸುಟ್ಟ, ಕರಗಿಸಿದ ಬೆಣ್ಣೆಯ ಹೊಳಪಿನ ಗರಿಗರಿ ಮೃದುವಾದ ನಾನ್.",
+    "customizations": {
+      "addOns": [
+        {
+          "id": "extra_butter_glaze",
+          "name": "Extra Butter Glaze / ಹೆಚ್ಚುವರಿ ಬೆಣ್ಣೆ ಲೇಪನ",
+          "price": 15
+        }
+      ]
+    },
+    "bom": {
+      "maida_kg": 0.09,
+      "butter_kg": 0.02
+    }
+  },
+  {
+    "id": "dish_garlic_naan",
+    "name": "Crispy Garlic Butter Naan",
+    "kannadaName": "ಗರಿಗರಿ ಬೆಳ್ಳುಳ್ಳಿ ನಾನ್ (ಗಾರ್ಲಿಕ್ ನಾನ್)",
+    "category": "Breads & Roti",
+    "kannadaCategory": "ರೊಟ್ಟಿ & ನಾನ್",
+    "price": 85,
+    "veg": true,
+    "jain": false,
+    "khata": "Tandoor",
+    "prepTime": 4,
+    "spicyLevel": 1,
+    "isBestseller": true,
+    "rating": 4.95,
+    "reviews": 950,
+    "calories": "210 kcal",
+    "portion": "1 pc (cut into 3)",
+    "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=700&auto=format&fit=crop&q=80",
+    "desc": "Hand-stretched naan studded with minced roasted garlic, fresh coriander leaves and melted butter.",
+    "kannadaDesc": "ಸುಟ್ಟ ಬೆಳ್ಳುಳ್ಳಿ ತುಣುಕುಗಳು ಮತ್ತು ಹಸಿ ಕೊತ್ತಂಬರಿಯೊಂದಿಗೆ ಸಿದ್ಧಪಡಿಸಿದ ತಂದೂರಿ ನಾನ್.",
+    "customizations": {
+      "addOns": [
+        {
+          "id": "cheese_stuffing",
+          "name": "Add Melted Cheese / ಚೀಸ್ ಸೇರಿಸಿ",
+          "price": 45
+        }
+      ]
+    },
+    "bom": {
+      "maida_kg": 0.09,
+      "garlic_kg": 0.015,
+      "butter_kg": 0.02
+    }
+  },
+  {
+    "id": "dish_tandoori_roti",
+    "name": "Whole Wheat Tandoori Roti",
+    "kannadaName": "ಗೋಧಿ ತಂದೂರಿ ರೊಟ್ಟಿ (ಬಿಸಿ ರೊಟ್ಟಿ)",
+    "category": "Breads & Roti",
+    "kannadaCategory": "ರೊಟ್ಟಿ & ನಾನ್",
+    "price": 40,
+    "veg": true,
+    "jain": true,
+    "khata": "Tandoor",
+    "prepTime": 3,
+    "spicyLevel": 0,
+    "isBestseller": true,
+    "rating": 4.8,
+    "reviews": 800,
+    "calories": "120 kcal",
+    "portion": "1 pc",
+    "image": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=700&auto=format&fit=crop&q=80",
+    "desc": "100% whole wheat unleavened bread baked crisp in clay tandoor. Served piping hot.",
+    "kannadaDesc": "ಶೇಕಡಾ 100ರಷ್ಟು ಶುದ್ಧ ಗೋಧಿ ಹಿಟ್ಟಿನಿಂದ ತಂದೂರಿನಲ್ಲಿ ಬೇಯಿಸಿದ ಬಿಸಿಬಿಸಿ ರೊಟ್ಟಿ.",
+    "customizations": {
+      "prepStyle": [
+        {
+          "id": "butter",
+          "name": "With Butter / ಬೆಣ್ಣೆಯೊಂದಿಗೆ",
+          "extra": 10,
+          "default": true
+        },
+        {
+          "id": "plain",
+          "name": "Plain (No Butter) / ಪ್ಲೇನ್ (ಬೆಣ್ಣೆ ಇಲ್ಲದೆ)",
+          "extra": 0
+        }
+      ]
+    },
+    "bom": {
+      "atta_kg": 0.08,
+      "butter_kg": 0.01
+    }
+  },
+  {
+    "id": "dish_hyderabadi_biryani",
+    "name": "Dum Handi Subz Biryani",
+    "kannadaName": "ದಮ್ ಹಂಡಿ ಸಬ್ಜ್ ಬಿರಿಯಾನಿ",
+    "category": "Biryani & Rice",
+    "kannadaCategory": "ಬಿರಿಯಾನಿ & ರೈಸ್",
+    "price": 340,
+    "veg": true,
+    "jain": true,
+    "khata": "Handi",
+    "prepTime": 14,
+    "spicyLevel": 2,
+    "isBestseller": true,
+    "rating": 4.9,
+    "reviews": 650,
+    "calories": "480 kcal",
+    "portion": "Serves 2 (Served with Raita & Salan)",
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=700&auto=format&fit=crop&q=80",
+    "desc": "Fragrant long-grain basmati layered with garden veggies, saffron, mint and fried shallots, sealed and slow cooked.",
+    "kannadaDesc": "ಉದ್ದನೆಯ ಬಾಸ್ಮತಿ ಅಕ್ಕಿ, ಕೇಸರಿ, ಪುದೀನಾ ಮತ್ತು ತರಕಾರಿಗಳಿಂದ ಮಣ್ಣಿನ ಹಂಡಿಯಲ್ಲಿ ದಮ್ ಕಟ್ಟಿದ ರುಚಿಕರ ಬಿರಿಯಾನಿ.",
+    "customizations": {
+      "spiceLevels": [
+        {
+          "id": "medium",
+          "name": "Medium / ಮಧ್ಯಮ",
+          "extra": 0,
+          "default": true
+        },
+        {
+          "id": "spicy",
+          "name": "Spicy / ಖಾರ",
+          "extra": 0
+        }
+      ],
+      "addOns": [
+        {
+          "id": "extra_raita",
+          "name": "Extra Boondi Raita / ಹೆಚ್ಚುವರಿ ರೈತಾ",
+          "price": 35
+        }
+      ]
+    },
+    "bom": {
+      "basmati_kg": 0.2,
+      "veggies_kg": 0.15
+    }
+  },
+  {
+    "id": "dish_gulab_jamun",
+    "name": "Shahi Kesar Gulab Jamun",
+    "kannadaName": "ಶಾಹಿ ಕೇಸರಿ ಗುಲಾಬ್ ಜಾಮೂನ್",
+    "category": "Desserts & Sweets",
+    "kannadaCategory": "ಸಿಹಿ ತಿಂಡಿಗಳು",
+    "price": 120,
+    "veg": true,
+    "jain": true,
+    "khata": "Halwai",
+    "prepTime": 5,
+    "spicyLevel": 0,
+    "isBestseller": true,
+    "rating": 4.95,
+    "reviews": 920,
+    "calories": "280 kcal",
+    "portion": "2 warm pieces with pistachio slivers",
+    "image": "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=700&auto=format&fit=crop&q=80",
+    "desc": "Mawa dumplings golden-fried in pure desi ghee, soaked in fragrant saffron and cardamom sugar syrup.",
+    "kannadaDesc": "ಶುದ್ಧ ತುಪ್ಪದಲ್ಲಿ ಕರಿದ, ಕೇಸರಿ ಮತ್ತು ಏಲಕ್ಕಿ ಸಕ್ಕರೆ ಪಾಕದಲ್ಲಿ ನೆನೆಸಿದ ಬಿಸಿಬಿಸಿ ಗುಲಾಬ್ ಜಾಮೂನ್.",
+    "customizations": {
+      "prepStyle": [
+        {
+          "id": "warm",
+          "name": "Served Hot / ಬಿಸಿಯಾಗಿ ನೀಡಿ",
+          "extra": 0,
+          "default": true
+        },
+        {
+          "id": "rabdi",
+          "name": "With Rabdi Topping / ರಬ್ದಿಯೊಂದಿಗೆ",
+          "extra": 40
+        }
+      ]
+    },
+    "bom": {
+      "khoya_kg": 0.08,
+      "sugar_kg": 0.1
+    }
+  },
+  {
+    "id": "dish_kesar_phirni",
+    "name": "Royal Matka Kesar Phirni",
+    "kannadaName": "ರಾಯಲ್ ಮಟ್ಕಾ ಕೇಸರಿ ಫಿರ್ನಿ",
+    "category": "Desserts & Sweets",
+    "kannadaCategory": "ಸಿಹಿ ತಿಂಡಿಗಳು",
+    "price": 140,
+    "veg": true,
+    "jain": true,
+    "khata": "Halwai",
+    "prepTime": 3,
+    "spicyLevel": 0,
+    "isBestseller": false,
+    "rating": 4.8,
+    "reviews": 310,
+    "calories": "260 kcal",
+    "portion": "Served chilled in earthenware sakora",
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=700&auto=format&fit=crop&q=80",
+    "desc": "Ground rice pudding slow-cooked in thickened milk with Kashmiri saffron, slivered almonds and pistachios.",
+    "kannadaDesc": "ಮಣ್ಣಿನ ಮಡಕೆಯಲ್ಲಿ ತಂಪಾಗಿಸಿದ, ಬಾದಾಮಿ-ಪಿಸ್ತಾ ಮತ್ತು ಕೇಸರಿಭರಿತ ಹಾಲಿನ ಫಿರ್ನಿ ಸಿಹಿ.",
+    "customizations": {
+      "addOns": [
+        {
+          "id": "extra_nuts",
+          "name": "Extra Pistachio & Almonds / ಹೆಚ್ಚುವರಿ ಡ್ರೈ ಫ್ರೂಟ್ಸ್",
+          "price": 30
+        }
+      ]
+    },
+    "bom": {
+      "milk_l": 0.2,
+      "sugar_kg": 0.04
+    }
+  },
+  {
+    "id": "dish_fresh_lime_soda",
+    "name": "Fresh Nimbu Soda (Sweet & Salt)",
+    "kannadaName": "ತಾಜಾ ನಿಂಬೆ ಸೋಡಾ (ಸಿಹಿ & ಉಪ್ಪು)",
+    "category": "Refreshing Beverages",
+    "kannadaCategory": "ತಂಪು ಪಾನೀಯಗಳು",
+    "price": 90,
+    "veg": true,
+    "jain": true,
+    "khata": "Pantry",
+    "prepTime": 4,
+    "spicyLevel": 0,
+    "isBestseller": true,
+    "rating": 4.75,
+    "reviews": 430,
+    "calories": "85 kcal",
+    "portion": "350ml tall glass",
+    "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=700&auto=format&fit=crop&q=80",
+    "desc": "Fresh squeezed Kagzi lemon juice churned with cracked black salt, cumin, sugar syrup and chilled soda.",
+    "kannadaDesc": "ತಾಜಾ ನಿಂಬೆ ರಸ, ಜೀರಿಗೆ ಪುಡಿ, ಕಪ್ಪು ಉಪ್ಪು ಮತ್ತು ಚಿಲ್ಲಡ್ ಸೋಡಾದೊಂದಿಗೆ ತಯಾರಿಸಿದ ಉಲ್ಲಾಸದಾಯಕ ಪಾನೀಯ.",
+    "customizations": {
+      "prepStyle": [
+        {
+          "id": "sweet_salt",
+          "name": "Sweet & Salt / ಸಿಹಿ ಮತ್ತು ಉಪ್ಪು ಮಿಶ್ರಣ",
+          "extra": 0,
+          "default": true
+        },
+        {
+          "id": "salted",
+          "name": "Pure Salted / ಕೇವಲ ಉಪ್ಪು",
+          "extra": 0
+        },
+        {
+          "id": "sweet",
+          "name": "Pure Sweet / ಕೇವಲ ಸಿಹಿ",
+          "extra": 0
+        }
+      ]
+    },
+    "bom": {
+      "lemon_pcs": 2,
+      "soda_l": 0.33
+    }
+  },
+  {
+    "id": "dish_masala_chaas",
+    "name": "Chilled Masala Buttermilk (Chaas)",
+    "kannadaName": "ಮಜ್ಜಿಗೆ ಮಸಾಲೆ (ತಂಪಾದ ಮಜ್ಜಿಗೆ)",
+    "category": "Refreshing Beverages",
+    "kannadaCategory": "ತಂಪು ಪಾನೀಯಗಳು",
+    "price": 80,
+    "veg": true,
+    "jain": true,
+    "khata": "Pantry",
+    "prepTime": 3,
+    "spicyLevel": 1,
+    "isBestseller": true,
+    "rating": 4.85,
+    "reviews": 580,
+    "calories": "60 kcal",
+    "portion": "300ml earthen glass",
+    "image": "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=700&auto=format&fit=crop&q=80",
+    "desc": "Country churned curd blended with roasted cumin, rock salt, crushed ginger, green chilli and fresh coriander.",
+    "kannadaDesc": "ಹುರಿದ ಜೀರಿಗೆ, ಶುಂಠಿ, ಹಸಿಮೆಣಸು ಮತ್ತು ಕೊತ್ತಂಬರಿಯೊಂದಿಗೆ ಕಡೆದ ತಂಪಾದ ಗಟ್ಟಿ ಮಜ್ಜಿಗೆ.",
+    "customizations": {
+      "prepStyle": [
+        {
+          "id": "regular",
+          "name": "Regular / ಸಾಮಾನ್ಯ",
+          "extra": 0,
+          "default": true
+        },
+        {
+          "id": "no_chilli",
+          "name": "No Green Chilli / ಹಸಿಮೆಣಸಿನಕಾಯಿ ರಹಿತ",
+          "extra": 0
+        }
+      ]
+    },
+    "bom": {
+      "curd_kg": 0.15
+    }
+  }
+]

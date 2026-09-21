@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waiter / Floor Captain Tablet Skeletons & Structural Wireframes (Screens 1 to 10)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* STRICT MONOCHROME WIREFRAME / BLUEPRINT PALETTE (ZERO COLORS) */
+    :root {
+      --wire-bg: #f8fafc;
+      --wire-card: #ffffff;
+      --wire-border: #94a3b8;
+      --wire-border-dark: #334155;
+      --wire-border-dashed: #cbd5e1;
+      --wire-text: #0f172a;
+      --wire-text-muted: #64748b;
+      --wire-surface-subtle: #f1f5f9;
+      --wire-surface-contrast: #e2e8f0;
+      --wire-black: #000000;
+      --wire-white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0b0f19;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+    }
+
+    /* TOP MASTER HEADER & CONTROLS */
+    .top-console {
+      width: 100%;
+      max-width: 1380px;
+      background: #111827;
+      border: 1px solid #374151;
+      border-radius: 12px;
+      padding: 12px 18px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .console-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .blueprint-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      background: #1f2937;
+      border: 1px solid #4b5563;
+      padding: 4px 8px;
+      border-radius: 6px;
+      color: #9ca3af;
+      letter-spacing: 0.5px;
+    }
+
+    .console-title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #f9fafb;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .switch-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #1f2937;
+      border: 1px solid #4b5563;
+      color: #d1d5db;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .switch-link:hover {
+      background: #374151;
+      color: #ffffff;
+      border-color: #6b7280;
+    }
+
+    .view-mode-switch {
+      display: flex;
+      gap: 4px;
+      background: #1f2937;
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid #374151;
+    }
+
+    .mode-btn {
+      background: transparent;
+      border: none;
+      color: #9ca3af;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      transition: all 0.15s;
+    }
+
+    .mode-btn.active {
+      background: #374151;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    /* SCREEN TABS BAR (SCREENS 1 TO 10) */
+    .screen-nav-bar {
+      width: 100%;
+      max-width: 1380px;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+
+    .screen-tab {
+      flex: 1;
+      min-width: 125px;
+      background: #111827;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      padding: 8px 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      transition: all 0.15s ease;
+      text-align: left;
+    }
+
+    .screen-tab:hover {
+      border-color: #6b7280;
+      background: #1a2234;
+    }
+
+    .screen-tab.active {
+      background: #1f2937;
+      border-color: #9ca3af;
+      box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.25);
+    }
+
+    .tab-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 800;
+      color: #9ca3af;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .screen-tab.active .tab-num {
+      color: #f3f4f6;
+    }
+
+    .tab-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #e5e7eb;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* TABLET DEVICE BEZEL CONTAINER */
+    .tablet-stage {
+      width: 100%;
+      max-width: 1380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .tablet-bezel {
+      width: 100%;
+      max-width: 1320px;
+      min-height: 840px;
+      background: #0f172a;
+      border: 14px solid #1e293b;
+      border-radius: 28px;
+      box-shadow: 0 25px 60px -15px rgba(0,0,0,0.7), 0 0 0 1px #334155;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .tablet-notch {
+      height: 16px;
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .tablet-camera {
+      width: 7px;
+      height: 7px;
+      background: #334155;
+      border-radius: 50%;
+      border: 1px solid #475569;
+    }
+
+    .tablet-sensor {
+      width: 18px;
+      height: 4px;
+      background: #334155;
+      border-radius: 2px;
+    }
+
+    /* WIREFRAME CANVAS INSIDE TABLET */
+    .wire-canvas {
+      flex: 1;
+      background: var(--wire-bg);
+      color: var(--wire-text);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* BLUEPRINT WIREFRAME ELEMENTS */
+    .wf-box {
+      border: 1.5px solid var(--wire-border);
+      background: var(--wire-card);
+      border-radius: 6px;
+      position: relative;
+    }
+
+    .wf-box-dashed {
+      border: 1.5px dashed var(--wire-border);
+      background: var(--wire-surface-subtle);
+      border-radius: 6px;
+    }
+
+    .wf-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--wire-text-muted);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .wf-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--wire-card);
+      color: var(--wire-black);
+      border: 1.5px solid var(--wire-black);
+      border-radius: 6px;
+      padding: 7px 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .wf-btn:hover {
+      background: var(--wire-surface-contrast);
+    }
+
+    .wf-btn-dark {
+      background: var(--wire-black);
+      color: var(--wire-white);
+      border: 1.5px solid var(--wire-black);
+    }
+
+    .wf-btn-dark:hover {
+      background: #262626;
+    }
+
+    .wf-btn-subtle {
+      border: 1px solid var(--wire-border);
+      background: var(--wire-surface-subtle);
+      color: var(--wire-text);
+    }
+
+    .wf-btn-subtle:hover {
+      background: var(--wire-surface-contrast);
+    }
+
+    /* SCREEN FULL CONTAINER (100% UTILIZATION OF TABLET SPACE) */
+    .screen-container-full {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 800px;
+      flex: 1;
+    }
+
+    /* SCREEN 1: SPLIT LANDSCAPE LOGIN (100% UTILIZATION) */
+    .login-split-landscape {
+      display: flex;
+      flex: 1;
+      height: 100%;
+      min-height: 800px;
+    }
+
+    .login-left-brand {
+      flex: 0 0 42%;
+      width: 42%;
+      border-right: 2px solid var(--wire-border-dark);
+      background: var(--wire-surface-subtle);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .login-right-terminal {
+      flex: 0 0 58%;
+      width: 58%;
+      background: var(--wire-card);
+      padding: 36px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .keypad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .key-btn {
+      height: 52px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      font-weight: 800;
+      background: var(--wire-card);
+      border: 1.5px solid var(--wire-border-dark);
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .key-btn:hover {
+      background: var(--wire-surface-contrast);
+      border-color: var(--wire-black);
+    }
+
+    .pin-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--wire-black);
+      background: transparent;
+      transition: all 0.15s;
+    }
+
+    .pin-dot.filled {
+      background: var(--wire-black);
+    }
+
+    /* SCREEN 2: ALL TABLES & DUAL NOTIFICATIONS */
+    .screen-2-header {
+      min-height: 68px;
+      border-bottom: 2px solid var(--wire-border-dark);
+      background: var(--wire-card);
+      padding: 10px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .metric-pill {
+      padding: 6px 12px;
+      border: 1.5px solid var(--wire-border);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--wire-surface-subtle);
+    }
+
+    .screen-2-main-split {
+      display: flex;
+      flex: 1;
+      min-height: 730px;
+    }
+
+    .screen-2-left-60 {
+      flex: 0 0 60%;
+      width: 60%;
+      border-right: 2px solid var(--wire-border-dark);
+      padding: 16px 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: var(--wire-bg);
+    }
+
+    .tables-grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .table-box {
+      background: var(--wire-card);
+      border: 1.5px solid var(--wire-border-dark);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .table-box:hover {
+      border-color: var(--wire-black);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transform: translateY(-1px);
+    }
+
+    .screen-2-right-40 {
+      flex: 0 0 40%;
+      width: 40%;
+      background: var(--wire-card);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .notif-half {
+      flex: 1;
+      padding: 16px 18px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .notif-half:first-child {
+      border-bottom: 2px solid var(--wire-border-dark);
+    }
+
+    .notif-card {
+      border: 1.5px solid var(--wire-border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      background: var(--wire-surface-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* SCREEN 3: DETAILED TABLE VIEW (60% / 40%) */
+    .screen-3-split {
+      display: flex;
+      flex: 1;
+      min-height: 730px;
+    }
+
+    .screen-3-left-60 {
+      flex: 0 0 60%;
+      width: 60%;
+      border-right: 2px solid var(--wire-border-dark);
+      padding: 18px 22px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: var(--wire-bg);
+    }
+
+    .screen-3-right-40 {
+      flex: 0 0 40%;
+      width: 40%;
+      background: var(--wire-card);
+      padding: 18px 22px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* SCREEN 4: MENU 2-COL GRID */
+    .menu-2col-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .menu-item-card {
+      background: var(--wire-card);
+      border: 1.5px solid var(--wire-border);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* SCREEN 6: TABLE CUSTOMIZATION & MERGE */
+    .table-chips-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .table-chip-btn {
+      padding: 10px 6px;
+      border: 1.5px solid var(--wire-border);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--wire-card);
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .table-chip-btn.selected {
+      background: var(--wire-black);
+      color: var(--wire-white);
+      border-color: var(--wire-black);
+    }
+
+    /* SCREEN 9: TURNAROUND CHECKLIST */
+    .turnaround-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .turnaround-btn {
+      padding: 16px;
+      border: 2px solid var(--wire-border-dark);
+      border-radius: 8px;
+      background: var(--wire-card);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.15s;
+      text-align: left;
+    }
+
+    .turnaround-btn.completed {
+      background: var(--wire-surface-contrast);
+      border-color: var(--wire-black);
+    }
+
+    /* SCREEN 10: KPI GRID */
+    .kpi-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .kpi-card {
+      background: var(--wire-card);
+      border: 1.5px solid var(--wire-border-dark);
+      border-radius: 8px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .kpi-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--wire-black);
+    }
+
+    /* ALL 10 SCREENS FULL-DISPLAY GRID VIEW (SHOWS COMPLETE FULL SCREENS ONE AFTER ANOTHER) */
+    .all-grid-view {
+      display: none;
+      width: 100%;
+      max-width: 1340px;
+      flex-direction: column;
+      gap: 36px;
+      margin-bottom: 50px;
+    }
+
+    .grid-screen-card {
+      background: #111827;
+      border: 2px solid #374151;
+      border-radius: 20px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .grid-screen-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 800;
+      color: #f3f4f6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 8px;
+    }
+
+    .grid-tablet-window {
+      width: 100%;
+      min-height: 740px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 2px solid var(--wire-border-dark);
+      background: var(--wire-bg);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* RESPONSIVE SCALING */
+    @media (max-width: 1024px) {
+      .login-split-landscape {
+        flex-direction: column;
+      }
+      .login-left-brand, .login-right-terminal {
+        width: 100%;
+        flex: 1 1 100%;
+        border-right: none;
+        border-bottom: 2px solid var(--wire-border-dark);
+      }
+      .screen-2-main-split, .screen-3-split {
+        flex-direction: column;
+      }
+      .screen-2-left-60, .screen-2-right-40, .screen-3-left-60, .screen-3-right-40 {
+        flex: 1 1 100%;
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid var(--wire-border-dark);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP CONSOLE CONTROLLER -->
+  <header class="top-console">
+    <div class="console-brand">
+      <span class="blueprint-tag">[WAITER TERMINAL]</span>
+      <span class="console-title">Floor Captain Tablet Skeletons (Screens 1 to 10)</span>
+      <span class="blueprint-tag">[TABLET RESOLUTION: 1024x768 / 16:10]</span>
+    </div>
+
+    <div class="nav-actions">
+      <a href="skeletons.html" class="switch-link">
+        <span>📱</span> Customer (1-10)
+      </a>
+      <a href="kitchen-skeletons.html" class="switch-link">
+        <span>📟</span> Kitchen KDS (1-3)
+      </a>
+      <a href="manager-skeletons.html" class="switch-link">
+        <span>👔</span> Manager (1-16)
+      </a>
+
+      <div class="view-mode-switch">
+        <button class="mode-btn active" id="btnModeFlow" onclick="setViewMode('flow')">📟 TABLET VIEW</button>
+        <button class="mode-btn" id="btnModeGrid" onclick="setViewMode('grid')">🗂️ ALL 10 SCREENS</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- SCREEN NAVIGATION TABS (SCREENS 1 TO 10) -->
+  <nav class="screen-nav-bar" id="screenTabsBar">
+    <button class="screen-tab active" id="tab-1" onclick="selectScreen(1)">
+      <div class="tab-num"><span>SCR 1</span><span>[AUTH]</span></div>
+      <div class="tab-title">1. Waiter Login</div>
+    </button>
+    <button class="screen-tab" id="tab-2" onclick="selectScreen(2)">
+      <div class="tab-num"><span>SCR 2</span><span>[60/40]</span></div>
+      <div class="tab-title">2. All Tables &amp; Feeds</div>
+    </button>
+    <button class="screen-tab" id="tab-3" onclick="selectScreen(3)">
+      <div class="tab-num"><span>SCR 3</span><span>[DETAIL]</span></div>
+      <div class="tab-title">3. Table Detail &amp; Actions</div>
+    </button>
+    <button class="screen-tab" id="tab-4" onclick="selectScreen(4)">
+      <div class="tab-num"><span>SCR 4</span><span>[MENU]</span></div>
+      <div class="tab-title">4. Take Order Menu</div>
+    </button>
+    <button class="screen-tab" id="tab-5" onclick="selectScreen(5)">
+      <div class="tab-num"><span>SCR 5</span><span>[ITEM]</span></div>
+      <div class="tab-title">5. Item Customization</div>
+    </button>
+    <button class="screen-tab" id="tab-6" onclick="selectScreen(6)">
+      <div class="tab-num"><span>SCR 6</span><span>[MERGE]</span></div>
+      <div class="tab-title">6. Merge/Split Tables</div>
+    </button>
+    <button class="screen-tab" id="tab-7" onclick="selectScreen(7)">
+      <div class="tab-num"><span>SCR 7</span><span>[PAY]</span></div>
+      <div class="tab-title">7. Payment / Gateway</div>
+    </button>
+    <button class="screen-tab" id="tab-8" onclick="selectScreen(8)">
+      <div class="tab-num"><span>SCR 8</span><span>[BILL]</span></div>
+      <div class="tab-title">8. Print / WhatsApp Bill</div>
+    </button>
+    <button class="screen-tab" id="tab-9" onclick="selectScreen(9)">
+      <div class="tab-num"><span>SCR 9</span><span>[VACATE]</span></div>
+      <div class="tab-title">9. Vacate &amp; Turnaround</div>
+    </button>
+    <button class="screen-tab" id="tab-10" onclick="selectScreen(10)">
+      <div class="tab-num"><span>SCR 10</span><span>[STATS]</span></div>
+      <div class="tab-title">10. Shift Overview</div>
+    </button>
+  </nav>
+
+  <!-- TABLET STAGE (FLOW VIEW) -->
+  <main class="tablet-stage" id="tabletStage">
+    <div class="tablet-bezel">
+      <div class="tablet-notch">
+        <div class="tablet-sensor"></div>
+        <div class="tablet-camera"></div>
+      </div>
+
+      <!-- WIREFRAME SCREEN CANVAS -->
+      <div class="wire-canvas" id="wireCanvas">
+
+        <!-- ========================================== -->
+        <!-- SCREEN 1: LOGIN PAGE (100% UTILIZED LANDSCAPE SPLIT) -->
+        <!-- ========================================== -->
+        <section id="screen-1-view" class="screen-container-full">
+          <div class="login-split-landscape">
+            
+            <!-- LEFT 42%: BRAND & HOTEL METADATA -->
+            <div class="login-left-brand">
+              <div>
+                <div class="wf-box-dashed" style="width: 100%; height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px;">
+                  <span style="font-size: 32px;">🏢</span>
+                  <span class="wf-tag">[HOTEL / ESTABLISHMENT LOGO SPACE]</span>
+                </div>
+
+                <h1 style="font-size: 20px; font-weight: 800; letter-spacing: 0.5px;">[HOTEL / ESTABLISHMENT NAME]</h1>
+                <p class="wf-tag" style="margin-top: 6px; font-size: 11px;">[FLOOR CAPTAIN / WAITER SERVICE CONSOLE]</p>
+
+                <div class="wf-box" style="margin-top: 24px; padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+                  <span class="wf-tag">[ACTIVE SHIFT ANNOUNCEMENT]:</span>
+                  <div style="font-size: 12px; font-weight: 600;">[SHIFT A: 08:00 AM - 04:00 PM]</div>
+                  <div class="wf-tag">[ASSIGNED ZONE: MAIN DINING HALL • SECTION A &amp; B]</div>
+                  <div class="wf-tag">[TABLES UNDER MANAGEMENT: 16 ACTIVE TABLES]</div>
+                </div>
+
+                <div class="wf-box" style="margin-top: 14px; padding: 12px; display: flex; flex-direction: column; gap: 4px;">
+                  <span class="wf-tag">[SERVICE PROTOCOL CHECK]:</span>
+                  <div style="font-size: 11px;">• [CHECK WATER BOTTLES &amp; CUTLERY STANDS]</div>
+                  <div style="font-size: 11px;">• [CONFIRM KITCHEN KDS CHEF CONNECTION]</div>
+                </div>
+              </div>
+
+              <!-- BOTTOM COMPANY LOGO -->
+              <div style="border-top: 1px dashed var(--wire-border); padding-top: 14px; text-align: center;">
+                <div class="wf-tag" style="font-size: 9.5px;">[SMALL OUR COMPANY LOGO • POWERED BY PLATFORM]</div>
+              </div>
+            </div>
+
+            <!-- RIGHT 58%: AUTHENTICATION KEYPAD TERMINAL -->
+            <div class="login-right-terminal">
+              <div>
+                <span class="wf-tag">[AUTHENTICATION CREDENTIALS]:</span>
+                <h2 style="font-size: 16px; font-weight: 800; margin-top: 4px;">[ENTER WAITER NAME &amp; NUMBER LOCK PIN]</h2>
+              </div>
+
+              <div>
+                <label class="wf-tag" style="display: block; margin-bottom: 6px;">[ENTER WAITER NAME]:</label>
+                <input type="text" id="waiterNameInput" class="wf-box" style="width: 100%; max-width: 440px; padding: 12px 14px; font-family: 'JetBrains Mono'; font-size: 14px; font-weight: 700;" value="[WAITER 01]">
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; max-width: 440px; margin-bottom: 6px;">
+                  <label class="wf-tag">[NUMBER LOCK PASSWORD / PIN]:</label>
+                  <span class="wf-tag" id="waiterPinStatus">[4 DIGITS REQUIRED]</span>
+                </div>
+                <div class="wf-box" style="max-width: 440px; padding: 14px; display: flex; justify-content: center; gap: 16px; background: var(--wire-surface-contrast);" id="waiterPinBox">
+                  <div class="pin-dot filled"></div>
+                  <div class="pin-dot filled"></div>
+                  <div class="pin-dot"></div>
+                  <div class="pin-dot"></div>
+                </div>
+              </div>
+
+              <!-- NUMBER KEYPAD -->
+              <div class="keypad-grid">
+                <button class="key-btn" onclick="pressWaiterKey('1')">1</button>
+                <button class="key-btn" onclick="pressWaiterKey('2')">2</button>
+                <button class="key-btn" onclick="pressWaiterKey('3')">3</button>
+                <button class="key-btn" onclick="pressWaiterKey('4')">4</button>
+                <button class="key-btn" onclick="pressWaiterKey('5')">5</button>
+                <button class="key-btn" onclick="pressWaiterKey('6')">6</button>
+                <button class="key-btn" onclick="pressWaiterKey('7')">7</button>
+                <button class="key-btn" onclick="pressWaiterKey('8')">8</button>
+                <button class="key-btn" onclick="pressWaiterKey('9')">9</button>
+                <button class="key-btn" style="font-size: 12px; background: var(--wire-surface-subtle);" onclick="pressWaiterDel()">[⌫ DEL]</button>
+                <button class="key-btn" onclick="pressWaiterKey('0')">0</button>
+                <button class="key-btn" style="font-size: 12px; background: var(--wire-surface-subtle);" onclick="clearWaiterPin()">[✕ CLR]</button>
+              </div>
+
+              <!-- ACTION BUTTONS -->
+              <div style="display: flex; gap: 12px; max-width: 440px; margin: 0 auto; width: 100%;">
+                <button class="wf-btn wf-btn-subtle" style="flex: 1; padding: 14px;" onclick="resetWaiterLogin()">
+                  [RESET]
+                </button>
+                <button class="wf-btn wf-btn-dark" style="flex: 2; padding: 14px; font-size: 13px;" onclick="selectScreen(2)">
+                  [GO TO DASHBOARD ➔]
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 2: ALL TABLES 3-COL (60%) + DUAL NOTIFICATIONS (40%) -->
+        <!-- ========================================== -->
+        <section id="screen-2-view" class="screen-container-full" style="display: none;">
+          
+          <!-- TOP HEADER (10% OF TAB SECTION) -->
+          <div class="screen-2-header">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span class="wf-tag" style="font-weight: 800; color: var(--wire-black);">[FLOOR METRICS]:</span>
+              <div class="metric-pill">[TOTAL TABLES: 16]</div>
+              <div class="metric-pill" style="border-color: var(--wire-black); background: var(--wire-surface-contrast);">[TABLES FILLED: 10]</div>
+              <div class="metric-pill">[TABLES EMPTY: 6]</div>
+              <div class="metric-pill">[ACTIVE ORDERS: 8]</div>
+              <div class="metric-pill">[GUESTS SEATED: 34]</div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="wf-tag" style="border: 1.5px solid var(--wire-black); padding: 6px 10px; border-radius: 6px;">
+                👤 [ACTIVE: WAITER 01]
+              </span>
+              <button class="wf-btn wf-btn-subtle" style="font-size: 11px;" onclick="selectScreen(10)">
+                📊 [VIEW SHIFT STATS]
+              </button>
+            </div>
+          </div>
+
+          <!-- MAIN SPLIT: LEFT 60% (3-COL TABLES) / RIGHT 40% (DUAL NOTIFS) -->
+          <div class="screen-2-main-split">
+            
+            <!-- LEFT 60%: ALL TABLES 3-COLUMN MATRIX -->
+            <div class="screen-2-left-60">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--wire-border-dark); padding-bottom: 6px;">
+                <span class="wf-tag" style="font-weight: 800; font-size: 11px;">
+                  [ALL TABLES MATRIX (3-COLUMNS) — 60% SCREEN WIDTH]
+                </span>
+                <span class="wf-tag">[CLICK ANY TABLE CARD TO OPEN SCREEN 3 DETAIL]</span>
+              </div>
+
+              <div class="tables-grid-3col">
+                
+                <!-- TABLE 01 -->
+                <div class="table-box" onclick="selectScreen(3, 'TABLE 01')">
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--wire-border); padding-bottom: 4px;">
+                    <strong style="font-family: 'JetBrains Mono'; font-size: 13px;">[TABLE 01]</strong>
+                    <span class="wf-tag">⏱ 14m • KOT #101</span>
+                  </div>
+                  <div style="font-size: 11px; display: flex; flex-direction: column; gap: 4px;">
+                    <div>• 2x [ITEM 1] <span class="wf-tag">[PREPARING]</span></div>
+                    <div>• 1x [ITEM 3] <span class="wf-tag">[RECEIVED]</span></div>
+                  </div>
+                  <div style="display: flex; gap: 6px; margin-top: auto; padding-top: 6px;">
+                    <button class="wf-btn wf-btn-dark" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); alert('[CUSTOMER TRACKING: ORDER MARKED SERVED FOR TABLE 01]')">
+                      ✓ [SERVED]
+                    </button>
+                    <button class="wf-btn wf-btn-subtle" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); selectScreen(9, 'TABLE 01')">
+                      [VACATE]
+                    </button>
+                  </div>
+                </div>
+
+                <!-- TABLE 02 -->
+                <div class="table-box" onclick="selectScreen(3, 'TABLE 02')">
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--wire-border); padding-bottom: 4px;">
+                    <strong style="font-family: 'JetBrains Mono'; font-size: 13px;">[TABLE 02]</strong>
+                    <span class="wf-tag">⏱ 08m • KOT #102</span>
+                  </div>
+                  <div style="font-size: 11px; display: flex; flex-direction: column; gap: 4px;">
+                    <div>• 2x [ITEM 2] <span class="wf-tag">[RECEIVED]</span></div>
+                    <div>• 1x [ITEM 5] <span class="wf-tag">[RECEIVED]</span></div>
+                  </div>
+                  <div style="display: flex; gap: 6px; margin-top: auto; padding-top: 6px;">
+                    <button class="wf-btn wf-btn-dark" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); alert('[CUSTOMER TRACKING: ORDER MARKED SERVED FOR TABLE 02]')">
+                      ✓ [SERVED]
+                    </button>
+                    <button class="wf-btn wf-btn-subtle" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); selectScreen(9, 'TABLE 02')">
+                      [VACATE]
+                    </button>
+                  </div>
+                </div>
+
+                <!-- TABLE 03 -->
+                <div class="table-box" onclick="selectScreen(3, 'TABLE 03')">
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--wire-border); padding-bottom: 4px;">
+                    <strong style="font-family: 'JetBrains Mono'; font-size: 13px;">[TABLE 03]</strong>
+                    <span class="wf-tag">⏱ 22m • KOT #103</span>
+                  </div>
+                  <div style="font-size: 11px; display: flex; flex-direction: column; gap: 4px;">
+                    <div>• 1x [ITEM 1] <span class="wf-tag" style="background: var(--wire-surface-contrast);">[READY]</span></div>
+                    <div>• 1x [ITEM 4] <span class="wf-tag" style="background: var(--wire-surface-contrast);">[READY]</span></div>
+                  </div>
+                  <div style="display: flex; gap: 6px; margin-top: auto; padding-top: 6px;">
+                    <button class="wf-btn wf-btn-dark" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); alert('[CUSTOMER TRACKING: ORDER MARKED SERVED FOR TABLE 03]')">
+                      ✓ [SERVED]
+                    </button>
+                    <button class="wf-btn wf-btn-subtle" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); selectScreen(9, 'TABLE 03')">
+                      [VACATE]
+                    </button>
+                  </div>
+                </div>
+
+                <!-- TABLE 04 (HIGHLIGHTED ACTIVE TABLE) -->
+                <div class="table-box" style="border-color: var(--wire-black); box-shadow: 0 0 0 1px var(--wire-black);" onclick="selectScreen(3, 'TABLE 04')">
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--wire-border); padding-bottom: 4px;">
+                    <strong style="font-family: 'JetBrains Mono'; font-size: 13px;">[TABLE 04] ★</strong>
+                    <span class="wf-tag">⏱ 12m • KOT #104</span>
+                  </div>
+                  <div style="font-size: 11px; display: flex; flex-direction: column; gap: 4px;">
+                    <div>• 1x [ITEM 2] <span class="wf-tag">[PREPARING]</span></div>
+                    <div>• 2x [ITEM 6] <span class="wf-tag">[PREPARING]</span></div>
+                  </div>
+                  <div style="display: flex; gap: 6px; margin-top: auto; padding-top: 6px;">
+                    <button class="wf-btn wf-btn-dark" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); alert('[CUSTOMER TRACKING: ORDER MARKED SERVED FOR TABLE 04]')">
+                      ✓ [SERVED]
+                    </button>
+                    <button class="wf-btn wf-btn-subtle" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); selectScreen(9, 'TABLE 04')">
+                      [VACATE]
+                    </button>
+                  </div>
+                </div>
+
+                <!-- TABLE 05 -->
+                <div class="table-box" onclick="selectScreen(3, 'TABLE 05')">
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--wire-border); padding-bottom: 4px;">
+                    <strong style="font-family: 'JetBrains Mono'; font-size: 13px;">[TABLE 05]</strong>
+                    <span class="wf-tag">⏱ 05m • KOT #105</span>
+                  </div>
+                  <div style="font-size: 11px; display: flex; flex-direction: column; gap: 4px;">
+                    <div>• 1x [ITEM 2] <span class="wf-tag">[RECEIVED]</span></div>
+                    <div>• 3x [ITEM 7] <span class="wf-tag">[RECEIVED]</span></div>
+                  </div>
+                  <div style="display: flex; gap: 6px; margin-top: auto; padding-top: 6px;">
+                    <button class="wf-btn wf-btn-dark" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); alert('[CUSTOMER TRACKING: ORDER MARKED SERVED FOR TABLE 05]')">
+                      ✓ [SERVED]
+                    </button>
+                    <button class="wf-btn wf-btn-subtle" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); selectScreen(9, 'TABLE 05')">
+                      [VACATE]
+                    </button>
+                  </div>
+                </div>
+
+                <!-- TABLE 06 -->
+                <div class="table-box" onclick="selectScreen(3, 'TABLE 06')">
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--wire-border); padding-bottom: 4px;">
+                    <strong style="font-family: 'JetBrains Mono'; font-size: 13px;">[TABLE 06]</strong>
+                    <span class="wf-tag">⏱ 18m • KOT #106</span>
+                  </div>
+                  <div style="font-size: 11px; display: flex; flex-direction: column; gap: 4px;">
+                    <div>• 2x [ITEM 3] <span class="wf-tag" style="background: var(--wire-surface-contrast);">[READY]</span></div>
+                    <div>• 1x [ITEM 8] <span class="wf-tag">[PREPARING]</span></div>
+                  </div>
+                  <div style="display: flex; gap: 6px; margin-top: auto; padding-top: 6px;">
+                    <button class="wf-btn wf-btn-dark" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); alert('[CUSTOMER TRACKING: ORDER MARKED SERVED FOR TABLE 06]')">
+                      ✓ [SERVED]
+                    </button>
+                    <button class="wf-btn wf-btn-subtle" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); selectScreen(9, 'TABLE 06')">
+                      [VACATE]
+                    </button>
+                  </div>
+                </div>
+
+                <!-- TABLE 07 -->
+                <div class="table-box" onclick="selectScreen(3, 'TABLE 07')">
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--wire-border); padding-bottom: 4px;">
+                    <strong style="font-family: 'JetBrains Mono'; font-size: 13px;">[TABLE 07]</strong>
+                    <span class="wf-tag">⏱ 03m • KOT #107</span>
+                  </div>
+                  <div style="font-size: 11px; display: flex; flex-direction: column; gap: 4px;">
+                    <div>• 1x [ITEM 4] <span class="wf-tag">[RECEIVED]</span></div>
+                    <div>• 2x [ITEM 1] <span class="wf-tag">[RECEIVED]</span></div>
+                  </div>
+                  <div style="display: flex; gap: 6px; margin-top: auto; padding-top: 6px;">
+                    <button class="wf-btn wf-btn-dark" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); alert('[CUSTOMER TRACKING: ORDER MARKED SERVED FOR TABLE 07]')">
+                      ✓ [SERVED]
+                    </button>
+                    <button class="wf-btn wf-btn-subtle" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); selectScreen(9, 'TABLE 07')">
+                      [VACATE]
+                    </button>
+                  </div>
+                </div>
+
+                <!-- TABLE 08 -->
+                <div class="table-box" onclick="selectScreen(3, 'TABLE 08')">
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--wire-border); padding-bottom: 4px;">
+                    <strong style="font-family: 'JetBrains Mono'; font-size: 13px;">[TABLE 08]</strong>
+                    <span class="wf-tag">⏱ 25m • KOT #108</span>
+                  </div>
+                  <div style="font-size: 11px; display: flex; flex-direction: column; gap: 4px;">
+                    <div>• 3x [ITEM 5] <span class="wf-tag" style="background: var(--wire-surface-contrast);">[READY]</span></div>
+                    <div>• 1x [ITEM 2] <span class="wf-tag">[SERVED]</span></div>
+                  </div>
+                  <div style="display: flex; gap: 6px; margin-top: auto; padding-top: 6px;">
+                    <button class="wf-btn wf-btn-dark" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); alert('[CUSTOMER TRACKING: ORDER MARKED SERVED FOR TABLE 08]')">
+                      ✓ [SERVED]
+                    </button>
+                    <button class="wf-btn wf-btn-subtle" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); selectScreen(9, 'TABLE 08')">
+                      [VACATE]
+                    </button>
+                  </div>
+                </div>
+
+                <!-- TABLE 09 -->
+                <div class="table-box" onclick="selectScreen(3, 'TABLE 09')">
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--wire-border); padding-bottom: 4px;">
+                    <strong style="font-family: 'JetBrains Mono'; font-size: 13px;">[TABLE 09]</strong>
+                    <span class="wf-tag">⏱ 11m • KOT #109</span>
+                  </div>
+                  <div style="font-size: 11px; display: flex; flex-direction: column; gap: 4px;">
+                    <div>• 1x [ITEM 6] <span class="wf-tag">[PREPARING]</span></div>
+                    <div>• 2x [ITEM 7] <span class="wf-tag">[PREPARING]</span></div>
+                  </div>
+                  <div style="display: flex; gap: 6px; margin-top: auto; padding-top: 6px;">
+                    <button class="wf-btn wf-btn-dark" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); alert('[CUSTOMER TRACKING: ORDER MARKED SERVED FOR TABLE 09]')">
+                      ✓ [SERVED]
+                    </button>
+                    <button class="wf-btn wf-btn-subtle" style="flex: 1; padding: 6px 4px; font-size: 9.5px;" onclick="event.stopPropagation(); selectScreen(9, 'TABLE 09')">
+                      [VACATE]
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- RIGHT 40%: DUAL NOTIFICATION SECTION -->
+            <div class="screen-2-right-40">
+              
+              <!-- TOP RIGHT: CUSTOMER NOTIFICATIONS -->
+              <div class="notif-half">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--wire-border-dark); padding-bottom: 6px;">
+                  <span class="wf-tag" style="font-weight: 800; color: var(--wire-black);">
+                    🔔 [CUSTOMER NOTIFICATIONS &amp; ASSISTANCE CALLS]
+                  </span>
+                  <span class="wf-tag">[TOP RIGHT 20%]</span>
+                </div>
+
+                <div class="notif-card" id="custNotif1">
+                  <div>
+                    <strong style="font-size: 11px; display: block;">[TABLE 04: REQUESTED WATER REFILL]</strong>
+                    <span class="wf-tag">⏱ 2m ago • Station A</span>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="font-size: 10px; padding: 6px 12px;" onclick="resolveNotif('custNotif1', '[CUSTOMER CALL RESOLVED: WATER REFILL COMPLETED]')">
+                    [RESOLVED]
+                  </button>
+                </div>
+
+                <div class="notif-card" id="custNotif2">
+                  <div>
+                    <strong style="font-size: 11px; display: block;">[TABLE 02: REQUESTED BILL / CHECKOUT]</strong>
+                    <span class="wf-tag">⏱ 4m ago • Ready to pay</span>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="font-size: 10px; padding: 6px 12px;" onclick="resolveNotif('custNotif2', '[BILL ASSISTANCE RESOLVED]')">
+                    [RESOLVED]
+                  </button>
+                </div>
+
+                <div class="notif-card" id="custNotif3">
+                  <div>
+                    <strong style="font-size: 11px; display: block;">[TABLE 07: CUTLERY &amp; TISSUE REFILL]</strong>
+                    <span class="wf-tag">⏱ 6m ago • Napkins requested</span>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="font-size: 10px; padding: 6px 12px;" onclick="resolveNotif('custNotif3', '[CUTLERY REQUEST RESOLVED]')">
+                    [RESOLVED]
+                  </button>
+                </div>
+
+                <div class="notif-card" id="custNotif4">
+                  <div>
+                    <strong style="font-size: 11px; display: block;">[TABLE 05: CALL WAITER TO ASSIST WITH MENU]</strong>
+                    <span class="wf-tag">⏱ 8m ago • Dietary query</span>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="font-size: 10px; padding: 6px 12px;" onclick="resolveNotif('custNotif4', '[WAITER ASSISTANCE RESOLVED]')">
+                    [RESOLVED]
+                  </button>
+                </div>
+              </div>
+
+              <!-- BOTTOM RIGHT: KITCHEN NOTIFICATIONS -->
+              <div class="notif-half">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--wire-border-dark); padding-bottom: 6px;">
+                  <span class="wf-tag" style="font-weight: 800; color: var(--wire-black);">
+                    👨‍🍳 [KITCHEN PASS DISPATCH NOTIFICATIONS]
+                  </span>
+                  <span class="wf-tag">[BOTTOM RIGHT 20%]</span>
+                </div>
+
+                <div class="notif-card" id="kitchNotif1">
+                  <div>
+                    <strong style="font-size: 11px; display: block;">[TABLE 03: 1x ITEM 1 &amp; 1x ITEM 4 READY]</strong>
+                    <span class="wf-tag">⏱ Just Now • Chef Pass Window</span>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="font-size: 10px; padding: 6px 12px;" onclick="resolveNotif('kitchNotif1', '[KITCHEN ORDER MARKED SERVED TO TABLE 03]')">
+                    [SERVED]
+                  </button>
+                </div>
+
+                <div class="notif-card" id="kitchNotif2">
+                  <div>
+                    <strong style="font-size: 11px; display: block;">[TABLE 06: 2x ITEM 3 READY FOR RUNNER]</strong>
+                    <span class="wf-tag">⏱ 3m ago • Hot Cookline</span>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="font-size: 10px; padding: 6px 12px;" onclick="resolveNotif('kitchNotif2', '[KITCHEN ORDER MARKED SERVED TO TABLE 06]')">
+                    [SERVED]
+                  </button>
+                </div>
+
+                <div class="notif-card" id="kitchNotif3">
+                  <div>
+                    <strong style="font-size: 11px; display: block;">[TABLE 01: 2x ITEM 1 PLATED]</strong>
+                    <span class="wf-tag">⏱ 5m ago • Pickup counter</span>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="font-size: 10px; padding: 6px 12px;" onclick="resolveNotif('kitchNotif3', '[KITCHEN ORDER MARKED SERVED TO TABLE 01]')">
+                    [SERVED]
+                  </button>
+                </div>
+
+                <div class="notif-card" id="kitchNotif4">
+                  <div>
+                    <strong style="font-size: 11px; display: block;">[TABLE 08: 3x ITEM 5 READY TO SERVE]</strong>
+                    <span class="wf-tag">⏱ 7m ago • Main Pass</span>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="font-size: 10px; padding: 6px 12px;" onclick="resolveNotif('kitchNotif4', '[KITCHEN ORDER MARKED SERVED TO TABLE 08]')">
+                    [SERVED]
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 3: DETAILED TABLE VIEW (60% LEFT / 40% RIGHT DYNAMIC) -->
+        <!-- ========================================== -->
+        <section id="screen-3-view" class="screen-container-full" style="display: none;">
+          
+          <div style="padding: 10px 18px; border-bottom: 2px solid var(--wire-border-dark); background: var(--wire-card); display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <button class="wf-btn wf-btn-dark" onclick="selectScreen(2)">
+                [⬅ BACK TO ALL TABLES (SCREEN 2)]
+              </button>
+              <h3 style="font-size: 14px; font-weight: 800;" id="screen3TableTitle">[TABLE 04 SELECTED]</h3>
+              <span class="wf-tag" style="border: 1px solid var(--wire-black); padding: 3px 6px; border-radius: 4px;">
+                [STATUS: OCCUPIED • DINING]
+              </span>
+            </div>
+            <span class="wf-tag">[ASSIGNED FLOOR CAPTAIN: WAITER 01]</span>
+          </div>
+
+          <div class="screen-3-split">
+            
+            <!-- LEFT 60%: TABLE DETAILS & ACTION BUTTONS -->
+            <div class="screen-3-left-60">
+              <div class="wf-box" style="padding: 14px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <strong style="font-size: 13px;">[KOT #104 • ORDER PLACED 12:52 PM]</strong>
+                  <div class="wf-tag">[GUEST COUNT: 3 GUESTS • SERVER: WAITER 01]</div>
+                </div>
+                <span class="wf-tag" style="border: 1.5px solid var(--wire-black); padding: 4px 8px; border-radius: 4px; font-weight: 800;">
+                  [RUNNING BILL: ₹ 1,430.00]
+                </span>
+              </div>
+
+              <div class="wf-tag" style="font-weight: 800;">[ORDERED ITEMS LIST &amp; PREPARATION TRACKING]:</div>
+
+              <!-- ITEMS LIST -->
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="wf-box" style="padding: 12px 14px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <strong style="font-size: 12px;">1x [ITEM 2]</strong>
+                    <div class="wf-tag">[NOTE: LESS SPICE, NO ONION]</div>
+                  </div>
+                  <span class="wf-tag" style="border: 1px solid var(--wire-black); padding: 3px 6px; border-radius: 3px;">[STAGE 2: PREPARING]</span>
+                </div>
+
+                <div class="wf-box" style="padding: 12px 14px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <strong style="font-size: 12px;">2x [ITEM 6]</strong>
+                    <div class="wf-tag">[NOTE: EXTRA CHEESE TOPPING]</div>
+                  </div>
+                  <span class="wf-tag" style="border: 1px solid var(--wire-black); padding: 3px 6px; border-radius: 3px;">[STAGE 3: READY FOR RUNNER]</span>
+                </div>
+
+                <div class="wf-box" style="padding: 12px 14px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <strong style="font-size: 12px;">1x [ITEM 1]</strong>
+                    <div class="wf-tag">[STANDARD PORTION]</div>
+                  </div>
+                  <span class="wf-tag" style="border: 1px solid var(--wire-black); padding: 3px 6px; border-radius: 3px;">[STAGE 4: SERVED]</span>
+                </div>
+              </div>
+
+              <div class="wf-box" style="padding: 12px; display: flex; flex-direction: column; gap: 4px;">
+                <span class="wf-tag">[SPECIAL CUSTOMER SERVICE NOTES]:</span>
+                <div style="font-size: 11px;">• [CUSTOMER REQUEST: EXTRA NAPKINS PROVIDED AT 01:05 PM]</div>
+                <div style="font-size: 11px;">• [ALLERGY ALERT: PEANUT FREE PREPARATION VERIFIED WITH CHEF]</div>
+              </div>
+
+              <!-- 4 ACTION BUTTONS IN 60% LEFT (PROPERLY POSITIONED) -->
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: auto; padding-top: 14px;">
+                <button class="wf-btn wf-btn-dark" style="padding: 14px;" onclick="selectScreen(4)">
+                  🍽️ [TAKE ORDERS BUTTON ➔ SCREEN 4]
+                </button>
+                <button class="wf-btn wf-btn-dark" style="padding: 14px;" onclick="openRightPane('payment')">
+                  💳 [PAYMENT BUTTON (EXPANDS RIGHT 40%)]
+                </button>
+                <button class="wf-btn wf-btn-subtle" style="padding: 14px;" onclick="openRightPane('merge')">
+                  🔗 [MERGE TABLES BUTTON (EXPANDS RIGHT 40%)]
+                </button>
+                <button class="wf-btn wf-btn-subtle" style="padding: 14px;" onclick="selectScreen(9, 'TABLE 04')">
+                  🧹 [TABLE VACATE BUTTON ➔ SCREEN 9]
+                </button>
+              </div>
+            </div>
+
+            <!-- RIGHT 40%: DYNAMIC VIEW (CHANGES BASED ON BUTTON CLICKS) -->
+            <div class="screen-3-right-40" id="screen3RightPane">
+              
+              <!-- DEFAULT RIGHT PANE VIEW -->
+              <div id="rightPaneDefault" style="display: flex; flex-direction: column; gap: 12px;">
+                <span class="wf-tag" style="font-weight: 800;">[RIGHT 40% CONSOLE — LIVE BILL SUMMARY]:</span>
+                <div class="wf-box" style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+                  <strong style="font-size: 13px;">[BILL SUMMARY FOR TABLE 04]</strong>
+                  <div style="font-family: 'JetBrains Mono'; font-size: 11px; display: flex; justify-content: space-between;">
+                    <span>[SUBTOTAL]:</span><span>₹ 1,300.00</span>
+                  </div>
+                  <div style="font-family: 'JetBrains Mono'; font-size: 11px; display: flex; justify-content: space-between;">
+                    <span>[CGST 2.5%]:</span><span>₹ 32.50</span>
+                  </div>
+                  <div style="font-family: 'JetBrains Mono'; font-size: 11px; display: flex; justify-content: space-between;">
+                    <span>[SGST 2.5%]:</span><span>₹ 32.50</span>
+                  </div>
+                  <div style="font-family: 'JetBrains Mono'; font-size: 11px; display: flex; justify-content: space-between;">
+                    <span>[SERVICE CHARGE 5%]:</span><span>₹ 65.00</span>
+                  </div>
+                  <div style="border-top: 1.5px solid var(--wire-black); padding-top: 8px; font-family: 'JetBrains Mono'; font-size: 13px; font-weight: 800; display: flex; justify-content: space-between;">
+                    <span>[NET AMOUNT PAYABLE]:</span><span>₹ 1,430.00</span>
+                  </div>
+                </div>
+
+                <div class="wf-box" style="padding: 12px; display: flex; flex-direction: column; gap: 4px;">
+                  <span class="wf-tag">[CUSTOMER PAYMENT PREFERENCE]:</span>
+                  <div style="font-size: 11px;">• [CUSTOMER PREFERS: CASH OR UPI]</div>
+                  <div style="font-size: 11px;">• [LOYALTY MEMBERSHIP: SILVER TIER (50 PTS AVAILABLE)]</div>
+                </div>
+
+                <div class="wf-box-dashed" style="padding: 12px; font-size: 11px; color: var(--wire-text-muted);">
+                  [CLICK [PAYMENT] OR [MERGE TABLES] ON THE LEFT TO OPEN REAL-TIME CONTROLS HERE]
+                </div>
+              </div>
+
+              <!-- DYNAMIC PAYMENT PANE -->
+              <div id="rightPanePayment" style="display: none; flex-direction: column; gap: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--wire-border-dark); padding-bottom: 6px;">
+                  <span class="wf-tag" style="font-weight: 800; color: var(--wire-black);">[PAYMENT SETTLEMENT PANE — TABLE 04]</span>
+                  <button class="wf-btn wf-btn-subtle" style="padding: 2px 6px; font-size: 9px;" onclick="openRightPane('default')">✕</button>
+                </div>
+                <div class="wf-box" style="padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+                  <strong style="font-size: 12px;">[CHOOSE SETTLEMENT METHOD]:</strong>
+                  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
+                    <button class="wf-btn wf-btn-dark" style="font-size: 10px;">[CASH]</button>
+                    <button class="wf-btn wf-btn-subtle" style="font-size: 10px;">[CARD POS]</button>
+                    <button class="wf-btn wf-btn-subtle" style="font-size: 10px;">[UPI QR]</button>
+                  </div>
+                </div>
+                <button class="wf-btn wf-btn-dark" style="padding: 14px; font-size: 12px;" onclick="selectScreen(7)">
+                  💳 [OPEN FULL PAYMENT PROCESSING (SCREEN 7) ➔]
+                </button>
+                <button class="wf-btn wf-btn-subtle" style="padding: 12px;" onclick="selectScreen(6)">
+                  ⚙️ [OPEN ADVANCED SPLIT BILL OPTIONS (SCREEN 6) ➔]
+                </button>
+              </div>
+
+              <!-- DYNAMIC MERGE TABLES PANE -->
+              <div id="rightPaneMerge" style="display: none; flex-direction: column; gap: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--wire-border-dark); padding-bottom: 6px;">
+                  <span class="wf-tag" style="font-weight: 800; color: var(--wire-black);">[MERGE TABLES CONTROLLER]</span>
+                  <button class="wf-btn wf-btn-subtle" style="padding: 2px 6px; font-size: 9px;" onclick="openRightPane('default')">✕</button>
+                </div>
+                <div class="wf-box" style="padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+                  <span class="wf-tag">[SELECT TABLES TO MERGE WITH TABLE 04]:</span>
+                  <div class="table-chips-grid">
+                    <button class="table-chip-btn selected">[TBL 04]</button>
+                    <button class="table-chip-btn selected" id="chipTbl5" onclick="toggleMergeChip(this)">[TBL 05]</button>
+                    <button class="table-chip-btn" id="chipTbl6" onclick="toggleMergeChip(this)">[TBL 06]</button>
+                    <button class="table-chip-btn" id="chipTbl7" onclick="toggleMergeChip(this)">[TBL 07]</button>
+                  </div>
+                </div>
+                <div class="wf-box" style="padding: 14px; display: flex; flex-direction: column; gap: 6px;">
+                  <strong style="font-size: 12px;">[MERGED TABLE RESULT PREVIEW]:</strong>
+                  <div class="wf-tag">[COMBINED TABLE: TBL 04 + TBL 05]</div>
+                  <div class="wf-tag">[TOTAL GUEST CAPACITY: 6 GUESTS]</div>
+                  <div class="wf-tag">[CONSOLIDATED RUNNING BILL: ₹ 2,650.00]</div>
+                </div>
+                <button class="wf-btn wf-btn-dark" style="padding: 14px;" onclick="confirmMerge()">
+                  🔗 [CONFIRM MERGE &amp; SYNC BILLS]
+                </button>
+                <button class="wf-btn wf-btn-subtle" style="padding: 12px;" onclick="selectScreen(6)">
+                  ⚙️ [OPEN TABLE MERGE / SPLIT CUSTOMIZATION (SCREEN 6) ➔]
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 4: MENU PAGE (2-COL AS SCREEN 2 OF CUSTOMER) -->
+        <!-- ========================================== -->
+        <section id="screen-4-view" class="screen-container-full" style="display: none; padding: 18px 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--wire-border-dark); padding-bottom: 10px; margin-bottom: 14px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <button class="wf-btn wf-btn-dark" onclick="selectScreen(3)">
+                [⬅ BACK TO TABLE 04]
+              </button>
+              <h3 style="font-size: 15px; font-weight: 800;">[SCREEN 4: MENU PAGE — ORDER TAKING FOR TABLE 04]</h3>
+            </div>
+            <button class="wf-btn wf-btn-dark" onclick="selectScreen(5)">
+              🛒 [VIEW CART / ITEM CUSTOMIZATION (SCREEN 5) ➔]
+            </button>
+          </div>
+
+          <!-- CATEGORIES & SEARCH & FILTERS -->
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;">
+            <button class="wf-btn wf-btn-dark" style="font-size: 11px;">[ALL CATEGORIES]</button>
+            <button class="wf-btn wf-btn-subtle" style="font-size: 11px;">[CATEGORY 1]</button>
+            <button class="wf-btn wf-btn-subtle" style="font-size: 11px;">[CATEGORY 2]</button>
+            <button class="wf-btn wf-btn-subtle" style="font-size: 11px;">[CATEGORY 3]</button>
+            <button class="wf-btn wf-btn-subtle" style="font-size: 11px;">[FILTER 1: VEG]</button>
+            <button class="wf-btn wf-btn-subtle" style="font-size: 11px;">[FILTER 2: CHEF SPECIAL]</button>
+            <input type="text" class="wf-box" style="flex: 1; min-width: 180px; padding: 6px 12px; font-family: 'JetBrains Mono'; font-size: 11px;" placeholder="[SEARCH MENU ITEMS...]">
+          </div>
+
+          <!-- DOUBLE-COLUMN ITEMS GRID (WITH ADD BUTTONS DIRECTLY BELOW EACH ITEM) -->
+          <div class="menu-2col-grid">
+            <div class="menu-item-card">
+              <div class="wf-box-dashed" style="height: 100px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🖼️ [ITEM 1 IMAGE]</div>
+              <strong style="font-size: 13px;">[ITEM 1]</strong>
+              <span class="wf-tag">[CATEGORY 1] • [PRICE: ₹ 220.00]</span>
+              <button class="wf-btn wf-btn-dark" style="width: 100%; margin-top: auto;" onclick="selectScreen(5)">
+                [+ ADD ITEM 1]
+              </button>
+            </div>
+
+            <div class="menu-item-card">
+              <div class="wf-box-dashed" style="height: 100px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🖼️ [ITEM 2 IMAGE]</div>
+              <strong style="font-size: 13px;">[ITEM 2]</strong>
+              <span class="wf-tag">[CATEGORY 1] • [PRICE: ₹ 280.00]</span>
+              <button class="wf-btn wf-btn-dark" style="width: 100%; margin-top: auto;" onclick="selectScreen(5)">
+                [+ ADD ITEM 2]
+              </button>
+            </div>
+
+            <div class="menu-item-card">
+              <div class="wf-box-dashed" style="height: 100px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🖼️ [ITEM 3 IMAGE]</div>
+              <strong style="font-size: 13px;">[ITEM 3]</strong>
+              <span class="wf-tag">[CATEGORY 2] • [PRICE: ₹ 340.00]</span>
+              <button class="wf-btn wf-btn-dark" style="width: 100%; margin-top: auto;" onclick="selectScreen(5)">
+                [+ ADD ITEM 3]
+              </button>
+            </div>
+
+            <div class="menu-item-card">
+              <div class="wf-box-dashed" style="height: 100px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🖼️ [ITEM 4 IMAGE]</div>
+              <strong style="font-size: 13px;">[ITEM 4]</strong>
+              <span class="wf-tag">[CATEGORY 2] • [PRICE: ₹ 190.00]</span>
+              <button class="wf-btn wf-btn-dark" style="width: 100%; margin-top: auto;" onclick="selectScreen(5)">
+                [+ ADD ITEM 4]
+              </button>
+            </div>
+
+            <div class="menu-item-card">
+              <div class="wf-box-dashed" style="height: 100px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🖼️ [ITEM 5 IMAGE]</div>
+              <strong style="font-size: 13px;">[ITEM 5]</strong>
+              <span class="wf-tag">[CATEGORY 3] • [PRICE: ₹ 310.00]</span>
+              <button class="wf-btn wf-btn-dark" style="width: 100%; margin-top: auto;" onclick="selectScreen(5)">
+                [+ ADD ITEM 5]
+              </button>
+            </div>
+
+            <div class="menu-item-card">
+              <div class="wf-box-dashed" style="height: 100px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🖼️ [ITEM 6 IMAGE]</div>
+              <strong style="font-size: 13px;">[ITEM 6]</strong>
+              <span class="wf-tag">[CATEGORY 3] • [PRICE: ₹ 340.00]</span>
+              <button class="wf-btn wf-btn-dark" style="width: 100%; margin-top: auto;" onclick="selectScreen(5)">
+                [+ ADD ITEM 6]
+              </button>
+            </div>
+          </div>
+
+          <!-- BOTTOM ORDER SUMMARY BAR -->
+          <div class="wf-box" style="margin-top: 14px; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; background: var(--wire-surface-subtle);">
+            <div>
+              <strong style="font-size: 12px;">[CURRENT SELECTION: 3 ITEMS ADDED]</strong>
+              <span class="wf-tag" style="margin-left: 10px;">[ESTIMATED SUBTOTAL: ₹ 840.00]</span>
+            </div>
+            <button class="wf-btn wf-btn-dark" onclick="selectScreen(5)">
+              [CONFIRM ORDER &amp; CUSTOMIZE ITEMS ➔]
+            </button>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 5: ITEM CUSTOMIZATION PAGE (AS SCREEN 3 OF CUSTOMER) -->
+        <!-- ========================================== -->
+        <section id="screen-5-view" class="screen-container-full" style="display: none; padding: 20px 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--wire-border-dark); padding-bottom: 10px; margin-bottom: 16px;">
+            <button class="wf-btn wf-btn-dark" onclick="selectScreen(4)">
+              [⬅ BACK TO MENU (SCREEN 4)]
+            </button>
+            <h3 style="font-size: 15px; font-weight: 800;">[SCREEN 5: DETAILED ITEM CUSTOMIZATION]</h3>
+            <span class="wf-tag">[ITEM 2 SELECTED]</span>
+          </div>
+
+          <div style="display: flex; gap: 24px; flex: 1;">
+            <!-- LEFT: BIG IMAGE & DIETARY DETAILS -->
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 12px;">
+              <div class="wf-box-dashed" style="flex: 1; min-height: 340px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;">
+                <span style="font-size: 48px;">🖼️</span>
+                <span class="wf-tag">[BIG ITEM IMAGE SPACE]</span>
+              </div>
+              <div class="wf-box" style="padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <span class="wf-tag">[PREP TIME: ⏱ 15-20 MINS]</span>
+                <span class="wf-tag">[DIET: VEGETARIAN • GLUTEN-FREE]</span>
+              </div>
+            </div>
+
+            <!-- RIGHT: CUSTOMIZATIONS & NOTES -->
+            <div style="flex: 1.2; display: flex; flex-direction: column; gap: 14px;">
+              <div class="wf-box" style="padding: 16px;">
+                <h2 style="font-size: 18px; font-weight: 800;">[ITEM 2]</h2>
+                <div class="wf-tag">[CATEGORY 1 • PRICE: ₹ 280.00]</div>
+                <p style="font-size: 12px; margin-top: 6px; color: var(--wire-text-muted);">
+                  [DETAILED ITEM DESCRIPTION: CHEF'S SPECIAL PORTION WITH SELECT SEASONING AND FRESH INGREDIENTS]
+                </p>
+              </div>
+
+              <div class="wf-box" style="padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+                <strong style="font-size: 12px;">[PORTION SIZE SELECTION]:</strong>
+                <div style="display: flex; gap: 10px;">
+                  <button class="wf-btn wf-btn-dark" style="flex: 1; font-size: 10px;">[REGULAR PORTION (₹280)]</button>
+                  <button class="wf-btn wf-btn-subtle" style="flex: 1; font-size: 10px;">[LARGE PORTION (+₹60)]</button>
+                </div>
+              </div>
+
+              <div class="wf-box" style="padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+                <strong style="font-size: 12px;">[CUSTOMISABLE OPTIONS]:</strong>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 12px;">
+                  <input type="checkbox" checked> [OPTION 1: LESS SPICY / MILD]
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 12px;">
+                  <input type="checkbox"> [OPTION 2: NO ONIONS / NO GARLIC]
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 12px;">
+                  <input type="checkbox"> [OPTION 3: EXTRA CHEESE TOPPING (+₹40.00)]
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 12px;">
+                  <input type="checkbox"> [OPTION 4: EXTRA SAUCE DIP (+₹25.00)]
+                </label>
+              </div>
+
+              <div>
+                <label class="wf-tag" style="display: block; margin-bottom: 4px;">[SPECIAL CHEF INSTRUCTION NOTE]:</label>
+                <input type="text" class="wf-box" style="width: 100%; padding: 10px 12px; font-family: 'JetBrains Mono'; font-size: 11px;" placeholder="[TYPE CHEF NOTE...]">
+              </div>
+
+              <div style="display: flex; gap: 10px; margin-top: auto; padding-top: 14px;">
+                <button class="wf-btn wf-btn-dark" style="flex: 1; padding: 14px;" onclick="alert('[ITEM 2 ADDED TO TABLE 04 ORDER]'); selectScreen(3);">
+                  [CONFIRM &amp; ADD TO TABLE 04 ORDER ➔]
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 6: TABLE CUSTOMIZATION (MERGE / SPLIT + PAYMENT OPTIONS) -->
+        <!-- ========================================== -->
+        <section id="screen-6-view" class="screen-container-full" style="display: none; padding: 20px 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--wire-border-dark); padding-bottom: 10px; margin-bottom: 16px;">
+            <button class="wf-btn wf-btn-dark" onclick="selectScreen(3)">
+              [⬅ BACK TO TABLE 04]
+            </button>
+            <h3 style="font-size: 15px; font-weight: 800;">[SCREEN 6: DETAILED TABLE &amp; PAYMENT CUSTOMIZATION]</h3>
+            <span class="wf-tag">[MERGE / SPLIT CONTROLLER]</span>
+          </div>
+
+          <div style="display: flex; gap: 24px; flex: 1;">
+            <!-- LEFT: TABLE MERGE & SPLIT -->
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 14px;">
+              <div class="wf-box" style="padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+                <strong style="font-size: 13px;">[1. MERGE TABLES BY TABLE NUMBERS]:</strong>
+                <span class="wf-tag">[SELECT TABLE NUMBERS TO MERGE TOGETHER]:</span>
+                <div class="table-chips-grid">
+                  <button class="table-chip-btn selected">[TBL 04]</button>
+                  <button class="table-chip-btn selected">[TBL 05]</button>
+                  <button class="table-chip-btn">[TBL 06]</button>
+                  <button class="table-chip-btn">[TBL 07]</button>
+                </div>
+                <div class="wf-tag">[MERGED STATUS: TBL 04 &amp; TBL 05 COMBINED]</div>
+                <div class="wf-tag">[TOTAL COMBINED SEATING: 6 GUESTS • CONSOLIDATED BILL: ₹ 2,650.00]</div>
+              </div>
+
+              <div class="wf-box" style="padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+                <strong style="font-size: 13px;">[2. SPLIT TABLE OR BILL]:</strong>
+                <div style="display: flex; gap: 8px;">
+                  <button class="wf-btn wf-btn-dark" style="flex: 1; font-size: 11px;">[SPLIT BY ITEMS]</button>
+                  <button class="wf-btn wf-btn-subtle" style="flex: 1; font-size: 11px;">[SPLIT BY PERSONS]</button>
+                </div>
+                <span class="wf-tag">[SPECIFY NUMBER OF PERSONS TO SPLIT]:</span>
+                <input type="number" class="wf-box" style="padding: 8px 12px; font-family: 'JetBrains Mono';" value="2" min="1" max="10">
+              </div>
+
+              <button class="wf-btn wf-btn-subtle" style="padding: 14px;" onclick="selectScreen(4)">
+                🍽️ [BACK TO MENU TO TAKE ORDERS FOR CUSTOMISED TABLE ➔]
+              </button>
+            </div>
+
+            <!-- RIGHT: PAYMENT CUSTOMIZATION (SCREEN 6 OF CUSTOMER) -->
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 14px;">
+              <div class="wf-box" style="padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+                <strong style="font-size: 13px;">[PAYMENT CUSTOMIZATION &amp; SPLIT BREAKDOWN]:</strong>
+                <div style="display: flex; flex-direction: column; gap: 6px; font-family: 'JetBrains Mono'; font-size: 11px;">
+                  <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--wire-border); padding-bottom: 4px;">
+                    <span>[PERSON 1 SHARE]:</span><span>₹ 715.00</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--wire-border); padding-bottom: 4px;">
+                    <span>[PERSON 2 SHARE]:</span><span>₹ 715.00</span>
+                  </div>
+                </div>
+
+                <span class="wf-tag" style="margin-top: 8px;">[WAITER TIPS PRESETS]:</span>
+                <div style="display: flex; gap: 6px;">
+                  <button class="wf-btn wf-btn-subtle" style="flex: 1; font-size: 10px;">[10%]</button>
+                  <button class="wf-btn wf-btn-dark" style="flex: 1; font-size: 10px;">[15%]</button>
+                  <button class="wf-btn wf-btn-subtle" style="flex: 1; font-size: 10px;">[20%]</button>
+                  <button class="wf-btn wf-btn-subtle" style="flex: 1; font-size: 10px;">[CUSTOM]</button>
+                </div>
+              </div>
+
+              <div class="wf-box" style="padding: 14px; display: flex; flex-direction: column; gap: 6px;">
+                <strong style="font-size: 12px;">[PAYMENT SUMMARY]:</strong>
+                <div style="display: flex; justify-content: space-between; font-size: 11px;">
+                  <span>[SPLIT TOTAL]:</span><span>₹ 1,430.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px;">
+                  <span>[TIP ADDED (15%)]:</span><span>₹ 195.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 800; border-top: 1px solid var(--wire-black); padding-top: 4px;">
+                  <span>[GRAND TOTAL PAYABLE]:</span><span>₹ 1,625.00</span>
+                </div>
+              </div>
+
+              <button class="wf-btn wf-btn-dark" style="padding: 16px; font-size: 13px; margin-top: auto;" onclick="selectScreen(7)">
+                💳 [PROCEED TO PAYMENT SCREEN 7 ➔]
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 7: PAYMENT PROCESSING / GATEWAY (AS SCREEN 7 OF CUSTOMER) -->
+        <!-- ========================================== -->
+        <section id="screen-7-view" class="screen-container-full" style="display: none; padding: 20px 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--wire-border-dark); padding-bottom: 10px; margin-bottom: 16px;">
+            <button class="wf-btn wf-btn-dark" onclick="selectScreen(6)">
+              [⬅ BACK TO CUSTOMIZATION (SCREEN 6)]
+            </button>
+            <h3 style="font-size: 15px; font-weight: 800;">[SCREEN 7: PAYMENT GATEWAY &amp; QR / CASH SETTLEMENT]</h3>
+            <span class="wf-tag">[TABLE 04 SETTLEMENT]</span>
+          </div>
+
+          <div style="display: flex; gap: 24px; flex: 1;">
+            <!-- QR SCANNER CONTAINER -->
+            <div class="wf-box" style="flex: 1; padding: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center;">
+              <div class="wf-box-dashed" style="width: 240px; height: 240px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;">
+                <span style="font-size: 48px;">📱</span>
+                <span class="wf-tag">[QR SCANNER SPACE FOR CUSTOMER UPI / CARD PAYMENT]</span>
+              </div>
+              <strong style="font-size: 15px;">[SCAN TO PAY ₹ 1,430.00]</strong>
+              <span class="wf-tag">[SUPPORTED: UPI APPS, CREDIT/DEBIT CARDS, NETBANKING]</span>
+              <div class="wf-tag">[PAYMENT TIMEOUT: 04:58 MINS REMAINING]</div>
+            </div>
+
+            <!-- PAYMENT OPTIONS & CASH PROCESSING -->
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 14px;">
+              <div class="wf-box" style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+                <strong style="font-size: 12px;">[PAYMENT OPTIONS]:</strong>
+                <div style="display: flex; gap: 8px;">
+                  <button class="wf-btn wf-btn-dark" style="flex: 1; font-size: 11px;">[CASH SETTLEMENT]</button>
+                  <button class="wf-btn wf-btn-subtle" style="flex: 1; font-size: 11px;">[POS SWIPE]</button>
+                  <button class="wf-btn wf-btn-subtle" style="flex: 1; font-size: 11px;">[UPI SCAN]</button>
+                </div>
+              </div>
+
+              <div class="wf-box" style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+                <strong style="font-size: 12px;">[CASH TENDERED CALCULATOR]:</strong>
+                <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-size: 11px;">
+                  <span>[BILL AMOUNT]:</span><span>₹ 1,430.00</span>
+                </div>
+                <div>
+                  <label class="wf-tag" style="display: block; margin-bottom: 4px;">[CASH RECEIVED FROM GUEST]:</label>
+                  <input type="text" class="wf-box" style="width: 100%; padding: 8px 12px; font-family: 'JetBrains Mono';" value="₹ 2,000.00">
+                </div>
+                <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-size: 13px; font-weight: 800; border-top: 1px dashed var(--wire-border); padding-top: 8px;">
+                  <span>[CHANGE TO RETURN]:</span><span>₹ 570.00</span>
+                </div>
+              </div>
+
+              <div class="wf-box" style="padding: 14px;">
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 12px;">
+                  <input type="checkbox" checked> [REDEEM 50 LOYALTY POINTS (-₹50.00 DISCOUNT)]
+                </label>
+              </div>
+
+              <button class="wf-btn wf-btn-dark" style="padding: 16px; font-size: 13px; margin-top: auto;" onclick="selectScreen(8)">
+                ✓ [CONFIRM &amp; PAY ➔ GENERATE BILL (SCREEN 8)]
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 8: BILL GENERATION & PRINT DISPATCH -->
+        <!-- ========================================== -->
+        <section id="screen-8-view" class="screen-container-full" style="display: none; padding: 20px 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--wire-border-dark); padding-bottom: 10px; margin-bottom: 16px;">
+            <button class="wf-btn wf-btn-dark" onclick="selectScreen(2)">
+              [⬅ BACK TO ALL TABLES]
+            </button>
+            <h3 style="font-size: 15px; font-weight: 800;">[SCREEN 8: BILL GENERATION &amp; MANAGER PRINT DISPATCH]</h3>
+            <span class="wf-tag">[INVOICE #INV-2026-104]</span>
+          </div>
+
+          <!-- PAYMENT SUCCESSFUL BANNER -->
+          <div class="wf-box" style="padding: 14px 20px; border-color: var(--wire-black); background: var(--wire-surface-contrast); display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 24px;">✓</span>
+              <div>
+                <strong style="font-size: 14px;">[PAYMENT SUCCESSFUL — BILL SETTLED]</strong>
+                <p class="wf-tag">[TRANSACTION ID: TXN_9876543210 • TIME: 01:24 PM]</p>
+              </div>
+            </div>
+            <span class="wf-tag" style="border: 1.5px solid var(--wire-black); padding: 4px 10px; border-radius: 4px; font-weight: 800;">[STATUS: PAID]</span>
+          </div>
+
+          <!-- ITEMIZED INVOICE -->
+          <div class="wf-box" style="padding: 18px; margin-top: 14px; display: flex; flex-direction: column; gap: 8px;">
+            <strong style="font-size: 13px;">[TAX INVOICE DETAILS]:</strong>
+            <div style="display: flex; flex-direction: column; gap: 5px; font-family: 'JetBrains Mono'; font-size: 11px;">
+              <div style="display: flex; justify-content: space-between;"><span>1x [ITEM 2]</span><span>₹ 280.00</span></div>
+              <div style="display: flex; justify-content: space-between;"><span>2x [ITEM 6]</span><span>₹ 680.00</span></div>
+              <div style="display: flex; justify-content: space-between;"><span>1x [ITEM 1]</span><span>₹ 220.00</span></div>
+              <div style="border-top: 1px dashed var(--wire-border); margin: 6px 0;"></div>
+              <div style="display: flex; justify-content: space-between;"><span>[CGST 2.5%]:</span><span>₹ 29.50</span></div>
+              <div style="display: flex; justify-content: space-between;"><span>[SGST 2.5%]:</span><span>₹ 29.50</span></div>
+              <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 13px; border-top: 1.5px solid var(--wire-black); padding-top: 6px;">
+                <span>[NET TOTAL PAID]:</span><span>₹ 1,239.00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ACTION BUTTONS: WHATSAPP SHARE & PHYSICAL BILL DISPATCH -->
+          <div style="display: flex; gap: 14px; margin-top: 18px;">
+            <button class="wf-btn wf-btn-dark" style="flex: 1; padding: 14px; font-size: 12px;" onclick="alert('[SUCCESS: DIGITAL BILL SHARED VIA WHATSAPP TO CUSTOMER]')">
+              💬 [SHARE BILL VIA WHATSAPP]
+            </button>
+            <button class="wf-btn wf-btn-dark" style="flex: 1; padding: 14px; font-size: 12px;" onclick="printPhysicalBill()">
+              🖨️ [PRINT PHYSICAL BILL (SENDS DIRECTLY TO MANAGER)]
+            </button>
+          </div>
+
+          <div id="printConfirmationBanner" style="display: none; margin-top: 14px; padding: 12px; border: 1.5px solid var(--wire-black); background: var(--wire-surface-subtle); text-align: center; font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 800;">
+            [PRINT COMMAND SENT DIRECTLY TO MANAGER POS PRINTER — PRINT JOB ID: #PRN-884]
+          </div>
+
+          <button class="wf-btn wf-btn-subtle" style="margin-top: 14px; padding: 14px;" onclick="selectScreen(9, 'TABLE 04')">
+            🧹 [PROCEED TO TABLE VACATE &amp; TURNAROUND (SCREEN 9) ➔]
+          </button>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 9: VACATE TABLE & TURNAROUND CHECKLIST -->
+        <!-- ========================================== -->
+        <section id="screen-9-view" class="screen-container-full" style="display: none; padding: 20px 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--wire-border-dark); padding-bottom: 10px; margin-bottom: 16px;">
+            <button class="wf-btn wf-btn-dark" onclick="selectScreen(2)">
+              [⬅ BACK TO ALL TABLES]
+            </button>
+            <h3 style="font-size: 15px; font-weight: 800;" id="screen9Title">[SCREEN 9: TABLE VACATE &amp; TURNAROUND CHECKLIST]</h3>
+            <span class="wf-tag">[TABLE 04 VACATE PROCESS]</span>
+          </div>
+
+          <div class="wf-box" style="padding: 16px; margin-bottom: 16px;">
+            <strong style="font-size: 13px;">[TABLE RESET &amp; SANITIZATION PROTOCOL]:</strong>
+            <p class="wf-tag" style="margin-top: 4px;">
+              [CLICK EACH TURNAROUND STEP BELOW TO MARK COMPLETE BEFORE DECLARING TABLE AVAILABLE]
+            </p>
+          </div>
+
+          <!-- 4+ TURNAROUND CHECKLIST BUTTONS -->
+          <div class="turnaround-grid">
+            <button class="turnaround-btn" id="cleanBtn1" onclick="toggleTask(this)">
+              <strong style="font-size: 13px;">🧽 [1. CLEAN TABLE]</strong>
+              <span class="wf-tag">[CLEAR DISHES, WIPE TOP &amp; SANITIZE SURFACE]</span>
+            </button>
+
+            <button class="turnaround-btn" id="cleanBtn2" onclick="toggleTask(this)">
+              <strong style="font-size: 13px;">💧 [2. WATER REFILL]</strong>
+              <span class="wf-tag">[REPLACE FRESH WATER BOTTLE &amp; CLEAN GLASSES]</span>
+            </button>
+
+            <button class="turnaround-btn" id="cleanBtn3" onclick="toggleTask(this)">
+              <strong style="font-size: 13px;">🍴 [3. CUTLERY REPLACEMENT]</strong>
+              <span class="wf-tag">[ARRANGE FRESH SPOONS, FORKS &amp; KNIVES]</span>
+            </button>
+
+            <button class="turnaround-btn" id="cleanBtn4" onclick="toggleTask(this)">
+              <strong style="font-size: 13px;">🧻 [4. TISSUE BOX REFILL]</strong>
+              <span class="wf-tag">[CHECK AND REFILL TABLE NAPKIN DISPENSER]</span>
+            </button>
+          </div>
+
+          <!-- TABLE AVAILABLE BUTTON (SYNCED WITH MANAGER) -->
+          <div style="margin-top: auto; padding-top: 24px; border-top: 2px solid var(--wire-border-dark);">
+            <button class="wf-btn wf-btn-dark" style="width: 100%; padding: 18px; font-size: 14px;" onclick="markTableAvailable()">
+              ✨ [TABLE AVAILABLE BUTTON — REFLECTS AS TABLE AVAILABLE IN MANAGER]
+            </button>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 10: WAITER DAILY SHIFT OVERVIEW -->
+        <!-- ========================================== -->
+        <section id="screen-10-view" class="screen-container-full" style="display: none; padding: 20px 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--wire-border-dark); padding-bottom: 10px; margin-bottom: 16px;">
+            <button class="wf-btn wf-btn-dark" onclick="selectScreen(2)">
+              [⬅ BACK TO ALL TABLES]
+            </button>
+            <h3 style="font-size: 15px; font-weight: 800;">[SCREEN 10: WAITER DAILY SHIFT PERFORMANCE OVERVIEW]</h3>
+            <span class="wf-tag">[WAITER 01 • SHIFT ACTIVE]</span>
+          </div>
+
+          <!-- 6 KPI METRICS CARDS -->
+          <div class="kpi-metrics-grid">
+            <div class="kpi-card">
+              <span class="wf-tag">[TOTAL ORDERS DONE TODAY VIA TAB]:</span>
+              <div class="kpi-value">24</div>
+              <span class="wf-tag">[ACROSS 10 UNIQUE TABLES]</span>
+            </div>
+
+            <div class="kpi-card">
+              <span class="wf-tag">[TOTAL PAYMENTS PROCESSED]:</span>
+              <div class="kpi-value">₹ 18,450</div>
+              <span class="wf-tag">[ALL PAYMENT MODES COMBINED]</span>
+            </div>
+
+            <div class="kpi-card">
+              <span class="wf-tag">[TOTAL CASH COLLECTED]:</span>
+              <div class="kpi-value">₹ 7,200</div>
+              <span class="wf-tag">[READY FOR HANDOVER]</span>
+            </div>
+
+            <div class="kpi-card">
+              <span class="wf-tag">[DIGITAL / UPI SETTLEMENTS]:</span>
+              <div class="kpi-value">₹ 11,250</div>
+              <span class="wf-tag">[INSTANT RECONCILIATION]</span>
+            </div>
+
+            <div class="kpi-card">
+              <span class="wf-tag">[TOTAL TIPS EARNED TODAY]:</span>
+              <div class="kpi-value">₹ 1,420</div>
+              <span class="wf-tag">[DIRECT WAITER TIP ACCRUAL]</span>
+            </div>
+
+            <div class="kpi-card">
+              <span class="wf-tag">[AVG TABLE TURNAROUND TIME]:</span>
+              <div class="kpi-value">38 MINS</div>
+              <span class="wf-tag">[EFFICIENCY BENCHMARK]</span>
+            </div>
+          </div>
+
+          <!-- SHIFT TIMELINE -->
+          <div class="wf-box" style="padding: 18px; margin-top: 18px; display: flex; flex-direction: column; gap: 10px;">
+            <strong style="font-size: 13px;">[TODAY'S SHIFT ACTIVITY TIMELINE]:</strong>
+            <div style="display: flex; flex-direction: column; gap: 6px; font-family: 'JetBrains Mono'; font-size: 11px;">
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--wire-border); padding-bottom: 5px;">
+                <span>12:52 PM • [TABLE 04]</span><span>₹ 1,450.00 • CASH</span><span class="wf-tag">[SETTLED]</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--wire-border); padding-bottom: 5px;">
+                <span>12:20 PM • [TABLE 02]</span><span>₹ 2,100.00 • UPI QR</span><span class="wf-tag">[SETTLED]</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--wire-border); padding-bottom: 5px;">
+                <span>11:45 AM • [TABLE 07]</span><span>₹ 980.00 • CARD</span><span class="wf-tag">[SETTLED]</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ALL 10 SCREENS FULL DISPLAY GRID VIEW (ONE AFTER ANOTHER IN FULL TABLET CANVAS) -->
+  <section class="all-grid-view" id="allGridView">
+    
+    <!-- GRID SCREEN 1 -->
+    <div class="grid-screen-card">
+      <div class="grid-screen-title">
+        <span>SCREEN 1: WAITER / FLOOR CAPTAIN LOGIN</span>
+        <button class="wf-btn wf-btn-dark" onclick="selectScreen(1); setViewMode('flow');">[OPEN IN INTERACTIVE VIEW]</button>
+      </div>
+      <div class="grid-tablet-window" id="grid-content-1"></div>
+    </div>
+
+    <!-- GRID SCREEN 2 -->
+    <div class="grid-screen-card">
+      <div class="grid-screen-title">
+        <span>SCREEN 2: ALL TABLES 3-COL (60%) + DUAL NOTIFICATIONS (40%)</span>
+        <button class="wf-btn wf-btn-dark" onclick="selectScreen(2); setViewMode('flow');">[OPEN IN INTERACTIVE VIEW]</button>
+      </div>
+      <div class="grid-tablet-window" id="grid-content-2"></div>
+    </div>
+
+    <!-- GRID SCREEN 3 -->
+    <div class="grid-screen-card">
+      <div class="grid-screen-title">
+        <span>SCREEN 3: DETAILED PARTICULAR TABLE VIEW (60% / 40% DYNAMIC)</span>
+        <button class="wf-btn wf-btn-dark" onclick="selectScreen(3); setViewMode('flow');">[OPEN IN INTERACTIVE VIEW]</button>
+      </div>
+      <div class="grid-tablet-window" id="grid-content-3"></div>
+    </div>
+
+    <!-- GRID SCREEN 4 -->
+    <div class="grid-screen-card">
+      <div class="grid-screen-title">
+        <span>SCREEN 4: TAKE ORDERS MENU PAGE (2-COLUMN GRID)</span>
+        <button class="wf-btn wf-btn-dark" onclick="selectScreen(4); setViewMode('flow');">[OPEN IN INTERACTIVE VIEW]</button>
+      </div>
+      <div class="grid-tablet-window" id="grid-content-4"></div>
+    </div>
+
+    <!-- GRID SCREEN 5 -->
+    <div class="grid-screen-card">
+      <div class="grid-screen-title">
+        <span>SCREEN 5: DETAILED ITEM PAGE &amp; CUSTOMIZATIONS</span>
+        <button class="wf-btn wf-btn-dark" onclick="selectScreen(5); setViewMode('flow');">[OPEN IN INTERACTIVE VIEW]</button>
+      </div>
+      <div class="grid-tablet-window" id="grid-content-5"></div>
+    </div>
+
+    <!-- GRID SCREEN 6 -->
+    <div class="grid-screen-card">
+      <div class="grid-screen-title">
+        <span>SCREEN 6: DETAILED TABLE CUSTOMIZATION — MERGE &amp; SPLIT</span>
+        <button class="wf-btn wf-btn-dark" onclick="selectScreen(6); setViewMode('flow');">[OPEN IN INTERACTIVE VIEW]</button>
+      </div>
+      <div class="grid-tablet-window" id="grid-content-6"></div>
+    </div>
+
+    <!-- GRID SCREEN 7 -->
+    <div class="grid-screen-card">
+      <div class="grid-screen-title">
+        <span>SCREEN 7: PAYMENT GATEWAY &amp; QR / CASH SETTLEMENT</span>
+        <button class="wf-btn wf-btn-dark" onclick="selectScreen(7); setViewMode('flow');">[OPEN IN INTERACTIVE VIEW]</button>
+      </div>
+      <div class="grid-tablet-window" id="grid-content-7"></div>
+    </div>
+
+    <!-- GRID SCREEN 8 -->
+    <div class="grid-screen-card">
+      <div class="grid-screen-title">
+        <span>SCREEN 8: BILL GENERATION &amp; MANAGER PRINT DISPATCH</span>
+        <button class="wf-btn wf-btn-dark" onclick="selectScreen(8); setViewMode('flow');">[OPEN IN INTERACTIVE VIEW]</button>
+      </div>
+      <div class="grid-tablet-window" id="grid-content-8"></div>
+    </div>
+
+    <!-- GRID SCREEN 9 -->
+    <div class="grid-screen-card">
+      <div class="grid-screen-title">
+        <span>SCREEN 9: TABLE VACATE &amp; TURNAROUND CHECKLIST</span>
+        <button class="wf-btn wf-btn-dark" onclick="selectScreen(9); setViewMode('flow');">[OPEN IN INTERACTIVE VIEW]</button>
+      </div>
+      <div class="grid-tablet-window" id="grid-content-9"></div>
+    </div>
+
+    <!-- GRID SCREEN 10 -->
+    <div class="grid-screen-card">
+      <div class="grid-screen-title">
+        <span>SCREEN 10: WAITER DAILY SHIFT PERFORMANCE OVERVIEW</span>
+        <button class="wf-btn wf-btn-dark" onclick="selectScreen(10); setViewMode('flow');">[OPEN IN INTERACTIVE VIEW]</button>
+      </div>
+      <div class="grid-tablet-window" id="grid-content-10"></div>
+    </div>
+
+  </section>
+
+  <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+  <script>
+    let currentScreen = 1;
+    let waiterPin = '12';
+
+    function selectScreen(num, tableLabel) {
+      currentScreen = num;
+      
+      // Update Tab Bar
+      for (let i = 1; i <= 10; i++) {
+        const tab = document.getElementById('tab-' + i);
+        if (tab) {
+          if (i === num) tab.classList.add('active');
+          else tab.classList.remove('active');
+        }
+      }
+
+      // Hide all screen views in interactive stage
+      for (let i = 1; i <= 10; i++) {
+        const view = document.getElementById('screen-' + i + '-view');
+        if (view) view.style.display = 'none';
+      }
+
+      // Show selected screen
+      const target = document.getElementById('screen-' + num + '-view');
+      if (target) {
+        target.style.display = 'flex';
+      }
+
+      // Update table title if label provided
+      if (tableLabel) {
+        const title = document.getElementById('screen3TableTitle');
+        if (title) title.textContent = '[' + tableLabel + ' SELECTED]';
+        const s9Title = document.getElementById('screen9Title');
+        if (s9Title) s9Title.textContent = '[SCREEN 9: ' + tableLabel + ' VACATE & TURNAROUND CHECKLIST]';
+      }
+
+      // Scroll to top of wireCanvas
+      const canvas = document.getElementById('wireCanvas');
+      if (canvas) canvas.scrollTop = 0;
+    }
+
+    function setViewMode(mode) {
+      const btnFlow = document.getElementById('btnModeFlow');
+      const btnGrid = document.getElementById('btnModeGrid');
+      const stage = document.getElementById('tabletStage');
+      const grid = document.getElementById('allGridView');
+      const tabs = document.getElementById('screenTabsBar');
+
+      if (mode === 'flow') {
+        btnFlow.classList.add('active');
+        btnGrid.classList.remove('active');
+        stage.style.display = 'flex';
+        grid.style.display = 'none';
+        tabs.style.display = 'flex';
+      } else {
+        btnGrid.classList.add('active');
+        btnFlow.classList.remove('active');
+        stage.style.display = 'none';
+        grid.style.display = 'flex';
+        tabs.style.display = 'none';
+        populateAllScreensGrid();
+      }
+    }
+
+    // POPULATE ALL 10 FULL SCREENS ONE AFTER ANOTHER IN GRID VIEW
+    function populateAllScreensGrid() {
+      for (let i = 1; i <= 10; i++) {
+        const src = document.getElementById('screen-' + i + '-view');
+        const dest = document.getElementById('grid-content-' + i);
+        if (src && dest) {
+          dest.innerHTML = src.innerHTML;
+          // Ensure inside grid cards everything displays properly
+          const hiddenElements = dest.querySelectorAll('[style*="display: none"]');
+          hiddenElements.forEach(el => {
+            // Keep specific rightPane sub-views as intended
+            if (!el.id.startsWith('rightPanePayment') && !el.id.startsWith('rightPaneMerge') && !el.id.startsWith('printConfirmationBanner')) {
+              el.style.display = 'flex';
+            }
+          });
+        }
+      }
+    }
+
+    /* KEYPAD INTERACTIONS (SCREEN 1) */
+    function renderWaiterPin() {
+      const box = document.getElementById('waiterPinBox');
+      const status = document.getElementById('waiterPinStatus');
+      if (!box) return;
+      box.innerHTML = '';
+      for (let i = 0; i < 4; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'pin-dot' + (i < waiterPin.length ? ' filled' : '');
+        box.appendChild(dot);
+      }
+      if (status) {
+        status.textContent = waiterPin.length === 4 ? '[PIN ENTERED (READY)]' : '[' + (4 - waiterPin.length) + ' DIGITS REMAINING]';
+      }
+    }
+
+    function pressWaiterKey(k) {
+      if (waiterPin.length < 4) {
+        waiterPin += k;
+        renderWaiterPin();
+      }
+    }
+
+    function pressWaiterDel() {
+      if (waiterPin.length > 0) {
+        waiterPin = waiterPin.slice(0, -1);
+        renderWaiterPin();
+      }
+    }
+
+    function clearWaiterPin() {
+      waiterPin = '';
+      renderWaiterPin();
+    }
+
+    function resetWaiterLogin() {
+      waiterPin = '';
+      document.getElementById('waiterNameInput').value = '';
+      renderWaiterPin();
+    }
+
+    /* SCREEN 2: RESOLVE NOTIFICATIONS */
+    function resolveNotif(id, alertMsg) {
+      const card = document.getElementById(id);
+      if (card) {
+        card.style.opacity = '0.4';
+        card.style.pointerEvents = 'none';
+        const btn = card.querySelector('.wf-btn');
+        if (btn) btn.textContent = '✓ RESOLVED';
+      }
+      alert(alertMsg);
+    }
+
+    /* SCREEN 3: DYNAMIC RIGHT PANE */
+    function openRightPane(pane) {
+      const def = document.getElementById('rightPaneDefault');
+      const pay = document.getElementById('rightPanePayment');
+      const mrg = document.getElementById('rightPaneMerge');
+      
+      if (def) def.style.display = 'none';
+      if (pay) pay.style.display = 'none';
+      if (mrg) mrg.style.display = 'none';
+
+      if (pane === 'payment' && pay) pay.style.display = 'flex';
+      else if (pane === 'merge' && mrg) mrg.style.display = 'flex';
+      else if (def) def.style.display = 'flex';
+    }
+
+    function toggleMergeChip(btn) {
+      btn.classList.toggle('selected');
+    }
+
+    function confirmMerge() {
+      alert('[SUCCESS: TABLE 04 & TABLE 05 ARE NOW MERGED WITH COMBINED GUEST CAPACITY & BILLING]');
+      openRightPane('default');
+    }
+
+    /* SCREEN 8: PRINT PHYSICAL BILL */
+    function printPhysicalBill() {
+      const banner = document.getElementById('printConfirmationBanner');
+      if (banner) banner.style.display = 'block';
+      alert('[PRINT COMMAND TRANSMITTED DIRECTLY TO MANAGER POS PRINTER]');
+    }
+
+    /* SCREEN 9: TURNAROUND CHECKLIST & TABLE AVAILABLE */
+    function toggleTask(btn) {
+      btn.classList.toggle('completed');
+    }
+
+    function markTableAvailable() {
+      alert('[SUCCESS: TABLE 04 IS NOW MARKED AVAILABLE! STATUS HAS BEEN TRANSMITTED TO MANAGER TERMINAL]');
+      selectScreen(2);
+    }
+
+    // Initialize
+    renderWaiterPin();
+  </script>
+</body>
+</html>

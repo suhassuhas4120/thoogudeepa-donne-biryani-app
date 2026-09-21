@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manager &amp; Cashier Console · Royal Awadh</title>
+<link rel="stylesheet" href="/css/common.css">
+<style>
+  body {
+    background: #0f172a;
+    padding: 10px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .manager-chassis {
+    background: #ffffff;
+    border: 3px solid #334155;
+    border-radius: 8px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .mgr-topbar {
+    background: #0f172a;
+    color: #fff;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #0284c7;
+  }
+  .mgr-tabs {
+    display: flex;
+    gap: 4px;
+    background: #f1f5f9;
+    padding: 6px 12px;
+    border-bottom: 1px solid #cbd5e1;
+  }
+  .mgr-tab {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    background: #e2e8f0;
+    color: #334155;
+  }
+  .mgr-tab.active {
+    background: #0f172a;
+    color: #fff;
+  }
+  .tab-content {
+    flex-grow: 1;
+    padding: 12px;
+    overflow-y: auto;
+  }
+</style>
+</head>
+<body>
+
+<div class="manager-chassis">
+  <div class="mgr-topbar">
+    <div>
+      <strong style="font-size:14px; color:#38bdf8;">EXECUTIVE MANAGER &amp; CASHIER POS</strong>
+      <span style="font-size:11px; color:#94a3b8; margin-left:8px;">GST: 07AAAAA0000A1Z5 · SAC: 996331</span>
+    </div>
+    <span id="ws-status-badge" class="badge badge-green">ONLINE</span>
+  </div>
+
+  <!-- TABS -->
+  <div class="mgr-tabs">
+    <div class="mgr-tab active" onclick="switchTab('billing')">DIGITAL BILLING &amp; POS</div>
+    <div class="mgr-tab" onclick="switchTab('dashboard')">LIVE REVENUE &amp; REVPASH</div>
+    <div class="mgr-tab" onclick="switchTab('inventory')">RAW INVENTORY &amp; BOM</div>
+    <div class="mgr-tab" onclick="switchTab('spoilage')">VOID VAULT &amp; WASTAGE</div>
+    <div class="mgr-tab" onclick="switchTab('zclose')">DAY-CLOSE Z-REPORT</div>
+  </div>
+
+  <!-- TAB: BILLING -->
+  <div class="tab-content" id="tab-billing">
+    <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:12px;">
+      <!-- LEFT: ACTIVE BILL FOR TABLE A-04 -->
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1.5px solid #0f172a; padding-bottom:6px; margin-bottom:8px;">
+          <div>
+            <strong style="font-size:14px;">TABLE A-04 · CONSOLIDATED TAX INVOICE</strong>
+            <div style="font-size:10px; color:#64748b;">SAC 996331 · Standalone Restaurant 5% GST</div>
+          </div>
+          <button class="btn btn-sm btn-primary" onclick="requestBill()">GENERATE DRAFT</button>
+        </div>
+
+        <div style="font-size:11.5px; line-height:1.6;" id="bill-details-container">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- RIGHT: PAYMENT HARDWARE TERMINAL -->
+      <div class="card" style="text-align:center;">
+        <div style="font-weight:800; font-size:12px; margin-bottom:8px;">DYNAMIC BHARAT UPI QR (CUSTOMER DISPLAY)</div>
+        <div style="background:#0f172a; color:#fff; width:140px; height:140px; margin:0 auto; display:flex; align-items:center; justify-content:center; border-radius:6px; font-size:10px; font-family:'JetBrains Mono', monospace;">
+          [ DYNAMIC UPI QR ]<br>₹1,940.00
+        </div>
+        <div style="font-size:10px; color:#64748b; margin-top:6px;">Scan via Google Pay / PhonePe</div>
+
+        <div style="display:flex; flex-direction:column; gap:6px; margin-top:12px;">
+          <button class="btn btn-success" onclick="settlePayment('UPI')">SIMULATE UPI PAYMENT WEBHOOK</button>
+          <button class="btn btn-dark" onclick="settlePayment('CASH')">CASH (POP DRAWER SOLENOID)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: DASHBOARD -->
+  <div class="tab-content" id="tab-dashboard" style="display:none;">
+    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin-bottom:12px;">
+      <div class="card" style="text-align:center;">
+        <div style="font-size:10px; color:#64748b;">TODAY'S NET SALES</div>
+        <div id="m-net-sales" style="font-size:18px; font-weight:900; color:#0f172a;">₹2,84,350</div>
+        <span class="badge badge-green">↑ 14.2% VS TARGET</span>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:10px; color:#64748b;">REVPASH (SEAT-HOUR)</div>
+        <div id="m-revpash" style="font-size:18px; font-weight:900; color:#0284c7;">₹323.12</div>
+        <span class="badge badge-blue">220 SEATS · 4 HRS</span>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:10px; color:#64748b;">ACTIVE COVERS</div>
+        <div style="font-size:18px; font-weight:900; color:#15803d;">184 / 220</div>
+        <span class="badge badge-green">83.6% OCCUPANCY</span>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:10px; color:#64748b;">KITCHEN SPOILAGE</div>
+        <div id="m-spoilage" style="font-size:18px; font-weight:900; color:#b91c1c;">₹468.00</div>
+        <span class="badge badge-amber">1.1% OF COGS (HEALTHY)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: INVENTORY -->
+  <div class="tab-content" id="tab-inventory" style="display:none;">
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <strong style="font-size:14px;">REAL-TIME RECIPE BOM INVENTORY DEPLETION</strong>
+        <button class="btn btn-danger" onclick="togglePaneer86()">TOGGLE PANEER 86 CASCADE</button>
+      </div>
+      <div id="inventory-table-container">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: SPOILAGE -->
+  <div class="tab-content" id="tab-spoilage" style="display:none;">
+    <div class="card">
+      <strong style="font-size:14px; margin-bottom:8px; display:block;">ANTI-FRAUD VOID VAULT &amp; KITCHEN LOSS AUDIT</strong>
+      <div id="spoilage-table-container">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: Z-CLOSE -->
+  <div class="tab-content" id="tab-zclose" style="display:none;">
+    <div class="card" style="max-width:500px; margin:0 auto; text-align:center;">
+      <strong style="font-size:16px;">END-OF-DAY REGISTER Z-REPORT SEAL</strong>
+      <div style="font-size:11px; color:#64748b; margin-bottom:12px;">Blind physical cash count reconciliation</div>
+
+      <div style="font-size:13px; line-height:1.8; text-align:left; background:#f8fafc; border:1px solid #cbd5e1; padding:10px; border-radius:6px; margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between;"><span>System Expected Cash:</span><strong>₹42,250.00</strong></div>
+        <div style="display:flex; justify-content:space-between;"><span>Counted Physical Cash:</span><strong style="color:#0284c7;">₹42,230.00</strong></div>
+        <div style="display:flex; justify-content:space-between; color:#b91c1c;"><span>Discrepancy / Variance:</span><strong>-₹20.00 (Acceptable)</strong></div>
+        <div style="display:flex; justify-content:space-between;"><span>UPI + EDC Settlements:</span><strong>₹2,42,100.00</strong></div>
+      </div>
+
+      <button class="btn btn-danger" onclick="sealZReport()">[ ENTER: LOCK REGISTER &amp; FIRE Z-REPORT ]</button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/socket-client.js"></script>
+<script>
+  let client;
+
+  window.addEventListener('DOMContentLoaded', () => {
+    client = new HospitalityClient((state, action) => {
+      renderManager(state);
+    });
+  });
+
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+    document.querySelectorAll('.mgr-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tabId).style.display = 'block';
+    event.target.classList.add('active');
+  }
+
+  function renderManager(state) {
+    // Metrics
+    document.getElementById('m-net-sales').textContent = '₹' + (state.metrics.netSales || 284350).toLocaleString('en-IN');
+    document.getElementById('m-revpash').textContent = '₹' + (state.metrics.revPash || 323.12);
+    document.getElementById('m-spoilage').textContent = '₹' + (state.metrics.spoilageCost || 468).toFixed(2);
+
+    // Bill Details for Table A-04
+    const tbl = state.tables.find(t => t.id === 'A4');
+    const billCont = document.getElementById('bill-details-container');
+    if (tbl && tbl.bill) {
+      billCont.innerHTML = `
+        <div style="display:flex; justify-content:space-between;"><span>Inv No: <strong>${tbl.bill.invNo}</strong></span><span>Date: ${new Date().toLocaleDateString('en-IN')}</span></div>
+        <div style="border-top:1px dashed #cbd5e1; margin:6px 0;"></div>
+        <div style="display:flex; justify-content:space-between;"><span>Subtotal:</span><span>₹${tbl.bill.subtotal.toFixed(2)}</span></div>
+        <div style="display:flex; justify-content:space-between; color:#0284c7;"><span>Service Charge (5%):</span><span>₹${tbl.bill.serviceCharge.toFixed(2)}</span></div>
+        <div style="display:flex; justify-content:space-between;"><span>CGST (2.5%):</span><span>₹${tbl.bill.cgst.toFixed(2)}</span></div>
+        <div style="display:flex; justify-content:space-between;"><span>SGST (2.5%):</span><span>₹${tbl.bill.sgst.toFixed(2)}</span></div>
+        <div style="display:flex; justify-content:space-between;"><span>Round Off:</span><span>₹${tbl.bill.roundOff.toFixed(2)}</span></div>
+        <div style="border-top:1.5px solid #0f172a; margin-top:6px; padding-top:4px; display:flex; justify-content:space-between; font-size:14px; font-weight:900;">
+          <span>PAYABLE:</span><span>₹${tbl.bill.payable.toFixed(2)}</span>
+        </div>
+        <div style="margin-top:8px;"><span class="badge badge-${tbl.bill.settled ? 'green' : 'amber'}">${tbl.bill.settled ? 'PAID via ' + tbl.bill.mode : 'AWAITING SETTLEMENT'}</span></div>
+      `;
+    } else {
+      billCont.innerHTML = '<em>No bill generated yet for Table A-04. Click "Generate Draft" above.</em>';
+    }
+
+    // Inventory Table
+    const invCont = document.getElementById('inventory-table-container');
+    let invHtml = '<table class="tech-table"><thead><tr><th>Ingredient</th><th>Current Stock</th><th>Par Buffer</th><th>Unit</th><th>Status</th></tr></thead><tbody>';
+    Object.keys(state.inventory).forEach(k => {
+      const inv = state.inventory[k];
+      invHtml += `<tr>
+        <td><strong>${inv.name}</strong></td>
+        <td>${inv.current}</td>
+        <td>${inv.par}</td>
+        <td>${inv.unit}</td>
+        <td><span class="badge badge-${inv.is86 ? 'red' : (inv.current < inv.par ? 'amber' : 'green')}">${inv.is86 ? '86 SOLD OUT' : (inv.current < inv.par ? 'LOW BUFFER' : 'HEALTHY')}</span></td>
+      </tr>`;
+    });
+    invHtml += '</tbody></table>';
+    invCont.innerHTML = invHtml;
+
+    // Spoilage Table
+    const spoilCont = document.getElementById('spoilage-table-container');
+    if (state.spoilageLogs.length) {
+      let spHtml = '<table class="tech-table"><thead><tr><th>Time</th><th>Table</th><th>Item</th><th>Cost (₹)</th><th>Reason</th><th>Authorized By</th></tr></thead><tbody>';
+      state.spoilageLogs.forEach(s => {
+        spHtml += `<tr>
+          <td>${s.time}</td>
+          <td>${s.tableId}</td>
+          <td>${s.itemName}</td>
+          <td>₹${s.cost}</td>
+          <td>${s.reason}</td>
+          <td>${s.authorizedBy}</td>
+        </tr>`;
+      });
+      spHtml += '</tbody></table>';
+      spoilCont.innerHTML = spHtml;
+    } else {
+      spoilCont.innerHTML = '<em>Zero post-cook voids logged during this shift.</em>';
+    }
+  }
+
+  function requestBill() {
+    client.dispatch('REQUEST_BILL', { tableId: 'A4' });
+  }
+
+  function settlePayment(mode) {
+    client.dispatch('SETTLE_PAYMENT', { tableId: 'A4', mode });
+  }
+
+  function togglePaneer86() {
+    const is86 = client && client.state && client.state.inventory.paneer_kg.is86;
+    client.dispatch('TRIGGER_86', { ingredientKey: 'paneer_kg', is86: !is86 });
+  }
+
+  function sealZReport() {
+    alert('Z-Report Sealed! Daily register closed and PDF summary dispatched to Owner WhatsApp.');
+  }
+</script>
+</body>
+</html>

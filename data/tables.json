@@ -1,0 +1,166 @@
+[
+  {
+    "id": "A1",
+    "name": "Table A-01",
+    "zone": "AC Family Hall",
+    "capacity": 4,
+    "status": "VACANT",
+    "covers": 0,
+    "captain": "Rohan",
+    "dwellMin": 0,
+    "kots": [],
+    "bill": null
+  },
+  {
+    "id": "A2",
+    "name": "Table A-02",
+    "zone": "AC Family Hall",
+    "capacity": 4,
+    "status": "ORDERING",
+    "covers": 4,
+    "captain": "Rohan",
+    "dwellMin": 8,
+    "kots": [],
+    "bill": null
+  },
+  {
+    "id": "A3",
+    "name": "Table A-03",
+    "zone": "AC Family Hall",
+    "capacity": 6,
+    "status": "COOKING",
+    "covers": 6,
+    "captain": "Suresh",
+    "dwellMin": 18,
+    "kots": [
+      "KOT-9801"
+    ],
+    "bill": null
+  },
+  {
+    "id": "A4",
+    "name": "Table A-04",
+    "zone": "AC Family Hall",
+    "capacity": 4,
+    "status": "SEATED",
+    "covers": 4,
+    "captain": "Suresh",
+    "dwellMin": 4,
+    "kots": [],
+    "bill": null
+  },
+  {
+    "id": "A5",
+    "name": "Table A-05",
+    "zone": "AC Family Hall",
+    "capacity": 2,
+    "status": "BILLED",
+    "covers": 2,
+    "captain": "Suresh",
+    "dwellMin": 42,
+    "kots": [
+      "KOT-9780"
+    ],
+    "bill": {
+      "subtotal": 1240,
+      "tax": 62,
+      "total": 1302
+    }
+  },
+  {
+    "id": "A6",
+    "name": "Table A-06",
+    "zone": "AC Family Hall",
+    "capacity": 4,
+    "status": "DIRTY",
+    "covers": 0,
+    "captain": "Rohan",
+    "dwellMin": 55,
+    "kots": [],
+    "bill": null
+  },
+  {
+    "id": "R1",
+    "name": "Table R-01",
+    "zone": "Rooftop Terrace",
+    "capacity": 4,
+    "status": "COOKING",
+    "covers": 4,
+    "captain": "Amit",
+    "dwellMin": 22,
+    "kots": [
+      "KOT-9795"
+    ],
+    "bill": null
+  },
+  {
+    "id": "R2",
+    "name": "Table R-02",
+    "zone": "Rooftop Terrace",
+    "capacity": 8,
+    "status": "BILLED",
+    "covers": 7,
+    "captain": "Amit",
+    "dwellMin": 64,
+    "kots": [
+      "KOT-9772"
+    ],
+    "bill": {
+      "subtotal": 4200,
+      "tax": 210,
+      "total": 4410
+    }
+  },
+  {
+    "id": "R3",
+    "name": "Table R-03",
+    "zone": "Rooftop Terrace",
+    "capacity": 4,
+    "status": "VACANT",
+    "covers": 0,
+    "captain": "Amit",
+    "dwellMin": 0,
+    "kots": [],
+    "bill": null
+  },
+  {
+    "id": "P1",
+    "name": "PDR Royal-1",
+    "zone": "Private Dining",
+    "capacity": 12,
+    "status": "GARAM_ROTI",
+    "covers": 10,
+    "captain": "Vikram",
+    "dwellMin": 45,
+    "kots": [
+      "KOT-9760"
+    ],
+    "bill": null
+  },
+  {
+    "id": "P2",
+    "name": "PDR Royal-2",
+    "zone": "Private Dining",
+    "capacity": 10,
+    "status": "VACANT",
+    "covers": 0,
+    "captain": "Vikram",
+    "dwellMin": 0,
+    "kots": [],
+    "bill": null
+  },
+  {
+    "id": "B1",
+    "name": "Bar High-01",
+    "zone": "Bar & Lounge",
+    "capacity": 2,
+    "status": "COOKING",
+    "covers": 2,
+    "captain": "Rohan",
+    "dwellMin": 14,
+    "kots": [
+      "KOT-9805"
+    ],
+    "bill": null
+  }
+]

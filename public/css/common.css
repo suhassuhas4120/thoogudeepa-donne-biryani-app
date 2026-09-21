@@ -1,0 +1,76 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --bg-main: #f8fafc;
+    --text-main: #0f172a;
+    --border-dark: #0f172a;
+    --primary-blue: #0284c7;
+    --success-green: #15803d;
+    --warning-amber: #d97706;
+    --danger-red: #b91c1c;
+    --purple-roti: #7e22ce;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    color: var(--text-main);
+    background: var(--bg-main);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  /* UTILITY BADGES */
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+  .badge-green { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+  .badge-amber { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+  .badge-red { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+  .badge-blue { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+  .badge-purple { background: #f3e8ff; color: #7e22ce; border: 1px solid #d8b4fe; }
+
+  /* BUTTONS */
+  .btn {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1.5px solid var(--border-dark);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: all 0.15s ease;
+  }
+  .btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn-primary { background: var(--primary-blue); color: #fff; border-color: #0369a1; }
+  .btn-success { background: var(--success-green); color: #fff; border-color: #166534; }
+  .btn-danger { background: var(--danger-red); color: #fff; border-color: #991b1b; }
+  .btn-purple { background: var(--purple-roti); color: #fff; border-color: #6b21a8; }
+  .btn-dark { background: var(--border-dark); color: #fff; }
+
+  /* CARD */
+  .card {
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  /* MONOSPACE CODE/TIMERS */
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+  }

@@ -1,0 +1,2500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kitchen KDS Tablet Skeletons & Structural Wireframes (Screens 1 to 3)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* STRICT MONOCHROME WIREFRAME / BLUEPRINT PALETTE (NO COLORS) */
+    :root {
+      --wire-bg: #f8fafc;
+      --wire-card: #ffffff;
+      --wire-border: #94a3b8;
+      --wire-border-dark: #334155;
+      --wire-border-dashed: #cbd5e1;
+      --wire-text: #0f172a;
+      --wire-text-muted: #64748b;
+      --wire-surface-subtle: #f1f5f9;
+      --wire-surface-contrast: #e2e8f0;
+      --wire-black: #000000;
+      --wire-white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0b0f19;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+    }
+
+    /* TOP MASTER HEADER & CONTROLS */
+    .top-console {
+      width: 100%;
+      max-width: 1360px;
+      background: #111827;
+      border: 1px solid #374151;
+      border-radius: 12px;
+      padding: 12px 18px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .console-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .blueprint-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      background: #1f2937;
+      border: 1px solid #4b5563;
+      padding: 4px 8px;
+      border-radius: 6px;
+      color: #9ca3af;
+      letter-spacing: 0.5px;
+    }
+
+    .console-title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #f9fafb;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .switch-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #1f2937;
+      border: 1px solid #4b5563;
+      color: #d1d5db;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .switch-link:hover {
+      background: #374151;
+      color: #ffffff;
+      border-color: #6b7280;
+    }
+
+    .view-mode-switch {
+      display: flex;
+      gap: 4px;
+      background: #1f2937;
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid #374151;
+    }
+
+    .mode-btn {
+      background: transparent;
+      border: none;
+      color: #9ca3af;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      transition: all 0.15s;
+    }
+
+    .mode-btn.active {
+      background: #374151;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    /* SCREEN TABS BAR */
+    .screen-nav-bar {
+      width: 100%;
+      max-width: 1360px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    .screen-tab {
+      flex: 1;
+      min-width: 240px;
+      background: #111827;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      padding: 10px 14px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: all 0.15s ease;
+      text-align: left;
+    }
+
+    .screen-tab:hover {
+      border-color: #6b7280;
+      background: #1a2234;
+    }
+
+    .screen-tab.active {
+      background: #1f2937;
+      border-color: #9ca3af;
+      box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.25);
+    }
+
+    .tab-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      color: #9ca3af;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .screen-tab.active .tab-num {
+      color: #f3f4f6;
+    }
+
+    .tab-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #e5e7eb;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* TABLET DEVICE BEZEL CONTAINER */
+    .tablet-stage {
+      width: 100%;
+      max-width: 1360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .tablet-bezel {
+      width: 100%;
+      max-width: 1240px;
+      min-height: 800px;
+      background: #0f172a;
+      border: 14px solid #1e293b;
+      border-radius: 28px;
+      box-shadow: 0 25px 60px -15px rgba(0,0,0,0.7), 0 0 0 1px #334155;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* TABLET HARDWARE NOTCH / SENSORS */
+    .tablet-notch {
+      height: 18px;
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .tablet-camera {
+      width: 7px;
+      height: 7px;
+      background: #334155;
+      border-radius: 50%;
+      border: 1px solid #475569;
+    }
+
+    .tablet-sensor {
+      width: 18px;
+      height: 4px;
+      background: #334155;
+      border-radius: 2px;
+    }
+
+    /* WIREFRAME CANVAS INSIDE TABLET */
+    .wire-canvas {
+      flex: 1;
+      background: var(--wire-bg);
+      color: var(--wire-text);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* BLUEPRINT WIREFRAME ELEMENTS */
+    .wf-box {
+      border: 1.5px solid var(--wire-border);
+      background: var(--wire-card);
+      border-radius: 6px;
+      position: relative;
+    }
+
+    .wf-box-dashed {
+      border: 1.5px dashed var(--wire-border);
+      background: var(--wire-surface-subtle);
+      border-radius: 6px;
+    }
+
+    .wf-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--wire-text-muted);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .wf-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--wire-card);
+      color: var(--wire-black);
+      border: 1.5px solid var(--wire-black);
+      border-radius: 6px;
+      padding: 7px 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .wf-btn:hover {
+      background: var(--wire-surface-contrast);
+    }
+
+    .wf-btn-dark {
+      background: var(--wire-black);
+      color: var(--wire-white);
+      border: 1.5px solid var(--wire-black);
+    }
+
+    .wf-btn-dark:hover {
+      background: #262626;
+    }
+
+    .wf-btn-subtle {
+      border: 1px solid var(--wire-border);
+      background: var(--wire-surface-subtle);
+      color: var(--wire-text);
+    }
+
+    .wf-btn-subtle:hover {
+      background: var(--wire-surface-contrast);
+    }
+
+    /* CALL WAITER BELL BUTTON ON KITCHEN SCREENS */
+    .bell-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1.5px solid var(--wire-black);
+      background: var(--wire-card);
+      color: var(--wire-black);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .bell-btn:hover {
+      background: var(--wire-surface-contrast);
+    }
+
+    .bell-icon {
+      font-size: 14px;
+    }
+
+    /* SCREEN 1: LOGIN (TABLET CENTERED) */
+    .screen-1-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: 40px 20px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--wire-card);
+      border: 2px solid var(--wire-black);
+      border-radius: 12px;
+      padding: 32px 36px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .login-logo-box {
+      width: 100%;
+      height: 90px;
+      border: 1.5px dashed var(--wire-border);
+      background: var(--wire-surface-subtle);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--wire-border-dark);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--wire-card);
+      color: var(--wire-text);
+      outline: none;
+    }
+
+    .login-input:focus {
+      border-color: var(--wire-black);
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+    }
+
+    .pin-display-box {
+      width: 100%;
+      padding: 14px;
+      background: var(--wire-surface-contrast);
+      border: 1.5px solid var(--wire-border-dark);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      min-height: 48px;
+    }
+
+    .pin-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--wire-black);
+      background: transparent;
+      transition: all 0.15s;
+    }
+
+    .pin-dot.filled {
+      background: var(--wire-black);
+    }
+
+    .keypad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+    }
+
+    .key-btn {
+      height: 52px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      font-weight: 800;
+      background: var(--wire-card);
+      border: 1.5px solid var(--wire-border-dark);
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .key-btn:hover {
+      background: var(--wire-surface-contrast);
+      border-color: var(--wire-black);
+    }
+
+    .key-btn:active {
+      transform: scale(0.97);
+    }
+
+    .key-btn-sub {
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--wire-surface-subtle);
+    }
+
+    .login-actions {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+    }
+
+    /* SCREEN 2: ALL TABLES OVERVIEW (70% LEFT / 30% RIGHT + TOP HEADER + BULK BAR) */
+    .kds-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 740px;
+    }
+
+    /* TOP HEADER: 10-15% OF TAB SCREEN */
+    .kds-header {
+      min-height: 68px;
+      border-bottom: 2px solid var(--wire-border-dark);
+      background: var(--wire-card);
+      padding: 10px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .category-chips-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cat-chip {
+      padding: 6px 12px;
+      border: 1.5px solid var(--wire-border);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--wire-card);
+      transition: all 0.15s;
+    }
+
+    .cat-chip.active {
+      background: var(--wire-black);
+      color: var(--wire-white);
+      border-color: var(--wire-black);
+    }
+
+    .header-right-tools {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-dropdown {
+      padding: 6px 10px;
+      border: 1.5px solid var(--wire-border-dark);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--wire-card);
+      color: var(--wire-text);
+      outline: none;
+    }
+
+    /* BULK DISPLAY BAR: 10-15% OF TAB SCREEN (EXACTLY BELOW HEADER) */
+    .bulk-display-bar {
+      min-height: 85px;
+      background: var(--wire-surface-subtle);
+      border-bottom: 2px solid var(--wire-border-dark);
+      padding: 8px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .bulk-bar-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .bulk-cards-row {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .bulk-card {
+      min-width: 220px;
+      background: var(--wire-card);
+      border: 1.5px solid var(--wire-border);
+      border-radius: 6px;
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .bulk-item-name {
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .bulk-count-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border: 1px solid var(--wire-black);
+      border-radius: 4px;
+      background: var(--wire-surface-contrast);
+    }
+
+    .bulk-table-sources {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--wire-text-muted);
+    }
+
+    /* MAIN SPLIT: 70% LEFT (TABLES MATRIX) / 30% RIGHT (TIME TICKETS) */
+    .kds-main-split {
+      display: flex;
+      flex: 1;
+      min-height: 560px;
+    }
+
+    /* LEFT 70% */
+    .kds-left-70 {
+      flex: 0 0 70%;
+      width: 70%;
+      border-right: 2px solid var(--wire-border-dark);
+      padding: 14px 18px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--wire-bg);
+    }
+
+    .section-headline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--wire-border);
+      padding-bottom: 6px;
+    }
+
+    /* 3-COLUMN TABLE GRID */
+    .tables-grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .table-box {
+      background: var(--wire-card);
+      border: 1.5px solid var(--wire-border-dark);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .table-box:hover {
+      border-color: var(--wire-black);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transform: translateY(-1px);
+    }
+
+    .table-box-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px dashed var(--wire-border);
+      padding-bottom: 6px;
+    }
+
+    .table-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--wire-black);
+    }
+
+    .order-timer {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border: 1px solid var(--wire-border);
+      border-radius: 4px;
+      background: var(--wire-surface-subtle);
+    }
+
+    .table-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 80px;
+    }
+
+    .table-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 6px;
+      background: var(--wire-surface-subtle);
+      border-radius: 4px;
+      border: 1px solid var(--wire-border-dashed);
+    }
+
+    .prep-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 5px;
+      border-radius: 3px;
+      border: 1px solid var(--wire-border);
+      background: var(--wire-card);
+    }
+
+    /* RIGHT 30%: CHRONOLOGICAL TIME QUEUE */
+    .kds-right-30 {
+      flex: 0 0 30%;
+      width: 30%;
+      background: var(--wire-card);
+      padding: 14px 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .chronological-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ticket-card {
+      border: 1.5px solid var(--wire-border);
+      border-radius: 6px;
+      padding: 10px;
+      background: var(--wire-surface-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .ticket-card:hover {
+      border-color: var(--wire-black);
+    }
+
+    .ticket-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ticket-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .ticket-timestamp {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--wire-text-muted);
+    }
+
+    .ticket-item-preview {
+      font-size: 11px;
+      color: var(--wire-text);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    /* SCREEN 3: TABLE & ITEM DETAIL (55% LEFT) + MENU INVENTORY CONTROLLER (45% RIGHT) */
+    .screen-3-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 740px;
+    }
+
+    .screen-3-topbar {
+      padding: 10px 18px;
+      border-bottom: 2px solid var(--wire-border-dark);
+      background: var(--wire-card);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .screen-3-split {
+      display: flex;
+      flex: 1;
+      min-height: 660px;
+    }
+
+    /* LEFT 55%: PARTICULAR TABLE SELECTED */
+    .screen-3-left-55 {
+      flex: 0 0 55%;
+      width: 55%;
+      border-right: 2px solid var(--wire-border-dark);
+      padding: 16px 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: var(--wire-bg);
+    }
+
+    .selected-table-header-card {
+      background: var(--wire-card);
+      border: 2px solid var(--wire-black);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .detail-items-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .detail-item-card {
+      background: var(--wire-card);
+      border: 1.5px solid var(--wire-border-dark);
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .detail-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .item-qty-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border: 1.5px solid var(--wire-black);
+      border-radius: 4px;
+    }
+
+    .item-notes-box {
+      padding: 6px 10px;
+      border: 1px dashed var(--wire-border);
+      background: var(--wire-surface-subtle);
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--wire-text-muted);
+    }
+
+    /* 4-STAGE PREPARATION STATUS STEPPERS FOR EACH ITEM */
+    .prep-stepper-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .prep-step-btn {
+      padding: 7px 4px;
+      border: 1.5px solid var(--wire-border);
+      background: var(--wire-card);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      transition: all 0.15s;
+    }
+
+    .prep-step-btn.active {
+      border-color: var(--wire-black);
+      background: var(--wire-black);
+      color: var(--wire-white);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
+
+    /* RIGHT 45%: LIVE MENU INVENTORY & AVAILABILITY CONTROLLER */
+    .screen-3-right-45 {
+      flex: 0 0 45%;
+      width: 45%;
+      background: var(--wire-card);
+      padding: 16px 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .inventory-header-card {
+      border: 1.5px solid var(--wire-border-dark);
+      border-radius: 8px;
+      background: var(--wire-surface-subtle);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .lock-control-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--wire-border);
+    }
+
+    .lock-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .lock-toggle-btn.locked {
+      background: var(--wire-card);
+      border: 1.5px solid var(--wire-border-dark);
+      color: var(--wire-text);
+    }
+
+    .lock-toggle-btn.unlocked {
+      background: var(--wire-black);
+      border: 1.5px solid var(--wire-black);
+      color: var(--wire-white);
+    }
+
+    .menu-search-bar {
+      display: flex;
+      gap: 8px;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1.5px solid var(--wire-border);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      outline: none;
+    }
+
+    .menu-items-table {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .menu-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border: 1.5px solid var(--wire-border);
+      border-radius: 6px;
+      background: var(--wire-card);
+      transition: all 0.15s;
+    }
+
+    .menu-row.out-of-stock {
+      border-style: dashed;
+      background: var(--wire-surface-subtle);
+      opacity: 0.75;
+    }
+
+    .stock-toggle-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1.5px solid var(--wire-black);
+      transition: all 0.15s;
+    }
+
+    .stock-toggle-btn.in-stock {
+      background: var(--wire-card);
+      color: var(--wire-black);
+    }
+
+    .stock-toggle-btn.out-stock {
+      background: var(--wire-surface-contrast);
+      color: var(--wire-text-muted);
+      border-color: var(--wire-border);
+      text-decoration: line-through;
+    }
+
+    /* ALL SCREENS GRID VIEW */
+    .all-grid-view {
+      display: none;
+      width: 100%;
+      max-width: 1360px;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .grid-screen-card {
+      background: #111827;
+      border: 1px solid #374151;
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .grid-screen-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 800;
+      color: #9ca3af;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* MODALS: ADD MENU ITEM & CALL WAITER */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-window {
+      width: 100%;
+      max-width: 480px;
+      background: var(--wire-card);
+      color: var(--wire-text);
+      border: 2px solid var(--wire-black);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* RESPONSIVE SCALING */
+    @media (max-width: 1024px) {
+      .tables-grid-3col {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .kds-main-split, .screen-3-split {
+        flex-direction: column;
+      }
+      .kds-left-70, .kds-right-30, .screen-3-left-55, .screen-3-right-45 {
+        flex: 1 1 100%;
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid var(--wire-border-dark);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP CONSOLE CONTROLLER -->
+  <header class="top-console">
+    <div class="console-brand">
+      <span class="blueprint-tag">[KITCHEN TERMINAL]</span>
+      <span class="console-title">KDS Tablet Skeletons (Screens 1 to 3)</span>
+      <span class="blueprint-tag">[TABLET RESOLUTION: 1024x768 / 16:10]</span>
+    </div>
+
+    <div class="nav-actions">
+      <a href="waiter-skeletons.html" class="switch-link"><span>🤵</span> Waiter (1-10)</a> 
+      <a href="skeletons.html" class="switch-link"><span>📱</span> Customer (1-10)</a>
+      <a href="manager-skeletons.html" class="switch-link"><span>👔</span> Manager (1-16)</a>
+
+      <div class="view-mode-switch">
+        <button class="mode-btn active" id="btnModeFlow" onclick="setViewMode('flow')">📟 TABLET VIEW</button>
+        <button class="mode-btn" id="btnModeGrid" onclick="setViewMode('grid')">🗂️ ALL 3 SCREENS</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- SCREEN NAVIGATION TABS -->
+  <nav class="screen-nav-bar" id="screenTabsBar">
+    <button class="screen-tab active" id="tab-1" onclick="selectScreen(1)">
+      <div class="tab-num"><span>SCREEN 1</span><span>[AUTH]</span></div>
+      <div class="tab-title">Kitchen Staff / Chef Login</div>
+    </button>
+    <button class="screen-tab" id="tab-2" onclick="selectScreen(2)">
+      <div class="tab-num"><span>SCREEN 2</span><span>[70% / 30% SPLIT]</span></div>
+      <div class="tab-title">All Tables (3-Col) + Orders Queue + Bulks</div>
+    </button>
+    <button class="screen-tab" id="tab-3" onclick="selectScreen(3)">
+      <div class="tab-num"><span>SCREEN 3</span><span>[50% / 50% SPLIT]</span></div>
+      <div class="tab-title">Table Detail Prep + Menu Inventory Lock</div>
+    </button>
+  </nav>
+
+  <!-- TABLET STAGE (FLOW VIEW) -->
+  <main class="tablet-stage" id="tabletStage">
+    <div class="tablet-bezel">
+      <!-- HARDWARE TOP SENSORS -->
+      <div class="tablet-notch">
+        <div class="tablet-sensor"></div>
+        <div class="tablet-camera"></div>
+      </div>
+
+      <!-- WIREFRAME SCREEN CANVAS -->
+      <div class="wire-canvas" id="wireCanvas">
+
+        <!-- ========================================== -->
+        <!-- SCREEN 1: LOGIN (TABLET CENTERED) -->
+        <!-- ========================================== -->
+        <section id="screen-1-view" class="screen-1-container">
+          <div class="login-card">
+            <div class="login-logo-box">
+              <span style="font-size: 26px;">🏢</span>
+              <span class="wf-tag">[HOTEL / ESTABLISHMENT LOGO SPACE]</span>
+            </div>
+
+            <div style="text-align: center;">
+              <h2 style="font-size: 16px; font-weight: 800; letter-spacing: 0.5px;">[KITCHEN TERMINAL ACCESS]</h2>
+              <p class="wf-tag" style="margin-top: 4px;">[CHEF / KITCHEN STAFF AUTHENTICATION]</p>
+            </div>
+
+            <div>
+              <label class="wf-tag" style="display: block; margin-bottom: 6px;">[ENTER CHEF / STAFF NAME]:</label>
+              <input type="text" id="chefNameInput" class="login-input" placeholder="[ENTER CHEF NAME]" value="[CHEF 01]">
+            </div>
+
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                <label class="wf-tag">[KEYPAD PASSWORD / PIN]:</label>
+                <span class="wf-tag" id="pinStatusText">[4 DIGITS REQUIRED]</span>
+              </div>
+              <div class="pin-display-box" id="pinDisplayBox">
+                <div class="pin-dot filled"></div>
+                <div class="pin-dot filled"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+              </div>
+            </div>
+
+            <!-- NUMBER KEYPAD STRUCTURE -->
+            <div class="keypad-grid">
+              <button class="key-btn" onclick="pressKey('1')">1</button>
+              <button class="key-btn" onclick="pressKey('2')">2</button>
+              <button class="key-btn" onclick="pressKey('3')">3</button>
+              <button class="key-btn" onclick="pressKey('4')">4</button>
+              <button class="key-btn" onclick="pressKey('5')">5</button>
+              <button class="key-btn" onclick="pressKey('6')">6</button>
+              <button class="key-btn" onclick="pressKey('7')">7</button>
+              <button class="key-btn" onclick="pressKey('8')">8</button>
+              <button class="key-btn" onclick="pressKey('9')">9</button>
+              <button class="key-btn key-btn-sub" onclick="pressBackspace()">[⌫ DEL]</button>
+              <button class="key-btn" onclick="pressKey('0')">0</button>
+              <button class="key-btn key-btn-sub" onclick="clearPin()">[✕ CLEAR]</button>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="login-actions">
+              <button class="wf-btn wf-btn-subtle" style="flex: 1; padding: 12px;" onclick="resetLogin()">
+                [RESET]
+              </button>
+              <button class="wf-btn wf-btn-dark" style="flex: 2; padding: 12px; font-size: 13px;" onclick="selectScreen(2)">
+                [GO TO HOME PAGE / LOGIN ->]
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 2: ALL TABLES 3-COL (70%) + QUEUE (30%) + TOP HEADER + BULK BAR -->
+        <!-- ========================================== -->
+        <section id="screen-2-view" class="kds-container" style="display: none;">
+          
+          <!-- TOP HEADER (10-15% OF TAB SCREEN): CATEGORIES & FILTERS & CALL WAITER -->
+          <div class="kds-header">
+            <div class="category-chips-bar">
+              <span class="wf-tag" style="margin-right: 4px;">[CATEGORIES]:</span>
+              <button class="cat-chip active" onclick="toggleChip(this)">[ALL CATEGORIES]</button>
+              <button class="cat-chip" onclick="toggleChip(this)">[CATEGORY 1]</button>
+              <button class="cat-chip" onclick="toggleChip(this)">[CATEGORY 2]</button>
+              <button class="cat-chip" onclick="toggleChip(this)">[CATEGORY 3]</button>
+              <button class="cat-chip" onclick="toggleChip(this)">[CATEGORY 4]</button>
+            </div>
+
+            <div class="header-right-tools">
+              <select class="filter-dropdown">
+                <option>[FILTER 1: ALL ACTIVE ORDERS]</option>
+                <option>[FILTER 2: PENDING PREPARATION]</option>
+                <option>[FILTER 3: IN COOKING / PROGRESS]</option>
+                <option>[FILTER 4: READY FOR PICKUP]</option>
+                <option>[FILTER 5: HIGH WAIT TIME (>15 MIN)]</option>
+              </select>
+
+              <!-- CALL WAITER BELL ICON ON SCREEN 2 -->
+              <button class="bell-btn" onclick="openWaiterModal('Screen 2 Overview')" title="[CALL FLOOR CAPTAIN / WAITER]">
+                <span class="bell-icon">🔔</span>
+                <span>[CALL WAITER]</span>
+              </button>
+
+              
+            </div>
+          </div>
+
+          <!-- BULK ORDER DISPLAY BAR (EXACTLY BELOW HEADER, 10-15% OF TAB SCREEN) -->
+          <div class="bulk-display-bar">
+            <div class="bulk-bar-title-row">
+              <span class="wf-tag" style="font-weight: 800; color: var(--wire-black);">
+                [📦 BULK AGGREGATION DISPLAY — SIMILAR ITEMS ACROSS ACTIVE TABLES]
+              </span>
+              <span class="wf-tag">[BULK QUEUE: 4 UNIQUE ITEMS CONSOLIDATED]</span>
+            </div>
+
+            <div class="bulk-cards-row">
+              <!-- BULK ITEM 1 -->
+              <div class="bulk-card">
+                <div class="bulk-item-name">
+                  <span>[ITEM 1]</span>
+                  <span class="bulk-count-badge">TOTAL: 5</span>
+                </div>
+                <div class="bulk-table-sources">
+                  [TABLES: TBL 01 (x2), TBL 03 (x1), TBL 06 (x2)]
+                </div>
+                <div style="font-family: 'JetBrains Mono'; font-size: 9px; font-weight: 700;">
+                  [STATUS: 3 COOKING, 2 PENDING]
+                </div>
+              </div>
+
+              <!-- BULK ITEM 2 -->
+              <div class="bulk-card">
+                <div class="bulk-item-name">
+                  <span>[ITEM 2]</span>
+                  <span class="bulk-count-badge">TOTAL: 4</span>
+                </div>
+                <div class="bulk-table-sources">
+                  [TABLES: TBL 02 (x2), TBL 04 (x1), TBL 05 (x1)]
+                </div>
+                <div style="font-family: 'JetBrains Mono'; font-size: 9px; font-weight: 700;">
+                  [STATUS: 4 COOKING]
+                </div>
+              </div>
+
+              <!-- BULK ITEM 3 -->
+              <div class="bulk-card">
+                <div class="bulk-item-name">
+                  <span>[ITEM 3]</span>
+                  <span class="bulk-count-badge">TOTAL: 3</span>
+                </div>
+                <div class="bulk-table-sources">
+                  [TABLES: TBL 01 (x1), TBL 06 (x2)]
+                </div>
+                <div style="font-family: 'JetBrains Mono'; font-size: 9px; font-weight: 700;">
+                  [STATUS: 1 READY, 2 COOKING]
+                </div>
+              </div>
+
+              <!-- BULK ITEM 4 -->
+              <div class="bulk-card">
+                <div class="bulk-item-name">
+                  <span>[ITEM 4]</span>
+                  <span class="bulk-count-badge">TOTAL: 2</span>
+                </div>
+                <div class="bulk-table-sources">
+                  [TABLES: TBL 03 (x1), TBL 07 (x1)]
+                </div>
+                <div style="font-family: 'JetBrains Mono'; font-size: 9px; font-weight: 700;">
+                  [STATUS: 2 PENDING]
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MAIN BODY: 70% LEFT (ALL TABLES 3-COL) / 30% RIGHT (TIME & TABLE QUEUE) -->
+          <div class="kds-main-split">
+            
+            <!-- LEFT 70%: 3-COLUMN TABLE MATRIX -->
+            <div class="kds-left-70">
+              <div class="section-headline">
+                <span class="wf-tag" style="font-weight: 800; font-size: 11px;">
+                  [ALL TABLES DISPLAY (3-COLUMN MATRIX) — 70% SCREEN WIDTH]
+                </span>
+                <span class="wf-tag">[CLICK ANY TABLE BOX TO OPEN SCREEN 3 DETAIL]</span>
+              </div>
+
+              <div class="tables-grid-3col">
+                
+                <!-- TABLE BOX 1 -->
+                <div class="table-box" onclick="selectScreen(3, 'TABLE 01')">
+                  <div class="table-box-header">
+                    <span class="table-badge">[TABLE 01]</span>
+                    <span class="order-timer">⏱ 14m (KOT #101)</span>
+                  </div>
+                  <div class="table-items-list" style="display:flex; flex-direction:column; gap:6px;">
+                    <!-- Item with 4-Stage Stepper -->
+                    <div class="table-item-card-compact" style="background:var(--wire-surface-subtle); border:1px solid var(--wire-border-dashed); border-radius:6px; padding:6px; display:flex; flex-direction:column; gap:4px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700;">
+                        <span>2x [ITEM 1]</span>
+                        <span class="wf-tag" style="font-size:8.5px; font-weight:800; padding:1px 4px; border:1px solid var(--wire-border); border-radius:3px; background:var(--wire-card);">[STAGE 2: PREPARING]</span>
+                      </div>
+                      <div class="prep-stepper-row" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:2px;">
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 1: RECEIVED]')">
+                          <span>1.REC</span>
+                        </button>
+                        <button class="prep-step-btn active" style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 2: PREPARING]')">
+                          <span>2.PREP</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 3: READY]')">
+                          <span>3.READY</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 4: SERVED]')">
+                          <span>4.SERVED</span>
+                        </button>
+                      </div>
+                    </div>
+                    <!-- Item with 4-Stage Stepper -->
+                    <div class="table-item-card-compact" style="background:var(--wire-surface-subtle); border:1px solid var(--wire-border-dashed); border-radius:6px; padding:6px; display:flex; flex-direction:column; gap:4px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700;">
+                        <span>1x [ITEM 3]</span>
+                        <span class="wf-tag" style="font-size:8.5px; font-weight:800; padding:1px 4px; border:1px solid var(--wire-border); border-radius:3px; background:var(--wire-card);">[STAGE 1: RECEIVED]</span>
+                      </div>
+                      <div class="prep-stepper-row" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:2px;">
+                        <button class="prep-step-btn active" style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 1: RECEIVED]')">
+                          <span>1.REC</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 2: PREPARING]')">
+                          <span>2.PREP</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 3: READY]')">
+                          <span>3.READY</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 4: SERVED]')">
+                          <span>4.SERVED</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="width: 100%; font-size: 10px; margin-top: auto;">
+                    [MANAGE TABLE 01 ->]
+                  </button>
+                </div>
+
+                <!-- TABLE BOX 2 -->
+                <div class="table-box" onclick="selectScreen(3, 'TABLE 02')">
+                  <div class="table-box-header">
+                    <span class="table-badge">[TABLE 02]</span>
+                    <span class="order-timer">⏱ 08m (KOT #102)</span>
+                  </div>
+                  <div class="table-items-list" style="display:flex; flex-direction:column; gap:6px;">
+                    <!-- Item with 4-Stage Stepper -->
+                    <div class="table-item-card-compact" style="background:var(--wire-surface-subtle); border:1px solid var(--wire-border-dashed); border-radius:6px; padding:6px; display:flex; flex-direction:column; gap:4px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700;">
+                        <span>2x [ITEM 2]</span>
+                        <span class="wf-tag" style="font-size:8.5px; font-weight:800; padding:1px 4px; border:1px solid var(--wire-border); border-radius:3px; background:var(--wire-card);">[STAGE 1: RECEIVED]</span>
+                      </div>
+                      <div class="prep-stepper-row" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:2px;">
+                        <button class="prep-step-btn active" style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 1: RECEIVED]')">
+                          <span>1.REC</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 2: PREPARING]')">
+                          <span>2.PREP</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 3: READY]')">
+                          <span>3.READY</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 4: SERVED]')">
+                          <span>4.SERVED</span>
+                        </button>
+                      </div>
+                    </div>
+                    <!-- Item with 4-Stage Stepper -->
+                    <div class="table-item-card-compact" style="background:var(--wire-surface-subtle); border:1px solid var(--wire-border-dashed); border-radius:6px; padding:6px; display:flex; flex-direction:column; gap:4px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700;">
+                        <span>1x [ITEM 5]</span>
+                        <span class="wf-tag" style="font-size:8.5px; font-weight:800; padding:1px 4px; border:1px solid var(--wire-border); border-radius:3px; background:var(--wire-card);">[STAGE 1: RECEIVED]</span>
+                      </div>
+                      <div class="prep-stepper-row" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:2px;">
+                        <button class="prep-step-btn active" style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 1: RECEIVED]')">
+                          <span>1.REC</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 2: PREPARING]')">
+                          <span>2.PREP</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 3: READY]')">
+                          <span>3.READY</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 4: SERVED]')">
+                          <span>4.SERVED</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="width: 100%; font-size: 10px; margin-top: auto;">
+                    [MANAGE TABLE 02 ->]
+                  </button>
+                </div>
+
+                <!-- TABLE BOX 3 -->
+                <div class="table-box" onclick="selectScreen(3, 'TABLE 03')">
+                  <div class="table-box-header">
+                    <span class="table-badge">[TABLE 03]</span>
+                    <span class="order-timer">⏱ 22m (KOT #103)</span>
+                  </div>
+                  <div class="table-items-list" style="display:flex; flex-direction:column; gap:6px;">
+                    <!-- Item with 4-Stage Stepper -->
+                    <div class="table-item-card-compact" style="background:var(--wire-surface-subtle); border:1px solid var(--wire-border-dashed); border-radius:6px; padding:6px; display:flex; flex-direction:column; gap:4px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700;">
+                        <span>1x [ITEM 1]</span>
+                        <span class="wf-tag" style="font-size:8.5px; font-weight:800; padding:1px 4px; border:1px solid var(--wire-border); border-radius:3px; background:var(--wire-card);">[STAGE 3: READY]</span>
+                      </div>
+                      <div class="prep-stepper-row" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:2px;">
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 1: RECEIVED]')">
+                          <span>1.REC</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 2: PREPARING]')">
+                          <span>2.PREP</span>
+                        </button>
+                        <button class="prep-step-btn active" style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 3: READY]')">
+                          <span>3.READY</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 4: SERVED]')">
+                          <span>4.SERVED</span>
+                        </button>
+                      </div>
+                    </div>
+                    <!-- Item with 4-Stage Stepper -->
+                    <div class="table-item-card-compact" style="background:var(--wire-surface-subtle); border:1px solid var(--wire-border-dashed); border-radius:6px; padding:6px; display:flex; flex-direction:column; gap:4px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700;">
+                        <span>1x [ITEM 4]</span>
+                        <span class="wf-tag" style="font-size:8.5px; font-weight:800; padding:1px 4px; border:1px solid var(--wire-border); border-radius:3px; background:var(--wire-card);">[STAGE 3: READY]</span>
+                      </div>
+                      <div class="prep-stepper-row" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:2px;">
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 1: RECEIVED]')">
+                          <span>1.REC</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 2: PREPARING]')">
+                          <span>2.PREP</span>
+                        </button>
+                        <button class="prep-step-btn active" style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 3: READY]')">
+                          <span>3.READY</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 4: SERVED]')">
+                          <span>4.SERVED</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="width: 100%; font-size: 10px; margin-top: auto;">
+                    [MANAGE TABLE 03 ->]
+                  </button>
+                </div>
+
+                <!-- TABLE BOX 4 -->
+                <div class="table-box" style="border-color: var(--wire-black); box-shadow: 0 0 0 1px var(--wire-black);" onclick="selectScreen(3, 'TABLE 04')">
+                  <div class="table-box-header">
+                    <span class="table-badge">[TABLE 04] ★</span>
+                    <span class="order-timer">⏱ 12m (KOT #104)</span>
+                  </div>
+                  <div class="table-items-list" style="display:flex; flex-direction:column; gap:6px;">
+                    <!-- Item with 4-Stage Stepper -->
+                    <div class="table-item-card-compact" style="background:var(--wire-surface-subtle); border:1px solid var(--wire-border-dashed); border-radius:6px; padding:6px; display:flex; flex-direction:column; gap:4px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700;">
+                        <span>1x [ITEM 2]</span>
+                        <span class="wf-tag" style="font-size:8.5px; font-weight:800; padding:1px 4px; border:1px solid var(--wire-border); border-radius:3px; background:var(--wire-card);">[STAGE 2: PREPARING]</span>
+                      </div>
+                      <div class="prep-stepper-row" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:2px;">
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 1: RECEIVED]')">
+                          <span>1.REC</span>
+                        </button>
+                        <button class="prep-step-btn active" style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 2: PREPARING]')">
+                          <span>2.PREP</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 3: READY]')">
+                          <span>3.READY</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 4: SERVED]')">
+                          <span>4.SERVED</span>
+                        </button>
+                      </div>
+                    </div>
+                    <!-- Item with 4-Stage Stepper -->
+                    <div class="table-item-card-compact" style="background:var(--wire-surface-subtle); border:1px solid var(--wire-border-dashed); border-radius:6px; padding:6px; display:flex; flex-direction:column; gap:4px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700;">
+                        <span>2x [ITEM 6]</span>
+                        <span class="wf-tag" style="font-size:8.5px; font-weight:800; padding:1px 4px; border:1px solid var(--wire-border); border-radius:3px; background:var(--wire-card);">[STAGE 2: PREPARING]</span>
+                      </div>
+                      <div class="prep-stepper-row" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:2px;">
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 1: RECEIVED]')">
+                          <span>1.REC</span>
+                        </button>
+                        <button class="prep-step-btn active" style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 2: PREPARING]')">
+                          <span>2.PREP</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 3: READY]')">
+                          <span>3.READY</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 4: SERVED]')">
+                          <span>4.SERVED</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="width: 100%; font-size: 10px; margin-top: auto;">
+                    [MANAGE TABLE 04 ->]
+                  </button>
+                </div>
+
+                <!-- TABLE BOX 5 -->
+                <div class="table-box" onclick="selectScreen(3, 'TABLE 05')">
+                  <div class="table-box-header">
+                    <span class="table-badge">[TABLE 05]</span>
+                    <span class="order-timer">⏱ 05m (KOT #105)</span>
+                  </div>
+                  <div class="table-items-list" style="display:flex; flex-direction:column; gap:6px;">
+                    <!-- Item with 4-Stage Stepper -->
+                    <div class="table-item-card-compact" style="background:var(--wire-surface-subtle); border:1px solid var(--wire-border-dashed); border-radius:6px; padding:6px; display:flex; flex-direction:column; gap:4px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700;">
+                        <span>1x [ITEM 2]</span>
+                        <span class="wf-tag" style="font-size:8.5px; font-weight:800; padding:1px 4px; border:1px solid var(--wire-border); border-radius:3px; background:var(--wire-card);">[STAGE 1: RECEIVED]</span>
+                      </div>
+                      <div class="prep-stepper-row" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:2px;">
+                        <button class="prep-step-btn active" style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 1: RECEIVED]')">
+                          <span>1.REC</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 2: PREPARING]')">
+                          <span>2.PREP</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 3: READY]')">
+                          <span>3.READY</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 4: SERVED]')">
+                          <span>4.SERVED</span>
+                        </button>
+                      </div>
+                    </div>
+                    <!-- Item with 4-Stage Stepper -->
+                    <div class="table-item-card-compact" style="background:var(--wire-surface-subtle); border:1px solid var(--wire-border-dashed); border-radius:6px; padding:6px; display:flex; flex-direction:column; gap:4px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700;">
+                        <span>3x [ITEM 7]</span>
+                        <span class="wf-tag" style="font-size:8.5px; font-weight:800; padding:1px 4px; border:1px solid var(--wire-border); border-radius:3px; background:var(--wire-card);">[STAGE 1: RECEIVED]</span>
+                      </div>
+                      <div class="prep-stepper-row" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:2px;">
+                        <button class="prep-step-btn active" style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 1: RECEIVED]')">
+                          <span>1.REC</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 2: PREPARING]')">
+                          <span>2.PREP</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 3: READY]')">
+                          <span>3.READY</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 4: SERVED]')">
+                          <span>4.SERVED</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="width: 100%; font-size: 10px; margin-top: auto;">
+                    [MANAGE TABLE 05 ->]
+                  </button>
+                </div>
+
+                <!-- TABLE BOX 6 -->
+                <div class="table-box" onclick="selectScreen(3, 'TABLE 06')">
+                  <div class="table-box-header">
+                    <span class="table-badge">[TABLE 06]</span>
+                    <span class="order-timer">⏱ 18m (KOT #106)</span>
+                  </div>
+                  <div class="table-items-list" style="display:flex; flex-direction:column; gap:6px;">
+                    <!-- Item with 4-Stage Stepper -->
+                    <div class="table-item-card-compact" style="background:var(--wire-surface-subtle); border:1px solid var(--wire-border-dashed); border-radius:6px; padding:6px; display:flex; flex-direction:column; gap:4px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700;">
+                        <span>2x [ITEM 3]</span>
+                        <span class="wf-tag" style="font-size:8.5px; font-weight:800; padding:1px 4px; border:1px solid var(--wire-border); border-radius:3px; background:var(--wire-card);">[STAGE 3: READY]</span>
+                      </div>
+                      <div class="prep-stepper-row" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:2px;">
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 1: RECEIVED]')">
+                          <span>1.REC</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 2: PREPARING]')">
+                          <span>2.PREP</span>
+                        </button>
+                        <button class="prep-step-btn active" style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 3: READY]')">
+                          <span>3.READY</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 4: SERVED]')">
+                          <span>4.SERVED</span>
+                        </button>
+                      </div>
+                    </div>
+                    <!-- Item with 4-Stage Stepper -->
+                    <div class="table-item-card-compact" style="background:var(--wire-surface-subtle); border:1px solid var(--wire-border-dashed); border-radius:6px; padding:6px; display:flex; flex-direction:column; gap:4px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700;">
+                        <span>1x [ITEM 8]</span>
+                        <span class="wf-tag" style="font-size:8.5px; font-weight:800; padding:1px 4px; border:1px solid var(--wire-border); border-radius:3px; background:var(--wire-card);">[STAGE 2: PREPARING]</span>
+                      </div>
+                      <div class="prep-stepper-row" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:2px;">
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 1: RECEIVED]')">
+                          <span>1.REC</span>
+                        </button>
+                        <button class="prep-step-btn active" style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 2: PREPARING]')">
+                          <span>2.PREP</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 3: READY]')">
+                          <span>3.READY</span>
+                        </button>
+                        <button class="prep-step-btn " style="padding:3px 1px; font-size:8px; border-radius:3px;" onclick="event.stopPropagation(); setCardPrepStage(this, '[STAGE 4: SERVED]')">
+                          <span>4.SERVED</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="wf-btn wf-btn-dark" style="width: 100%; font-size: 10px; margin-top: auto;">
+                    [MANAGE TABLE 06 ->]
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- RIGHT 30%: CHRONOLOGICAL TIME QUEUE -->
+            <div class="kds-right-30">
+              <div class="section-headline">
+                <span class="wf-tag" style="font-weight: 800; font-size: 11px;">
+                  [TIME QUEUE (30% WIDTH)]
+                </span>
+                <span class="wf-tag">[TIMED ORDERS]</span>
+              </div>
+
+              <div class="chronological-feed">
+                <!-- TICKET 1 -->
+                <div class="ticket-card" onclick="selectScreen(3, 'TABLE 01')">
+                  <div class="ticket-top">
+                    <span class="ticket-title">[TICKET #101] • [TABLE 01]</span>
+                    <span class="ticket-timestamp">12:40 PM (14m)</span>
+                  </div>
+                  <div class="ticket-item-preview">
+                    <div>• 2x [ITEM 1] [NOTE: CUSTOM 1]</div>
+                    <div>• 1x [ITEM 3] [NOTE: STANDARD]</div>
+                  </div>
+                </div>
+
+                <!-- TICKET 2 -->
+                <div class="ticket-card" onclick="selectScreen(3, 'TABLE 02')">
+                  <div class="ticket-top">
+                    <span class="ticket-title">[TICKET #102] • [TABLE 02]</span>
+                    <span class="ticket-timestamp">12:44 PM (10m)</span>
+                  </div>
+                  <div class="ticket-item-preview">
+                    <div>• 2x [ITEM 2] [NOTE: CUSTOM 2]</div>
+                    <div>• 1x [ITEM 5] [NOTE: STANDARD]</div>
+                  </div>
+                </div>
+
+                <!-- TICKET 3 -->
+                <div class="ticket-card" onclick="selectScreen(3, 'TABLE 03')">
+                  <div class="ticket-top">
+                    <span class="ticket-title">[TICKET #103] • [TABLE 03]</span>
+                    <span class="ticket-timestamp">12:48 PM (06m)</span>
+                  </div>
+                  <div class="ticket-item-preview">
+                    <div>• 1x [ITEM 1] [NOTE: STANDARD]</div>
+                    <div>• 1x [ITEM 4] [NOTE: STANDARD]</div>
+                  </div>
+                </div>
+
+                <!-- TICKET 4 -->
+                <div class="ticket-card" style="border-color: var(--wire-black);" onclick="selectScreen(3, 'TABLE 04')">
+                  <div class="ticket-top">
+                    <span class="ticket-title">[TICKET #104] • [TABLE 04]</span>
+                    <span class="ticket-timestamp">12:52 PM (02m)</span>
+                  </div>
+                  <div class="ticket-item-preview">
+                    <div>• 1x [ITEM 2] [NOTE: LESS SPICE]</div>
+                    <div>• 2x [ITEM 6] [NOTE: EXTRA CHEESE]</div>
+                  </div>
+                </div>
+
+                <!-- TICKET 5 -->
+                <div class="ticket-card" onclick="selectScreen(3, 'TABLE 05')">
+                  <div class="ticket-top">
+                    <span class="ticket-title">[TICKET #105] • [TABLE 05]</span>
+                    <span class="ticket-timestamp">12:54 PM (Just Now)</span>
+                  </div>
+                  <div class="ticket-item-preview">
+                    <div>• 1x [ITEM 2] [NOTE: STANDARD]</div>
+                    <div>• 3x [ITEM 7] [NOTE: STANDARD]</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 3: TABLE DETAIL PREP (55%) + MENU INVENTORY LOCK (45%) -->
+        <!-- ========================================== -->
+        <section id="screen-3-view" class="screen-3-container" style="display: none;">
+          
+          <!-- TOP BAR WITH BACK TO SCREEN 2 & CALL WAITER BELL -->
+          <div class="screen-3-topbar">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <button class="wf-btn wf-btn-dark" onclick="selectScreen(2)">
+                [<- BACK TO ALL TABLES (SCREEN 2)]
+              </button>
+              <span class="wf-tag" style="font-size: 12px; font-weight: 800;" id="currentTableLabel">
+                [TABLE 04 DETAIL SELECTED]
+              </span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <!-- CALL WAITER BELL ICON ON SCREEN 3 -->
+              <button class="bell-btn" onclick="openWaiterModal('Screen 3 Table Detail')" title="[CALL FLOOR CAPTAIN / WAITER]">
+                <span class="bell-icon">🔔</span>
+                <span>[CALL WAITER]</span>
+              </button>
+
+              <span class="wf-tag">[CHEF TERMINAL #01]</span>
+            </div>
+          </div>
+
+          <!-- SPLIT: LEFT 55% (TABLE ITEMS & PREP STATUS) / RIGHT 45% (MENU INVENTORY & LOCK) -->
+          <div class="screen-3-split">
+            
+            <!-- LEFT 55%: PARTICULAR TABLE SELECTED PREPARATION STATUSES -->
+            <div class="screen-3-left-55">
+              
+              <div class="selected-table-header-card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <h3 style="font-size: 15px; font-weight: 800;">[PARTICULAR TABLE VIEW: TABLE 04]</h3>
+                    <p class="wf-tag">[KOT #104 • ORDER RECEIVED AT 12:52 PM • TIME ELAPSED: 12 MINS]</p>
+                  </div>
+                  <span class="wf-tag" style="border: 1px solid var(--wire-black); padding: 4px 8px; border-radius: 4px;">
+                    [GUEST COUNT: 3]
+                  </span>
+                </div>
+              </div>
+
+              <div class="section-headline">
+                <span class="wf-tag" style="font-weight: 800;">[ORDERED ITEMS & PREPARATION STATUS SELECTION]:</span>
+                <span class="wf-tag">[CLICK STAGE TO UPDATE ITEM STATUS]</span>
+              </div>
+
+              <!-- ITEMS LIST FOR THIS TABLE -->
+              <div class="detail-items-container">
+                
+                <!-- DETAIL ITEM 1 -->
+                <div class="detail-item-card">
+                  <div class="detail-item-header">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="item-qty-tag">1x</span>
+                      <strong style="font-size: 13px;">[ITEM 2]</strong>
+                      <span class="wf-tag">[CATEGORY 1]</span>
+                    </div>
+                    <span class="wf-tag" id="prepStatusLabel1" style="font-weight: 800;">[STAGE: PREPARING]</span>
+                  </div>
+
+                  <div class="item-notes-box">
+                    [CHEF CUSTOMIZATION NOTE: LESS SPICE, NO ONION, EXTRA CRISPY]
+                  </div>
+
+                  <!-- 4 PREPARATION STATUS SELECTION BUTTONS -->
+                  <div class="prep-stepper-row">
+                    <button class="prep-step-btn" onclick="setPrepStage(this, 1, '[STAGE: ORDER RECEIVED]')">
+                      <span>STAGE 1</span>
+                      <span>[ORDER RECEIVED]</span>
+                    </button>
+                    <button class="prep-step-btn active" onclick="setPrepStage(this, 1, '[STAGE: PREPARING]')">
+                      <span>STAGE 2</span>
+                      <span>[PREPARING]</span>
+                    </button>
+                    <button class="prep-step-btn" onclick="setPrepStage(this, 1, '[STAGE: READY TO PICKUP]')">
+                      <span>STAGE 3</span>
+                      <span>[READY TO PICKUP]</span>
+                    </button>
+                    <button class="prep-step-btn" onclick="setPrepStage(this, 1, '[STAGE: SERVED]')">
+                      <span>STAGE 4</span>
+                      <span>[SERVED]</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- DETAIL ITEM 2 -->
+                <div class="detail-item-card">
+                  <div class="detail-item-header">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="item-qty-tag">2x</span>
+                      <strong style="font-size: 13px;">[ITEM 6]</strong>
+                      <span class="wf-tag">[CATEGORY 3]</span>
+                    </div>
+                    <span class="wf-tag" id="prepStatusLabel2" style="font-weight: 800;">[STAGE: PREPARING]</span>
+                  </div>
+
+                  <div class="item-notes-box">
+                    [CHEF CUSTOMIZATION NOTE: EXTRA CHEESE TOPPING, SERVE PIPING HOT]
+                  </div>
+
+                  <!-- 4 PREPARATION STATUS SELECTION BUTTONS -->
+                  <div class="prep-stepper-row">
+                    <button class="prep-step-btn" onclick="setPrepStage(this, 2, '[STAGE: ORDER RECEIVED]')">
+                      <span>STAGE 1</span>
+                      <span>[ORDER RECEIVED]</span>
+                    </button>
+                    <button class="prep-step-btn active" onclick="setPrepStage(this, 2, '[STAGE: PREPARING]')">
+                      <span>STAGE 2</span>
+                      <span>[PREPARING]</span>
+                    </button>
+                    <button class="prep-step-btn" onclick="setPrepStage(this, 2, '[STAGE: READY TO PICKUP]')">
+                      <span>STAGE 3</span>
+                      <span>[READY TO PICKUP]</span>
+                    </button>
+                    <button class="prep-step-btn" onclick="setPrepStage(this, 2, '[STAGE: SERVED]')">
+                      <span>STAGE 4</span>
+                      <span>[SERVED]</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- DETAIL ITEM 3 -->
+                <div class="detail-item-card">
+                  <div class="detail-item-header">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="item-qty-tag">1x</span>
+                      <strong style="font-size: 13px;">[ITEM 1]</strong>
+                      <span class="wf-tag">[CATEGORY 1]</span>
+                    </div>
+                    <span class="wf-tag" id="prepStatusLabel3" style="font-weight: 800;">[STAGE: ORDER RECEIVED]</span>
+                  </div>
+
+                  <div class="item-notes-box">
+                    [CHEF CUSTOMIZATION NOTE: STANDARD PORTION]
+                  </div>
+
+                  <!-- 4 PREPARATION STATUS SELECTION BUTTONS -->
+                  <div class="prep-stepper-row">
+                    <button class="prep-step-btn active" onclick="setPrepStage(this, 3, '[STAGE: ORDER RECEIVED]')">
+                      <span>STAGE 1</span>
+                      <span>[ORDER RECEIVED]</span>
+                    </button>
+                    <button class="prep-step-btn" onclick="setPrepStage(this, 3, '[STAGE: PREPARING]')">
+                      <span>STAGE 2</span>
+                      <span>[PREPARING]</span>
+                    </button>
+                    <button class="prep-step-btn" onclick="setPrepStage(this, 3, '[STAGE: READY TO PICKUP]')">
+                      <span>STAGE 3</span>
+                      <span>[READY TO PICKUP]</span>
+                    </button>
+                    <button class="prep-step-btn" onclick="setPrepStage(this, 3, '[STAGE: SERVED]')">
+                      <span>STAGE 4</span>
+                      <span>[SERVED]</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- BOTTOM ACTIONS FOR THIS TABLE -->
+              <div style="display: flex; gap: 10px; margin-top: auto; padding-top: 10px;">
+                <button class="wf-btn wf-btn-dark" style="flex: 1; padding: 12px;" onclick="markAllReady()">
+                  [MARK ALL ITEMS IN TABLE 04 AS READY TO PICKUP]
+                </button>
+                <button class="wf-btn wf-btn-subtle" style="padding: 12px;" onclick="openWaiterModal('Table 04 Pick Up Notification')">
+                  🔔 [NOTIFY RUNNER]
+                </button>
+              </div>
+
+            </div>
+
+            <!-- RIGHT 45%: ALL MENU ITEMS LIST WITH AVAILABILITY/OUT OF STOCK & 1-CLICK LOCK -->
+            <div class="screen-3-right-45">
+              
+              <!-- INVENTORY CONTROLLER HEADER WITH LOCK & ADD ITEM & SEARCH -->
+              <div class="inventory-header-card">
+                
+                <!-- TOP ROW: TITLE & 1-CLICK LOCK ICON BUTTON -->
+                <div class="lock-control-bar">
+                  <div>
+                    <h3 style="font-size: 13px; font-weight: 800;">[ALL MENU ITEMS & AVAILABILITY]</h3>
+                    <p class="wf-tag">[REFLECTS INSTANTLY IN CUSTOMER MENU]</p>
+                  </div>
+
+                  <!-- SMALL LOCK ICON AT TOP RIGHT OF MENU LIST (1-CLICK TOGGLE) -->
+                  <button class="lock-toggle-btn locked" id="lockToggleBtn" onclick="toggleInventoryLock()" title="[CLICK TO UNLOCK/LOCK INVENTORY AVAILABILITY CONTROLS]">
+                    <span id="lockIcon">🔒</span>
+                    <span id="lockText">[LOCKED]</span>
+                  </button>
+                </div>
+
+                <!-- LOCK STATUS ADVISORY BANNER -->
+                <div id="lockAdvisoryBanner" style="padding: 6px 10px; background: var(--wire-surface-contrast); border: 1px solid var(--wire-border); border-radius: 4px; font-family: 'JetBrains Mono'; font-size: 10px; font-weight: 700;">
+                  [STATUS: LOCKED — CLICK 🔒 LOCK AT TOP RIGHT TO TOGGLE ITEM AVAILABILITY]
+                </div>
+
+                <!-- ADD ITEM TO MENU BUTTON & SEARCH -->
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                  <div class="menu-search-bar" style="flex: 1;">
+                    <input type="text" class="search-input" id="menuSearchInput" placeholder="[SEARCH MENU ITEMS...]" oninput="filterMenuItems(this.value)">
+                  </div>
+                  <button class="wf-btn wf-btn-dark" onclick="openAddMenuModal()">
+                    [+ ADD ITEM TO MENU]
+                  </button>
+                </div>
+
+              </div>
+
+              <div class="section-headline">
+                <span class="wf-tag" style="font-weight: 800;">[MENU ITEMS AVAILABILITY MATRIX]:</span>
+                <span class="wf-tag">[SYNCED WITH CUSTOMER APP]</span>
+              </div>
+
+              <!-- MENU ITEMS LIST -->
+              <div class="menu-items-table" id="menuItemsTable">
+                
+                <!-- ITEM 1 -->
+                <div class="menu-row">
+                  <div>
+                    <strong style="font-size: 12px; display: block;">[ITEM 1]</strong>
+                    <span class="wf-tag">[CATEGORY 1] • [PRICE: ₹ ---]</span>
+                  </div>
+                  <button class="stock-toggle-btn in-stock" onclick="toggleItemStock(this)">
+                    [✓ IN STOCK]
+                  </button>
+                </div>
+
+                <!-- ITEM 2 -->
+                <div class="menu-row">
+                  <div>
+                    <strong style="font-size: 12px; display: block;">[ITEM 2]</strong>
+                    <span class="wf-tag">[CATEGORY 1] • [PRICE: ₹ ---]</span>
+                  </div>
+                  <button class="stock-toggle-btn in-stock" onclick="toggleItemStock(this)">
+                    [✓ IN STOCK]
+                  </button>
+                </div>
+
+                <!-- ITEM 3 -->
+                <div class="menu-row out-of-stock">
+                  <div>
+                    <strong style="font-size: 12px; display: block;">[ITEM 3]</strong>
+                    <span class="wf-tag">[CATEGORY 2] • [PRICE: ₹ ---]</span>
+                  </div>
+                  <button class="stock-toggle-btn out-stock" onclick="toggleItemStock(this)">
+                    [✕ OUT OF STOCK]
+                  </button>
+                </div>
+
+                <!-- ITEM 4 -->
+                <div class="menu-row">
+                  <div>
+                    <strong style="font-size: 12px; display: block;">[ITEM 4]</strong>
+                    <span class="wf-tag">[CATEGORY 2] • [PRICE: ₹ ---]</span>
+                  </div>
+                  <button class="stock-toggle-btn in-stock" onclick="toggleItemStock(this)">
+                    [✓ IN STOCK]
+                  </button>
+                </div>
+
+                <!-- ITEM 5 -->
+                <div class="menu-row">
+                  <div>
+                    <strong style="font-size: 12px; display: block;">[ITEM 5]</strong>
+                    <span class="wf-tag">[CATEGORY 3] • [PRICE: ₹ ---]</span>
+                  </div>
+                  <button class="stock-toggle-btn in-stock" onclick="toggleItemStock(this)">
+                    [✓ IN STOCK]
+                  </button>
+                </div>
+
+                <!-- ITEM 6 -->
+                <div class="menu-row out-of-stock">
+                  <div>
+                    <strong style="font-size: 12px; display: block;">[ITEM 6]</strong>
+                    <span class="wf-tag">[CATEGORY 3] • [PRICE: ₹ ---]</span>
+                  </div>
+                  <button class="stock-toggle-btn out-stock" onclick="toggleItemStock(this)">
+                    [✕ OUT OF STOCK]
+                  </button>
+                </div>
+
+                <!-- ITEM 7 -->
+                <div class="menu-row">
+                  <div>
+                    <strong style="font-size: 12px; display: block;">[ITEM 7]</strong>
+                    <span class="wf-tag">[CATEGORY 4] • [PRICE: ₹ ---]</span>
+                  </div>
+                  <button class="stock-toggle-btn in-stock" onclick="toggleItemStock(this)">
+                    [✓ IN STOCK]
+                  </button>
+                </div>
+
+                <!-- ITEM 8 -->
+                <div class="menu-row">
+                  <div>
+                    <strong style="font-size: 12px; display: block;">[ITEM 8]</strong>
+                    <span class="wf-tag">[CATEGORY 4] • [PRICE: ₹ ---]</span>
+                  </div>
+                  <button class="stock-toggle-btn in-stock" onclick="toggleItemStock(this)">
+                    [✓ IN STOCK]
+                  </button>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ALL 3 SCREENS GRID ARCHITECTURE VIEW -->
+  <section class="all-grid-view" id="allGridView">
+    
+    <!-- GRID CARD 1 -->
+    <div class="grid-screen-card">
+      <div class="grid-screen-title">
+        <span>SCREEN 1: KITCHEN STAFF LOGIN (TABLET RESOLUTION)</span>
+        <button class="wf-btn wf-btn-dark" onclick="selectScreen(1); setViewMode('flow');">[OPEN IN TABLET VIEW]</button>
+      </div>
+      <div style="background: var(--wire-bg); border-radius: 8px; padding: 24px; display: flex; justify-content: center;">
+        <div style="width: 100%; max-width: 500px;">
+          <div class="login-card" style="box-shadow: none;">
+            <div class="login-logo-box">
+              <span style="font-size: 24px;">🏢</span>
+              <span class="wf-tag">[HOTEL / ESTABLISHMENT LOGO SPACE]</span>
+            </div>
+            <div style="text-align: center;">
+              <h4 style="font-size: 14px; font-weight: 800;">[KITCHEN TERMINAL ACCESS]</h4>
+            </div>
+            <input type="text" class="login-input" value="[CHEF NAME]" readonly>
+            <div class="pin-display-box">
+              <div class="pin-dot filled"></div><div class="pin-dot filled"></div><div class="pin-dot filled"></div><div class="pin-dot"></div>
+            </div>
+            <div class="keypad-grid">
+              <div class="key-btn" style="height: 38px; font-size: 14px;">1</div>
+              <div class="key-btn" style="height: 38px; font-size: 14px;">2</div>
+              <div class="key-btn" style="height: 38px; font-size: 14px;">3</div>
+              <div class="key-btn" style="height: 38px; font-size: 14px;">4</div>
+              <div class="key-btn" style="height: 38px; font-size: 14px;">5</div>
+              <div class="key-btn" style="height: 38px; font-size: 14px;">6</div>
+              <div class="key-btn" style="height: 38px; font-size: 14px;">7</div>
+              <div class="key-btn" style="height: 38px; font-size: 14px;">8</div>
+              <div class="key-btn" style="height: 38px; font-size: 14px;">9</div>
+              <div class="key-btn key-btn-sub" style="height: 38px;">[⌫]</div>
+              <div class="key-btn" style="height: 38px; font-size: 14px;">0</div>
+              <div class="key-btn key-btn-sub" style="height: 38px;">[✕]</div>
+            </div>
+            <div class="login-actions">
+              <button class="wf-btn wf-btn-subtle" style="flex: 1;">[RESET]</button>
+              <button class="wf-btn wf-btn-dark" style="flex: 2;">[GO TO HOME PAGE / LOGIN ->]</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRID CARD 2 -->
+    <div class="grid-screen-card">
+      <div class="grid-screen-title">
+        <span>SCREEN 2: ALL TABLES 3-COL (70%) + QUEUE (30%) + HEADER & BULK BAR</span>
+        <button class="wf-btn wf-btn-dark" onclick="selectScreen(2); setViewMode('flow');">[OPEN IN TABLET VIEW]</button>
+      </div>
+      <div style="background: var(--wire-bg); border-radius: 8px; border: 1.5px solid var(--wire-border-dark); overflow: hidden;">
+        <!-- HEADER PREVIEW -->
+        <div style="padding: 8px 14px; background: var(--wire-card); border-bottom: 1.5px solid var(--wire-border); display: flex; justify-content: space-between;">
+          <div style="display: flex; gap: 6px;">
+            <span class="wf-tag" style="border: 1px solid var(--wire-black); padding: 3px 6px;">[ALL CATS]</span>
+            <span class="wf-tag" style="border: 1px solid var(--wire-border); padding: 3px 6px;">[CAT 1]</span>
+            <span class="wf-tag" style="border: 1px solid var(--wire-border); padding: 3px 6px;">[CAT 2]</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <span class="wf-tag" style="border: 1px solid var(--wire-border); padding: 3px 6px;">[FILTER 1: ALL ACTIVE]</span>
+            <span class="wf-tag" style="border: 1.5px solid var(--wire-black); padding: 3px 6px; font-weight: 800;">🔔 [CALL WAITER]</span>
+          </div>
+        </div>
+        <!-- BULK BAR PREVIEW -->
+        <div style="padding: 8px 14px; background: var(--wire-surface-subtle); border-bottom: 1.5px solid var(--wire-border); display: flex; gap: 8px;">
+          <div class="bulk-card" style="min-width: 160px; padding: 6px 10px;">
+            <div class="bulk-item-name" style="font-size: 11px;"><span>[ITEM 1]</span><span>x5</span></div>
+            <span class="bulk-table-sources">[TBL 01, 03, 06]</span>
+          </div>
+          <div class="bulk-card" style="min-width: 160px; padding: 6px 10px;">
+            <div class="bulk-item-name" style="font-size: 11px;"><span>[ITEM 2]</span><span>x4</span></div>
+            <span class="bulk-table-sources">[TBL 02, 04, 05]</span>
+          </div>
+        </div>
+        <!-- 70/30 PREVIEW -->
+        <div style="display: flex; min-height: 280px;">
+          <div style="flex: 0 0 70%; padding: 12px; border-right: 1.5px solid var(--wire-border);">
+            <span class="wf-tag" style="display: block; margin-bottom: 8px;">[LEFT 70%: 3-COLUMN TABLE MATRIX]</span>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+              <div class="table-box" style="padding: 8px;"><strong>[TBL 01]</strong><span class="wf-tag">2 items</span></div>
+              <div class="table-box" style="padding: 8px;"><strong>[TBL 02]</strong><span class="wf-tag">2 items</span></div>
+              <div class="table-box" style="padding: 8px;"><strong>[TBL 03]</strong><span class="wf-tag">2 items</span></div>
+              <div class="table-box" style="padding: 8px;"><strong>[TBL 04]</strong><span class="wf-tag">2 items</span></div>
+              <div class="table-box" style="padding: 8px;"><strong>[TBL 05]</strong><span class="wf-tag">3 items</span></div>
+              <div class="table-box" style="padding: 8px;"><strong>[TBL 06]</strong><span class="wf-tag">2 items</span></div>
+            </div>
+          </div>
+          <div style="flex: 0 0 30%; padding: 12px; background: var(--wire-card);">
+            <span class="wf-tag" style="display: block; margin-bottom: 8px;">[RIGHT 30%: TIME QUEUE]</span>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <div class="ticket-card" style="padding: 6px;"><span class="wf-tag">[TICKET #101 • TBL 01] 12:40</span></div>
+              <div class="ticket-card" style="padding: 6px;"><span class="wf-tag">[TICKET #102 • TBL 02] 12:44</span></div>
+              <div class="ticket-card" style="padding: 6px;"><span class="wf-tag">[TICKET #103 • TBL 03] 12:48</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRID CARD 3 -->
+    <div class="grid-screen-card">
+      <div class="grid-screen-title">
+        <span>SCREEN 3: TABLE DETAIL PREPARATION (55%) + MENU INVENTORY LOCK (45%)</span>
+        <button class="wf-btn wf-btn-dark" onclick="selectScreen(3); setViewMode('flow');">[OPEN IN TABLET VIEW]</button>
+      </div>
+      <div style="background: var(--wire-bg); border-radius: 8px; border: 1.5px solid var(--wire-border-dark); overflow: hidden;">
+        <div style="padding: 8px 14px; background: var(--wire-card); border-bottom: 1.5px solid var(--wire-border); display: flex; justify-content: space-between;">
+          <span class="wf-tag" style="font-weight: 800;">[TABLE 04 SELECTED]</span>
+          <span class="wf-tag" style="border: 1.5px solid var(--wire-black); padding: 3px 6px; font-weight: 800;">🔔 [CALL WAITER]</span>
+        </div>
+        <div style="display: flex; min-height: 280px;">
+          <div style="flex: 0 0 55%; padding: 12px; border-right: 1.5px solid var(--wire-border);">
+            <span class="wf-tag" style="display: block; margin-bottom: 8px;">[LEFT 55%: ORDERED ITEMS & PREPARATION STEPPERS]</span>
+            <div class="detail-item-card" style="padding: 8px;">
+              <strong style="font-size: 11px;">1x [ITEM 2]</strong>
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: 4px;">
+                <span class="wf-tag" style="border: 1px solid var(--wire-border); padding: 2px; text-align: center;">[RECEIVED]</span>
+                <span class="wf-tag" style="border: 1px solid var(--wire-black); background: var(--wire-black); color: white; padding: 2px; text-align: center;">[PREPARING]</span>
+                <span class="wf-tag" style="border: 1px solid var(--wire-border); padding: 2px; text-align: center;">[READY]</span>
+                <span class="wf-tag" style="border: 1px solid var(--wire-border); padding: 2px; text-align: center;">[SERVED]</span>
+              </div>
+            </div>
+          </div>
+          <div style="flex: 0 0 45%; padding: 12px; background: var(--wire-card);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span class="wf-tag" style="font-weight: 800;">[RIGHT 45%: MENU INVENTORY]</span>
+              <span class="wf-tag" style="border: 1px solid var(--wire-black); padding: 2px 6px;">🔒 [LOCK/UNLOCK]</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <div class="menu-row" style="padding: 6px;"><span>[ITEM 1]</span><span class="wf-tag">[IN STOCK]</span></div>
+              <div class="menu-row" style="padding: 6px;"><span>[ITEM 2]</span><span class="wf-tag">[IN STOCK]</span></div>
+              <div class="menu-row out-of-stock" style="padding: 6px;"><span>[ITEM 3]</span><span class="wf-tag">[OUT OF STOCK]</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- MODAL: ADD ITEM TO MENU SKELETON -->
+  <div class="modal-backdrop" id="addMenuModal">
+    <div class="modal-window">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--wire-border); padding-bottom: 8px;">
+        <h3 style="font-size: 14px; font-weight: 800;">[+ ADD NEW ITEM TO MENU]</h3>
+        <button class="wf-btn wf-btn-subtle" style="padding: 4px 8px;" onclick="closeAddMenuModal()">✕</button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div>
+          <label class="wf-tag" style="display: block; margin-bottom: 4px;">[ITEM NAME]:</label>
+          <input type="text" class="login-input" placeholder="[ENTER NEW ITEM NAME]">
+        </div>
+        <div>
+          <label class="wf-tag" style="display: block; margin-bottom: 4px;">[CATEGORY SELECTION]:</label>
+          <select class="filter-dropdown" style="width: 100%; padding: 10px;">
+            <option>[CATEGORY 1]</option>
+            <option>[CATEGORY 2]</option>
+            <option>[CATEGORY 3]</option>
+            <option>[CATEGORY 4]</option>
+          </select>
+        </div>
+        <div>
+          <label class="wf-tag" style="display: block; margin-bottom: 4px;">[PRICE (₹)]:</label>
+          <input type="text" class="login-input" placeholder="[PRICE VALUE]">
+        </div>
+        <div>
+          <label class="wf-tag" style="display: block; margin-bottom: 4px;">[INITIAL AVAILABILITY STATUS]:</label>
+          <div style="display: flex; gap: 8px;">
+            <button class="wf-btn wf-btn-dark" style="flex: 1;">[IN STOCK]</button>
+            <button class="wf-btn wf-btn-subtle" style="flex: 1;">[OUT OF STOCK]</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px; border-top: 1.5px solid var(--wire-border); padding-top: 12px;">
+        <button class="wf-btn wf-btn-subtle" style="flex: 1;" onclick="closeAddMenuModal()">[CANCEL]</button>
+        <button class="wf-btn wf-btn-dark" style="flex: 1;" onclick="saveNewMenuItem()">[SAVE ITEM TO MENU]</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CALL WAITER (BELL ICON ON SCREEN 2 & SCREEN 3) -->
+  <div class="modal-backdrop" id="waiterModal">
+    <div class="modal-window">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--wire-border); padding-bottom: 8px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 20px;">🔔</span>
+          <h3 style="font-size: 14px; font-weight: 800;">[CALL FLOOR CAPTAIN / WAITER]</h3>
+        </div>
+        <button class="wf-btn wf-btn-subtle" style="padding: 4px 8px;" onclick="closeWaiterModal()">✕</button>
+      </div>
+
+      <div style="font-family: 'JetBrains Mono'; font-size: 11px;" id="modalCallerContext">
+        [REQUEST INITIATED FROM: KITCHEN TERMINAL]
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <span class="wf-tag">[SELECT 1-CLICK CALL PRESET]:</span>
+        <button class="wf-btn wf-btn-subtle" style="justify-content: flex-start;" onclick="sendWaiterAlert('[ALERT: ORDER READY FOR TABLE PICKUP]')">
+          🏃 [NOTIFY RUNNER: ORDER READY FOR TABLE PICKUP]
+        </button>
+        <button class="wf-btn wf-btn-subtle" style="justify-content: flex-start;" onclick="sendWaiterAlert('[ALERT: CALL CAPTAIN TO KITCHEN CHEF PASS]')">
+          👨‍🍳 [CALL FLOOR CAPTAIN TO KITCHEN PASS]
+        </button>
+        <button class="wf-btn wf-btn-subtle" style="justify-content: flex-start;" onclick="sendWaiterAlert('[ALERT: INGREDIENT DELAY / CUSTOM REQUEST QUERY]')">
+          ⏱ [NOTIFY CAPTAIN: ORDER DELAY / MODIFICATION NEEDED]
+        </button>
+        <button class="wf-btn wf-btn-subtle" style="justify-content: flex-start;" onclick="sendWaiterAlert('[ALERT: WATER / BEVERAGE SERVICE NEEDED]')">
+          💧 [REQUEST RUNNER: WATER / BEVERAGE SUPPORT]
+        </button>
+      </div>
+
+      <div>
+        <label class="wf-tag" style="display: block; margin-bottom: 4px;">[OR CUSTOM TEXT NOTE TO WAITER]:</label>
+        <input type="text" class="login-input" id="customWaiterMsg" placeholder="[TYPE CUSTOM MESSAGE TO FLOOR CAPTAIN]">
+      </div>
+
+      <div style="display: flex; gap: 10px; border-top: 1.5px solid var(--wire-border); padding-top: 12px;">
+        <button class="wf-btn wf-btn-subtle" style="flex: 1;" onclick="closeWaiterModal()">[CANCEL]</button>
+        <button class="wf-btn wf-btn-dark" style="flex: 1;" onclick="sendWaiterAlert(document.getElementById('customWaiterMsg').value || '[ALERT TRANSMITTED]')">
+          [SEND NOTIFICATION 🔔]
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE CLIENT LOGIC -->
+  <script>
+    let currentScreen = 1;
+    let currentPin = '12';
+    let isInventoryLocked = true;
+
+    function selectScreen(num, tableLabel) {
+      currentScreen = num;
+      
+      // Update Tab Bar
+      for (let i = 1; i <= 3; i++) {
+        const tab = document.getElementById('tab-' + i);
+        if (tab) {
+          if (i === num) tab.classList.add('active');
+          else tab.classList.remove('active');
+        }
+      }
+
+      // Hide all screen views
+      document.getElementById('screen-1-view').style.display = 'none';
+      document.getElementById('screen-2-view').style.display = 'none';
+      document.getElementById('screen-3-view').style.display = 'none';
+
+      // Show selected screen
+      const target = document.getElementById('screen-' + num + '-view');
+      if (target) {
+        if (num === 1) target.style.display = 'flex';
+        else target.style.display = 'flex';
+      }
+
+      // Update table detail label if specified
+      if (num === 3 && tableLabel) {
+        const lbl = document.getElementById('currentTableLabel');
+        if (lbl) lbl.textContent = '[' + tableLabel + ' DETAIL SELECTED]';
+      }
+
+      // Scroll to top of wireCanvas
+      const canvas = document.getElementById('wireCanvas');
+      if (canvas) canvas.scrollTop = 0;
+    }
+
+    function setViewMode(mode) {
+      const btnFlow = document.getElementById('btnModeFlow');
+      const btnGrid = document.getElementById('btnModeGrid');
+      const stage = document.getElementById('tabletStage');
+      const grid = document.getElementById('allGridView');
+      const tabs = document.getElementById('screenTabsBar');
+
+      if (mode === 'flow') {
+        btnFlow.classList.add('active');
+        btnGrid.classList.remove('active');
+        stage.style.display = 'flex';
+        grid.style.display = 'none';
+        tabs.style.display = 'flex';
+      } else {
+        btnGrid.classList.add('active');
+        btnFlow.classList.remove('active');
+        stage.style.display = 'none';
+        grid.style.display = 'flex';
+        tabs.style.display = 'none';
+      }
+    }
+
+    /* KEYPAD INTERACTIONS (SCREEN 1) */
+    function renderPin() {
+      const box = document.getElementById('pinDisplayBox');
+      const status = document.getElementById('pinStatusText');
+      if (!box) return;
+      box.innerHTML = '';
+      for (let i = 0; i < 4; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'pin-dot' + (i < currentPin.length ? ' filled' : '');
+        box.appendChild(dot);
+      }
+      if (status) {
+        status.textContent = currentPin.length === 4 ? '[PIN ENTERED (READY)]' : '[' + (4 - currentPin.length) + ' DIGITS REMAINING]';
+      }
+    }
+
+    function pressKey(k) {
+      if (currentPin.length < 4) {
+        currentPin += k;
+        renderPin();
+      }
+    }
+
+    function pressBackspace() {
+      if (currentPin.length > 0) {
+        currentPin = currentPin.slice(0, -1);
+        renderPin();
+      }
+    }
+
+    function clearPin() {
+      currentPin = '';
+      renderPin();
+    }
+
+    function resetLogin() {
+      currentPin = '';
+      document.getElementById('chefNameInput').value = '';
+      renderPin();
+    }
+
+    /* CHIPS TOGGLE */
+    function toggleChip(btn) {
+      const parent = btn.parentElement;
+      const chips = parent.querySelectorAll('.cat-chip');
+      chips.forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    /* ITEM PREP STATUS STEPPERS (SCREEN 3) */
+    /* 4-STAGE PREPARATION STATUS STEPPERS FOR SCREEN 2 TABLE CARDS */
+    function setCardPrepStage(btn, statusText) {
+      const row = btn.parentElement;
+      const buttons = row.querySelectorAll('.prep-step-btn');
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tag = row.previousElementSibling.querySelector('.wf-tag');
+      if (tag) tag.textContent = statusText;
+    }
+
+    function setPrepStage(btn, itemIdx, labelText) {
+      const row = btn.parentElement;
+      const buttons = row.querySelectorAll('.prep-step-btn');
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const label = document.getElementById('prepStatusLabel' + itemIdx);
+      if (label) {
+        label.textContent = labelText;
+      }
+    }
+
+    function markAllReady() {
+      for (let i = 1; i <= 3; i++) {
+        const card = document.querySelectorAll('.detail-item-card')[i - 1];
+        if (card) {
+          const btns = card.querySelectorAll('.prep-step-btn');
+          btns.forEach(b => b.classList.remove('active'));
+          if (btns[2]) btns[2].classList.add('active'); // Ready to pickup
+          const lbl = document.getElementById('prepStatusLabel' + i);
+          if (lbl) lbl.textContent = '[STAGE: READY TO PICKUP]';
+        }
+      }
+      alert('[SUCCESS: ALL ITEMS IN TABLE 04 MARKED AS READY TO PICKUP]');
+    }
+
+    /* 1-CLICK LOCK TOGGLE FOR INVENTORY AVAILABILITY (SCREEN 3) */
+    function toggleInventoryLock() {
+      isInventoryLocked = !isInventoryLocked;
+      const btn = document.getElementById('lockToggleBtn');
+      const icon = document.getElementById('lockIcon');
+      const text = document.getElementById('lockText');
+      const banner = document.getElementById('lockAdvisoryBanner');
+
+      if (isInventoryLocked) {
+        btn.className = 'lock-toggle-btn locked';
+        icon.textContent = '🔒';
+        text.textContent = '[LOCKED]';
+        banner.textContent = '[STATUS: LOCKED — CLICK 🔒 LOCK AT TOP RIGHT TO TOGGLE ITEM AVAILABILITY]';
+        banner.style.background = 'var(--wire-surface-contrast)';
+      } else {
+        btn.className = 'lock-toggle-btn unlocked';
+        icon.textContent = '🔓';
+        text.textContent = '[UNLOCKED]';
+        banner.textContent = '[STATUS: UNLOCKED — CHEF CAN NOW TOGGLE AVAILABILITY OR OUT OF STOCK]';
+        banner.style.background = 'var(--wire-surface-subtle)';
+      }
+    }
+
+    function toggleItemStock(btn) {
+      if (isInventoryLocked) {
+        alert('[ACTION BLOCKED: INVENTORY EDITING IS LOCKED]\n\nPlease click the small [🔒 LOCKED] button at the top right of the menu list first to enable changes.');
+        return;
+      }
+
+      const row = btn.closest('.menu-row');
+      if (btn.classList.contains('in-stock')) {
+        btn.classList.remove('in-stock');
+        btn.classList.add('out-stock');
+        btn.textContent = '[✕ OUT OF STOCK]';
+        if (row) row.classList.add('out-of-stock');
+      } else {
+        btn.classList.remove('out-stock');
+        btn.classList.add('in-stock');
+        btn.textContent = '[✓ IN STOCK]';
+        if (row) row.classList.remove('out-of-stock');
+      }
+    }
+
+    function filterMenuItems(query) {
+      const q = query.toLowerCase();
+      const rows = document.querySelectorAll('#menuItemsTable .menu-row');
+      rows.forEach(r => {
+        const text = r.textContent.toLowerCase();
+        r.style.display = text.includes(q) ? 'flex' : 'none';
+      });
+    }
+
+    /* ADD MENU ITEM MODAL */
+    function openAddMenuModal() {
+      document.getElementById('addMenuModal').classList.add('open');
+    }
+
+    function closeAddMenuModal() {
+      document.getElementById('addMenuModal').classList.remove('open');
+    }
+
+    function saveNewMenuItem() {
+      closeAddMenuModal();
+      alert('[SUCCESS: NEW ITEM ADDED TO MENU SKELETON]');
+    }
+
+    /* CALL WAITER BELL MODAL (SCREENS 2 & 3) */
+    function openWaiterModal(context) {
+      const ctx = document.getElementById('modalCallerContext');
+      if (ctx) ctx.textContent = '[CALL REQUEST ORIGIN: ' + context + ']';
+      document.getElementById('waiterModal').classList.add('open');
+    }
+
+    function closeWaiterModal() {
+      document.getElementById('waiterModal').classList.remove('open');
+      document.getElementById('customWaiterMsg').value = '';
+    }
+
+    function sendWaiterAlert(msg) {
+      closeWaiterModal();
+      alert('[BELL NOTIFICATION TRANSMITTED TO FLOOR CAPTAIN]:\n\n' + msg);
+    }
+
+    // Initialize PIN
+    renderPin();
+  </script>
+</body>
+</html>

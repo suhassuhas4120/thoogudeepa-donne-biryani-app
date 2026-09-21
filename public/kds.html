@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Kitchen Display System (KDS) | ಅಡುಗೆ ಮನೆ ಕನ್ಸೋಲ್</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800;900&family=Noto+Sans+Kannada:wght@600;700;800&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+  :root {
+    --kds-bg: #020617;
+    --kds-surface: #0f172a;
+    --kds-card: #1e293b;
+    --kds-border: #334155;
+    --neon-cyan: #38bdf8;
+    --neon-green: #4ade80;
+    --neon-amber: #fbbf24;
+    --neon-purple: #c084fc;
+    --neon-red: #f87171;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'JetBrains Mono', 'Noto Sans Kannada', monospace;
+    background: var(--kds-bg);
+    color: #f8fafc;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* KDS Header */
+  .kds-header {
+    background: #090d16;
+    border-bottom: 2px solid #1e293b;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .kds-title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .kds-badge-icon {
+    width: 32px;
+    height: 32px;
+    background: #dc2626;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+  }
+
+  .kds-metrics-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .metric-tag {
+    background: #111827;
+    border: 1px solid #374151;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .roti-meter-highlight {
+    background: rgba(74, 222, 128, 0.1);
+    border-color: #22c55e;
+    color: #4ade80;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  /* Khata Navigation Tabs */
+  .khata-bar {
+    background: #0f172a;
+    border-bottom: 1px solid var(--kds-border);
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 6px 12px;
+    gap: 8px;
+  }
+
+  .khata-bar::-webkit-scrollbar { display: none; }
+
+  .khata-tab {
+    background: #1e293b;
+    border: 1px solid var(--kds-border);
+    color: #94a3b8;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+  }
+
+  .khata-tab.active {
+    background: #0284c7;
+    color: #ffffff;
+    border-color: #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+  }
+
+  /* Tickets Grid Viewport */
+  .tickets-viewport {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    align-content: start;
+  }
+
+  /* Individual KDS Ticket Card */
+  .kds-card {
+    background: #ffffff;
+    color: #0f172a;
+    border-radius: 10px;
+    border: 3px solid #cbd5e1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.15s;
+  }
+
+  .kds-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .kds-card.priority {
+    border-color: #9333ea !important;
+    box-shadow: 0 0 18px rgba(147, 51, 234, 0.6) !important;
+  }
+
+  .kds-card.overdue {
+    border-color: #ef4444 !important;
+    animation: flashRedBorder 1.5s infinite;
+  }
+
+  @keyframes flashRedBorder {
+    0%, 100% { border-color: #ef4444; }
+    50% { border-color: #fca5a5; }
+  }
+
+  .card-header {
+    background: #0f172a;
+    color: #ffffff;
+    padding: 8px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .card-header.priority {
+    background: linear-gradient(135deg, #7e22ce, #9333ea);
+  }
+
+  .timer-pill {
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .timer-green { background: #166534; color: #86efac; }
+  .timer-amber { background: #854d0e; color: #fde047; }
+  .timer-red { background: #991b1b; color: #fca5a5; animation: blinkText 1s infinite; }
+
+  @keyframes blinkText {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .voice-memo-strip {
+    background: #fef3c7;
+    border-bottom: 1px solid #fde68a;
+    color: #92400e;
+    padding: 5px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .card-items-list {
+    padding: 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #f8fafc;
+  }
+
+  .ticket-dish-row {
+    padding-bottom: 6px;
+    border-bottom: 1px dashed #cbd5e1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dish-name-label {
+    font-size: 13px;
+    font-weight: 800;
+    color: #0f172a;
+  }
+
+  .dish-kn-sub {
+    font-size: 11px;
+    color: #d97706;
+    font-weight: 700;
+  }
+
+  .dish-khata-tag {
+    font-size: 9.5px;
+    color: #64748b;
+    font-weight: 600;
+  }
+
+  .btn-item-status {
+    border: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+
+  .status-preparing { background: #e0f2fe; color: #0369a1; }
+  .status-cooking { background: #fef3c7; color: #b45309; }
+  .status-plated { background: #dcfce7; color: #15803d; }
+
+  .jain-lock-badge {
+    background: #fee2e2;
+    border: 1px solid #f87171;
+    color: #b91c1c;
+    padding: 3px 6px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .card-footer {
+    background: #e2e8f0;
+    border-top: 1px solid #cbd5e1;
+    padding: 6px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn-bump-ticket {
+    background: #15803d;
+    color: #ffffff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: background 0.15s;
+  }
+
+  .btn-bump-ticket:hover {
+    background: #166534;
+  }
+
+  /* Tactile Metallic Bump Bar */
+  .bump-bar-strip {
+    background: #090d16;
+    border-top: 2px solid #1e293b;
+    padding: 8px 14px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .bump-btn {
+    flex: 1;
+    background: #1e293b;
+    color: #f8fafc;
+    border: 1.5px solid #475569;
+    border-radius: 6px;
+    padding: 8px 4px;
+    font-size: 11px;
+    font-weight: 800;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+
+  .bump-btn:hover { background: #334155; }
+  .bump-btn:active { transform: translateY(1px); }
+  .bump-btn.primary { background: #0284c7; border-color: #38bdf8; }
+  .bump-btn.success { background: #15803d; border-color: #4ade80; }
+  .bump-btn.danger { background: #b91c1c; border-color: #f87171; }
+  .bump-btn.purple { background: #7e22ce; border-color: #c084fc; }
+</style>
+</head>
+<body>
+
+  <!-- KDS Top Status Bar -->
+  <header class="kds-header">
+    <div class="kds-title-group">
+      <div class="kds-badge-icon">🔥</div>
+      <div>
+        <div style="font-size:13.5px; font-weight:900; color:#38bdf8; letter-spacing:0.5px;">KITCHEN DISPLAY SYSTEM (KDS-01)</div>
+        <div style="font-size:10px; color:#94a3b8;">Royal Kitchen Terminal · Clay Bhatti &amp; Handi Range</div>
+      </div>
+    </div>
+
+    <div class="kds-metrics-bar">
+      <div class="metric-tag">
+        <span>🔥 Bhatti Temp:</span>
+        <strong style="color:#f87171;">345°C</strong>
+      </div>
+      <div class="metric-tag roti-meter-highlight">
+        <span>🫓 ರೊಟ್ಟಿ ಮೀಟರ್ (ROTI METER):</span>
+        <span id="rotiMeterTally" style="color:#4ade80;">0 NAAN</span>
+      </div>
+      <div class="metric-tag">
+        <span id="ws-status-badge" class="badge badge-green">LIVE SYNC</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Khata Station Filters -->
+  <div class="khata-bar">
+    <button class="khata-tab active" onclick="setStation('ALL', this)">ALL KHATAS (ಎಲ್ಲವೂ)</button>
+    <button class="khata-tab" onclick="setStation('Tandoor', this)">🔥 TANDOOR BHATTI (ತಂದೂರ್)</button>
+    <button class="khata-tab" onclick="setStation('Handi', this)">🍲 HANDI CURRIES (ಹಂಡಿ)</button>
+    <button class="khata-tab" onclick="setStation('Chinese', this)">🥡 INDO-CHINESE (ವೋಕ್)</button>
+    <button class="khata-tab" onclick="setStation('Pantry', this)">🍹 PANTRY &amp; DRINKS (ಪಾನೀಯ)</button>
+    <button class="khata-tab" onclick="setStation('Halwai', this)">🍨 HALWAI SWEETS (ಸಿಹಿ)</button>
+  </div>
+
+  <!-- Tickets Viewport -->
+  <main class="tickets-viewport" id="kdsTicketsGrid">
+    <!-- Rendered via JS -->
+  </main>
+
+  <!-- Hardware Bump Bar Simulation -->
+  <footer class="bump-bar-strip">
+    <button class="bump-btn primary" onclick="triggerBumpFirst()">F1: BUMP TICKET (ಮುಗಿದಿದೆ)</button>
+    <button class="bump-btn" onclick="setStationKey('Tandoor')">F2: TANDOOR (ತಂದೂರ್)</button>
+    <button class="bump-btn" onclick="setStationKey('Handi')">F3: CURRIES (ಹಂಡಿ)</button>
+    <button class="bump-btn danger" onclick="toggle86Paneer()">F5: 86 PANEER (ಖಾಲಿಯಾಗಿದೆ)</button>
+    <button class="bump-btn success" onclick="certifyFirstJain()">F7: CERTIFY JAIN (ಜೈನ ಖಾತ್ರಿ)</button>
+    <button class="bump-btn purple" onclick="expoDispatchFirst()">ENTER: EXPO DISPATCH (ರವಾನೆ)</button>
+  </footer>
+
+  <script src="/js/socket-client.js"></script>
+  <script>
+    let client;
+    let activeStation = 'ALL';
+    let previousKotCount = 0;
+
+    // Acoustic Sound Alert for New Tickets & Priority Garam Roti
+    function playKitchenChime(isPriority = false) {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = isPriority ? 'sawtooth' : 'triangle';
+        osc.frequency.setValueAtTime(isPriority ? 880 : 587.33, ctx.currentTime);
+        osc.frequency.setValueAtTime(isPriority ? 1174.66 : 784, ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.35, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.35);
+      } catch (e) {}
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      client = new HospitalityClient((state, action) => {
+        handleState(state);
+      });
+
+      // Bind Hardware Keyboard Hotkeys
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'F1') { e.preventDefault(); triggerBumpFirst(); }
+        else if (e.key === 'F2') { e.preventDefault(); setStationKey('Tandoor'); }
+        else if (e.key === 'F3') { e.preventDefault(); setStationKey('Handi'); }
+        else if (e.key === 'F5') { e.preventDefault(); toggle86Paneer(); }
+        else if (e.key === 'F7') { e.preventDefault(); certifyFirstJain(); }
+        else if (e.key === 'Enter') { e.preventDefault(); expoDispatchFirst(); }
+      });
+    });
+
+    function setStation(station, btn) {
+      activeStation = station;
+      document.querySelectorAll('.khata-tab').forEach(t => t.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      if (client && client.state) renderTickets(client.state);
+    }
+
+    function setStationKey(station) {
+      const tabs = Array.from(document.querySelectorAll('.khata-tab'));
+      const found = tabs.find(t => t.innerText.includes(station));
+      if (found) setStation(station, found);
+    }
+
+    function handleState(state) {
+      // Audio notification if new ticket arrives
+      const curCount = (state.activeKots || []).length;
+      if (curCount > previousKotCount) {
+        const lastKot = state.activeKots[0];
+        playKitchenChime(lastKot && lastKot.priority === 'HIGH_PRIORITY');
+      }
+      previousKotCount = curCount;
+
+      renderRotiMeter(state);
+      renderTickets(state);
+    }
+
+    function renderRotiMeter(state) {
+      let naan = 0;
+      let roti = 0;
+      (state.activeKots || []).forEach(k => {
+        k.items.forEach(it => {
+          if (it.name.includes('Naan')) naan += it.qty;
+          if (it.name.includes('Roti')) roti += it.qty;
+        });
+      });
+      document.getElementById('rotiMeterTally').innerText = `${naan} NAAN • ${roti} ROTI`;
+    }
+
+    function renderTickets(state) {
+      const container = document.getElementById('kdsTicketsGrid');
+      container.innerHTML = '';
+
+      const kots = state.activeKots || [];
+
+      kots.forEach((kot, kotIndex) => {
+        const isPriority = kot.priority === 'HIGH_PRIORITY';
+        
+        // Filter items by active khata station
+        const stationItems = kot.items.filter(it => {
+          if (activeStation === 'ALL') return true;
+          return it.khata === activeStation;
+        });
+
+        if (!stationItems.length) return;
+
+        const card = document.createElement('div');
+        card.className = 'kds-card' + (isPriority ? ' priority' : '');
+
+        // Mock elapsed timer calculation
+        const elapsedMin = Math.floor(Math.random() * 8) + 2;
+        let timerClass = 'timer-green';
+        if (elapsedMin >= 10) timerClass = 'timer-red';
+        else if (elapsedMin >= 6) timerClass = 'timer-amber';
+
+        let itemsHtml = '';
+        stationItems.forEach(it => {
+          const isJainLocked = it.jain && !it.jainCertified;
+          const statusClass = it.status === 'PLATED' ? 'status-plated' : (it.status === 'COOKING' ? 'status-cooking' : 'status-preparing');
+
+          itemsHtml += `
+            <div class="ticket-dish-row">
+              <div>
+                <div class="dish-name-label">${it.qty}x ${it.name}</div>
+                ${it.kannadaName ? `<div class="dish-kn-sub">${it.kannadaName}</div>` : ''}
+                <div class="dish-khata-tag">${it.khata || 'Tandoor'} Station ${it.notes ? '• ' + it.notes : ''}</div>
+              </div>
+              <div>
+                ${isJainLocked 
+                  ? `<button class="jain-lock-badge" onclick="certifyItem('${kot.id}', '${it.id}')">🔒 JAIN LOCK [F7]</button>`
+                  : `<button class="btn-item-status ${statusClass}" onclick="cycleItemStatus('${kot.id}', '${it.id}', '${it.status}')">${it.status}</button>`
+                }
+              </div>
+            </div>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="card-header ${isPriority ? 'priority' : ''}">
+            <span>${isPriority ? '⚡ REPEAT: ' : ''}${kot.tableName || kot.tableId}</span>
+            <span class="timer-pill ${timerClass}">⏱️ ${elapsedMin}m SLA</span>
+          </div>
+          ${kot.voiceMemo ? `<div class="voice-memo-strip"><span>🎤</span><span>"${kot.voiceMemo}"</span></div>` : ''}
+          <div class="card-items-list">
+            ${itemsHtml}
+          </div>
+          <div class="card-footer">
+            <span style="font-size:10px; color:#64748b; font-weight:800;">#${kot.id}</span>
+            <button class="btn-bump-ticket" onclick="bumpEntireTicket('${kot.id}')">
+              <span>✓</span>
+              <span>BUMP TICKET [F1]</span>
+            </button>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      if (container.children.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column:1/-1; text-align:center; padding:50px 20px; color:#64748b;">
+            <div style="font-size:36px;">✓</div>
+            <div style="font-size:16px; font-weight:800; color:#cbd5e1; margin-top:8px;">All KOT Tickets Fulfilled!</div>
+            <div style="font-size:12px; color:#94a3b8; margin-top:4px;">No active orders pending at ${activeStation} station.</div>
+          </div>
+        `;
+      }
+    }
+
+    function cycleItemStatus(kotId, itemId, currentStatus) {
+      client.dispatch('BUMP_ITEM', { kotId, itemId });
+    }
+
+    function certifyItem(kotId, itemId) {
+      client.dispatch('CERTIFY_JAIN', { kotId, itemId });
+    }
+
+    function certifyFirstJain() {
+      if (client && client.state) {
+        for (const kot of client.state.activeKots) {
+          for (const it of kot.items) {
+            if (it.jain && !it.jainCertified) {
+              client.dispatch('CERTIFY_JAIN', { kotId: kot.id, itemId: it.id });
+              return;
+            }
+          }
+        }
+      }
+    }
+
+    function bumpEntireTicket(kotId) {
+      client.dispatch('EXPO_DISPATCH', { kotId, shelfSlot: 'H-2', runnerName: 'Rahul' });
+    }
+
+    function triggerBumpFirst() {
+      if (client && client.state && client.state.activeKots.length) {
+        const firstKot = client.state.activeKots[0];
+        bumpEntireTicket(firstKot.id);
+      }
+    }
+
+    function expoDispatchFirst() {
+      triggerBumpFirst();
+    }
+
+    function toggle86Paneer() {
+      const isCurrently86 = client && client.state && client.state.inventory && client.state.inventory.paneer_kg ? client.state.inventory.paneer_kg.is86 : false;
+      client.dispatch('TRIGGER_86', { ingredientKey: 'paneer_kg', is86: !isCurrently86 });
+    }
+  </script>
+</body>
+</html>

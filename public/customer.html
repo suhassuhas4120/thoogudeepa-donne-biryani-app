@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Royal Dining & Tandoor | ರಾಜಮನೆತನದ ಊಟ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Kannada:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #d97706;
+      --primary-dark: #b45309;
+      --primary-light: #fef3c7;
+      --emerald: #10b981;
+      --emerald-dark: #059669;
+      --ruby: #ef4444;
+      --amber: #f59e0b;
+      --bg-dark: #09090b;
+      --bg-surface: #18181b;
+      --bg-surface-elevated: #27272a;
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(217, 119, 6, 0.4);
+      --font-body: 'Plus Jakarta Sans', 'Noto Sans Kannada', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-bottom: 110px; /* Space for floating cart bar */
+    }
+
+    /* Top App Bar */
+    .top-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: rgba(9, 9, 11, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-crest {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+    }
+
+    .brand-text-block h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: #fbbf24;
+      line-height: 1.1;
+    }
+
+    .brand-text-block .kannada-subtitle {
+      font-size: 10.5px;
+      color: #cbd5e1;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .table-pill {
+      background: rgba(217, 119, 6, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .lang-toggle-btn {
+      background: #27272a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .lang-toggle-btn:hover {
+      border-color: #fbbf24;
+      background: #3f3f46;
+    }
+
+    /* Table Service Quick Bar */
+    .service-call-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(24, 24, 27, 0.7);
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 11.5px;
+    }
+
+    .service-btn {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #e4e4e7;
+      padding: 7px 8px;
+      border-radius: 10px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+
+    .service-btn:active {
+      background: rgba(217, 119, 6, 0.25);
+    }
+
+    /* Active Order Progress Stepper (Visible when table has active KOT) */
+    .order-tracker-card {
+      margin: 12px 16px 0;
+      background: linear-gradient(145deg, #1c1917, #292524);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      display: none;
+    }
+
+    .tracker-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .tracker-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.15);
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: pulseAnim 1.5s infinite;
+    }
+
+    @keyframes pulseAnim {
+      0% { transform: scale(0.9); opacity: 0.7; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.7; }
+    }
+
+    .stepper-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      margin: 16px 0 8px;
+    }
+
+    .stepper-line {
+      position: absolute;
+      top: 14px;
+      left: 20px;
+      right: 20px;
+      height: 3px;
+      background: #3f3f46;
+      z-index: 1;
+    }
+
+    .stepper-line-progress {
+      position: absolute;
+      top: 14px;
+      left: 20px;
+      height: 3px;
+      background: linear-gradient(90deg, #10b981, #f59e0b);
+      z-index: 2;
+      transition: width 0.4s ease;
+    }
+
+    .step-node {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      width: 60px;
+    }
+
+    .node-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #27272a;
+      border: 2px solid #52525b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #a1a1aa;
+      transition: all 0.3s;
+    }
+
+    .step-node.completed .node-circle {
+      background: #10b981;
+      border-color: #10b981;
+      color: #ffffff;
+    }
+
+    .step-node.active .node-circle {
+      background: #f59e0b;
+      border-color: #f59e0b;
+      color: #ffffff;
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.6);
+      transform: scale(1.15);
+    }
+
+    .node-label {
+      font-size: 9.5px;
+      font-weight: 600;
+      color: #a1a1aa;
+      text-align: center;
+      line-height: 1.15;
+    }
+
+    .step-node.active .node-label {
+      color: #fbbf24;
+      font-weight: 700;
+    }
+
+    .tracker-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 11.5px;
+      color: #cbd5e1;
+    }
+
+    .bill-btn-small {
+      background: #d97706;
+      border: none;
+      color: #ffffff;
+      padding: 5px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Search & Filter Section */
+    .search-filter-container {
+      position: sticky;
+      top: 59px;
+      z-index: 50;
+      background: rgba(9, 9, 11, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 10px 16px 6px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .search-bar-wrap {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 10px 14px 10px 38px;
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      color: #ffffff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .clear-search-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* Dietary Filter Pills */
+    .diet-filters-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 8px 0 4px;
+      scrollbar-width: none;
+    }
+
+    .diet-filters-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .diet-pill {
+      white-space: nowrap;
+      background: var(--bg-surface);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #a1a1aa;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+
+    .diet-pill.active {
+      background: rgba(217, 119, 6, 0.15);
+      border-color: var(--primary);
+      color: #fbbf24;
+    }
+
+    /* Category Navigation Ribbon */
+    .category-scroll-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 16px 4px;
+      scrollbar-width: none;
+    }
+
+    .category-scroll-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-chip {
+      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #d4d4d8;
+      padding: 7px 14px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .cat-chip.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
+    }
+
+    /* Main Menu Section */
+    .menu-container {
+      padding: 12px 16px 40px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .category-header {
+      margin: 20px 0 12px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 6px;
+    }
+
+    .category-header h2 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .category-header .cat-kannada {
+      font-size: 12px;
+      color: #a1a1aa;
+      font-weight: 600;
+    }
+
+    .category-item-count {
+      font-size: 11px;
+      color: #71717a;
+      font-weight: 600;
+    }
+
+    /* Gourmet Dish Card */
+    .dish-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 14px;
+      transition: transform 0.2s, border-color 0.2s;
+      position: relative;
+    }
+
+    .dish-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .dish-info-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dish-badges-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    /* Regulatory Food Icons */
+    .food-icon-veg {
+      width: 14px;
+      height: 14px;
+      border: 1.5px solid #10b981;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+    }
+
+    .food-icon-veg::after {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+    }
+
+    .food-icon-nonveg {
+      width: 14px;
+      height: 14px;
+      border: 1.5px solid #ef4444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+    }
+
+    .food-icon-nonveg::after {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-bottom: 7px solid #ef4444;
+    }
+
+    .bestseller-tag {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .jain-tag {
+      background: rgba(16, 185, 129, 0.12);
+      color: #34d399;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .dish-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-top: 2px;
+    }
+
+    .dish-title-kn {
+      font-size: 12px;
+      font-weight: 600;
+      color: #f59e0b;
+      margin-top: 1px;
+    }
+
+    .dish-desc {
+      font-size: 11.5px;
+      color: #a1a1aa;
+      line-height: 1.4;
+      margin: 6px 0 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .dish-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      color: #71717a;
+      margin-top: auto;
+    }
+
+    .dish-price {
+      font-size: 15px;
+      font-weight: 800;
+      color: #f4f4f5;
+    }
+
+    /* Dish Image & Add Button Column */
+    .dish-action-col {
+      width: 115px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .dish-img-wrap {
+      width: 115px;
+      height: 95px;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #27272a;
+      position: relative;
+    }
+
+    .dish-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .prep-time-badge {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      background: rgba(0, 0, 0, 0.75);
+      color: #ffffff;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 5px;
+      border-radius: 6px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Smart Add Button & Quantity Stepper */
+    .add-action-wrap {
+      margin-top: -14px;
+      z-index: 2;
+      width: 90px;
+    }
+
+    .add-btn {
+      width: 100%;
+      background: #ffffff;
+      color: #15803d;
+      border: 1.5px solid #16a34a;
+      border-radius: 10px;
+      padding: 6px 0;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    .add-btn:active {
+      transform: scale(0.95);
+      background: #f0fdf4;
+    }
+
+    .custom-tag-label {
+      font-size: 8px;
+      color: #71717a;
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    .qty-stepper {
+      width: 100%;
+      background: #15803d;
+      color: #ffffff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 8px;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(21, 128, 61, 0.4);
+    }
+
+    .stepper-btn {
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Floating Express "Garam Roti" Button */
+    .floating-express-btn {
+      position: fixed;
+      bottom: 82px;
+      right: 16px;
+      z-index: 55;
+      background: linear-gradient(135deg, #7c2d12, #c2410c);
+      border: 1.5px solid #fdba74;
+      color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 28px;
+      font-size: 12.5px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(194, 65, 12, 0.45);
+      animation: bounceSubtle 3s infinite ease-in-out;
+    }
+
+    @keyframes bounceSubtle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    /* Floating Cart Bar */
+    .floating-cart-bar {
+      position: fixed;
+      bottom: 12px;
+      left: 16px;
+      right: 16px;
+      max-width: 648px;
+      margin: 0 auto;
+      z-index: 58;
+      background: linear-gradient(135deg, #15803d, #166534);
+      color: #ffffff;
+      border-radius: 18px;
+      padding: 14px 18px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 12px 30px rgba(21, 128, 61, 0.5);
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .cart-summary-left {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-count-text {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+
+    .cart-total-price {
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .cart-action-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    /* Modal / Drawer Overlays */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-sheet {
+      background: var(--bg-surface);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px 24px 0 0;
+      width: 100%;
+      max-width: 600px;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .sheet-handle {
+      width: 40px;
+      height: 4px;
+      background: #52525b;
+      border-radius: 2px;
+      margin: 10px auto 4px;
+    }
+
+    .sheet-header {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .sheet-header h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .sheet-close-btn {
+      background: #27272a;
+      border: none;
+      color: #a1a1aa;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sheet-body {
+      padding: 16px 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .sheet-footer {
+      padding: 14px 20px;
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-dark);
+    }
+
+    /* Cart Items in Drawer */
+    .cart-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .cart-item-details {
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .cart-item-custom-notes {
+      font-size: 11px;
+      color: #fbbf24;
+      margin-top: 2px;
+    }
+
+    .cart-item-price {
+      font-size: 13px;
+      font-weight: 700;
+      color: #a1a1aa;
+      margin-top: 2px;
+    }
+
+    /* Customization Options */
+    .custom-option-group {
+      margin-bottom: 18px;
+    }
+
+    .option-group-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fbbf24;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .option-choice-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #27272a;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+
+    .option-choice-box.selected {
+      border-color: var(--primary);
+      background: rgba(217, 119, 6, 0.12);
+    }
+
+    /* Bill Breakdown */
+    .bill-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5px;
+      color: #a1a1aa;
+      margin-bottom: 6px;
+    }
+
+    .bill-row.highlight {
+      font-size: 15px;
+      font-weight: 800;
+      color: #ffffff;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 8px;
+      margin-top: 8px;
+    }
+
+    /* Tip Selection Buttons */
+    .tip-pills-row {
+      display: flex;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .tip-pill {
+      flex: 1;
+      background: #27272a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #d4d4d8;
+      padding: 8px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .tip-pill.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* Primary Order Action Button */
+    .btn-place-order {
+      width: 100%;
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      border: none;
+      color: #ffffff;
+      padding: 16px;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 20px rgba(22, 163, 74, 0.4);
+    }
+
+    .btn-place-order:hover {
+      background: #15803d;
+    }
+
+    /* Fast Roti Selector Grid */
+    .roti-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .roti-card {
+      background: #27272a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+
+    .roti-card:hover, .roti-card.active {
+      border-color: #f97316;
+      background: rgba(249, 115, 22, 0.15);
+    }
+
+    /* Toast Notification */
+    .toast-popup {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: rgba(24, 24, 27, 0.95);
+      border: 1px solid #10b981;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      z-index: 200;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .toast-popup.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Star Rating Widget */
+    .star-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 16px 0;
+      font-size: 32px;
+      cursor: pointer;
+    }
+
+    .star-icon {
+      color: #52525b;
+      transition: color 0.2s, transform 0.15s;
+    }
+
+    .star-icon.filled {
+      color: #f59e0b;
+      transform: scale(1.1);
+    }
+
+    .rating-tag-chip {
+      display: inline-flex;
+      background: #27272a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #d4d4d8;
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 4px;
+    }
+
+    .rating-tag-chip.active {
+      background: rgba(217, 119, 6, 0.2);
+      border-color: #d97706;
+      color: #fbbf24;
+    }
+
+    /* UPI Apps Buttons */
+    .upi-apps-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    .upi-app-btn {
+      background: #27272a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 10px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .upi-app-btn:hover {
+      border-color: #10b981;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Notification Bar -->
+  <div id="toastNotification" class="toast-popup">
+    <span id="toastIcon">🔔</span>
+    <span id="toastMessage">Captain has been notified</span>
+  </div>
+
+  <!-- Sticky Top Navbar -->
+  <header class="top-navbar">
+    <div class="brand-section">
+      <div class="brand-crest">👑</div>
+      <div class="brand-text-block">
+        <h1 id="brandTitle">ROYAL DINING & TANDOOR</h1>
+        <div class="kannada-subtitle" id="brandSubTitle">ರಾಜಮನೆತನದ ಊಟ ಮತ್ತು ತಂದೂರ್</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <!-- Seated Table Selector Pill -->
+      <div class="table-pill" onclick="openTablePickerModal()" title="Change Table">
+        <span>🍽️</span>
+        <span id="headerTableLabel">Table A-04</span>
+      </div>
+      <!-- Dual Language Toggle (English <-> Kannada) -->
+      <button class="lang-toggle-btn" id="langToggleBtn" onclick="toggleLanguage()">
+        <span id="langFlag">🇬🇧</span>
+        <span id="langName">ಕನ್ನಡ</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Service Calling Bar (Call Waiter, Water Refill, Bill) -->
+  <div class="service-call-bar">
+    <button class="service-btn" onclick="callService('WAITER')">
+      <span>🔔</span>
+      <span id="lblCallWaiter">Call Waiter / ವೈಟರ್ ಕರೆ</span>
+    </button>
+    <button class="service-btn" onclick="callService('WATER')">
+      <span>💧</span>
+      <span id="lblWater">Water Refill / ನೀರು ಬೇಕು</span>
+    </button>
+    <button class="service-btn" onclick="openBillModal()">
+      <span>📄</span>
+      <span id="lblBill">Bill / ಬಿಲ್</span>
+    </button>
+  </div>
+
+  <!-- Real-Time Order Cooking Tracker (Appears when table has active KOT) -->
+  <div class="order-tracker-card" id="orderTrackerCard">
+    <div class="tracker-header">
+      <div class="tracker-badge">
+        <div class="pulse-dot"></div>
+        <span id="trackerKotNumber">KOT #8492 ACTIVE</span>
+      </div>
+      <span style="font-size:11px; color:#fbbf24; font-weight:700;" id="trackerTimeEst">Est. 8 min</span>
+    </div>
+    <div class="stepper-row">
+      <div class="stepper-line"></div>
+      <div class="stepper-line-progress" id="stepperProgressBar" style="width: 33%;"></div>
+      
+      <div class="step-node completed" id="step1Node">
+        <div class="node-circle">✓</div>
+        <div class="node-label" id="lblStep1">Placed<br><small>ಸ್ವೀಕರಿಸಲಾಗಿದೆ</small></div>
+      </div>
+      <div class="step-node active" id="step2Node">
+        <div class="node-circle">🔥</div>
+        <div class="node-label" id="lblStep2">Cooking<br><small>ತಯಾರಾಗುತ್ತಿದೆ</small></div>
+      </div>
+      <div class="step-node" id="step3Node">
+        <div class="node-circle">🍽️</div>
+        <div class="node-label" id="lblStep3">Plated<br><small>ಪ್ಲೇಟಿಂಗ್</small></div>
+      </div>
+      <div class="step-node" id="step4Node">
+        <div class="node-circle">🚀</div>
+        <div class="node-label" id="lblStep4">Served<br><small>ತಲುಪಿಸಲಾಗಿದೆ</small></div>
+      </div>
+    </div>
+    
+    <!-- Live Item-Level Status Breakdown -->
+    <div id="trackerLiveItemsBox" style="background:#1c1917; border-radius:10px; padding:8px 12px; margin:10px 0 6px;">
+      <!-- Populated via customer-app.js -->
+    </div>
+    <div class="tracker-footer">
+      <span id="trackerItemSummary">3 dishes simmering in bhatti</span>
+      <button class="bill-btn-small" onclick="openBillModal()" id="lblViewBillSmall">View Bill & Pay</button>
+    </div>
+  </div>
+
+  <!-- Search & Filter Controls (Sticky) -->
+  <div class="search-filter-container">
+    <div class="search-bar-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" class="search-input" placeholder="Search dishes, curries, breads..." oninput="handleSearch(this.value)">
+      <button class="clear-search-btn" id="clearSearchBtn" onclick="clearSearch()">✕</button>
+    </div>
+
+    <!-- Dietary Filters -->
+    <div class="diet-filters-row">
+      <button class="diet-pill active" onclick="setDietFilter('ALL', this)">
+        <span id="lblFilterAll">All Items</span>
+      </button>
+      <button class="diet-pill" onclick="setDietFilter('VEG', this)">
+        <span class="food-icon-veg"></span>
+        <span id="lblFilterVeg">Veg Only</span>
+      </button>
+      <button class="diet-pill" onclick="setDietFilter('JAIN', this)">
+        <span>🟡</span>
+        <span id="lblFilterJain">Jain Friendly</span>
+      </button>
+      <button class="diet-pill" onclick="setDietFilter('FAST', this)">
+        <span>⚡</span>
+        <span id="lblFilterFast">Fast Serving (&lt;10m)</span>
+      </button>
+      <button class="diet-pill" onclick="setDietFilter('BESTSELLER', this)">
+        <span>⭐</span>
+        <span id="lblFilterBestseller">Bestsellers</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Category Scroll Navigation -->
+  <div class="category-scroll-bar" id="categoryTabsBar">
+    <!-- Rendered dynamically -->
+  </div>
+
+  <!-- Main Menu Display Container -->
+  <main class="menu-container" id="menuContainer">
+    <!-- Menu items grouped by category rendered dynamically via JavaScript -->
+  </main>
+
+  <!-- Floating Express Hot Roti Button -->
+  <button class="floating-express-btn" id="floatingExpressBtn" onclick="openGaramRotiModal()">
+    <span>⚡</span>
+    <span id="lblExpressRoti">Order Hot Roti (3m) / ಬಿಸಿ ರೊಟ್ಟಿ</span>
+  </button>
+
+  <!-- Floating Cart Bar (Bottom) -->
+  <div class="floating-cart-bar" id="floatingCartBar" onclick="openCartDrawer()">
+    <div class="cart-summary-left">
+      <span class="cart-count-text" id="cartCountLabel">0 Items</span>
+      <span class="cart-total-price" id="cartTotalLabel">₹0</span>
+    </div>
+    <div class="cart-action-right">
+      <span id="lblViewCart">View Cart / ಕಾರ್ಟ್</span>
+      <span>➔</span>
+    </div>
+  </div>
+
+  <!-- Cart Drawer Modal -->
+  <div class="modal-overlay" id="cartDrawerOverlay" onclick="closeModalOnBackdrop(event, 'cartDrawerOverlay')">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 id="lblCartTitle">Your Table Order / ನಿಮ್ಮ ಕಾರ್ಟ್</h3>
+        <button class="sheet-close-btn" onclick="closeCartDrawer()">✕</button>
+      </div>
+      <div class="sheet-body">
+        <div id="cartItemsList">
+          <!-- Cart items rendered dynamically -->
+        </div>
+
+        <!-- Cooking Instruction Note -->
+        <div style="margin-top: 16px;">
+          <label style="font-size:12px; font-weight:700; color:#fbbf24;" id="lblCookingNotes">Special Cooking Request / ಅಡುಗೆ ಸೂಚನೆ:</label>
+          <input type="text" id="cookingNoteInput" placeholder="e.g. Crisp naan, less oil, extra green chillies" style="width:100%; background:#27272a; border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:10px; color:#ffffff; font-size:12.5px; margin-top:6px; outline:none;">
+        </div>
+
+        <!-- Waiter Staff Tip Selection -->
+        <div style="margin-top: 16px;">
+          <label style="font-size:12px; font-weight:700; color:#a1a1aa;" id="lblTipStaff">Say Thanks with a Tip for Captain & Staff:</label>
+          <div class="tip-pills-row">
+            <div class="tip-pill active" onclick="selectTip(0, this)">No Tip</div>
+            <div class="tip-pill" onclick="selectTip(30, this)">₹30</div>
+            <div class="tip-pill" onclick="selectTip(50, this)">₹50</div>
+            <div class="tip-pill" onclick="selectTip(100, this)">₹100</div>
+          </div>
+        </div>
+
+        <!-- Bill Summary -->
+        <div style="margin-top: 16px; background:#27272a; border-radius:14px; padding:14px;">
+          <div class="bill-row">
+            <span id="lblSubtotal">Item Total</span>
+            <span id="cartSubtotalAmount">₹0</span>
+          </div>
+          <div class="bill-row">
+            <span>CGST (2.5%)</span>
+            <span id="cartCgstAmount">₹0</span>
+          </div>
+          <div class="bill-row">
+            <span>SGST (2.5%)</span>
+            <span id="cartSgstAmount">₹0</span>
+          </div>
+          <div class="bill-row" id="tipRow" style="display:none;">
+            <span id="lblTipAmount">Staff Tip</span>
+            <span id="cartTipAmount">₹0</span>
+          </div>
+          <div class="bill-row highlight">
+            <span id="lblGrandTotal">To Pay</span>
+            <span id="cartGrandTotalAmount" style="color:#10b981;">₹0</span>
+          </div>
+        </div>
+      </div>
+      <div class="sheet-footer">
+        <button class="btn-place-order" onclick="placeOrder()">
+          <span>🔥</span>
+          <span id="lblPlaceOrder">Send Order to Kitchen / ಆದೇಶಿಸಿ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dish Customization Modal -->
+  <div class="modal-overlay" id="customizerOverlay" onclick="closeModalOnBackdrop(event, 'customizerOverlay')">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div>
+          <h3 id="customizerDishTitle">Customize Dish</h3>
+          <div style="font-size:12px; color:#f59e0b; font-weight:600;" id="customizerDishKnTitle"></div>
+        </div>
+        <button class="sheet-close-btn" onclick="closeCustomizer()">✕</button>
+      </div>
+      <div class="sheet-body" id="customizerBody">
+        <!-- Customization groups generated dynamically -->
+      </div>
+      <div class="sheet-footer">
+        <button class="btn-place-order" onclick="confirmCustomization()">
+          <span id="lblConfirmAdd">Add with Customization / ಸೇರಿಸಿ</span>
+          <span id="customizerTotalBtnPrice">₹0</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fast Garam Roti Modal -->
+  <div class="modal-overlay" id="garamRotiOverlay" onclick="closeModalOnBackdrop(event, 'garamRotiOverlay')">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div>
+          <h3 style="color:#f97316;">⚡ Express Garam Roti / ಬಿಸಿ ರೊಟ್ಟಿ</h3>
+          <div style="font-size:11px; color:#94a3b8;">High-Priority Kitchen Bhatti Ticket • 3-Min SLA</div>
+        </div>
+        <button class="sheet-close-btn" onclick="closeGaramRotiModal()">✕</button>
+      </div>
+      <div class="sheet-body">
+        <p style="font-size:13px; color:#cbd5e1; margin-bottom:12px;" id="lblRotiPrompt">Select hot tandoor breads for immediate delivery to your table:</p>
+        <div class="roti-grid">
+          <div class="roti-card active" onclick="selectRotiItem('dish_butter_naan', 'Butter Naan / ಬೆಣ್ಣೆ ನಾನ್', 70, this)">
+            <div style="font-size:24px;">🫓</div>
+            <div style="font-weight:700; font-size:13px; color:#ffffff;">Butter Naan</div>
+            <div style="font-size:11px; color:#fbbf24;">ಬೆಣ್ಣೆ ನಾನ್</div>
+            <div style="font-size:12px; font-weight:800; color:#10b981; margin-top:4px;">₹70</div>
+          </div>
+          <div class="roti-card" onclick="selectRotiItem('dish_tandoori_roti', 'Tandoori Roti / ತಂದೂರಿ ರೊಟ್ಟಿ', 40, this)">
+            <div style="font-size:24px;">🫓</div>
+            <div style="font-weight:700; font-size:13px; color:#ffffff;">Tandoori Roti</div>
+            <div style="font-size:11px; color:#fbbf24;">ತಂದೂರಿ ರೊಟ್ಟಿ</div>
+            <div style="font-size:12px; font-weight:800; color:#10b981; margin-top:4px;">₹40</div>
+          </div>
+          <div class="roti-card" onclick="selectRotiItem('dish_garlic_naan', 'Garlic Naan / ಬೆಳ್ಳುಳ್ಳಿ ನಾನ್', 85, this)">
+            <div style="font-size:24px;">🫓</div>
+            <div style="font-weight:700; font-size:13px; color:#ffffff;">Garlic Butter Naan</div>
+            <div style="font-size:11px; color:#fbbf24;">ಬೆಳ್ಳುಳ್ಳಿ ನಾನ್</div>
+            <div style="font-size:12px; font-weight:800; color:#10b981; margin-top:4px;">₹85</div>
+          </div>
+          <div class="roti-card" onclick="selectRotiItem('dish_tandoori_roti', 'Plain Wheat Roti / ಪ್ಲೇನ್ ರೊಟ್ಟಿ', 40, this)">
+            <div style="font-size:24px;">🫓</div>
+            <div style="font-weight:700; font-size:13px; color:#ffffff;">Plain Wheat Roti</div>
+            <div style="font-size:11px; color:#fbbf24;">ಪ್ಲೇನ್ ಗೋಧಿ ರೊಟ್ಟಿ</div>
+            <div style="font-size:12px; font-weight:800; color:#10b981; margin-top:4px;">₹40</div>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:center; justify-content:space-between; background:#18181b; padding:12px; border-radius:12px; margin-top:8px;">
+          <span style="font-size:13px; font-weight:700;">Quantity / ಪ್ರಮಾಣ:</span>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <button class="add-btn" style="width:32px; height:32px; border-radius:8px;" onclick="adjustRotiQty(-1)">-</button>
+            <span id="fastRotiQty" style="font-size:16px; font-weight:800; color:#ffffff;">2</span>
+            <button class="add-btn" style="width:32px; height:32px; border-radius:8px;" onclick="adjustRotiQty(1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="sheet-footer">
+        <button class="btn-place-order" style="background:linear-gradient(135deg, #ea580c, #c2410c);" onclick="fireFastRoti()">
+          <span>⚡</span>
+          <span id="lblFireRotiBtn">Fire Roti to Tandoor Now / ತಕ್ಷಣ ಕಳುಹಿಸಿ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Digital GST Bill & UPI Payment Modal -->
+  <div class="modal-overlay" id="billModalOverlay" onclick="closeModalOnBackdrop(event, 'billModalOverlay')">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div>
+          <h3 id="lblBillHeader">Digital Tax Invoice / ಬಿಲ್ ವಿವರ</h3>
+          <div style="font-size:11px; color:#94a3b8;">GSTIN: 29AABCU9603R1ZM • SAC: 996331</div>
+        </div>
+        <button class="sheet-close-btn" onclick="closeBillModal()">✕</button>
+      </div>
+      <div class="sheet-body">
+        <div style="text-align:center; padding:10px 0 16px; border-bottom:1px dashed #52525b;">
+          <div style="font-family:'Cinzel', serif; font-size:16px; font-weight:800; color:#fbbf24;">ROYAL DINING & TANDOOR</div>
+          <div style="font-size:12px; color:#cbd5e1;">ರಾಜಮನೆತನದ ಊಟ • Bengaluru, Karnataka</div>
+          <div style="font-size:11px; color:#a1a1aa; margin-top:4px;" id="billTableAndDate">Table A-04 | 18-Sep-2026 14:40</div>
+        </div>
+
+        <div id="billItemsContainer" style="margin: 14px 0;">
+          <!-- Itemized list rendered dynamically -->
+        </div>
+
+        <div style="background:#27272a; border-radius:14px; padding:14px; margin-top:12px;">
+          <div class="bill-row">
+            <span>Subtotal</span>
+            <span id="billSubtotal">₹0</span>
+          </div>
+          <div class="bill-row">
+            <span>CGST (2.5%)</span>
+            <span id="billCgst">₹0</span>
+          </div>
+          <div class="bill-row">
+            <span>SGST (2.5%)</span>
+            <span id="billSgst">₹0</span>
+          </div>
+          <div class="bill-row" id="billTipRow" style="display:none;">
+            <span>Staff Gratitude Tip</span>
+            <span id="billTip">₹0</span>
+          </div>
+          <div class="bill-row">
+            <span>Round Off</span>
+            <span id="billRoundOff">₹0.00</span>
+          </div>
+          <div class="bill-row highlight">
+            <span>Net Payable / ಒಟ್ಟು ಮೊತ್ತ</span>
+            <span id="billGrandTotal" style="color:#10b981; font-size:18px;">₹0</span>
+          </div>
+        </div>
+
+        <!-- Dynamic UPI Section -->
+        <div style="margin-top: 18px; text-align:center; background:#18181b; border:1px solid #3f3f46; border-radius:18px; padding:16px;">
+          <div style="font-size:13px; font-weight:800; color:#ffffff; margin-bottom:8px;">Instant UPI Contactless Payment</div>
+          <div style="display:flex; justify-content:center; margin:10px 0;">
+            <div style="background:#ffffff; padding:10px; border-radius:14px; display:inline-block;">
+              <img id="billUpiQrImg" src="/api/qr?text=upi://pay?pa=royal.dining@hdfcbank&pn=RoyalDine&am=0&cu=INR" style="width:160px; height:160px; display:block;" alt="UPI QR">
+            </div>
+          </div>
+          <div style="font-size:11px; color:#a1a1aa;">Scan with Google Pay, PhonePe, Paytm or BHIM</div>
+
+          <!-- Instant Pay App Buttons -->
+          <div class="upi-apps-row">
+            <button class="upi-app-btn" onclick="simulateUpiPayment('Google Pay')">
+              <span style="font-size:18px;">🟢</span>
+              <span>GPay</span>
+            </button>
+            <button class="upi-app-btn" onclick="simulateUpiPayment('PhonePe')">
+              <span style="font-size:18px;">🟣</span>
+              <span>PhonePe</span>
+            </button>
+            <button class="upi-app-btn" onclick="simulateUpiPayment('Paytm')">
+              <span style="font-size:18px;">🔵</span>
+              <span>Paytm</span>
+            </button>
+            <button class="upi-app-btn" onclick="simulateUpiPayment('BHIM UPI')">
+              <span style="font-size:18px;">🟠</span>
+              <span>BHIM</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="sheet-footer">
+        <button class="btn-place-order" style="background:linear-gradient(135deg, #10b981, #059669);" onclick="simulateUpiPayment('Direct UPI')">
+          <span>✓</span>
+          <span id="lblSimulatePayment">Confirm Payment Completed / ಪಾವತಿಸಲಾಗಿದೆ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post-Meal 5-Star Feedback Modal -->
+  <div class="modal-overlay" id="feedbackModalOverlay">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 id="lblFeedbackTitle">How was your Dining Experience? / ನಿಮ್ಮ ಅನುಭವ</h3>
+      </div>
+      <div class="sheet-body" style="text-align:center;">
+        <div style="font-size:13px; color:#cbd5e1; margin-top:4px;" id="lblFeedbackSub">We hope you relished the royal flavors!</div>
+        
+        <div class="star-row" id="starRatingRow">
+          <span class="star-icon filled" onclick="rateExperience(1)">★</span>
+          <span class="star-icon filled" onclick="rateExperience(2)">★</span>
+          <span class="star-icon filled" onclick="rateExperience(3)">★</span>
+          <span class="star-icon filled" onclick="rateExperience(4)">★</span>
+          <span class="star-icon filled" onclick="rateExperience(5)">★</span>
+        </div>
+        <div style="font-weight:800; font-size:14px; color:#fbbf24;" id="ratingSentimentText">Outstanding! / ಅತ್ಯುತ್ತಮ!</div>
+
+        <div style="margin-top:16px; text-align:left;">
+          <div style="font-size:12px; font-weight:700; color:#a1a1aa; margin-bottom:6px;" id="lblFeedbackTags">What delighted you most? / ನಿಮಗೆ ಹೆಚ್ಚು ಇಷ್ಟವಾದದ್ದು:</div>
+          <div id="feedbackTagsContainer">
+            <span class="rating-tag-chip active" onclick="toggleTag(this)">ರುಚಿಯಾದ ಊಟ / Delicious Food</span>
+            <span class="rating-tag-chip active" onclick="toggleTag(this)">ತ್ವರಿತ ಸೇವೆ / Lightning Fast</span>
+            <span class="rating-tag-chip" onclick="toggleTag(this)">ಬಿಸಿ ರೊಟ್ಟಿ / Hot Roti</span>
+            <span class="rating-tag-chip" onclick="toggleTag(this)">ಸ್ವಚ್ಛತೆ / Cleanliness</span>
+            <span class="rating-tag-chip" onclick="toggleTag(this)">ಆತಿಥ್ಯ / Warm Staff</span>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <input type="text" id="feedbackComments" placeholder="Any personal note for Chef or Captain..." style="width:100%; background:#27272a; border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:10px; color:#ffffff; font-size:12px; outline:none;">
+        </div>
+      </div>
+      <div class="sheet-footer">
+        <button class="btn-place-order" onclick="submitRating()">
+          <span>❤️</span>
+          <span id="lblSubmitFeedback">Submit Rating / ಪ್ರತಿಕ್ರಿಯೆ ಸಲ್ಲಿಸಿ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Picker / Change Table Modal -->
+  <div class="modal-overlay" id="tablePickerOverlay" onclick="closeModalOnBackdrop(event, 'tablePickerOverlay')">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 id="lblPickTable">Select Your Table / ನಿಮ್ಮ ಮೇಜು ಆರಿಸಿ</h3>
+        <button class="sheet-close-btn" onclick="closeTablePickerModal()">✕</button>
+      </div>
+      <div class="sheet-body">
+        <p style="font-size:13px; color:#a1a1aa; margin-bottom:12px;">Switching tables links your session directly with kitchen KDS and Captain:</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;" id="tablesListGrid">
+          <!-- Populated from server state -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/customer-app.js"></script>
+</body>
+</html>

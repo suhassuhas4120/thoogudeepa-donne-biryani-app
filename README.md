@@ -204,7 +204,7 @@ hospitality-saas-app/
 │   │   └── manager.ts            # Manager permissions, metrics & Z-Report types
 │   ├── package.json              # Next.js 15, React 19, Tailwind, Zustand dependencies
 │   ├── tsconfig.json             # TypeScript configuration
-│   └── tailwind.config.js        # Royal Awadh palette (#D4AF37 Gold, #0F3A22 Green)
+│   └── tailwind.config.js        # Thoogudeepa Donne Biryani palette (#D4AF37 Gold, #0F3A22 Green)
 ├── deploy_skeletons/             # Standalone Wireframe Suite (Zero dependencies)
 │   ├── index.html                # Customer 12-Screen interactive wireframes
 │   ├── kitchen-skeletons.html    # Kitchen 3-Screen interactive wireframes

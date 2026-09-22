@@ -15,7 +15,7 @@ let inventoryData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'inv
 
 // In-Memory State
 let state = {
-  property: "Royal Awadh Heritage & Banquets",
+  property: "Thoogudeepa Donne Biryani Mane",
   shift: "Dinner Rush (18:00 - 23:59 IST)",
   fssaiLic: "10019011002341",
   gstin: "07AAAAA0000A1Z5",

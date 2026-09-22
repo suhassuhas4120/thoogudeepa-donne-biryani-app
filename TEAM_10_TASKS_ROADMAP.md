@@ -309,9 +309,9 @@ This document provides a prioritized, actionable **10-task implementation roadma
 **Branch:** `feature/suhas-bharath-ui-ux`  
 **Working Directory:** `customer-next/app/globals.css`, `customer-next/tailwind.config.js`, `customer-next/components/ui/`
 
-### Task 6.1: Royal Awadh Brand Palette Audit `[P1]`
+### Task 6.1: Thoogudeepa Donne Biryani Brand Palette Audit `[P1]`
 - **Target File:** `customer-next/tailwind.config.js`, `customer-next/app/globals.css`
-- **Instruction:** Enforce brand color tokens across all Tailwind classes: Gold (`#D4AF37`), Dark Amber (`#B45309`), Forest Green (`#0F3A22`), Slate Dark (`#0F172A`).
+- **Instruction:** Enforce brand color tokens across all Tailwind classes: Gold (`#D4AF37`), Dark Amber (`#B45309`), Plantain Leaf Green (`#0F3A22`), Slate Dark (`#0F172A`).
 - **Verification:** Inspect buttons and headers; verify consistent luxury restaurant color hierarchy.
 
 ### Task 6.2: 48px Minimum Touch Target Sizing `[P1]`

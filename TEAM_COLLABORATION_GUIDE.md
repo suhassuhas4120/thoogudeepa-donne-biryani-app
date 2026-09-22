@@ -9,15 +9,15 @@ This guide outlines the complete development setup, module ownership, and GitFlo
 
 Every team member has a dedicated module and directory boundary. Because each portal has its own dedicated directory in `customer-next/components/` and `customer-next/app/`, all 7 team members can code simultaneously without stepping on each other's code or encountering merge conflicts!
 
-| Role / Node | Assigned Developer(s) | Module Responsibility | Dedicated Files & Folders | Assigned Git Branch |
-| :--- | :--- | :--- | :--- | :--- |
-| **PERSON 1** | **Vishal** | **Customer Self-Ordering Experience (12 Screens)**<br/>Menu, portions, add-ons (Egg/Salna), cart, UPI QR payment, bill breakdown, live order tracking, loyalty & reviews. | `customer-next/components/screens/`<br/>`customer-next/app/page.tsx`<br/>`customer-next/store/useCustomerStore.ts`<br/>`customer-next/store/useCartStore.ts` | `feature/vishal-customer-app` |
-| **PERSON 2** | **Vennela** | **Kitchen Display System (KDS - 3 Tablet Screens)**<br/>Chef station login, 70/30 table matrix with 4-stage prep steppers (`1.REC`, `2.PREP`, `3.READY`, `4.SERVED`), bulk dish cooking bar, 86 inventory toggle. | `customer-next/components/kitchen/`<br/>`customer-next/app/kitchen/page.tsx`<br/>`customer-next/store/useKitchenStore.ts` | `feature/vennela-kitchen-kds` |
-| **PERSON 3** | **Nayana & Shivakumar** | **Waiter / Captain Suite (10 Screens - Mobile & Tablet)**<br/>Handheld mobile & tablet table feed, live customer call bell alerts, tableside POS order puncher, Bluetooth ESC/POS thermal bill print, table merge/split & vacate. | `customer-next/components/waiter/`<br/>`customer-next/app/waiter/page.tsx`<br/>`customer-next/store/useWaiterStore.ts` | `feature/nayana-shivakumar-waiter-suite` |
-| **PERSON 4** | **Prajwal** | **Manager HQ & Cashier POS (16 Screens)**<br/>Executive dashboard, interactive floor map, direct counter order menu punch, staff attendance, sales analytics, petty expenses & Day-Close Z-Report. | `customer-next/components/manager/`<br/>`customer-next/app/manager/page.tsx`<br/>`customer-next/store/useManagerStore.ts` | `feature/prajwal-manager-pos` |
-| **PERSON 5** | **Suhas M** | **Real-Time State & Backend Architect**<br/>Central reactive bridge (`useSharedBridge.ts`), data models, WebSocket server (`server.js`), and database/API synchronization connecting all 4 portals. | `customer-next/store/useSharedBridge.ts`<br/>`customer-next/types/*.ts`<br/>`server.js`<br/>`data/*.json` | `feature/suhas-m-backend-bridge` |
-| **PERSON 6** | **Suhas M & Bharath** | **UI/UX & Design Systems Leads**<br/>Restaurant visual tokens, amber/emerald Donne Biryani theme, component library (`components/ui/`), animations, touch accessibility & wireframes sync. | `customer-next/app/globals.css`<br/>`customer-next/tailwind.config.js`<br/>`customer-next/components/ui/`<br/>`deploy_skeletons/` | `feature/suhas-bharath-ui-ux` |
-| **PERSON 7** | **Manjunath** | **QA, Testing & DevOps Lead**<br/>Build validation (`npm run type-check` & `npm run build`), CI/CD GitHub Actions (`.github/workflows/ci.yml`), 1-click launch scripts (`RUN_PROJECT.bat`) & cloud deployment. | `.github/workflows/`<br/>`customer-next/next.config.ts`<br/>Build scripts & deployment configs | `feature/manjunath-qa-devops` |
+| Role / Node | Assigned Developer(s) | GitHub Username | Module Responsibility | Dedicated Files & Folders | Assigned Git Branch |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **PERSON 1** | **Vishal** | `@vishalvc-lab` | **Customer Self-Ordering Experience (12 Screens)**<br/>Menu, portions, add-ons (Egg/Salna), cart, UPI QR payment, bill breakdown, live order tracking, loyalty & reviews. | `customer-next/components/screens/`<br/>`customer-next/app/page.tsx`<br/>`customer-next/store/useCustomerStore.ts`<br/>`customer-next/store/useCartStore.ts` | `feature/vishal-customer-app` |
+| **PERSON 2** | **Vennela** | `@tvennelavennelat-ship-it` | **Kitchen Display System (KDS - 3 Tablet Screens)**<br/>Chef station login, 70/30 table matrix with 4-stage prep steppers (`1.REC`, `2.PREP`, `3.READY`, `4.SERVED`), bulk dish cooking bar, 86 inventory toggle. | `customer-next/components/kitchen/`<br/>`customer-next/app/kitchen/page.tsx`<br/>`customer-next/store/useKitchenStore.ts` | `feature/vennela-kitchen-kds` |
+| **PERSON 3** | **Nayana & Shivakumar** | `@Nayanabai`<br/>`@skram03` | **Waiter / Captain Suite (10 Screens - Mobile & Tablet)**<br/>Handheld mobile & tablet table feed, live customer call bell alerts, tableside POS order puncher, Bluetooth ESC/POS thermal bill print, table merge/split & vacate. | `customer-next/components/waiter/`<br/>`customer-next/app/waiter/page.tsx`<br/>`customer-next/store/useWaiterStore.ts` | `feature/nayana-shivakumar-waiter-suite` |
+| **PERSON 4** | **Prajwal** | `@Prajwal-Praju01` | **Manager HQ & Cashier POS (16 Screens)**<br/>Executive dashboard, interactive floor map, direct counter order menu punch, staff attendance, sales analytics, petty expenses & Day-Close Z-Report. | `customer-next/components/manager/`<br/>`customer-next/app/manager/page.tsx`<br/>`customer-next/store/useManagerStore.ts` | `feature/prajwal-manager-pos` |
+| **PERSON 5** | **Suhas M** | `@suhassuhas4120` | **Real-Time State & Backend Architect**<br/>Central reactive bridge (`useSharedBridge.ts`), data models, WebSocket server (`server.js`), and database/API synchronization connecting all 4 portals. | `customer-next/store/useSharedBridge.ts`<br/>`customer-next/types/*.ts`<br/>`server.js`<br/>`data/*.json` | `feature/suhas-m-backend-bridge` |
+| **PERSON 6** | **Suhas M & Bharath** | `@suhassuhas4120`<br/>`@Bharath200404` | **UI/UX & Design Systems Leads**<br/>Restaurant visual tokens, amber/emerald Donne Biryani theme, component library (`components/ui/`), animations, touch accessibility & wireframes sync. | `customer-next/app/globals.css`<br/>`customer-next/tailwind.config.js`<br/>`customer-next/components/ui/`<br/>`deploy_skeletons/` | `feature/suhas-bharath-ui-ux` |
+| **PERSON 7** | **Manjunath** | `@manju2512` | **QA, Testing & DevOps Lead**<br/>Build validation (`npm run type-check` & `npm run build`), CI/CD GitHub Actions (`.github/workflows/ci.yml`), 1-click launch scripts (`RUN_PROJECT.bat`) & cloud deployment. | `.github/workflows/`<br/>`customer-next/next.config.ts`<br/>Build scripts & deployment configs | `feature/manjunath-qa-devops` |
 
 ---
 
@@ -72,14 +72,14 @@ git push --all origin
 
 ### Step C: Add the Developers as Collaborators
 In GitHub: Go to **Settings ➔ Collaborators ➔ Add people** and invite:
-- Vishal
-- Vennela
-- Nayana
-- Shivakumar
-- Prajwal
-- Suhas M
-- Bharath
-- Manjunath
+- **Vishal**: `vishalvc-lab`
+- **Vennela**: `tvennelavennelat-ship-it`
+- **Nayana**: `Nayanabai`
+- **Shivakumar**: `skram03`
+- **Prajwal**: `Prajwal-Praju01`
+- **Bharath**: `Bharath200404`
+- **Manjunath**: `manju2512`
+*(Repository Owner: `suhassuhas4120`)*
 
 ---
 

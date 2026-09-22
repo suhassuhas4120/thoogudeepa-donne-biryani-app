@@ -1,6 +1,6 @@
 ﻿import { OrderStage } from './customer';
 
-export type KitchenScreenId = 1 | 2 | 3;
+export type KitchenScreenId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
 export type KitchenStation = 'MAIN' | 'DUM_BIRYANI' | 'TANDOOR_BHATTI' | 'DESSERT_PANTRY';
 

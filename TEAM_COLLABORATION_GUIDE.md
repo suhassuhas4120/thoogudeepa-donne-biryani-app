@@ -59,8 +59,8 @@ To publish this project online so all 7 developers can clone and collaborate:
 Open your terminal in `C:\Users\HP\.gemini\antigravity\scratch\hospitality-saas-app` and run:
 
 ```bash
-# 1. Link your remote GitHub repository (replace with your URL)
-git remote add origin https://github.com/YOUR_ORGANIZATION/thoogudeepa-donne-biryani-app.git
+# 1. Link your remote GitHub repository (already configured!)
+git remote add origin https://github.com/suhassuhas4120/thoogudeepa-donne-biryani-app.git
 
 # 2. Push production main and develop branches
 git push -u origin main

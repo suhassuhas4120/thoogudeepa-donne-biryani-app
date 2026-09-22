@@ -116,15 +116,54 @@ export const ScreenK2Overview: React.FC = () => {
     callFloorWaiter,
   } = useKitchenStore();
 
-  const { kdsTickets: bridgeTickets } = useSharedBridge();
+  const { kdsTickets: bridgeTickets, kitchenSetItemStage } = useSharedBridge();
 
-  // Local state for all 6 tables and stage toggles
+  // Local state for initial tables
   const [tablesState, setTablesState] = useState<K2Table[]>(INITIAL_K2_TABLES);
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL CATEGORIES');
   const [filterStation, setFilterStation] = useState<string>('ALL');
 
+  // Convert bridge tickets into K2Table format
+  const activeBridgeTables: K2Table[] = React.useMemo(() => {
+    return bridgeTickets
+      .filter((tk) => tk.status !== 'COMPLETED')
+      .map((tk) => ({
+        id: tk.id,
+        tableNumber: `TABLE ${tk.tableNumber}`,
+        kotNumber: tk.id.replace('KDS-', ''),
+        elapsedMinutes: tk.elapsedMinutes || 1,
+        serverName: tk.serverName || 'Captain',
+        isVip: tk.source === 'CUSTOMER',
+        items: tk.items.map((it) => ({
+          id: it.id,
+          name: it.name,
+          quantity: it.quantity,
+          stage: (it.stage === 'PLACED'
+            ? 'RECEIVED'
+            : it.stage === 'PREP'
+            ? 'PREPARING'
+            : it.stage === 'PLATED'
+            ? 'READY'
+            : 'SERVED') as 'RECEIVED' | 'PREPARING' | 'READY' | 'SERVED',
+        })),
+      }));
+  }, [bridgeTickets]);
+
+  // Combined tables: active bridge tables take priority, supplemented by initial tables to fill the 6-table grid
+  const allTablesToRender: K2Table[] = React.useMemo(() => {
+    if (activeBridgeTables.length === 0) return tablesState;
+    const tableNumsInBridge = new Set(activeBridgeTables.map((t) => t.tableNumber));
+    const remainingSeedTables = tablesState.filter((t) => !tableNumsInBridge.has(t.tableNumber));
+    return [...activeBridgeTables, ...remainingSeedTables];
+  }, [activeBridgeTables, tablesState]);
+
   // Interactive Stage Stepper Handler
-  const handleSetStage = (tableId: string, itemId: string, newStage: 'RECEIVED' | 'PREPARING' | 'READY' | 'SERVED') => {
+  const handleSetStage = (
+    tableId: string,
+    itemId: string,
+    newStage: 'RECEIVED' | 'PREPARING' | 'READY' | 'SERVED'
+  ) => {
+    // 1. Update local seed tables if present
     setTablesState((prev) =>
       prev.map((tbl) => {
         if (tbl.id !== tableId) return tbl;
@@ -134,6 +173,23 @@ export const ScreenK2Overview: React.FC = () => {
         };
       })
     );
+
+    // 2. Synchronize to useSharedBridge if it's a bridge ticket or matches an item
+    const bridgeStage =
+      newStage === 'PREPARING'
+        ? 'PREP'
+        : newStage === 'READY'
+        ? 'PLATED'
+        : newStage === 'SERVED'
+        ? 'SERVED'
+        : 'PLACED';
+
+    const bridgeTicket = bridgeTickets.find(
+      (tk) => tk.id === tableId || tk.items.some((i) => i.id === itemId)
+    );
+    if (bridgeTicket) {
+      kitchenSetItemStage(bridgeTicket.id, itemId, bridgeStage);
+    }
   };
 
   const handleOpenTable = (tableNumber: string) => {
@@ -169,39 +225,49 @@ export const ScreenK2Overview: React.FC = () => {
     },
   ];
 
-  // Right Side Time Queue Data
-  const timeQueueTickets = [
-    {
-      ticketNum: '101',
-      table: 'TABLE 01',
-      time: '12:40 PM (14m)',
-      items: ['2x Special Chicken Donne Biryani [NOTE: LESS SPICY]', '1x Mutton Chops Fry [NOTE: EXTRA CRISPY]'],
-    },
-    {
-      ticketNum: '102',
-      table: 'TABLE 02',
-      time: '12:44 PM (10m)',
-      items: ['2x Donne Mutton Biryani [NOTE: EXTRA SALNA]', '1x Guntur Chicken Wings [NOTE: STANDARD]'],
-    },
-    {
-      ticketNum: '103',
-      table: 'TABLE 03',
-      time: '12:48 PM (06m)',
-      items: ['1x Special Chicken Donne Biryani', '1x Chicken Kshatriya Kebab'],
-    },
-    {
-      ticketNum: '104',
-      table: 'TABLE 04',
-      time: '12:52 PM (02m)',
-      items: ['1x Donne Mutton Biryani (Large)', '2x Nati Koli Donne Biryani'],
-    },
-    {
-      ticketNum: '105',
-      table: 'TABLE 05',
-      time: '12:54 PM (Just Now)',
-      items: ['1x Donne Mutton Biryani (Regular)', '3x Donne Egg Biryani'],
-    },
-  ];
+  // Right Side Time Queue Data (Dynamic from bridgeTickets or default demo)
+  const timeQueueTickets = React.useMemo(() => {
+    if (bridgeTickets.length > 0) {
+      return bridgeTickets.map((tk) => ({
+        ticketNum: tk.id.replace('KDS-', ''),
+        table: `TABLE ${tk.tableNumber}`,
+        time: `${tk.timestamp} (${tk.elapsedMinutes || 1}m)`,
+        items: tk.items.map((it) => `${it.quantity}x ${it.name}`),
+      }));
+    }
+    return [
+      {
+        ticketNum: '101',
+        table: 'TABLE 01',
+        time: '12:40 PM (14m)',
+        items: ['2x Special Chicken Donne Biryani [NOTE: LESS SPICY]', '1x Mutton Chops Fry [NOTE: EXTRA CRISPY]'],
+      },
+      {
+        ticketNum: '102',
+        table: 'TABLE 02',
+        time: '12:44 PM (10m)',
+        items: ['2x Donne Mutton Biryani [NOTE: EXTRA SALNA]', '1x Guntur Chicken Wings [NOTE: STANDARD]'],
+      },
+      {
+        ticketNum: '103',
+        table: 'TABLE 03',
+        time: '12:48 PM (06m)',
+        items: ['1x Special Chicken Donne Biryani', '1x Chicken Kshatriya Kebab'],
+      },
+      {
+        ticketNum: '104',
+        table: 'TABLE 04',
+        time: '12:52 PM (02m)',
+        items: ['1x Donne Mutton Biryani (Large)', '2x Nati Koli Donne Biryani'],
+      },
+      {
+        ticketNum: '105',
+        table: 'TABLE 05',
+        time: '12:54 PM (Just Now)',
+        items: ['1x Donne Mutton Biryani (Regular)', '3x Donne Egg Biryani'],
+      },
+    ];
+  }, [bridgeTickets]);
 
   return (
     <KitchenTabletHousing screenNumber={2} screenTitle="ALL TABLES & FEEDS (70/30 SPLIT)">
@@ -291,7 +357,7 @@ export const ScreenK2Overview: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-3">
-              {tablesState.map((tbl) => (
+              {allTablesToRender.map((tbl) => (
                 <div
                   key={tbl.id}
                   onClick={() => handleOpenTable(tbl.tableNumber)}

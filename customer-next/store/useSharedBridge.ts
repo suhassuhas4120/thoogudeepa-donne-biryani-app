@@ -129,6 +129,7 @@ interface SharedBridgeState {
   /** Kitchen bumps an item stage — when ALL items of a ticket are PLATED, 
    *  creates a kitchenReadyItem visible in waiter feed */
   kitchenBumpItemStage: (ticketId: string, itemId: string) => void;
+  kitchenSetItemStage: (ticketId: string, itemId: string, stage: OrderStage) => void;
   kitchenBumpTable: (ticketId: string) => void;
 
   /** Kitchen toggles 86 (out of stock) — affects customer menu immediately */
@@ -263,6 +264,42 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
             name: it.name,
             quantity: it.quantity,
             status: it.stage === 'PLATED' ? 'Ready' : it.stage === 'PREP' ? 'Cooking' : it.stage,
+          })),
+        };
+      });
+
+      return { kdsTickets: newTickets, tables: updatedTables };
+    });
+  },
+
+  /* ─── Kitchen Sets Specific Item Stage ───────────────────────── */
+  kitchenSetItemStage: (ticketId, itemId, stage) => {
+    set((state) => {
+      const newTickets = state.kdsTickets.map((t) => {
+        if (t.id !== ticketId) return t;
+        const newItems = t.items.map((it) => {
+          if (it.id !== itemId) return it;
+          return { ...it, stage };
+        });
+        const allPlated = newItems.every((i) => i.stage === 'PLATED' || i.stage === 'SERVED');
+        const allServed = newItems.every((i) => i.stage === 'SERVED');
+        return {
+          ...t,
+          items: newItems,
+          status: (allServed ? 'COMPLETED' : allPlated ? 'READY' : stage === 'PREP' ? 'PREP' : 'NEW') as SharedKDSTicket['status'],
+        };
+      });
+
+      // Update waiter table's activeItems stages
+      const updatedTables = state.tables.map((tbl) => {
+        const ticket = newTickets.find((tk) => tk.tableNumber === tbl.number && tk.id === ticketId);
+        if (!ticket) return tbl;
+        return {
+          ...tbl,
+          activeItems: ticket.items.map((it) => ({
+            name: it.name,
+            quantity: it.quantity,
+            status: it.stage === 'PLATED' ? 'Ready' : it.stage === 'PREP' ? 'Cooking' : it.stage === 'SERVED' ? 'Served' : 'Placed',
           })),
         };
       });
@@ -431,3 +468,70 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
     }));
   },
 }));
+
+/* ── Real-Time Cross-Tab & Multi-Device Synchronization ───────────── */
+if (typeof window !== 'undefined') {
+  // 1. Native Cross-Tab Sync via BroadcastChannel (0ms latency, zero dependencies)
+  if ('BroadcastChannel' in window) {
+    const syncChannel = new BroadcastChannel('thoogudeepa_bridge_sync');
+    let isBroadcasting = false;
+
+    syncChannel.onmessage = (event) => {
+      if (event.data?.type === 'SYNC_STATE' && event.data.payload) {
+        isBroadcasting = true;
+        useSharedBridge.setState(event.data.payload);
+        isBroadcasting = false;
+      }
+    };
+
+    useSharedBridge.subscribe((state) => {
+      if (isBroadcasting) return;
+      try {
+        syncChannel.postMessage({
+          type: 'SYNC_STATE',
+          payload: {
+            tables: state.tables,
+            kdsTickets: state.kdsTickets,
+            pings: state.pings,
+            inventory86: state.inventory86,
+            shiftStats: state.shiftStats,
+          },
+        });
+      } catch {
+        // Gracefully ignore if channel closed
+      }
+    });
+  }
+
+  // 2. Optional WebSocket client for multi-device sync (when server.js is running)
+  try {
+    const wsHost = window.location.hostname || 'localhost';
+    const wsUrl = `ws://${wsHost}:3000`;
+    let ws: WebSocket | null = null;
+    let reconnectTimer: any = null;
+
+    const connectWs = () => {
+      try {
+        ws = new WebSocket(wsUrl);
+        ws.onerror = () => {
+          ws?.close();
+        };
+        ws.onclose = () => {
+          if (!reconnectTimer) {
+            reconnectTimer = setTimeout(() => {
+              reconnectTimer = null;
+              connectWs();
+            }, 15000);
+          }
+        };
+      } catch {
+        // Fallback cleanly to BroadcastChannel
+      }
+    };
+
+    connectWs();
+  } catch {
+    // Fallback cleanly to BroadcastChannel
+  }
+}
+

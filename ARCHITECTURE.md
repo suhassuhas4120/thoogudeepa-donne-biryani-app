@@ -10,7 +10,7 @@ This document details the architectural design, reactive state flow, data contra
 graph TD
     subgraph "Clients / Roles"
         C["📱 Customer App (12 Screens)<br/>/"]
-        K["🍳 Kitchen KDS (10 Screens)<br/>/kitchen"]
+        K["🍳 Kitchen KDS (3 Screens)<br/>/kitchen"]
         W["🤵 Waiter Captain (10 Screens)<br/>/waiter"]
         M["💼 Manager HQ & POS (16 Screens)<br/>/manager"]
     end
@@ -38,25 +38,25 @@ graph TD
 Rather than having isolated islands of state, this application utilizes a single **Reactive Bridge Store** (`customer-next/store/useSharedBridge.ts`) that exposes granular actions and selectors:
 
 ### Core Data State:
-- `tables`: Array of all restaurant tables (Number, Capacity, Status: Available / Occupied / Billed, Running Total, Active Guests).
-- `kdsTickets`: Array of live Kitchen Order Tickets (Ticket ID, Table Number, Items, Special Notes, Status: QUEUED / PREPARING / READY / COMPLETED, Timestamp).
-- `pings`: Array of customer-to-waiter assistance requests (Ping ID, Table Number, Type: WATER / WAITER / BILL / CLEAN, Status: PENDING / ACCEPTED / RESOLVED, Timestamp).
-- `inventory86`: Record of dishes and ingredients marked unavailable/sold-out (`{ [dishId: string]: boolean }`).
-- `shiftStats`: Running daily metrics (Total Sales, Order Count, Cash Collected, UPI Collected, Card Collected, Tips, Avg Prep Time).
+- `tables`: Array of all restaurant tables (Number, Capacity, Status: Vacant / Occupied / Billing / Cleaning, Current Bill, Seated Time, Kot Count).
+- `kdsTickets`: Array of live Kitchen Order Tickets (Ticket ID, Table Number, Items, Status: NEW / PREP / READY / COMPLETED, Timestamp).
+- `pings`: Array of customer-to-waiter assistance requests (Ping ID, Table Number, Type: WATER / BILL / WAITER / CLEAN, Status: PENDING / ACCEPTED / RESOLVED, Timestamp).
+- `inventory86`: Array of dishes and categories marked unavailable/sold-out (`SharedMenuItem86[]`).
+- `shiftStats`: Running daily metrics (Tables Served, Total Revenue, Tips Earned, Avg Turnaround Minutes).
 
 ### Inter-Portal Reactive Triggers:
 1. **Customer Places Order**:
    - Customer clicks "Confirm Order" on `Screen4Cart`.
-   - Action `customerPlacesOrder(tableNumber, items, notes)` executes.
+   - Action `customerPlacesOrder(tableNumber, guestName, guestCount, items)` executes.
    - Bridge assigns a sequential KOT Ticket #, adds it to `kdsTickets`, sets Table status to `OCCUPIED`, and increments running bill.
-   - Kitchen KDS displays the new ticket with audio chime.
-   - Manager Floor Map updates Table to amber/occupied.
+   - Kitchen KDS displays the new ticket dynamically in `ScreenK2Overview` and `ScreenK3Detail`.
+   - Manager Floor Map updates Table to occupied with running total.
 2. **Kitchen 86 Item Sold Out**:
-   - Chef taps "86 Item" on `ScreenK4Inventory86`.
-   - Action `toggle86Item(dishId, boolean)` fires.
-   - Customer Menu (`Screen2Menu`) instantly renders "Sold Out" badges and disables selection.
-   - Waiter POS (`ScreenW4TakeOrder`) warns "Item 86'd" if captain attempts to punch it.
-   - Manager Menu Master (`ScreenM5Menu`) shows item status as offline.
+   - Chef toggles 86 on `ScreenK3Detail`.
+   - Action `kitchenToggle86(dishId)` fires.
+   - Customer Menu (`Screen2Menu`) instantly renders "Sold Out" badge and disables selection.
+   - Waiter POS (`ScreenW4TakeOrder`) grays out item with 86 badge.
+   - Manager Menu Stock (`ScreenM10Menu86Stock`) reflects updated 86 state.
 3. **Customer Calls Waiter**:
    - Customer taps "Request Water" on `Screen10WaiterCall`.
    - Action `customerPingsWaiter(tableNumber, 'WATER')` fires.
@@ -86,19 +86,23 @@ Rather than having isolated islands of state, this application utilizes a single
 ```
 customer-next/
 ├── app/
-│   ├── page.tsx                    # Customer Portal (12 screens)
-│   ├── kitchen/page.tsx            # Kitchen KDS Portal (10 screens)
-│   ├── waiter/page.tsx             # Waiter Suite (10 screens)
-│   └── manager/page.tsx            # Manager Command Center (16 screens)
+│   ├── page.tsx                    # Customer Self-Ordering Portal (12 screens)
+│   ├── kitchen/page.tsx            # Kitchen KDS Tablet Portal (3 screens)
+│   ├── waiter/page.tsx             # Waiter Suite (10 screens, Mobile & Tablet)
+│   └── manager/page.tsx            # Manager Command Center & POS (16 screens)
 ├── components/
-│   ├── screens/Screen1Splash.tsx ... Screen12Feedback.tsx
-│   ├── kitchen/ScreenK1Login.tsx ... ScreenK10AuditLog.tsx
+│   ├── screens/Screen1Welcome.tsx ... Screen12Feedback.tsx
+│   ├── kitchen/ScreenK1Login.tsx ... ScreenK3Detail.tsx
 │   ├── waiter/ScreenW1Login.tsx ... ScreenW10ShiftStats.tsx
 │   │   └── tablet/TabletScreen1Login.tsx ... TabletScreen10ShiftStats.tsx
 │   ├── manager/ScreenM1Login.tsx ... ScreenM16DayCloseZReport.tsx
 │   └── ui/                         # Badges, drawers, sheets, modals
 └── store/
-    └── useSharedBridge.ts          # Reactive sync core
+    ├── useSharedBridge.ts          # Central Real-Time Cross-Section Bridge & BroadcastChannel
+    ├── useCustomerStore.ts         # Customer state
+    ├── useKitchenStore.ts          # Kitchen KDS state
+    ├── useWaiterStore.ts           # Waiter state
+    └── useManagerStore.ts          # Manager state
 ```
 
 ---

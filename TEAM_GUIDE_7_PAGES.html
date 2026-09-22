@@ -355,19 +355,19 @@
           <strong>customer-next/</strong><br/>
           ├── <strong>app/page.tsx</strong> <span class="file-desc">(Customer router & screen switch)</span><br/>
           ├── <strong>components/screens/</strong> <span class="file-desc">(12 Customer Screens)</span><br/>
-          │   ├── Screen1TableWelcome.tsx <span class="file-desc">(Table QR landing)</span><br/>
-          │   ├── Screen2MenuCatalog.tsx <span class="file-desc">(Donne Biryani catalog)</span><br/>
-          │   ├── Screen3DishCustomizer.tsx <span class="file-desc">(Portion/spice/egg)</span><br/>
-          │   ├── Screen4SmartCart.tsx <span class="file-desc">(Cart & 5% GST math)</span><br/>
-          │   ├── Screen5LiveOrderTracking.tsx <span class="file-desc">(4-stage progress)</span><br/>
-          │   ├── Screen6BillSummary.tsx <span class="file-desc">(Split bill calculator)</span><br/>
-          │   ├── Screen7UPIPayment.tsx <span class="file-desc">(Dynamic PhonePe QR)</span><br/>
-          │   ├── Screen8DigitalReceipt.tsx <span class="file-desc">(Tax receipt view)</span><br/>
-          │   ├── Screen9TableHistory.tsx <span class="file-desc">(Multi-round orders)</span><br/>
-          │   ├── Screen10WaiterCallBell.tsx <span class="file-desc">(Water/clean pings)</span><br/>
-          │   ├── Screen11LoyaltyRewards.tsx <span class="file-desc">(Scratch cards)</span><br/>
-          │   └── Screen12ReviewFeedback.tsx <span class="file-desc">(5-star ratings)</span><br/>
-          └── <strong>store/useCustomerStore.ts & useCartStore.ts</strong>
+          │   ├── Screen1Welcome.tsx <span class="file-desc">(Table QR landing)</span><br/>
+          │   ├── Screen2Menu.tsx <span class="file-desc">(Donne Biryani catalog)</span><br/>
+          │   ├── Screen3ItemDetail.tsx <span class="file-desc">(Portion/spice/egg)</span><br/>
+          │   ├── Screen4Cart.tsx <span class="file-desc">(Cart & Stepper)</span><br/>
+          │   ├── Screen5LiveTracking.tsx <span class="file-desc">(4-stage progress)</span><br/>
+          │   ├── Screen6PaymentBreakdown.tsx <span class="file-desc">(Split bill calculator)</span><br/>
+          │   ├── Screen7PaymentGateway.tsx <span class="file-desc">(Dynamic PhonePe QR)</span><br/>
+          │   ├── Screen8Confirmation.tsx <span class="file-desc">(Order reference & success)</span><br/>
+          │   ├── Screen9DigitalBill.tsx <span class="file-desc">(GST tax bill view)</span><br/>
+          │   ├── Screen10WaiterCall.tsx <span class="file-desc">(Water/clean pings)</span><br/>
+          │   ├── Screen11Loyalty.tsx <span class="file-desc">(Scratch cards & points)</span><br/>
+          │   └── Screen12Feedback.tsx <span class="file-desc">(5-star ratings)</span><br/>
+          └── <strong>store/useCustomerStore.ts</strong>
         </div>
       </div>
     </div>
@@ -377,9 +377,9 @@
       <div class="card">
         <div class="card-title">🎯 Next Tasks & Deliverables</div>
         <ul class="task-list">
-          <li><span class="task-tag tag-p1">P1</span> In <code>Screen1TableWelcome</code>, read <code>?table=4</code> from URL on load.</li>
-          <li><span class="task-tag tag-p1">P1</span> In <code>Screen7UPIPayment</code>, link UPI button to native <code>upi://pay</code>.</li>
-          <li><span class="task-tag tag-p2">P2</span> In <code>useCartStore</code>, save cart items in browser <code>localStorage</code>.</li>
+          <li><span class="task-tag tag-p1">P1</span> In <code>Screen1Welcome</code>, read <code>?table=4</code> from URL on load.</li>
+          <li><span class="task-tag tag-p1">P1</span> In <code>Screen7PaymentGateway</code>, link UPI button to native <code>upi://pay</code>.</li>
+          <li><span class="task-tag tag-p2">P2</span> In <code>useCustomerStore</code>, save cart items in browser <code>localStorage</code>.</li>
           <li><span class="task-tag tag-p2">P2</span> In <code>Screen2MenuCatalog</code>, add Kannada text toggles for dish names.</li>
           <li><span class="task-tag tag-p3">P3</span> In <code>Screen3DishCustomizer</code>, configure Regular / Large / Family pot prices.</li>
         </ul>

@@ -88,15 +88,15 @@ All 4 portals are **logically interconnected in real time** through a shared rea
 
 ### 1. 📱 Customer Self-Ordering App (12 Screens)
 *Route: `/app/page.tsx` | Components: `components/screens/`*
-1. **Screen 1 - Splash & Table Welcome**: Table QR recognition (Table 4, Hall Section), language switcher (English, Kannada), party size selection.
-2. **Screen 2 - Dynamic Menu**: Category tabs (Donne Biryani, Starters, Kebabs, Desserts, Beverages), dietary filters (Non-Veg, Halal, Veg), live search, spice level indicators.
+1. **Screen 1 - Splash & Table Welcome**: Table QR recognition (Table A-04), language switcher (English, Kannada), party size selection.
+2. **Screen 2 - Dynamic Menu**: Category tabs (Dum Biryani, Starters, Kebabs, Desserts, Beverages), dietary filters (Non-Veg, Halal, Veg), live search, spice level indicators, automatic 86 sold-out badges.
 3. **Screen 3 - Dish Customization**: Portion sizing (Regular, Large, Family Pack), spice level tuning, addon selection (Extra Salna, Boiled Egg, Raita, Ghee Roast), special kitchen instructions.
-4. **Screen 4 - Smart Cart & Review**: Order summary, dynamic GST (5%) calculation, packaging fee toggle, applied coupon discounts, order confirmation modal.
-5. **Screen 5 - Live KDS Order Tracking**: Step-by-step progress bar (Order Placed ➔ Kitchen Preparing ➔ Plated ➔ Served), live prep timer countdown, chef note banner.
-6. **Screen 6 - Bill Summary & Split Bill**: Itemized breakdown, split bill calculator (Equal split or custom itemized split by diner), tipping options.
+4. **Screen 4 - Smart Cart & Review**: Order summary, item quantity stepper, order separately option, confirmation drawer.
+5. **Screen 5 - Live KDS Order Tracking**: Step-by-step progress bar (Order Placed ➔ Kitchen Preparing ➔ Plated ➔ Served), live prep status synchronized directly with Kitchen KDS tickets.
+6. **Screen 6 - Bill Summary & Split Bill**: Itemized breakdown, split bill calculator (Equal split or custom diner split), tipping options.
 7. **Screen 7 - Instant UPI & Card Payment**: Dynamic QR code for PhonePe/GooglePay/Paytm, UPI Intent button, card and cash settlement options.
-8. **Screen 8 - Digital Bill Receipt**: Official GST-compliant tax receipt, downloadable PDF/print layout, order reference number, transaction timestamp.
-9. **Screen 9 - Table Order History**: Complete timeline of all rounds of orders punched for Table 4 during the current dining session.
+8. **Screen 8 - Order Confirmation & Reference**: Success status, estimated prep countdown, token number, and transaction receipt ID.
+9. **Screen 9 - Digital Tax Bill**: Official GST-compliant tax receipt (2.5% CGST + 2.5% SGST), itemized breakdown, printable 80mm format.
 10. **Screen 10 - Waiter Call Bell**: One-tap service triggers (Call Waiter, Water Refill, Extra Cutlery, Clean Table, Bill Request) that push real-time audio pings to Captain devices.
 11. **Screen 11 - Loyalty & Rewards**: Thoogudeepa Biryani Club points balance, redeemable coupon scratch cards, tier progression.
 12. **Screen 12 - Dish & Experience Rating**: Star ratings for food taste, delivery speed, hygiene, and custom feedback comments.
@@ -114,14 +114,14 @@ All 4 portals are **logically interconnected in real time** through a shared rea
 *Route: `/app/waiter/page.tsx` | Components: `components/waiter/`*
 - **Toggle Viewports**: Features a live switch between **Mobile Handheld (390px)** and **Tablet Terminal (768px)** views!
 1. **Screen W1 - Captain PIN Login**: Waiter authentication with shift assignment.
-2. **Screen W2 - Live Table Floor & Call Feed**: Real-time floor status (Available, Occupied, Billing, Needs Attention) + incoming customer call bell notifications with 1-tap accept/resolve.
+2. **Screen W2 - Live Table Floor & Call Feed**: Real-time floor status (Vacant, Occupied, Billing, Cleaning) + incoming customer call bell notifications with 1-tap accept/resolve + Kitchen Ready alerts.
 3. **Screen W3 - Table Order Details**: Active table bill preview, running orders, kitchen prep status, customer details.
 4. **Screen W4 - POS Order Puncher**: High-speed touch menu for captains to punch orders tableside, with instant validation against 86 sold-out items.
-5. **Screen W5 - Item Modifiers**: Custom kitchen notes (e.g., "Less spicy", "No coriander", "Serve piping hot").
+5. **Screen W5 - Item Modifiers & KOT Submit**: Custom kitchen notes, dietary instructions, and 1-tap KOT firing to Kitchen KDS.
 6. **Screen W6 - Table Merge & Split**: Merge multiple adjacent tables for large family banquets or split orders.
 7. **Screen W7 - Table Payment Settlement**: Record cash payments, trigger UPI QR on customer mobile, apply captain discount overrides.
 8. **Screen W8 - Bluetooth Thermal Bill Print**: 80mm ESC/POS thermal receipt formatting preview with 1-tap print dispatch.
-9. **Screen W9 - Vacate & Table Turn**: Mark dining session complete, release table to Available state, alert housekeeping staff.
+9. **Screen W9 - Vacate & Table Turn**: Mark dining session complete, release table to Vacant state, alert housekeeping staff.
 10. **Screen W10 - Shift Performance Stats**: Waiter shift analytics (tables served, total revenue collected, tips earned, avg table turn time).
 
 ### 4. 💼 Manager Command Center & POS (16 Screens)
@@ -129,32 +129,33 @@ All 4 portals are **logically interconnected in real time** through a shared rea
 - **Two Viewing Modes**:
   - **Stage View**: Focused interactive screen with top navigation bar and live status badges.
   - **16-Screen Gallery Grid**: Simultaneously displays all 16 manager screens side-by-side on desktop displays!
-1. **Screen M1 - Manager PIN Login**: Biometric / PIN login with administrative privilege enforcement.
-2. **Screen M2 - Executive Live Dashboard**: Top-level KPIs (Today's Gross Sales, Active Tables, Average Order Value, Table Turn Rate, Live KDS Queue, Waiter Status).
-3. **Screen M3 - Live Interactive Floor Map**: Visual floor layout (AC Hall, Family Section, Terrace, Garden) with color-coded table occupancy and live bill totals.
-4. **Screen M4 - High-Speed Billing POS**: Counter billing terminal, instant table lookup, dynamic item punch, quick tender (Cash, UPI, Card), split payments.
-5. **Screen M5 - Menu Master & 86 Sync**: Manage dish prices, toggle availability, edit categories. **Live-synced to Customer & Waiter!**
-6. **Screen M6 - Staff Roster & Attendance**: Live clock-in tracking for Captains, Chefs, Helpers, shift assignments, and performance logs.
-7. **Screen M7 - Real-time Sales Analytics**: Hourly sales velocity chart, top-selling biryani rankings, revenue breakdown by payment mode.
-8. **Screen M8 - Inventory & Raw Stock Control**: Track raw ingredients (Mutton, Country Chicken, Seeraga Samba Rice, Pure Ghee, Spices) with low-stock warnings and reorder levels.
-9. **Screen M9 - Customer CRM & Feedback Hub**: Customer profiles, lifetime visit counts, dining feedback sentiments, VIP customer flags.
-10. **Screen M10 - Kitchen Efficiency & KOT Analytics**: KDS speed metrics, prep bottlenecks, average preparation time by station.
-11. **Screen M11 - Discounts & Promotional Engine**: Manage promo codes (DONNE10, FESTIVE15), happy hour rules, manager discount authorizations.
-12. **Screen M12 - Expense & Petty Cash Tracker**: Log daily operational expenses (Dairy delivery, vegetables, ice bags, gas cylinder refills).
-13. **Screen M13 - Audit Log & Compliance**: Security trail of critical actions (bill cancellations, item voids, price modifications, drawer openings).
-14. **Screen M14 - Hardware & Printer Configuration**: Setup KOT thermal printers, cashier receipt printers, Bluetooth and LAN network status.
-15. **Screen M15 - Tax, GST & System Settings**: Configure CGST (2.5%), SGST (2.5%), restaurant name, FSSAI license number, address, currency symbol (₹).
-16. **Screen M16 - Day-End Close & Z-Report**: Official end-of-day register closure, physical cash vs POS variance check, one-click PDF/print Z-Report.
+1. **Screen M1 - Manager PIN Login**: PIN authentication with administrative shift selection.
+2. **Screen M2 - Executive Live Dashboard**: Top-level live KPIs (Today's Sales, Active Seated Guests, Active KDS KOTs, Floor Occupancy).
+3. **Screen M3 - Live Interactive Floor Map**: Visual floor grid (Section A, B, C) with color-coded table occupancy and live bill totals.
+4. **Screen M4 - High-Speed Billing POS**: Counter billing terminal, auto-loading table's active items, GST computation, discounts, tender settlement, and 80mm receipt printing.
+5. **Screen M5 - Kitchen Speed & KOT Analytics**: KDS speed metrics, prep bottlenecks, average preparation time by station.
+6. **Screen M6 - Waiting Queue & Reservations**: Dine-in guest waiting list, table allocation, party size tracker.
+7. **Screen M7 - Staff Roster & Attendance**: Live clock-in tracking for Captains, Chefs, Helpers, shift assignments.
+8. **Screen M8 - Calls & Alerts Feed**: Customer service requests (water, bill, captain call) timeline and response monitoring.
+9. **Screen M9 - Waiter Cash Settlement**: End-of-shift cash drawer balance, tips reconciliation, variance logging.
+10. **Screen M10 - Menu 86 Stock Control**: Instant out-of-stock (86) toggle for dishes and ingredients. **Live-synced to Customer & Waiter!**
+11. **Screen M11 - Sales Analytics & Reports**: Revenue trends, top-selling biryani items, payment breakdown (UPI vs Cash vs Card).
+12. **Screen M12 - Offers & Promotional Rules**: Discount promo rules, coupon validation, happy hour adjustments.
+13. **Screen M13 - Petty Cash & Expenses**: Daily miscellaneous operational expenses logging (produce, dairy, ice, gas).
+14. **Screen M14 - Attendance & Captain Tips**: Service staff shift hours, tip pool distribution, performance ratings.
+15. **Screen M15 - Hardware & Thermal Printer Health**: Network status, paper roll indicators, ESC/POS printer diagnostics.
+16. **Screen M16 - Day-End Close & Z-Report**: Official end-of-day register closure, physical cash vs POS variance check, one-click print Z-Report.
 
 ---
 
 ## 🔗 Real-Time Synchronization Logic
 
-The application uses Zustand (`customer-next/store/useSharedBridge.ts`) for seamless state communication:
+The application uses a centralized reactive bridge (`customer-next/store/useSharedBridge.ts`) equipped with native browser `BroadcastChannel` (`thoogudeepa_bridge_sync`):
+- **Cross-Tab Real-Time Sync**: Opening `/` (Customer), `/kitchen` (Kitchen KDS), `/waiter` (Waiter), and `/manager` (Manager) in different browser tabs synchronizes state **instantly across tabs with 0ms latency**!
 - **86 / Sold Out**: When Manager or Kitchen toggles an item (e.g. *Mutton Biryani*) to SOLD OUT, it instantly greys out in Customer Menu and blocks Waiter POS from punching it.
 - **Order Placement**: Placing an order from Customer App or Waiter Captain instantly pushes a ticket into Kitchen KDS and updates the Manager Floor Map.
-- **Cooking Progress**: When Kitchen Chef marks an order *READY*, Customer Live Tracking updates to "Plated & Ready", and Waiter gets a pickup notification.
-- **Service Bells**: Customer tapping "Call Waiter" sends an audible ding and notification badge to Waiter Table Feed.
+- **Cooking Progress**: When Kitchen Chef marks an order `READY` (`PLATED`), Customer Live Tracking updates to "Plated & Ready", and Waiter gets an instant green pickup notification.
+- **Service Bells**: Customer tapping "Call Waiter" sends an immediate notification badge to Waiter Table Feed.
 - **Payment & Vacate**: Settling bill in Waiter or Manager marks the table available and increments Manager Day-End revenue.
 
 ---
@@ -163,55 +164,67 @@ The application uses Zustand (`customer-next/store/useSharedBridge.ts`) for seam
 
 ```
 hospitality-saas-app/
-├── customer-next/                # Complete Next.js 15 App
-│   ├── app/                      # App Router Pages
+├── customer-next/                # Complete Next.js 15 Full-Stack Web App
+│   ├── app/                      # Next.js App Router Entrypoints
 │   │   ├── page.tsx              # Customer Self-Ordering App (12 Screens)
-│   │   ├── kitchen/page.tsx      # Kitchen Display System (10 Screens)
-│   │   ├── waiter/page.tsx       # Waiter/Captain Suite (10 Screens)
-│   │   ├── manager/page.tsx      # Manager Command Center (16 Screens)
-│   │   ├── globals.css           # Tailwind styles & custom animations
-│   │   └── layout.tsx            # Global Root Layout
-│   ├── components/               # UI & Screen Components
-│   │   ├── screens/              # Customer Screens (Screen1 to Screen12)
-│   │   ├── kitchen/              # Kitchen Screens (ScreenK1 to ScreenK10)
-│   │   ├── waiter/               # Waiter Screens (Mobile & Tablet W1 to W10)
-│   │   ├── manager/              # Manager Screens (ScreenM1 to ScreenM16)
-│   │   └── ui/                   # Reusable UI primitives (Buttons, Badges, Sheets)
-│   ├── store/                    # State Stores
-│   │   ├── useSharedBridge.ts    # Central Reactive Synchronizer
-│   │   ├── useCustomerStore.ts   # Customer state
-│   │   ├── useCartStore.ts       # Cart & item selection
-│   │   ├── useKdsStore.ts        # KDS ticket queue
-│   │   ├── useWaiterStore.ts     # Waiter state
-│   │   └── useManagerStore.ts    # Manager state
-│   ├── types/                    # TypeScript Data Models
-│   │   ├── customer.ts
-│   │   ├── kitchen.ts
-│   │   ├── waiter.ts
-│   │   ├── manager.ts
-│   │   └── bridge.ts
-│   ├── package.json              # Next.js dependencies
+│   │   ├── kitchen/page.tsx      # Kitchen Display System KDS (3 Screens)
+│   │   ├── waiter/page.tsx       # Waiter/Captain Suite (10 Screens, Mobile & Tablet)
+│   │   ├── manager/page.tsx      # Manager Command Center & POS (16 Screens)
+│   │   ├── globals.css           # Tailwind styles & print CSS for 80mm receipts
+│   │   └── layout.tsx            # Global Root Layout & Metadata
+│   ├── components/               # Modular Screen & UI Components
+│   │   ├── screens/              # Customer Screens (Screen1Welcome to Screen12Feedback)
+│   │   ├── kitchen/              # Kitchen Screens (ScreenK1Login to ScreenK3Detail)
+│   │   ├── waiter/               # Waiter Screens (ScreenW1Login to ScreenW10ShiftStats)
+│   │   │   └── tablet/           # 10" Landscape Tablet Screens (TabletScreen1 to 10)
+│   │   ├── manager/              # Manager Screens (ScreenM1Login to ScreenM16DayCloseZReport)
+│   │   └── ui/                   # ScreenHousing, WireHeader, ItemDrawer, StickyBottomBar
+│   ├── context/                  # Unified Context Layer
+│   │   └── CustomerContext.tsx   # TanStack Query & Customer store bridge
+│   ├── data/                     # Frontend Master Menu Data
+│   │   └── menuItems.ts          # Authentic Donne Biryani dishes, pricing & addons
+│   ├── hooks/                    # TanStack Query & Synchronous Hooks
+│   │   ├── useMenuQuery.ts       # Cached menu query
+│   │   ├── useOrderTrackingQuery.ts # Live order status polling & caching
+│   │   └── useWaiterQuery.ts     # Waiter floor synchronizer
+│   ├── lib/                      # Core Utilities
+│   │   └── queryClient.ts        # TanStack Query Client instance
+│   ├── providers/                # Client Providers
+│   │   └── QueryProvider.tsx     # TanStack ReactQueryProvider
+│   ├── store/                    # Reactive Zustand Stores
+│   │   ├── useSharedBridge.ts    # Central Cross-Section Real-Time Bridge & BroadcastChannel
+│   │   ├── useCustomerStore.ts   # Customer cart, active screen & guest session state
+│   │   ├── useKitchenStore.ts    # Kitchen station login, audio alerts & station filters
+│   │   ├── useWaiterStore.ts     # Waiter floor view mode (mobile/tablet) & KOT order cart
+│   │   └── useManagerStore.ts    # Manager authentication, active shift & POS screen state
+│   ├── types/                    # Strongly-Typed TypeScript Models
+│   │   ├── customer.ts           # Customer dishes, cart items, payment & order stages
+│   │   ├── kitchen.ts            # KDS stations, tickets & prep mode types
+│   │   ├── waiter.ts             # Waiter captains, table pings & shift stats
+│   │   └── manager.ts            # Manager permissions, metrics & Z-Report types
+│   ├── package.json              # Next.js 15, React 19, Tailwind, Zustand dependencies
 │   ├── tsconfig.json             # TypeScript configuration
-│   └── tailwind.config.js        # Restaurant color palette & styling
+│   └── tailwind.config.js        # Royal Awadh palette (#D4AF37 Gold, #0F3A22 Green)
 ├── deploy_skeletons/             # Standalone Wireframe Suite (Zero dependencies)
-│   ├── index.html                # Customer 12-Screen wireframes
-│   ├── kitchen-skeletons.html    # Kitchen 10-Screen wireframes
-│   ├── waiter-skeletons.html     # Waiter 10-Screen wireframes
-│   └── manager-skeletons.html    # Manager 16-Screen wireframes
+│   ├── index.html                # Customer 12-Screen interactive wireframes
+│   ├── kitchen-skeletons.html    # Kitchen 3-Screen interactive wireframes
+│   ├── waiter-skeletons.html     # Waiter 10-Screen interactive wireframes (Mobile & Tablet)
+│   └── manager-skeletons.html    # Manager 16-Screen interactive wireframes
 ├── public/                       # WebSocket Prototype & Assets
 │   ├── customer.html
 │   ├── kds.html
 │   ├── captain.html
 │   └── manager.html
-├── data/                         # Master Restaurant Data
+├── data/                         # Master Restaurant JSON Data
 │   ├── menu.json                 # Authentic Donne Biryani menu items & pricing
 │   ├── tables.json               # Restaurant floor tables & layout
 │   └── inventory.json            # Ingredient stock levels & thresholds
-├── server.js                     # Optional Node.js WebSocket backend
+├── server.js                     # Optional Node.js WebSocket backend (Port 3000)
 ├── RUN_PROJECT.bat               # 1-Click Windows Launcher
 ├── RUN_PROJECT.sh                # 1-Click Mac/Linux Launcher
+├── TEAM_COLLABORATION_GUIDE.md   # 7-Developer Parallel GitFlow Roles & Rules
 ├── ARCHITECTURE.md               # Technical Deep Dive & System Design
-└── README.md                     # This Guide
+└── README.md                     # Complete Project Documentation & Guide
 ```
 
 ---

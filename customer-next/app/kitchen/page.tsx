@@ -7,13 +7,6 @@ import { KitchenScreenId } from '../../types/kitchen';
 import { ScreenK1Login } from '../../components/kitchen/ScreenK1Login';
 import { ScreenK2Overview } from '../../components/kitchen/ScreenK2Overview';
 import { ScreenK3Detail } from '../../components/kitchen/ScreenK3Detail';
-import { ScreenK4Inventory86 } from '../../components/kitchen/ScreenK4Inventory86';
-import { ScreenK5SOP } from '../../components/kitchen/ScreenK5SOP';
-import { ScreenK6BumpBar } from '../../components/kitchen/ScreenK6BumpBar';
-import { ScreenK7AudioAlerts } from '../../components/kitchen/ScreenK7AudioAlerts';
-import { ScreenK8RecipeScaler } from '../../components/kitchen/ScreenK8RecipeScaler';
-import { ScreenK9Handover } from '../../components/kitchen/ScreenK9Handover';
-import { ScreenK10AuditLog } from '../../components/kitchen/ScreenK10AuditLog';
 import {
   Flame,
   LayoutGrid,
@@ -21,18 +14,9 @@ import {
   ChefHat,
   Sliders,
   Layers,
-  ArrowRight,
-  Sparkles,
   Utensils,
   UserCheck,
   Briefcase,
-  AlertTriangle,
-  BookOpen,
-  Zap,
-  Volume2,
-  Scale,
-  ClipboardCheck,
-  History,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -42,63 +26,21 @@ export default function KitchenKDSPage() {
   const screens = [
     {
       id: 1 as KitchenScreenId,
-      name: '1. Station Login',
+      name: '1. KDS Station Login',
       icon: <ChefHat className="h-3.5 w-3.5 text-orange-500" />,
       comp: <ScreenK1Login />,
     },
     {
       id: 2 as KitchenScreenId,
-      name: '2. Live Multi-Station KDS',
+      name: '2. All Tables & Feeds (70/30)',
       icon: <Layers className="h-3.5 w-3.5 text-amber-500" />,
       comp: <ScreenK2Overview />,
     },
     {
       id: 3 as KitchenScreenId,
-      name: '3. Table Detail & Stage Bump',
+      name: '3. Table Detail & 86 Inventory',
       icon: <Sliders className="h-3.5 w-3.5 text-emerald-500" />,
       comp: <ScreenK3Detail />,
-    },
-    {
-      id: 4 as KitchenScreenId,
-      name: '4. 86 Sold-Out Master',
-      icon: <AlertTriangle className="h-3.5 w-3.5 text-rose-500" />,
-      comp: <ScreenK4Inventory86 />,
-    },
-    {
-      id: 5 as KitchenScreenId,
-      name: '5. Authentic Recipe SOP',
-      icon: <BookOpen className="h-3.5 w-3.5 text-indigo-500" />,
-      comp: <ScreenK5SOP />,
-    },
-    {
-      id: 6 as KitchenScreenId,
-      name: '6. Expediter Bump Bar (1-9)',
-      icon: <Zap className="h-3.5 w-3.5 text-amber-400" />,
-      comp: <ScreenK6BumpBar />,
-    },
-    {
-      id: 7 as KitchenScreenId,
-      name: '7. Audio Alerts & Decibel Monitor',
-      icon: <Volume2 className="h-3.5 w-3.5 text-blue-500" />,
-      comp: <ScreenK7AudioAlerts />,
-    },
-    {
-      id: 8 as KitchenScreenId,
-      name: '8. Recipe Yield Scaler',
-      icon: <Scale className="h-3.5 w-3.5 text-orange-400" />,
-      comp: <ScreenK8RecipeScaler />,
-    },
-    {
-      id: 9 as KitchenScreenId,
-      name: '9. Shift Handover Checklist',
-      icon: <ClipboardCheck className="h-3.5 w-3.5 text-emerald-500" />,
-      comp: <ScreenK9Handover />,
-    },
-    {
-      id: 10 as KitchenScreenId,
-      name: '10. Kitchen Shift Audit Log',
-      icon: <History className="h-3.5 w-3.5 text-purple-500" />,
-      comp: <ScreenK10AuditLog />,
     },
   ];
 
@@ -110,20 +52,6 @@ export default function KitchenKDSPage() {
         return <ScreenK2Overview />;
       case 3:
         return <ScreenK3Detail />;
-      case 4:
-        return <ScreenK4Inventory86 />;
-      case 5:
-        return <ScreenK5SOP />;
-      case 6:
-        return <ScreenK6BumpBar />;
-      case 7:
-        return <ScreenK7AudioAlerts />;
-      case 8:
-        return <ScreenK8RecipeScaler />;
-      case 9:
-        return <ScreenK9Handover />;
-      case 10:
-        return <ScreenK10AuditLog />;
       default:
         return <ScreenK1Login />;
     }
@@ -147,7 +75,7 @@ export default function KitchenKDSPage() {
               </span>
             </div>
             <h1 className="text-sm font-black tracking-tight text-slate-900 mt-0.5">
-              KITCHEN DISPLAY SYSTEM (10 TABLET SCREENS)
+              KITCHEN DISPLAY SYSTEM (3 TABLET SCREENS)
             </h1>
           </div>
         </div>
@@ -164,7 +92,7 @@ export default function KitchenKDSPage() {
             </Link>
             <span className="rounded-xl bg-orange-600 text-white px-3 py-1.5 shadow-xs flex items-center gap-1">
               <Flame className="h-3.5 w-3.5 fill-white" />
-              <span>KITCHEN (10)</span>
+              <span>KITCHEN (3)</span>
             </span>
             <Link
               href="/waiter"
@@ -204,7 +132,7 @@ export default function KitchenKDSPage() {
               }`}
             >
               <LayoutGrid className="h-3.5 w-3.5" />
-              <span>ALL 10 SCREENS</span>
+              <span>ALL 3 SCREENS</span>
             </button>
           </div>
         </div>
@@ -251,10 +179,10 @@ export default function KitchenKDSPage() {
             </AnimatePresence>
           </div>
         ) : (
-          /* All 10 Screens Grid Mode */
-          <div className="w-full max-w-[1700px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-4">
+          /* All 3 Screens Grid Mode */
+          <div className="w-full max-w-[1500px] flex flex-col lg:flex-row items-center justify-center gap-8 py-4">
             {screens.map((screen) => (
-              <div key={screen.id} className="flex flex-col items-center">
+              <div key={screen.id} className="flex flex-col items-center w-full max-w-[480px]">
                 <div className="mb-2 flex items-center gap-2 font-mono text-xs font-extrabold text-slate-700">
                   <span className="h-2 w-2 rounded-full bg-orange-500" />
                   <span>{screen.name}</span>

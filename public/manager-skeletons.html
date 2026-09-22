@@ -1646,7 +1646,7 @@
                 <div class="wf-text-muted">ONCE LOCKED, NO FURTHER KOT OR BILL ADJUSTMENTS CAN BE PERFORMED. SUMMARY IS EMAILED TO THE OWNER.</div>
                 <div style="display:flex; flex-direction:column; gap:8px; margin-top:14px;">
                   <button class="wf-btn wf-btn-dark" style="padding:11px;" onclick="printZReport()">🖨️ [PRINT MASTER Z-REPORT SLIP]</button>
-                  <button class="wf-btn" style="padding:9px;" onclick="alert('[SUMMARY AUDIT PDF DISPATCHED TO OWNER hemalatha20032003@gmail.com]')">📧 [SEND NIGHT AUDIT TO OWNER EMAIL]</button>
+                  <button class="wf-btn" style="padding:9px;" onclick="alert('[SUMMARY AUDIT PDF DISPATCHED TO OWNER owner@thoogudeepabiryani.com]')">📧 [SEND NIGHT AUDIT TO OWNER EMAIL]</button>
                   <button class="wf-btn wf-btn-danger" style="padding:11px; margin-top:4px;" onclick="lockNightShift()">🔒 [CONFIRM &amp; LOCK NIGHT SHIFT]</button>
                 </div>
               </div>
@@ -2420,7 +2420,7 @@
     function lockNightShift() {
       if (confirm('Are you sure you want to CLOSE SHIFT and lock the POS terminal for the night?')) {
         showToast('🔒 Shift closed and safe locked. Good night!');
-        alert('[RESTAURANT NIGHT TILL SEALED - All accounts balanced. Audit summary dispatched to hemalatha20032003@gmail.com.]');
+        alert('[RESTAURANT NIGHT TILL SEALED - All accounts balanced. Audit summary dispatched to owner@thoogudeepabiryani.com.]');
         selectScreen(1);
       }
     }

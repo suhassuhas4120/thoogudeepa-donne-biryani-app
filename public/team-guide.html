@@ -67,7 +67,7 @@
     font-size: 14px;
     font-weight: 800;
     letter-spacing: -0.2px;
-    color: #b45309; /* Amber 700 */
+    color: #b45309;
     text-transform: uppercase;
     display: flex;
     align-items: center;
@@ -103,7 +103,7 @@
   .hero-left h1 {
     font-size: 18px;
     font-weight: 800;
-    color: #fef08a; /* Soft amber */
+    color: #fef08a;
     letter-spacing: -0.3px;
   }
   .hero-left .role-name {
@@ -179,7 +179,7 @@
     text-transform: uppercase;
   }
   .tech-val {
-    font-size: 10.5px;
+    font-size: 10px;
     font-weight: 600;
     color: #0f172a;
     font-family: 'JetBrains Mono', monospace;
@@ -309,41 +309,41 @@
     </div>
 
     <div class="grid-2">
-      <!-- Complete Tech Stack -->
+      <!-- Complete Tech Stack (Exact Project Dependencies) -->
       <div class="card">
-        <div class="card-title">⚡ Production Hotel Tech Stack</div>
+        <div class="card-title">⚡ Exact Framework & Dependencies</div>
         <div class="tech-grid">
           <div class="tech-item">
-            <div class="tech-category">Frontend Framework</div>
-            <div class="tech-val">Next.js 15 + React 19</div>
+            <div class="tech-category">App Framework</div>
+            <div class="tech-val">Next.js 15 (App Router)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Language & Types</div>
-            <div class="tech-val">TypeScript 5.0+</div>
+            <div class="tech-category">UI Runtime</div>
+            <div class="tech-val">React 19.0 + TypeScript 5.8</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Styling & UI</div>
-            <div class="tech-val">Tailwind CSS + Lucide</div>
+            <div class="tech-category">Styling System</div>
+            <div class="tech-val">Tailwind CSS 3.4</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-category">Icons Library</div>
+            <div class="tech-val">Lucide React</div>
           </div>
           <div class="tech-item">
             <div class="tech-category">State Management</div>
-            <div class="tech-val">Zustand + LocalStorage</div>
+            <div class="tech-val">Zustand 5.0 (Client Stores)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Payments API</div>
-            <div class="tech-val">Web UPI Intent Protocol</div>
+            <div class="tech-category">Session Storage</div>
+            <div class="tech-val">Browser localStorage</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">QR & Barcode</div>
-            <div class="tech-val">qrcode.react (SVG/Canvas)</div>
+            <div class="tech-category">Animations</div>
+            <div class="tech-val">Framer Motion</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Internationalization</div>
-            <div class="tech-val">i18n (English + Kannada)</div>
-          </div>
-          <div class="tech-item">
-            <div class="tech-category">Haptics & Motion</div>
-            <div class="tech-val">navigator.vibrate + Framer</div>
+            <div class="tech-category">Payment Protocol</div>
+            <div class="tech-val">Standard Web UPI Intent</div>
           </div>
         </div>
       </div>
@@ -356,13 +356,13 @@
           ├── <strong>app/page.tsx</strong> <span class="file-desc">(Customer router & screen switch)</span><br/>
           ├── <strong>components/screens/</strong> <span class="file-desc">(12 Customer Screens)</span><br/>
           │   ├── Screen1TableWelcome.tsx <span class="file-desc">(Table QR landing)</span><br/>
-          │   ├── Screen2MenuCatalog.tsx <span class="file-desc">(Donne Biryani list)</span><br/>
+          │   ├── Screen2MenuCatalog.tsx <span class="file-desc">(Donne Biryani catalog)</span><br/>
           │   ├── Screen3DishCustomizer.tsx <span class="file-desc">(Portion/spice/egg)</span><br/>
           │   ├── Screen4SmartCart.tsx <span class="file-desc">(Cart & 5% GST math)</span><br/>
           │   ├── Screen5LiveOrderTracking.tsx <span class="file-desc">(4-stage progress)</span><br/>
           │   ├── Screen6BillSummary.tsx <span class="file-desc">(Split bill calculator)</span><br/>
           │   ├── Screen7UPIPayment.tsx <span class="file-desc">(Dynamic PhonePe QR)</span><br/>
-          │   ├── Screen8DigitalReceipt.tsx <span class="file-desc">(GST tax invoice PDF)</span><br/>
+          │   ├── Screen8DigitalReceipt.tsx <span class="file-desc">(Tax receipt view)</span><br/>
           │   ├── Screen9TableHistory.tsx <span class="file-desc">(Multi-round orders)</span><br/>
           │   ├── Screen10WaiterCallBell.tsx <span class="file-desc">(Water/clean pings)</span><br/>
           │   ├── Screen11LoyaltyRewards.tsx <span class="file-desc">(Scratch cards)</span><br/>
@@ -375,13 +375,13 @@
     <!-- Task List & Daily Workflow -->
     <div class="grid-2">
       <div class="card">
-        <div class="card-title">🎯 Next Sprint Tasks & Deliverables</div>
+        <div class="card-title">🎯 Next Tasks & Deliverables</div>
         <ul class="task-list">
-          <li><span class="task-tag tag-p1">P1</span> Parse <code>?table=4</code> from URL on load to auto-bind table without manual entry.</li>
-          <li><span class="task-tag tag-p1">P1</span> Wire UPI Intent buttons to open PhonePe / GooglePay native apps on mobile.</li>
-          <li><span class="task-tag tag-p2">P2</span> Connect Kannada language toggle for authentic local diner navigation.</li>
-          <li><span class="task-tag tag-p2">P2</span> Persist cart & placed order in <code>localStorage</code> to survive page refreshes.</li>
-          <li><span class="task-tag tag-p3">P3</span> Add portion size toggle (Regular ₹220, Large ₹320, Family Pot ₹650).</li>
+          <li><span class="task-tag tag-p1">P1</span> In <code>Screen1TableWelcome</code>, read <code>?table=4</code> from URL on load.</li>
+          <li><span class="task-tag tag-p1">P1</span> In <code>Screen7UPIPayment</code>, link UPI button to native <code>upi://pay</code>.</li>
+          <li><span class="task-tag tag-p2">P2</span> In <code>useCartStore</code>, save cart items in browser <code>localStorage</code>.</li>
+          <li><span class="task-tag tag-p2">P2</span> In <code>Screen2MenuCatalog</code>, add Kannada text toggles for dish names.</li>
+          <li><span class="task-tag tag-p3">P3</span> In <code>Screen3DishCustomizer</code>, configure Regular / Large / Family pot prices.</li>
         </ul>
       </div>
 
@@ -391,12 +391,12 @@
           <span class="cmd-comment"># 1. Checkout your dedicated feature branch</span><br/>
           <span class="cmd-keyword">git</span> checkout feature/vishal-customer-app<br/>
           <span class="cmd-keyword">git</span> pull origin develop<br/>
-          <span class="cmd-comment"># 2. Run local development server</span><br/>
+          <span class="cmd-comment"># 2. Run local development server (port 3001)</span><br/>
           <span class="cmd-keyword">cd</span> customer-next &amp;&amp; npm run dev<br/>
-          <span class="cmd-comment"># Open http://localhost:3001/ in Chrome DevTools (390px Mobile)</span><br/>
+          <span class="cmd-comment"># Open http://localhost:3001/ in Chrome (390px Mobile View)</span><br/>
           <span class="cmd-comment"># 3. Commit and push when changes are complete</span><br/>
           <span class="cmd-keyword">git</span> add components/screens/ store/<br/>
-          <span class="cmd-keyword">git</span> commit -m "feat(customer): add table QR parser and UPI intent"<br/>
+          <span class="cmd-keyword">git</span> commit -m "feat(customer): parse table QR from URL and persist cart"<br/>
           <span class="cmd-keyword">git</span> push origin feature/vishal-customer-app
         </div>
       </div>
@@ -405,7 +405,7 @@
     <!-- Hotel Ready Banner -->
     <div class="hotel-ready">
       <div class="hotel-ready-title">🏨 Real-World Hotel Production Requirement</div>
-      <div class="hotel-ready-desc">The customer app runs directly on diners' personal phones via QR code scan without app installation. It must be ultra-lightweight (&lt;100KB initial bundle), handle poor 3G/4G connectivity, and ensure payments link directly to the hotel's merchant UPI VPA.</div>
+      <div class="hotel-ready-desc">The customer self-ordering app runs directly inside the mobile browser of diners who scan the table QR code. It uses our lightweight Next.js + React 19 setup for instant loading on any smartphone without requiring an app store download.</div>
     </div>
   </div>
 
@@ -440,41 +440,41 @@
     </div>
 
     <div class="grid-2">
-      <!-- Complete Tech Stack -->
+      <!-- Complete Tech Stack (Exact Project Dependencies) -->
       <div class="card">
-        <div class="card-title">⚡ Production Hotel Tech Stack</div>
+        <div class="card-title">⚡ Exact Framework & Dependencies</div>
         <div class="tech-grid">
           <div class="tech-item">
-            <div class="tech-category">Frontend Framework</div>
-            <div class="tech-val">Next.js 15 + React 19</div>
+            <div class="tech-category">App Framework</div>
+            <div class="tech-val">Next.js 15 (App Router)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Audio Synthesis</div>
-            <div class="tech-val">Web Audio API (Oscillator)</div>
+            <div class="tech-category">UI Runtime</div>
+            <div class="tech-val">React 19.0 + TypeScript 5.8</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Hardware Bump Bar</div>
-            <div class="tech-val">Keyboard Event Listeners</div>
+            <div class="tech-category">Styling System</div>
+            <div class="tech-val">Tailwind CSS 3.4</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-category">Icons Library</div>
+            <div class="tech-val">Lucide React</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-category">State Management</div>
+            <div class="tech-val">Zustand 5.0 (Kitchen Store)</div>
           </div>
           <div class="tech-item">
             <div class="tech-category">Real-Time Sync</div>
-            <div class="tech-val">WebSocket Client + Bridge</div>
+            <div class="tech-val">Shared Bridge Store + WebSocket</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Precision Timers</div>
-            <div class="tech-val">requestAnimationFrame</div>
+            <div class="tech-category">Audio Synthesis</div>
+            <div class="tech-val">Web Audio API Oscillator</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Touch Optimization</div>
-            <div class="tech-val">Touch Events (min 48x48px)</div>
-          </div>
-          <div class="tech-item">
-            <div class="tech-category">Layout Architecture</div>
-            <div class="tech-val">CSS Grid (70/30 Matrix)</div>
-          </div>
-          <div class="tech-item">
-            <div class="tech-category">KOT Logic</div>
-            <div class="tech-val">FIFO Ticket Queue Engine</div>
+            <div class="tech-category">Hardware Hotkeys</div>
+            <div class="tech-val">Native Keyboard Events (1-9)</div>
           </div>
         </div>
       </div>
@@ -487,15 +487,15 @@
           ├── <strong>app/kitchen/page.tsx</strong> <span class="file-desc">(Kitchen navigation & station header)</span><br/>
           ├── <strong>components/kitchen/</strong> <span class="file-desc">(STRICTLY 3 KITCHEN SCREENS)</span><br/>
           │   ├── <strong>ScreenK1Login.tsx</strong> <br/>
-          │   │   <span class="file-desc">↳ Head Chef & Station PIN authentication</span><br/>
+          │   │   <span class="file-desc">↳ Chef Station & PIN Authentication</span><br/>
           │   ├── <strong>ScreenK2Overview.tsx</strong> <br/>
-          │   │   <span class="file-desc">↳ 70% 6-Table Matrix with 4-stage prep steppers:</span><br/>
+          │   │   <span class="file-desc">↳ 70% 6-Table Matrix with 4-stage steppers:</span><br/>
           │   │   <span class="file-desc">   (1.REC ➔ 2.PREP ➔ 3.READY ➔ 4.SERVED)</span><br/>
           │   │   <span class="file-desc">↳ Top 4-Item Bulk Cooking Aggregation Bar</span><br/>
           │   │   <span class="file-desc">↳ 30% Chronological Wait Time Queue</span><br/>
           │   └── <strong>ScreenK3Detail.tsx</strong> <br/>
           │       <span class="file-desc">↳ Table deep dive, custom notes & 86 Item Master</span><br/>
-          └── <strong>store/useKitchenStore.ts</strong> <span class="file-desc">(Filter pills & active tickets)</span>
+          └── <strong>store/useKitchenStore.ts</strong> <span class="file-desc">(Active station & filter state)</span>
         </div>
       </div>
     </div>
@@ -503,13 +503,13 @@
     <!-- Task List & Daily Workflow -->
     <div class="grid-2">
       <div class="card">
-        <div class="card-title">🎯 Next Sprint Tasks & Deliverables</div>
+        <div class="card-title">🎯 Next Tasks & Deliverables</div>
         <ul class="task-list">
-          <li><span class="task-tag tag-p1">P1</span> Implement Web Audio chime on new incoming tickets (&gt;85dB alert).</li>
-          <li><span class="task-tag tag-p1">P1</span> Connect Station Filter Pills (*Biryani*, *Tandoor*, *Fryer*, *Bar*).</li>
-          <li><span class="task-tag tag-p2">P2</span> Add pulsing red visual + audio warning when prep exceeds 15 minutes.</li>
-          <li><span class="task-tag tag-p2">P2</span> Build 5-second "Undo Bump" banner for accidental ticket bumps.</li>
-          <li><span class="task-tag tag-p3">P3</span> Hardware Bump Bar support (keyboard numbers 1-9 to bump tickets).</li>
+          <li><span class="task-tag tag-p1">P1</span> In <code>ScreenK2Overview</code>, connect station filter pills (Biryani, Tandoor).</li>
+          <li><span class="task-tag tag-p1">P1</span> Synthesize audio chime using Web Audio API when new ticket arrives.</li>
+          <li><span class="task-tag tag-p2">P2</span> Add pulsing red visual border when table elapsed time &gt; 15 mins.</li>
+          <li><span class="task-tag tag-p2">P2</span> In <code>ScreenK3Detail</code>, toggle 86 item sold-out via <code>useSharedBridge</code>.</li>
+          <li><span class="task-tag tag-p3">P3</span> Add Bump hotkey (pressing number 1-6 advances corresponding table).</li>
         </ul>
       </div>
 
@@ -519,12 +519,12 @@
           <span class="cmd-comment"># 1. Checkout your dedicated feature branch</span><br/>
           <span class="cmd-keyword">git</span> checkout feature/vennela-kitchen-kds<br/>
           <span class="cmd-keyword">git</span> pull origin develop<br/>
-          <span class="cmd-comment"># 2. Run local development server</span><br/>
+          <span class="cmd-comment"># 2. Run local development server (port 3001)</span><br/>
           <span class="cmd-keyword">cd</span> customer-next &amp;&amp; npm run dev<br/>
-          <span class="cmd-comment"># Open http://localhost:3001/kitchen/ in Tablet Landscape (1024x768)</span><br/>
+          <span class="cmd-comment"># Open http://localhost:3001/kitchen/ (Tablet Landscape 1024x768)</span><br/>
           <span class="cmd-comment"># 3. Commit and push when changes are complete</span><br/>
           <span class="cmd-keyword">git</span> add components/kitchen/ store/useKitchenStore.ts<br/>
-          <span class="cmd-keyword">git</span> commit -m "feat(kitchen): add audio chimes and station filter pills"<br/>
+          <span class="cmd-keyword">git</span> commit -m "feat(kitchen): connect station filters and 4-stage stepper transitions"<br/>
           <span class="cmd-keyword">git</span> push origin feature/vennela-kitchen-kds
         </div>
       </div>
@@ -533,7 +533,7 @@
     <!-- Hotel Ready Banner -->
     <div class="hotel-ready">
       <div class="hotel-ready-title">🏨 Real-World Hotel Production Requirement</div>
-      <div class="hotel-ready-desc">The KDS runs on wall-mounted 10-inch Android/iPad tablets inside a hot, noisy, steamy commercial kitchen. High-contrast colors, oversized touch buttons (min 48px), and loud audio buzzers are mandatory so chefs never miss an order during peak weekend rush hours.</div>
+      <div class="hotel-ready-desc">The Kitchen Display System runs on wall-mounted 10-inch tablets inside the kitchen. Strictly 3 screens keep the chef focused: station PIN login, the live 70/30 table matrix with 4-stage steppers, and single-ticket detail with 86 item sold-out protection.</div>
     </div>
   </div>
 
@@ -568,41 +568,41 @@
     </div>
 
     <div class="grid-2">
-      <!-- Complete Tech Stack -->
+      <!-- Complete Tech Stack (Exact Project Dependencies) -->
       <div class="card">
-        <div class="card-title">⚡ Production Hotel Tech Stack</div>
+        <div class="card-title">⚡ Exact Framework & Dependencies</div>
         <div class="tech-grid">
           <div class="tech-item">
-            <div class="tech-category">Frontend Framework</div>
-            <div class="tech-val">Next.js 15 + React 19</div>
+            <div class="tech-category">App Framework</div>
+            <div class="tech-val">Next.js 15 (App Router)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Hardware Printing</div>
-            <div class="tech-val">Web Bluetooth ESC/POS</div>
+            <div class="tech-category">UI Runtime</div>
+            <div class="tech-val">React 19.0 + TypeScript 5.8</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Direct Thermal Print</div>
-            <div class="tech-val">@media print (80mm width)</div>
+            <div class="tech-category">Styling System</div>
+            <div class="tech-val">Tailwind CSS 3.4</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-category">Icons Library</div>
+            <div class="tech-val">Lucide React</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-category">State Management</div>
+            <div class="tech-val">Zustand 5.0 (Waiter Store)</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-category">Thermal Print</div>
+            <div class="tech-val">window.print() + @media print</div>
           </div>
           <div class="tech-item">
             <div class="tech-category">Haptic Alerts</div>
             <div class="tech-val">navigator.vibrate Pattern</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Responsive Modes</div>
-            <div class="tech-val">Dual 390px / 768px Viewports</div>
-          </div>
-          <div class="tech-item">
-            <div class="tech-category">Floor State Sync</div>
-            <div class="tech-val">Zustand Reactive Bridge</div>
-          </div>
-          <div class="tech-item">
-            <div class="tech-category">Offline Fallback</div>
-            <div class="tech-val">Service Worker Menu Cache</div>
-          </div>
-          <div class="tech-item">
-            <div class="tech-category">Icons & Badges</div>
-            <div class="tech-val">Lucide Icons + Tailwind</div>
+            <div class="tech-category">Dual Viewport</div>
+            <div class="tech-val">Tailwind Responsive (390px/768px)</div>
           </div>
         </div>
       </div>
@@ -612,20 +612,20 @@
         <div class="card-title">📂 Dedicated File Boundaries</div>
         <div class="file-tree">
           <strong>customer-next/</strong><br/>
-          ├── <strong>app/waiter/page.tsx</strong> <span class="file-desc">(Mobile & Tablet live viewport toggle)</span><br/>
+          ├── <strong>app/waiter/page.tsx</strong> <span class="file-desc">(Mobile & Tablet live switcher)</span><br/>
           ├── <strong>components/waiter/</strong> <span class="file-desc">(10 Waiter Screens)</span><br/>
           │   ├── ScreenW1PinLogin.tsx <span class="file-desc">(Captain shift authentication)</span><br/>
           │   ├── ScreenW2TablesFloor.tsx <span class="file-desc">(Floor feed & call bell alerts)</span><br/>
-          │   ├── ScreenW3TableDetail.tsx <span class="file-desc">(Table bill & KDS prep status)</span><br/>
+          │   ├── ScreenW3TableDetail.tsx <span class="file-desc">(Active table bill & status)</span><br/>
           │   ├── ScreenW4OrderPuncher.tsx <span class="file-desc">(Tableside high-speed POS)</span><br/>
           │   ├── ScreenW5ItemModifiers.tsx <span class="file-desc">(Kitchen notes & spice tags)</span><br/>
-          │   ├── ScreenW6MergeSplit.tsx <span class="file-desc">(Combine tables & split checks)</span><br/>
+          │   ├── ScreenW6MergeSplit.tsx <span class="file-desc">(Combine tables & split bills)</span><br/>
           │   ├── ScreenW7Payment.tsx <span class="file-desc">(Cash/Card settlement & discount)</span><br/>
           │   ├── ScreenW8PrintBill.tsx <span class="file-desc">(80mm thermal receipt dispatch)</span><br/>
-          │   ├── ScreenW9Vacate.tsx <span class="file-desc">(Release table & housekeeping alert)</span><br/>
+          │   ├── ScreenW9Vacate.tsx <span class="file-desc">(Release table & housekeeping)</span><br/>
           │   ├── ScreenW10ShiftStats.tsx <span class="file-desc">(Captain covers & tips tracker)</span><br/>
           │   └── <strong>tablet/</strong> <span class="file-desc">(768px tablet layout variants)</span><br/>
-          └── <strong>store/useWaiterStore.ts</strong> <span class="file-desc">(Active table selection & call pings)</span>
+          └── <strong>store/useWaiterStore.ts</strong> <span class="file-desc">(Active table & call bell resolution)</span>
         </div>
       </div>
     </div>
@@ -633,13 +633,13 @@
     <!-- Task List & Daily Workflow -->
     <div class="grid-2">
       <div class="card">
-        <div class="card-title">🎯 Next Sprint Tasks & Deliverables</div>
+        <div class="card-title">🎯 Next Tasks & Deliverables</div>
         <ul class="task-list">
-          <li><span class="task-tag tag-p1">P1</span> Trigger <code>navigator.vibrate</code> on captain phones when call bell rings.</li>
-          <li><span class="task-tag tag-p1">P1</span> Connect "Print Bill" button to trigger 80mm thermal receipt printing.</li>
-          <li><span class="task-tag tag-p2">P2</span> Add high-speed <code>+</code> / <code>-</code> item stepper to tableside POS puncher.</li>
-          <li><span class="task-tag tag-p2">P2</span> Ensure 86 sold-out items from Kitchen are blocked from tableside punch.</li>
-          <li><span class="task-tag tag-p3">P3</span> Implement table merge linking Table 2 + Table 3 for family groups.</li>
+          <li><span class="task-tag tag-p1">P1</span> In <code>ScreenW8PrintBill</code>, hook print button to <code>window.print()</code>.</li>
+          <li><span class="task-tag tag-p1">P1</span> Trigger <code>navigator.vibrate</code> on captain phone when call bell rings.</li>
+          <li><span class="task-tag tag-p2">P2</span> In <code>ScreenW4OrderPuncher</code>, add fast <code>+</code> / <code>-</code> quantity stepper.</li>
+          <li><span class="task-tag tag-p2">P2</span> Verify 86 sold-out dishes are greyed out from tableside ordering.</li>
+          <li><span class="task-tag tag-p3">P3</span> In <code>ScreenW6MergeSplit</code>, combine Table 2 + 3 bills for family groups.</li>
         </ul>
       </div>
 
@@ -649,12 +649,12 @@
           <span class="cmd-comment"># 1. Checkout your dedicated feature branch</span><br/>
           <span class="cmd-keyword">git</span> checkout feature/nayana-shivakumar-waiter-suite<br/>
           <span class="cmd-keyword">git</span> pull origin develop<br/>
-          <span class="cmd-comment"># 2. Run local development server</span><br/>
+          <span class="cmd-comment"># 2. Run local development server (port 3001)</span><br/>
           <span class="cmd-keyword">cd</span> customer-next &amp;&amp; npm run dev<br/>
-          <span class="cmd-comment"># Open http://localhost:3001/waiter/ (Test both Mobile and Tablet)</span><br/>
+          <span class="cmd-comment"># Open http://localhost:3001/waiter/ (Test both Mobile & Tablet)</span><br/>
           <span class="cmd-comment"># 3. Commit and push when changes are complete</span><br/>
           <span class="cmd-keyword">git</span> add components/waiter/ store/useWaiterStore.ts<br/>
-          <span class="cmd-keyword">git</span> commit -m "feat(waiter): add call bell vibration and thermal receipt print"<br/>
+          <span class="cmd-keyword">git</span> commit -m "feat(waiter): implement call bell vibration and thermal receipt print"<br/>
           <span class="cmd-keyword">git</span> push origin feature/nayana-shivakumar-waiter-suite
         </div>
       </div>
@@ -663,7 +663,7 @@
     <!-- Hotel Ready Banner -->
     <div class="hotel-ready">
       <div class="hotel-ready-title">🏨 Real-World Hotel Production Requirement</div>
-      <div class="hotel-ready-desc">Waiters use handheld 6-inch Android phones while walking between tables and 10-inch tablets stationed at service sideboards. Instant call bell alerts and 1-tap thermal receipt printing via portable belt printers ensure high table turnover during lunch peak hours.</div>
+      <div class="hotel-ready-desc">Captains carry mobile phones in their pockets to receive instant vibration pings when diners ring the call bell. Sideboard tablets let them punch orders tableside and print 80mm ESC/POS guest receipts directly without running back to the cashier counter.</div>
     </div>
   </div>
 
@@ -698,41 +698,41 @@
     </div>
 
     <div class="grid-2">
-      <!-- Complete Tech Stack -->
+      <!-- Complete Tech Stack (Exact Project Dependencies) -->
       <div class="card">
-        <div class="card-title">⚡ Production Hotel Tech Stack</div>
+        <div class="card-title">⚡ Exact Framework & Dependencies</div>
         <div class="tech-grid">
           <div class="tech-item">
-            <div class="tech-category">Frontend Framework</div>
-            <div class="tech-val">Next.js 15 + React 19</div>
+            <div class="tech-category">App Framework</div>
+            <div class="tech-val">Next.js 15 (App Router)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Data Visualization</div>
-            <div class="tech-val">Recharts / Chart.js</div>
+            <div class="tech-category">UI Runtime</div>
+            <div class="tech-val">React 19.0 + TypeScript 5.8</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Report Generation</div>
-            <div class="tech-val">jsPDF + CSV Data Exporter</div>
+            <div class="tech-category">Styling System</div>
+            <div class="tech-val">Tailwind CSS 3.4</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Cash Drawer Hardware</div>
-            <div class="tech-val">RJ11 Pulse Trigger (ESC/POS)</div>
-          </div>
-          <div class="tech-item">
-            <div class="tech-category">Multi-Screen Matrix</div>
-            <div class="tech-val">Stage View + 16-Grid Gallery</div>
-          </div>
-          <div class="tech-item">
-            <div class="tech-category">Tax & Compliance</div>
-            <div class="tech-val">CGST + SGST (5%) & FSSAI</div>
+            <div class="tech-category">Icons Library</div>
+            <div class="tech-val">Lucide React</div>
           </div>
           <div class="tech-item">
             <div class="tech-category">State Management</div>
-            <div class="tech-val">Zustand Shared Bridge</div>
+            <div class="tech-val">Zustand 5.0 (Manager Store)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Audit Security</div>
-            <div class="tech-val">Void/Cancel Bill Logging</div>
+            <div class="tech-category">Data Charts</div>
+            <div class="tech-val">Pure Tailwind CSS & SVG Bars</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-category">Audit Export</div>
+            <div class="tech-val">Browser Native CSV Exporter</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-category">Billing Receipts</div>
+            <div class="tech-val">window.print() Tax Invoice</div>
           </div>
         </div>
       </div>
@@ -750,8 +750,8 @@
           │   ├── <strong>ScreenM4BillingPOS.tsx</strong> <span class="file-desc">(POS + DIRECT COUNTER MENU TAB)</span><br/>
           │   ├── ScreenM5MenuMaster.tsx <span class="file-desc">(Price adjustments & 86 sync)</span><br/>
           │   ├── ScreenM6StaffRoster.tsx <span class="file-desc">(Clock-in/out attendance logs)</span><br/>
-          │   ├── ScreenM7SalesAnalytics.tsx <span class="file-desc">(Hourly velocity charts)</span><br/>
-          │   ├── ScreenM8Inventory.tsx <span class="file-desc">(Mutton, rice & ghee stock alerts)</span><br/>
+          │   ├── ScreenM7SalesAnalytics.tsx <span class="file-desc">(Hourly velocity metrics)</span><br/>
+          │   ├── ScreenM8Inventory.tsx <span class="file-desc">(Meat, rice & ghee stock alerts)</span><br/>
           │   ├── ScreenM9CRMFeedback.tsx <span class="file-desc">(VIP guests & customer ratings)</span><br/>
           │   ├── ScreenM10KitchenKOT.tsx <span class="file-desc">(Station bottleneck analysis)</span><br/>
           │   ├── ScreenM11Promotions.tsx <span class="file-desc">(Promo codes & discounts)</span><br/>
@@ -768,13 +768,13 @@
     <!-- Task List & Daily Workflow -->
     <div class="grid-2">
       <div class="card">
-        <div class="card-title">🎯 Next Sprint Tasks & Deliverables</div>
+        <div class="card-title">🎯 Next Tasks & Deliverables</div>
         <ul class="task-list">
           <li><span class="task-tag tag-p1">P1</span> In <code>ScreenM4BillingPOS</code>, connect counter menu items to checkout.</li>
-          <li><span class="task-tag tag-p1">P1</span> In <code>ScreenM16DayClose</code>, build 1-click Download Daily Z-Report CSV/PDF.</li>
-          <li><span class="task-tag tag-p2">P2</span> In <code>ScreenM15Settings</code>, create form to edit GSTIN, FSSAI, & hotel address.</li>
+          <li><span class="task-tag tag-p1">P1</span> In <code>ScreenM16DayClose</code>, build 1-click Download Daily Z-Report CSV.</li>
+          <li><span class="task-tag tag-p2">P2</span> In <code>ScreenM15Settings</code>, build form to edit GSTIN, FSSAI, & hotel address.</li>
           <li><span class="task-tag tag-p2">P2</span> In <code>ScreenM12Expenses</code>, auto-subtract petty cash from day cash drawer.</li>
-          <li><span class="task-tag tag-p3">P3</span> In <code>ScreenM7SalesAnalytics</code>, plot live hourly revenue line charts.</li>
+          <li><span class="task-tag tag-p3">P3</span> In <code>ScreenM7SalesAnalytics</code>, plot live hourly revenue metrics.</li>
         </ul>
       </div>
 
@@ -784,12 +784,12 @@
           <span class="cmd-comment"># 1. Checkout your dedicated feature branch</span><br/>
           <span class="cmd-keyword">git</span> checkout feature/prajwal-manager-pos<br/>
           <span class="cmd-keyword">git</span> pull origin develop<br/>
-          <span class="cmd-comment"># 2. Run local development server</span><br/>
+          <span class="cmd-comment"># 2. Run local development server (port 3001)</span><br/>
           <span class="cmd-keyword">cd</span> customer-next &amp;&amp; npm run dev<br/>
           <span class="cmd-comment"># Open http://localhost:3001/manager/ on Desktop Monitor</span><br/>
           <span class="cmd-comment"># 3. Commit and push when changes are complete</span><br/>
           <span class="cmd-keyword">git</span> add components/manager/ store/useManagerStore.ts<br/>
-          <span class="cmd-keyword">git</span> commit -m "feat(manager): connect counter POS checkout and Z-report export"<br/>
+          <span class="cmd-keyword">git</span> commit -m "feat(manager): connect counter POS checkout and Z-report CSV export"<br/>
           <span class="cmd-keyword">git</span> push origin feature/prajwal-manager-pos
         </div>
       </div>
@@ -833,41 +833,41 @@
     </div>
 
     <div class="grid-2">
-      <!-- Complete Tech Stack -->
+      <!-- Complete Tech Stack (Exact Project Dependencies) -->
       <div class="card">
-        <div class="card-title">⚡ Production Hotel Tech Stack</div>
+        <div class="card-title">⚡ Exact Framework & Dependencies</div>
         <div class="tech-grid">
           <div class="tech-item">
             <div class="tech-category">Runtime Environment</div>
             <div class="tech-val">Node.js v20+ / Next.js API</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Real-Time Sync</div>
-            <div class="tech-val">WebSockets (ws / Socket.io)</div>
+            <div class="tech-category">WebSocket Engine</div>
+            <div class="tech-val">ws library (^8.21.3)</div>
           </div>
           <div class="tech-item">
             <div class="tech-category">Central Reactive Store</div>
             <div class="tech-val">Zustand Global State</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Persistent Database</div>
-            <div class="tech-val">PostgreSQL / SQLite Local</div>
+            <div class="tech-category">Data Schemas</div>
+            <div class="tech-val">TypeScript Strict Interfaces</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Database ORM</div>
-            <div class="tech-val">Prisma ORM / Drizzle</div>
+            <div class="tech-category">Master Datasets</div>
+            <div class="tech-val">Native JSON (menu & tables)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Schema Validation</div>
-            <div class="tech-val">Zod Schema Validation</div>
+            <div class="tech-category">QR Engine</div>
+            <div class="tech-val">qrcode library (^1.5.4)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Network Protocol</div>
-            <div class="tech-val">JSON-RPC / REST APIs</div>
+            <div class="tech-category">Async Data Fetching</div>
+            <div class="tech-val">@tanstack/react-query</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Connection Recovery</div>
-            <div class="tech-val">Heartbeat Ping-Pong Sync</div>
+            <div class="tech-category">API Routing</div>
+            <div class="tech-val">Next.js App Router Route Handlers</div>
           </div>
         </div>
       </div>
@@ -897,10 +897,10 @@
     <!-- Task List & Daily Workflow -->
     <div class="grid-2">
       <div class="card">
-        <div class="card-title">🎯 Next Sprint Tasks & Deliverables</div>
+        <div class="card-title">🎯 Next Tasks & Deliverables</div>
         <ul class="task-list">
           <li><span class="task-tag tag-p1">P1</span> Connect <code>server.js</code> WebSockets to <code>useSharedBridge.ts</code> for multi-device sync.</li>
-          <li><span class="task-tag tag-p1">P1</span> Setup persistent SQLite/PostgreSQL database tables for orders and bills.</li>
+          <li><span class="task-tag tag-p1">P1</span> Maintain ticket state transitions (Customer Order ➔ Kitchen KDS ➔ Waiter).</li>
           <li><span class="task-tag tag-p2">P2</span> Add auto-reconnect logic so terminals re-sync if hotel Wi-Fi flickers.</li>
           <li><span class="task-tag tag-p2">P2</span> Build Next.js App Router API route handlers under <code>app/api/</code>.</li>
           <li><span class="task-tag tag-p3">P3</span> Maintain strict TypeScript contracts across all 4 portal data models.</li>
@@ -918,7 +918,7 @@
           <span class="cmd-comment"># In a second terminal window: node server.js</span><br/>
           <span class="cmd-comment"># 3. Test cross-device event propagation</span><br/>
           <span class="cmd-comment"># 4. Commit and push when changes are complete</span><br/>
-          <span class="cmd-keyword">git</span> add store/useSharedBridge.ts types/ server.js app/api/<br/>
+          <span class="cmd-keyword">git</span> add store/useSharedBridge.ts types/ server.js<br/>
           <span class="cmd-keyword">git</span> commit -m "feat(bridge): implement multi-device WebSocket live sync"<br/>
           <span class="cmd-keyword">git</span> push origin feature/suhas-m-backend-bridge
         </div>
@@ -928,7 +928,7 @@
     <!-- Hotel Ready Banner -->
     <div class="hotel-ready">
       <div class="hotel-ready-title">🏨 Real-World Hotel Production Requirement</div>
-      <div class="hotel-ready-desc">Suhas M controls the central bridge connecting Customer phones, Waiter tablets, Kitchen screens, and Cashier PCs. In a live hotel, an order punched on Table 4 must appear in the kitchen within 300 milliseconds over local Wi-Fi, and survive computer reboots without data loss.</div>
+      <div class="hotel-ready-desc">Suhas M controls the central reactive bridge connecting Customer phones, Waiter tablets, Kitchen screens, and Cashier PCs. In a live hotel, an order punched on Table 4 appears on the kitchen screen in real time over local Wi-Fi without reloading any web pages.</div>
     </div>
   </div>
 
@@ -954,7 +954,7 @@
     <div class="hero-card">
       <div class="hero-left">
         <h1>PERSON 6: Suhas M & Bharath</h1>
-        <div class="role-name">UI/UX Design Systems, Responsive Architecture & PWA Leads</div>
+        <div class="role-name">UI/UX Design Systems, Responsive Architecture & Visual Leads</div>
       </div>
       <div class="hero-right">
         <div class="branch-pill">feature/suhas-bharath-ui-ux</div>
@@ -963,41 +963,41 @@
     </div>
 
     <div class="grid-2">
-      <!-- Complete Tech Stack -->
+      <!-- Complete Tech Stack (Exact Project Dependencies) -->
       <div class="card">
-        <div class="card-title">⚡ Production Hotel Tech Stack</div>
+        <div class="card-title">⚡ Exact Framework & Dependencies</div>
         <div class="tech-grid">
           <div class="tech-item">
             <div class="tech-category">CSS Engine</div>
-            <div class="tech-val">Tailwind CSS v3.4 + PostCSS</div>
+            <div class="tech-val">Tailwind CSS v3.4</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Thermal Print CSS</div>
-            <div class="tech-val">@media print (Paged Media)</div>
+            <div class="tech-category">CSS Compiler</div>
+            <div class="tech-val">PostCSS + Autoprefixer</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">PWA Architecture</div>
-            <div class="tech-val">Web App Manifest + Icons</div>
+            <div class="tech-category">Drawer Overlays</div>
+            <div class="tech-val">Vaul Drawer Library</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Iconography</div>
-            <div class="tech-val">Lucide React Icons</div>
+            <div class="tech-category">Icons System</div>
+            <div class="tech-val">Lucide React</div>
           </div>
           <div class="tech-item">
             <div class="tech-category">Color Palette</div>
             <div class="tech-val">Amber Gold + Emerald + Slate</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Accessibility</div>
-            <div class="tech-val">WCAG AA (Touch min 48px)</div>
+            <div class="tech-category">Print Media</div>
+            <div class="tech-val">@media print (80mm width)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Component Primitives</div>
-            <div class="tech-val">Radix UI / Headless UI</div>
+            <div class="tech-category">Touch Compliance</div>
+            <div class="tech-val">Oversized Targets (min 48px)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Micro-Animations</div>
-            <div class="tech-val">Framer Motion Spring Physics</div>
+            <div class="tech-category">Motion Engine</div>
+            <div class="tech-val">Framer Motion Spring Transitions</div>
           </div>
         </div>
       </div>
@@ -1015,7 +1015,6 @@
           │   ├── Modal.tsx <span class="file-desc">(Accessible dialogs & overlays)</span><br/>
           │   ├── Badge.tsx <span class="file-desc">(Status chips: NEW, PREP, READY, SERVED)</span><br/>
           │   └── Stepper.tsx <span class="file-desc">(4-stage preparation visual step indicator)</span><br/>
-          ├── <strong>public/manifest.json</strong> <span class="file-desc">(Installable PWA tablet configuration)</span><br/>
           └── <strong>deploy_skeletons/</strong> <span class="file-desc">(Standalone HTML wireframe reference suite)</span>
         </div>
       </div>
@@ -1024,13 +1023,13 @@
     <!-- Task List & Daily Workflow -->
     <div class="grid-2">
       <div class="card">
-        <div class="card-title">🎯 Next Sprint Tasks & Deliverables</div>
+        <div class="card-title">🎯 Next Tasks & Deliverables</div>
         <ul class="task-list">
-          <li><span class="task-tag tag-p1">P1</span> Write <code>@media print</code> CSS for clean 80mm thermal receipt printing.</li>
-          <li><span class="task-tag tag-p1">P1</span> Create <code>manifest.json</code> so tablets can tap "Add to Home Screen" (PWA).</li>
-          <li><span class="task-tag tag-p2">P2</span> Audit touch targets: verify all interactive buttons are &gt;= 48x48px.</li>
-          <li><span class="task-tag tag-p2">P2</span> Create high-contrast dark theme mode for Kitchen KDS screens.</li>
-          <li><span class="task-tag tag-p3">P3</span> Add subtle spring micro-animations on cart quantity increments.</li>
+          <li><span class="task-tag tag-p1">P1</span> In <code>globals.css</code>, refine <code>@media print</code> for crisp black/white 80mm bills.</li>
+          <li><span class="task-tag tag-p1">P1</span> Audit touch targets: verify all interactive buttons are &gt;= 48x48px.</li>
+          <li><span class="task-tag tag-p2">P2</span> Ensure high-contrast colors on Kitchen KDS under bright kitchen lighting.</li>
+          <li><span class="task-tag tag-p2">P2</span> Add subtle spring micro-animations on cart quantity increments with Framer Motion.</li>
+          <li><span class="task-tag tag-p3">P3</span> Keep standalone HTML wireframes in <code>deploy_skeletons/</code> aligned with React code.</li>
         </ul>
       </div>
 
@@ -1040,12 +1039,12 @@
           <span class="cmd-comment"># 1. Checkout your dedicated feature branch</span><br/>
           <span class="cmd-keyword">git</span> checkout feature/suhas-bharath-ui-ux<br/>
           <span class="cmd-keyword">git</span> pull origin develop<br/>
-          <span class="cmd-comment"># 2. Run local development server</span><br/>
+          <span class="cmd-comment"># 2. Run local development server (port 3001)</span><br/>
           <span class="cmd-keyword">cd</span> customer-next &amp;&amp; npm run dev<br/>
           <span class="cmd-comment"># Inspect Chrome DevTools: test 390px, 768px, 1024px, 1920px</span><br/>
           <span class="cmd-comment"># 3. Commit and push when changes are complete</span><br/>
           <span class="cmd-keyword">git</span> add app/globals.css tailwind.config.js components/ui/<br/>
-          <span class="cmd-keyword">git</span> commit -m "style(ui): add 80mm thermal print styles and PWA manifest"<br/>
+          <span class="cmd-keyword">git</span> commit -m "style(ui): polish 80mm print stylesheet and touch target accessibility"<br/>
           <span class="cmd-keyword">git</span> push origin feature/suhas-bharath-ui-ux
         </div>
       </div>
@@ -1054,7 +1053,7 @@
     <!-- Hotel Ready Banner -->
     <div class="hotel-ready">
       <div class="hotel-ready-title">🏨 Real-World Hotel Production Requirement</div>
-      <div class="hotel-ready-desc">Waiters and chefs work with greasy, wet hands under high-pressure lunch rushes. The UI must avoid tiny tap targets (&gt;=48px required), avoid dark ink-heavy receipt printing (80mm receipts must be crisp black/white), and launch full-screen like native apps on tablets without browser address bars.</div>
+      <div class="hotel-ready-desc">Waiters and chefs work with greasy, wet hands under high-pressure lunch rushes. The UI avoids tiny tap targets (min 48px), avoids dark ink-heavy thermal printing (80mm receipts must be clean black/white text), and ensures responsive clarity on any phone or tablet screen.</div>
     </div>
   </div>
 
@@ -1080,50 +1079,50 @@
     <div class="hero-card">
       <div class="hero-left">
         <h1>PERSON 7: Manjunath</h1>
-        <div class="role-name">QA Testing, CI/CD Pipeline & Hardware Deployment Lead</div>
+        <div class="role-name">QA Build Verification, CI/CD Pipeline & Release Deployment Lead</div>
       </div>
       <div class="hero-right">
         <div class="branch-pill">feature/manjunath-qa-devops</div>
-        <div class="folder-tag">.github/workflows/ &amp; tests/</div>
+        <div class="folder-tag">.github/workflows/ &amp; customer-next/</div>
       </div>
     </div>
 
     <div class="grid-2">
-      <!-- Complete Tech Stack -->
+      <!-- Complete Tech Stack (Exact Project Dependencies) -->
       <div class="card">
-        <div class="card-title">⚡ Production Hotel Tech Stack</div>
+        <div class="card-title">⚡ Exact Framework & Dependencies</div>
         <div class="tech-grid">
           <div class="tech-item">
-            <div class="tech-category">Unit Testing Engine</div>
-            <div class="tech-val">Vitest / Jest + RTL</div>
+            <div class="tech-category">Type Checker</div>
+            <div class="tech-val">tsc --noEmit (npm run type-check)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">E2E Flow Testing</div>
-            <div class="tech-val">Playwright (Multi-device)</div>
+            <div class="tech-category">Production Compiler</div>
+            <div class="tech-val">next build (npm run build)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">CI/CD Pipeline</div>
+            <div class="tech-category">CI/CD Automation</div>
             <div class="tech-val">GitHub Actions (.github)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Type Verification</div>
-            <div class="tech-val">TypeScript Compiler (tsc)</div>
+            <div class="tech-category">Windows Startup</div>
+            <div class="tech-val">RUN_PROJECT.bat (1-Click Launch)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Local Server Runtime</div>
-            <div class="tech-val">PM2 Process Manager / Node</div>
+            <div class="tech-category">Linux/Mac Startup</div>
+            <div class="tech-val">RUN_PROJECT.sh (Bash Launcher)</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Offline Packaging</div>
-            <div class="tech-val">Docker / 1-Click Startup Bat</div>
+            <div class="tech-category">Production Server</div>
+            <div class="tech-val">next start -p 3001</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Hardware ESC/POS</div>
-            <div class="tech-val">Epson / TVS / NGX Thermal USB</div>
+            <div class="tech-category">Static Web Hosting</div>
+            <div class="tech-val">Surge.sh / Cloud Deploy</div>
           </div>
           <div class="tech-item">
-            <div class="tech-category">Local LAN Resolution</div>
-            <div class="tech-val">mDNS / Bonjour (hotel.local)</div>
+            <div class="tech-category">Git Branch Model</div>
+            <div class="tech-val">GitFlow (main / develop / feature)</div>
           </div>
         </div>
       </div>
@@ -1134,13 +1133,12 @@
         <div class="file-tree">
           <strong>hospitality-saas-app/</strong><br/>
           ├── <strong>.github/workflows/ci.yml</strong> <span class="file-desc">(Automated PR build gatekeeper)</span><br/>
-          ├── <strong>RUN_PROJECT.bat &amp; RUN_PROJECT.sh</strong> <span class="file-desc">(1-click local launch scripts)</span><br/>
-          ├── <strong>tests/</strong> <span class="file-desc">(Automated Test Suites)</span><br/>
-          │   ├── billing.test.ts <span class="file-desc">(5% GST math &amp; split check validation)</span><br/>
-          │   ├── kds-queue.test.ts <span class="file-desc">(FIFO ticket sequence &amp; 86 item sync)</span><br/>
-          │   └── e2e-order.spec.ts <span class="file-desc">(Customer ➔ KDS ➔ Waiter ➔ Manager flow)</span><br/>
+          ├── <strong>RUN_PROJECT.bat</strong> <span class="file-desc">(1-click Windows desktop startup script)</span><br/>
+          ├── <strong>RUN_PROJECT.sh</strong> <span class="file-desc">(1-click Mac/Linux startup script)</span><br/>
+          ├── <strong>.gitattributes</strong> <span class="file-desc">(TypeScript repository language lock)</span><br/>
+          ├── <strong>.gitignore</strong> <span class="file-desc">(Clean node_modules and .next exclusion)</span><br/>
           └── <strong>customer-next/</strong><br/>
-              ├── package.json <span class="file-desc">(Build scripts: type-check, build, test)</span><br/>
+              ├── package.json <span class="file-desc">(Build scripts: type-check, build, start)</span><br/>
               └── next.config.ts <span class="file-desc">(Compiler optimization &amp; static export)</span>
         </div>
       </div>
@@ -1149,13 +1147,13 @@
     <!-- Task List & Daily Workflow -->
     <div class="grid-2">
       <div class="card">
-        <div class="card-title">🎯 Next Sprint Tasks & Deliverables</div>
+        <div class="card-title">🎯 Next Tasks & Deliverables</div>
         <ul class="task-list">
-          <li><span class="task-tag tag-p1">P1</span> Write unit tests verifying 5% GST and equal bill split math to the paisa.</li>
-          <li><span class="task-tag tag-p1">P1</span> Validate every teammate's PR via <code>npm run type-check</code> &amp; <code>npm run build</code>.</li>
-          <li><span class="task-tag tag-p2">P2</span> Test physical 80mm ESC/POS thermal printers over USB and Bluetooth.</li>
-          <li><span class="task-tag tag-p2">P2</span> Configure PM2 startup script so the hotel server boots automatically on power on.</li>
-          <li><span class="task-tag tag-p3">P3</span> Stress-test system with 50 simultaneous simulated table orders.</li>
+          <li><span class="task-tag tag-p1">P1</span> Validate every teammate's PR via <code>npm run type-check</code> (0 errors).</li>
+          <li><span class="task-tag tag-p1">P1</span> Verify full static compilation via <code>npm run build</code> before release.</li>
+          <li><span class="task-tag tag-p2">P2</span> Verify 5% GST tax calculation accuracy across all order subtotals.</li>
+          <li><span class="task-tag tag-p2">P2</span> Maintain 1-click Windows <code>RUN_PROJECT.bat</code> for hotel staff.</li>
+          <li><span class="task-tag tag-p3">P3</span> Merge approved feature PRs from <code>develop</code> into production <code>main</code>.</li>
         </ul>
       </div>
 
@@ -1170,8 +1168,8 @@
           npm run type-check   <span class="cmd-comment"># MUST RETURN 0 ERRORS</span><br/>
           npm run build        <span class="cmd-comment"># MUST COMPILE CLEANLY</span><br/>
           <span class="cmd-comment"># 3. Commit and push when changes are complete</span><br/>
-          <span class="cmd-keyword">git</span> add .github/ tests/ package.json<br/>
-          <span class="cmd-keyword">git</span> commit -m "ci(devops): add billing calculation unit tests and CI build gate"<br/>
+          <span class="cmd-keyword">git</span> add .github/ package.json customer-next/package.json<br/>
+          <span class="cmd-keyword">git</span> commit -m "ci(devops): verify production build pipeline and scripts"<br/>
           <span class="cmd-keyword">git</span> push origin feature/manjunath-qa-devops
         </div>
       </div>
@@ -1180,7 +1178,7 @@
     <!-- Hotel Ready Banner -->
     <div class="hotel-ready">
       <div class="hotel-ready-title">🏨 Real-World Hotel Production Requirement</div>
-      <div class="hotel-ready-desc">Manjunath ensures zero system downtime. If the restaurant internet fails, the entire application must run completely offline on a local mini-PC inside the hotel over the local Wi-Fi router, ensuring waitstaff can continue taking orders, kitchen continues cooking, and bills continue printing.</div>
+      <div class="hotel-ready-desc">Manjunath ensures zero system downtime. Hotel staff are not software engineers — they simply double-click <code>RUN_PROJECT.bat</code> on the hotel billing computer, and the entire restaurant suite boots up immediately with 100% type safety and zero runtime crashes.</div>
     </div>
   </div>
 

@@ -1,0 +1,8 @@
+# GitHub Linguist Overrides - Ensure TypeScript is identified as primary language
+deploy_skeletons/** linguist-vendored
+public/** linguist-vendored
+*.html linguist-documentation
+data/** linguist-vendored
+server.js linguist-vendored
+RUN_PROJECT.bat linguist-vendored
+RUN_PROJECT.sh linguist-vendored

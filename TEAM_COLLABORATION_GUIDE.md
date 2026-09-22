@@ -17,7 +17,7 @@ Every team member has a dedicated module and directory boundary. Because each po
 | **PERSON 4** | **Prajwal** | **Manager HQ & Cashier POS (16 Screens)**<br/>Executive dashboard, interactive floor map, direct counter order menu punch, staff attendance, sales analytics, petty expenses & Day-Close Z-Report. | `customer-next/components/manager/`<br/>`customer-next/app/manager/page.tsx`<br/>`customer-next/store/useManagerStore.ts` | `feature/prajwal-manager-pos` |
 | **PERSON 5** | **Suhas M** | **Real-Time State & Backend Architect**<br/>Central reactive bridge (`useSharedBridge.ts`), data models, WebSocket server (`server.js`), and database/API synchronization connecting all 4 portals. | `customer-next/store/useSharedBridge.ts`<br/>`customer-next/types/*.ts`<br/>`server.js`<br/>`data/*.json` | `feature/suhas-m-backend-bridge` |
 | **PERSON 6** | **Suhas M & Bharath** | **UI/UX & Design Systems Leads**<br/>Restaurant visual tokens, amber/emerald Donne Biryani theme, component library (`components/ui/`), animations, touch accessibility & wireframes sync. | `customer-next/app/globals.css`<br/>`customer-next/tailwind.config.js`<br/>`customer-next/components/ui/`<br/>`deploy_skeletons/` | `feature/suhas-bharath-ui-ux` |
-| **PERSON 7** | **Manjunath** | **QA, Testing & DevOps Lead**<br/>Build validation (`npm run type-check` & `npm run build`), CI/CD GitHub Actions (`.github/workflows/ci.yml`), automated tests, hardware printer testing & cloud deployment. | `.github/workflows/`<br/>`customer-next/next.config.ts`<br/>Testing suites & deployment configs | `feature/manjunath-qa-devops` |
+| **PERSON 7** | **Manjunath** | **QA, Testing & DevOps Lead**<br/>Build validation (`npm run type-check` & `npm run build`), CI/CD GitHub Actions (`.github/workflows/ci.yml`), 1-click launch scripts (`RUN_PROJECT.bat`) & cloud deployment. | `.github/workflows/`<br/>`customer-next/next.config.ts`<br/>Build scripts & deployment configs | `feature/manjunath-qa-devops` |
 
 ---
 
@@ -140,7 +140,7 @@ In GitHub: Go to **Settings ➔ Collaborators ➔ Add people** and invite:
   - Live floor feed showing table status (Available, Occupied, Billed) and real-time customer call bell pings.
   - Tableside high-speed POS puncher with instant 86 sold-out item protection.
   - Table merge (joining 2 tables for large families) and split bills.
-  - Bluetooth thermal bill print preview (80mm ESC/POS layout).
+  - Thermal bill print preview (80mm ESC/POS layout via window.print()).
 - **Daily Commands for Nayana & Shivakumar**:
   ```bash
   git checkout feature/nayana-shivakumar-waiter-suite
@@ -189,7 +189,7 @@ In GitHub: Go to **Settings ➔ Collaborators ➔ Add people** and invite:
     - Customer calls waiter ➔ rings call bell banner on Waiter tablets.
     - Waiter/Manager settles bill ➔ updates Z-Report sales ledger and marks table available.
   - Maintains TypeScript contracts (`customer-next/types/*.ts`), `server.js`, and master datasets (`data/*.json`).
-  - Prepares PostgreSQL / database connectivity when moving to on-premise hotel servers.
+  - Maintains server endpoints, WebSocket events in `server.js`, and data persistence.
 - **Daily Commands for Suhas M**:
   ```bash
   git checkout feature/suhas-m-backend-bridge

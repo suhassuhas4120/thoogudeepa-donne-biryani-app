@@ -11,7 +11,7 @@ This system powers a modern dine-in restaurant with **4 interconnected, synchron
 | Section | Portal Description | Live Deployed URL |
 | :--- | :--- | :--- |
 | **Customer App** | 12-Screen Self-Ordering, Live Tracking, UPI Bill Pay | [Open Customer App](https://thoogudeepa-donne-biryani.surge.sh/) |
-| **Kitchen Display (KDS)** | 10-Screen Chef Station, Bump Bar, Audio Alerts, 86 Item Sync | [Open Kitchen KDS](https://thoogudeepa-donne-biryani.surge.sh/kitchen/) |
+| **Kitchen Display (KDS)** | 3-Screen Tablet Station, 70/30 Matrix, 4-Stage Steppers, 86 Sync | [Open Kitchen KDS](https://thoogudeepa-donne-biryani.surge.sh/kitchen/) |
 | **Waiter / Captain** | 10-Screen Table Management, Mobile & Tablet Modes, POS Punch | [Open Waiter Suite](https://thoogudeepa-donne-biryani.surge.sh/waiter/) |
 | **Manager Portal** | 16-Screen Executive HQ, Floor Map, POS, CRM, Day-Close Z-Report | [Open Manager HQ](https://thoogudeepa-donne-biryani.surge.sh/manager/) |
 | **Wireframes Suite** | Complete Interactive Wireframe Skeletons for All 4 Roles | [Open Wireframes](https://customer-journey-wireframes.surge.sh/) |
@@ -82,7 +82,7 @@ All 4 portals are **logically interconnected in real time** through a shared rea
        ▼                  ▼                    ▼                  ▼
 ┌──────────────┐   ┌──────────────┐     ┌──────────────┐   ┌──────────────┐
 │   CUSTOMER   │   │   KITCHEN    │     │    WAITER    │   │   MANAGER    │
-│  (12 Screens)│   │  (10 Screens)│     │  (10 Screens)│   │  (16 Screens)│
+│  (12 Screens)│   │  (3 Screens) │     │  (10 Screens)│   │  (16 Screens)│
 └──────────────┘   └──────────────┘     └──────────────┘   └──────────────┘
 ```
 
@@ -101,18 +101,14 @@ All 4 portals are **logically interconnected in real time** through a shared rea
 11. **Screen 11 - Loyalty & Rewards**: Thoogudeepa Biryani Club points balance, redeemable coupon scratch cards, tier progression.
 12. **Screen 12 - Dish & Experience Rating**: Star ratings for food taste, delivery speed, hygiene, and custom feedback comments.
 
-### 2. 🍳 Kitchen Display System - KDS (10 Screens)
+### 2. 🍳 Kitchen Display System - KDS (3 Tablet Screens)
 *Route: `/app/kitchen/page.tsx` | Components: `components/kitchen/`*
-1. **Screen K1 - Station Login**: Head Chef & station crew PIN login, station selector (Biryani Station, Tandoor & Grill, Fryer/Curry, Beverage Bar).
-2. **Screen K2 - Live Multi-Station KDS**: Color-coded ticket grid (NEW, PREPARING, READY), aging timer with color thresholds (<10m green, 10-15m amber, >15m pulsing red), station filter tabs.
-3. **Screen K3 - Course Timing & Batching**: Dish aggregation view combining identical items across tables (e.g. "Prep 6x Donne Mutton Biryani simultaneously").
-4. **Screen K4 - 86 / Sold-Out Master**: Instant toggle to mark ingredients or dishes sold out. **Immediately syncs to Customer and Waiter portals to prevent unavailable orders!**
-5. **Screen K5 - Standard Operating Procedures (SOP)**: Step-by-step authentic recipes, hygiene checklists, standard plating guidelines, allergen warnings.
-6. **Screen K6 - Expediter Bump Bar**: Single-tap ticket status transitions (Start Cooking ➔ Plated ➔ Bump/Complete) with hardware keyboard shortcut support (1-9).
-7. **Screen K7 - Audio Alerts & Sound Settings**: Audio chimes for new incoming orders, rush alerts, high-decibel kitchen buzzer simulation.
-8. **Screen K8 - Recipe Yield Scaler**: Proportional batch scaling calculator for cooking biryani pots (scales 5kg, 10kg, 25kg seeraga samba rice and meat proportions).
-9. **Screen K9 - Station Handover Checklist**: Shift handoff form logging prep levels, cold room temperatures, clean station confirmation.
-10. **Screen K10 - Shift Audit Log**: Real-time log of every action taken in the kitchen (ticket bumped, 86 toggle, chef approvals).
+1. **Screen K1 - Station & PIN Authentication**: Head Chef & station PIN login, station selector (Biryani Station, Tandoor & Grill, Fryer/Curry, Beverage Bar).
+2. **Screen K2 - Live 70/30 Table Matrix & Prep Steppers**:
+   - **Top 4-Item Bulk Cooking Bar**: Real-time aggregated item counts across all active tables (e.g., "12x Donne Mutton Biryani Cooking").
+   - **70% Active Table Grid**: 6 table cards with 4-stage preparation steppers (`1.REC`, `2.PREP`, `3.READY`, `4.SERVED`), elapsed timers, and 1-tap table detail management.
+   - **30% Chronological Time Queue**: Orders sequenced by elapsed wait time with color-coded urgency thresholds (<10m green, 10-15m amber, >15m pulsing red).
+3. **Screen K3 - Individual Table Order Deep Dive & 86 Item Master**: Detailed dish modifications, ingredient notes, prep delay warnings, and instant 86 sold-out toggles synced across all terminals.
 
 ### 3. 🤵 Waiter / Captain Suite (10 Screens - Mobile & Tablet Views)
 *Route: `/app/waiter/page.tsx` | Components: `components/waiter/`*

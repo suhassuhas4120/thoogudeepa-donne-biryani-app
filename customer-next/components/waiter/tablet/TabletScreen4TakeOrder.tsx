@@ -223,54 +223,49 @@ export const TabletScreen4TakeOrder: React.FC = () => {
                       : 'bg-white border-slate-200 hover:border-slate-400'
                   }`}
                 >
-                  {/* Category, Prep Mode & Badges Header */}
-                  <div className="w-full bg-slate-50/80 border border-slate-200/80 rounded-xl p-2.5 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
+                  {/* Food Image Container exactly how it was before */}
+                  <div className="relative w-full h-24 border border-dashed border-slate-200 bg-slate-50 rounded-xl flex items-center justify-center gap-2 text-slate-700">
+                    <div className="absolute top-2.5 left-2.5">
                       <FoodTypeBadge isVeg={isVegItem(item)} />
-                      <span className="text-[10.5px] font-black uppercase tracking-wider text-slate-700 font-mono">
+                    </div>
+                    <span className="text-3xl">{isSoldOut ? '🚫' : '🍛'}</span>
+                    <div className="flex flex-col">
+                      <span className="font-mono text-xs font-black uppercase text-slate-900">
                         {item.category}
                       </span>
-                      {item.prepMode && (
-                        <span className="text-[9.5px] font-bold px-2 py-0.5 rounded-md bg-stone-200/70 text-slate-700 flex items-center gap-1">
-                          <Flame className="h-3 w-3 text-orange-500" />
-                          <span>{item.prepMode}</span>
-                        </span>
-                      )}
+                      <span className="text-[10px] text-slate-500 font-bold">
+                        {item.prepMode}
+                      </span>
                     </div>
-
-                    <div>
-                      {isSoldOut ? (
-                        <span className="bg-rose-600 text-white text-[9.5px] font-black px-2 py-0.5 rounded-lg flex items-center gap-1 shadow-2xs">
-                          <Ban className="h-3 w-3" />
-                          <span>86 SOLD OUT</span>
-                        </span>
-                      ) : item.badge ? (
-                        <span className="bg-amber-100 text-amber-800 border border-amber-300 text-[9.5px] font-black px-2 py-0.5 rounded-lg flex items-center gap-1 shadow-2xs">
-                          <Sparkles className="h-3 w-3 text-amber-600" />
-                          <span>{item.badge}</span>
-                        </span>
-                      ) : null}
-                    </div>
+                    {isSoldOut ? (
+                      <span className="absolute top-2.5 right-2.5 bg-rose-600 text-white text-[9.5px] font-black px-2 py-0.5 rounded-lg shadow-2xs">
+                        86 SOLD OUT
+                      </span>
+                    ) : item.badge ? (
+                      <span className="absolute top-2.5 right-2.5 bg-amber-100 text-amber-800 border border-amber-300 text-[9.5px] font-black px-2 py-0.5 rounded-lg shadow-2xs">
+                        {item.badge}
+                      </span>
+                    ) : null}
                   </div>
 
                   <div>
-                    <div className="flex items-start justify-between gap-2">
-                      <strong className="text-sm font-black text-slate-950 leading-snug">
+                    <div className="flex items-center justify-between">
+                      <strong className="text-sm font-black text-slate-950 block">
                         {item.name}
                       </strong>
                       <span className="text-sm font-black text-orange-600 font-mono shrink-0">
                         ₹ {item.price}
                       </span>
                     </div>
-                    <p className="text-[11.5px] text-slate-600 mt-1 line-clamp-2 leading-relaxed">
+                    <p className="text-[11px] text-slate-600 mt-1 line-clamp-2 leading-relaxed">
                       {item.description}
                     </p>
                   </div>
 
                   <div className="pt-1">
                     {isSoldOut ? (
-                      <div className="w-full py-2 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-stone-200 text-slate-400 border border-slate-300 cursor-not-allowed">
-                        <Ban className="h-3.5 w-3.5" />
+                      <div className="w-full py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-stone-200 text-slate-400 border border-slate-300 cursor-not-allowed">
+                        <Ban className="h-4 w-4" />
                         <span>Kitchen 86 — Sold Out</span>
                       </div>
                     ) : totalQty > 0 ? (
@@ -318,7 +313,7 @@ export const TabletScreen4TakeOrder: React.FC = () => {
                           whileTap={{ scale: 0.98 }}
                           type="button"
                           onClick={() => handleAdd(item)}
-                          className="flex-1 py-2 bg-slate-900 hover:bg-black text-white rounded-xl font-black text-xs transition flex items-center justify-center gap-1.5 shadow-2xs active:scale-95"
+                          className="flex-1 py-2.5 bg-slate-900 hover:bg-black text-white rounded-xl font-black text-xs transition flex items-center justify-center gap-1.5 shadow-2xs active:scale-95"
                         >
                           <Plus className="h-3.5 w-3.5 stroke-[2.5]" />
                           <span>Add to KOT</span>

@@ -184,23 +184,31 @@ export const ScreenW4TakeOrder: React.FC = () => {
                       : 'bg-white border-slate-200'
                   }`}
                 >
-                  <div>
-                    <div className="flex items-center justify-between gap-1 mb-1">
+                  {/* Food Image Container */}
+                  <div className="relative w-full h-20 rounded-xl border border-dashed border-slate-200 bg-slate-50 flex flex-col items-center justify-center p-1 text-center mb-1.5">
+                    <div className="absolute top-1 left-1">
                       <FoodTypeBadge isVeg={isVegItem(item)} />
-                      {isSoldOut ? (
-                        <span className="text-[8px] font-black bg-rose-600 text-white px-1 py-0.2 rounded shrink-0">
-                          86 SOLD
-                        </span>
-                      ) : item.badge ? (
-                        <span className="text-[8px] font-bold bg-amber-100 text-amber-800 px-1 py-0.2 rounded border border-amber-200 shrink-0">
-                          {item.badge}
-                        </span>
-                      ) : null}
                     </div>
-                    <div className="text-xs font-black text-slate-900 line-clamp-2 leading-snug">
+                    <span className="text-2xl">{isSoldOut ? '🚫' : '🍛'}</span>
+                    <span className="font-mono text-[8.5px] font-black uppercase text-slate-700 line-clamp-1 mt-0.5">
+                      {item.imagePlaceholder}
+                    </span>
+                    {isSoldOut ? (
+                      <span className="absolute top-1 right-1 bg-rose-600 text-white text-[7.5px] font-black px-1 py-0.2 rounded">
+                        86 SOLD
+                      </span>
+                    ) : item.badge ? (
+                      <span className="absolute top-1 right-1 bg-amber-100 text-amber-800 border border-amber-200 text-[7.5px] font-black px-1 py-0.2 rounded">
+                        {item.badge}
+                      </span>
+                    ) : null}
+                  </div>
+
+                  <div>
+                    <div className="text-xs font-black text-slate-900 line-clamp-1 leading-snug">
                       {item.name}
                     </div>
-                    <div className="text-xs font-black text-orange-600 mt-1 font-mono">
+                    <div className="text-xs font-black text-orange-600 mt-0.5 font-mono">
                       ₹ {item.price}
                     </div>
                   </div>

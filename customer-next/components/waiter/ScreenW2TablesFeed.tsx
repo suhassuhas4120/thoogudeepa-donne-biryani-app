@@ -20,6 +20,7 @@ import {
   Sparkles,
   Layers,
   LogOut,
+  Receipt,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -75,6 +76,12 @@ export const ScreenW2TablesFeed: React.FC = () => {
     e.stopPropagation();
     selectTable(tableNumber);
     setCurrentScreen(4);
+  };
+
+  const handleBillClick = (e: React.MouseEvent, tableNumber: string) => {
+    e.stopPropagation();
+    selectTable(tableNumber);
+    setCurrentScreen(8);
   };
 
   const handleVacateClick = (e: React.MouseEvent, tableNumber: string) => {
@@ -283,14 +290,25 @@ export const ScreenW2TablesFeed: React.FC = () => {
                       <span>Order</span>
                     </button>
 
-                    <button
-                      type="button"
-                      onClick={(e) => handleVacateClick(e, t.number)}
-                      className="flex-1 py-1.5 px-1 border border-slate-300 hover:bg-stone-100 text-slate-700 rounded-lg text-[9.5px] font-bold transition flex items-center justify-center gap-1 active:scale-95"
-                    >
-                      <LogOut className="h-3 w-3" />
-                      <span>{t.status === 'BILLING' ? 'Bill / Vac' : 'Vacate'}</span>
-                    </button>
+                    {t.status === 'BILLING' ? (
+                      <button
+                        type="button"
+                        onClick={(e) => handleBillClick(e, t.number)}
+                        className="flex-1 py-1.5 px-1 border border-purple-300 bg-purple-50 hover:bg-purple-100 text-purple-800 rounded-lg text-[9.5px] font-bold transition flex items-center justify-center gap-1 shadow-2xs active:scale-95"
+                      >
+                        <Receipt className="h-3 w-3" />
+                        <span>Bill</span>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={(e) => handleVacateClick(e, t.number)}
+                        className="flex-1 py-1.5 px-1 border border-slate-300 hover:bg-stone-100 text-slate-700 rounded-lg text-[9.5px] font-bold transition flex items-center justify-center gap-1 active:scale-95"
+                      >
+                        <LogOut className="h-3 w-3" />
+                        <span>Vacate</span>
+                      </button>
+                    )}
                   </div>
                 </motion.div>
               );

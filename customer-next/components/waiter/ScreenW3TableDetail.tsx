@@ -60,7 +60,7 @@ export const ScreenW3TableDetail: React.FC = () => {
 
   const handleResolvePing = (pingId: string) => {
     waiterResolvePing(pingId);
-    showToast(`✓ Call resolved for Table ${table.number}`);
+    showToast(`✓ Service call resolved for Table ${table.number}`);
   };
 
   const handleServeItem = (ticketId: string, itemId: string) => {
@@ -100,7 +100,7 @@ export const ScreenW3TableDetail: React.FC = () => {
   const gst = totalBill - subtotal;
 
   return (
-    <WaiterTabletHousing screenNumber={3} screenTitle="TABLE DETAIL &amp; ACTION HUB">
+    <WaiterTabletHousing screenNumber={3} screenTitle="TABLE DETAILS">
       <div className="flex-1 flex flex-col justify-between p-4 overflow-y-auto space-y-3 relative">
         {/* Floating Toast Notification */}
         <AnimatePresence>
@@ -122,10 +122,10 @@ export const ScreenW3TableDetail: React.FC = () => {
           <div className="flex items-center justify-between font-mono">
             <button
               onClick={() => setCurrentScreen(2)}
-              className="flex items-center gap-1.5 text-xs font-black text-slate-700 hover:text-slate-900 transition"
+              className="flex items-center gap-1.5 text-xs font-black text-slate-700 hover:text-slate-900 transition cursor-pointer"
             >
               <ArrowLeft className="h-3.5 w-3.5 stroke-[2.5]" />
-              <span>All Tables</span>
+              <span>Back to Tables</span>
             </button>
             <span
               className={`px-2 py-0.5 rounded text-[10px] font-bold border ${getStatusBadge(
@@ -153,7 +153,7 @@ export const ScreenW3TableDetail: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleResolvePing(tablePings[0].id)}
-                className="py-1 px-2 bg-orange-600 hover:bg-orange-700 text-white text-[10px] font-bold rounded-lg transition active:scale-95 shadow-2xs"
+                className="py-1 px-2.5 bg-orange-600 hover:bg-orange-700 text-white text-[10px] font-bold rounded-lg transition active:scale-95 shadow-2xs cursor-pointer"
               >
                 Resolve
               </button>
@@ -169,7 +169,7 @@ export const ScreenW3TableDetail: React.FC = () => {
                     Dishes Ready at Kitchen Pass
                   </div>
                   <div className="text-[9.5px] font-bold text-emerald-700">
-                    Ready for delivery to table
+                    Ready to serve to guests
                   </div>
                 </div>
               </div>
@@ -181,7 +181,7 @@ export const ScreenW3TableDetail: React.FC = () => {
                     tableReadyTickets[0].items[0]?.id || ''
                   )
                 }
-                className="py-1 px-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-[10px] font-bold rounded-lg transition flex items-center gap-1 active:scale-95 shadow-2xs"
+                className="py-1 px-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-[10px] font-bold rounded-lg transition flex items-center gap-1 active:scale-95 shadow-2xs cursor-pointer"
               >
                 <Check className="h-3 w-3 stroke-[2.5]" />
                 <span>Mark Served</span>
@@ -218,7 +218,7 @@ export const ScreenW3TableDetail: React.FC = () => {
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
                 <Utensils className="h-3 w-3 text-orange-600" />
-                <span>Running Ordered Items</span>
+                <span>Active Order Items</span>
               </span>
               <span className="text-[10px] font-bold text-slate-500">
                 {table.status === 'OCCUPIED' ? `KOT #${table.kotCount || 1}` : table.status}
@@ -239,7 +239,7 @@ export const ScreenW3TableDetail: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setCurrentScreen(4)}
-                  className="mt-1 py-1.5 px-3.5 bg-orange-600 hover:bg-orange-700 text-white rounded-xl text-xs font-black transition inline-flex items-center gap-1.5 shadow-2xs"
+                  className="mt-1 py-1.5 px-3.5 bg-orange-600 hover:bg-orange-700 text-white rounded-xl text-xs font-black transition inline-flex items-center gap-1.5 shadow-2xs cursor-pointer"
                 >
                   <Plus className="h-3.5 w-3.5 stroke-[2.5]" />
                   <span>Seat Guests &amp; Take Order</span>
@@ -294,7 +294,7 @@ export const ScreenW3TableDetail: React.FC = () => {
             <motion.button
               whileTap={{ scale: 0.98 }}
               onClick={() => setCurrentScreen(4)}
-              className="flex items-center justify-center gap-1.5 p-3 rounded-xl bg-orange-600 text-white text-xs font-black shadow-md shadow-orange-600/20 hover:bg-orange-700 transition"
+              className="flex items-center justify-center gap-1.5 p-3 rounded-xl bg-orange-600 text-white text-xs font-black shadow-md shadow-orange-600/20 hover:bg-orange-700 transition cursor-pointer"
             >
               <Plus className="h-4 w-4 stroke-[2.5]" />
               <span>Take Order</span>
@@ -303,16 +303,16 @@ export const ScreenW3TableDetail: React.FC = () => {
             <motion.button
               whileTap={{ scale: 0.98 }}
               onClick={() => setCurrentScreen(6)}
-              className="flex items-center justify-center gap-1.5 p-3 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs font-black shadow-2xs hover:bg-stone-50 transition"
+              className="flex items-center justify-center gap-1.5 p-3 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs font-black shadow-2xs hover:bg-stone-50 transition cursor-pointer"
             >
               <Users className="h-4 w-4 text-purple-600" />
-              <span>Merge / Split</span>
+              <span>Split / Merge</span>
             </motion.button>
 
             <motion.button
               whileTap={{ scale: 0.98 }}
               onClick={() => setCurrentScreen(7)}
-              className="flex items-center justify-center gap-1.5 p-3 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs font-black shadow-2xs hover:bg-stone-50 transition"
+              className="flex items-center justify-center gap-1.5 p-3 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs font-black shadow-2xs hover:bg-stone-50 transition cursor-pointer"
             >
               <CreditCard className="h-4 w-4 text-emerald-600" />
               <span>Collect Payment</span>
@@ -321,7 +321,7 @@ export const ScreenW3TableDetail: React.FC = () => {
             <motion.button
               whileTap={{ scale: 0.98 }}
               onClick={() => setCurrentScreen(8)}
-              className="flex items-center justify-center gap-1.5 p-3 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs font-black shadow-2xs hover:bg-stone-50 transition"
+              className="flex items-center justify-center gap-1.5 p-3 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs font-black shadow-2xs hover:bg-stone-50 transition cursor-pointer"
             >
               <Receipt className="h-4 w-4 text-blue-600" />
               <span>Print Bill</span>
@@ -335,7 +335,7 @@ export const ScreenW3TableDetail: React.FC = () => {
             <motion.button
               whileTap={{ scale: 0.98 }}
               onClick={() => setCurrentScreen(4)}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-orange-600 text-white text-xs font-black hover:bg-orange-700 transition shadow-md shadow-orange-600/20"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-orange-600 text-white text-xs font-black hover:bg-orange-700 transition shadow-md shadow-orange-600/20 cursor-pointer"
             >
               <Plus className="h-4 w-4 stroke-[2.5]" />
               <span>Seat Guests &amp; Start Order</span>
@@ -344,7 +344,7 @@ export const ScreenW3TableDetail: React.FC = () => {
             <motion.button
               whileTap={{ scale: 0.98 }}
               onClick={() => setCurrentScreen(7)}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-purple-700 text-white text-xs font-black hover:bg-purple-800 transition shadow-md shadow-purple-700/20"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-purple-700 text-white text-xs font-black hover:bg-purple-800 transition shadow-md shadow-purple-700/20 cursor-pointer"
             >
               <CreditCard className="h-4 w-4" />
               <span>Collect Payment (₹ {totalBill})</span>
@@ -353,10 +353,10 @@ export const ScreenW3TableDetail: React.FC = () => {
             <motion.button
               whileTap={{ scale: 0.98 }}
               onClick={() => setCurrentScreen(8)}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-900 text-white text-xs font-black hover:bg-slate-800 transition shadow-xs"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-900 text-white text-xs font-black hover:bg-slate-800 transition shadow-xs cursor-pointer"
             >
               <Receipt className="h-4 w-4" />
-              <span>Request Bill ➔ Print Bill</span>
+              <span>Print Bill Receipt</span>
             </motion.button>
           )}
 
@@ -364,10 +364,10 @@ export const ScreenW3TableDetail: React.FC = () => {
             <button
               type="button"
               onClick={() => setCurrentScreen(9)}
-              className="w-full flex items-center justify-center gap-1.5 py-2 text-[11px] font-bold text-slate-500 hover:text-slate-800 transition"
+              className="w-full flex items-center justify-center gap-1.5 py-2 text-[11px] font-bold text-slate-500 hover:text-slate-800 transition cursor-pointer"
             >
               <Trash2 className="h-3.5 w-3.5 text-slate-400" />
-              <span>Vacate &amp; Clean Table ➔</span>
+              <span>Vacate Table</span>
             </button>
           )}
         </div>

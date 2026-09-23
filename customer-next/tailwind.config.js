@@ -27,6 +27,15 @@ module.exports = {
           300: '#d6d3d1',
           card: '#ffffff',
         },
+        thoogudeepa: {
+          green: '#0F3A22',
+          greenLight: '#1C5B36',
+          gold: '#D4AF37',
+          goldLight: '#F5E6A3',
+          spicyRed: '#B91C1C',
+          charcoal: '#1A1A1A',
+          cream: '#FDFBF7',
+        },
       },
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],

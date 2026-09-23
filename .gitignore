@@ -46,3 +46,7 @@ Desktop.ini
 # Backup Archives
 *.zip
 staging_zip/
+
+# Local Wireframe Exports (Not for git)
+customer-next/public/*.pdf
+customer-next/public/*.html

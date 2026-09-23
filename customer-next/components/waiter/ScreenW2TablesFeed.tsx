@@ -19,6 +19,7 @@ import {
   ChefHat,
   Sparkles,
   Layers,
+  LogOut,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -74,6 +75,12 @@ export const ScreenW2TablesFeed: React.FC = () => {
     e.stopPropagation();
     selectTable(tableNumber);
     setCurrentScreen(4);
+  };
+
+  const handleVacateClick = (e: React.MouseEvent, tableNumber: string) => {
+    e.stopPropagation();
+    selectTable(tableNumber);
+    setCurrentScreen(9);
   };
 
   const handleResolvePing = (pingId: string, tableNumber: string) => {
@@ -255,20 +262,34 @@ export const ScreenW2TablesFeed: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Card Bottom: Bill & Quick Action */}
+                  {/* Card Bottom: Bill in single line */}
                   <div className="mt-2 pt-1.5 border-t border-slate-200/80 flex items-center justify-between font-mono">
-                    <span className="text-[11px] font-black text-slate-900">
+                    <span className="text-xs font-black text-slate-900">
                       {t.currentBill > 0 ? `₹${t.currentBill}` : '₹0'}
                     </span>
+                    <span className="text-[9.5px] font-bold text-slate-500">
+                      {t.status === 'OCCUPIED' ? `KOT #${t.kotCount}` : `Cap: ${t.capacity}`}
+                    </span>
+                  </div>
 
-                    {/* Quick 1-Tap Action Shortcut */}
+                  {/* Actions Row: Order & Vacate */}
+                  <div className="flex items-center gap-1.5 mt-1.5 font-mono">
                     <button
                       type="button"
                       onClick={(e) => handleTakeOrder(e, t.number)}
-                      className="px-2.5 py-1 rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-mono text-[9.5px] font-black transition flex items-center gap-1 shadow-2xs active:scale-95"
+                      className="flex-1 py-1.5 px-1 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-[9.5px] font-bold transition flex items-center justify-center gap-1 shadow-2xs active:scale-95"
                     >
                       <Plus className="h-3 w-3 stroke-[2.5]" />
                       <span>Order</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={(e) => handleVacateClick(e, t.number)}
+                      className="flex-1 py-1.5 px-1 border border-slate-300 hover:bg-stone-100 text-slate-700 rounded-lg text-[9.5px] font-bold transition flex items-center justify-center gap-1 active:scale-95"
+                    >
+                      <LogOut className="h-3 w-3" />
+                      <span>{t.status === 'BILLING' ? 'Bill / Vac' : 'Vacate'}</span>
                     </button>
                   </div>
                 </motion.div>

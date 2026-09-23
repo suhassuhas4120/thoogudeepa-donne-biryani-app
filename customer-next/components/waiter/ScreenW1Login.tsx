@@ -133,7 +133,7 @@ export const ScreenW1Login: React.FC = () => {
             <div className="flex items-center gap-2">
               <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               <div className="font-mono text-[10px] font-bold text-slate-800">
-                <span className="text-orange-600 font-black">[SHIFT ACTIVE]</span> Peak Rush (12:00 - 23:00)
+                <span className="text-orange-600 font-black">SHIFT ACTIVE</span> Peak Rush (12:00 - 23:00)
               </div>
             </div>
             <span className="font-mono text-[9px] font-black text-slate-500 bg-white border border-slate-200 rounded-md px-1.5 py-0.5">
@@ -148,7 +148,7 @@ export const ScreenW1Login: React.FC = () => {
                 <UserCheck className="h-3 w-3 text-orange-600" />
                 <span>SELECT CAPTAIN PROFILE</span>
               </span>
-              <span className="text-[9px] font-mono text-slate-400 font-bold">[TAP TO SELECT]</span>
+              <span className="text-[9px] font-mono text-slate-400 font-bold">Tap to select</span>
             </div>
 
             <div className="grid grid-cols-2 gap-1.5">
@@ -185,7 +185,7 @@ export const ScreenW1Login: React.FC = () => {
           <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-xs space-y-2">
             <div>
               <label className="text-[10px] font-bold text-slate-500 font-mono uppercase flex items-center justify-between">
-                <span>[ASSIGNED CAPTAIN NAME]</span>
+                <span>Assigned Captain Name</span>
                 {matchedProfile && (
                   <span className="text-emerald-700 font-black text-[9.5px]">
                     ✓ {matchedProfile.role}
@@ -206,7 +206,7 @@ export const ScreenW1Login: React.FC = () => {
 
             <div>
               <label className="text-[10px] font-bold text-slate-500 font-mono uppercase block mb-1">
-                [ACTIVE FLOOR ZONE / SECTION]
+                Active Floor Zone / Section
               </label>
               <div className="flex gap-1 overflow-x-auto pb-0.5 scrollbar-none">
                 {sections.map((sec) => (
@@ -231,7 +231,7 @@ export const ScreenW1Login: React.FC = () => {
           <div>
             <div className="flex items-center justify-between mb-1 px-0.5">
               <span className="text-[10px] font-bold font-mono uppercase tracking-wider text-slate-500">
-                [ENTER 4-DIGIT SECURITY PIN]
+                Enter 4-Digit Security PIN
               </span>
               <span className={`text-[10px] font-mono font-bold ${pin.length === 4 ? 'text-emerald-600' : 'text-slate-400'}`}>
                 {pin.length === 4 ? '✓ PIN ENTERED' : `(${4 - pin.length} digits left)`}
@@ -317,7 +317,7 @@ export const ScreenW1Login: React.FC = () => {
             className="flex-1 py-3.5 border border-slate-300 rounded-2xl font-mono text-xs font-bold text-slate-700 bg-stone-100 hover:bg-stone-200 transition active:scale-95 flex items-center justify-center gap-1.5 shadow-2xs"
           >
             <RotateCcw className="h-3.5 w-3.5" />
-            <span>[RESET]</span>
+            <span>Reset</span>
           </button>
           <motion.button
             whileTap={{ scale: 0.98 }}
@@ -325,7 +325,7 @@ export const ScreenW1Login: React.FC = () => {
             onClick={handleLogin}
             className="flex-[2] flex items-center justify-center gap-2 rounded-2xl bg-orange-600 py-3.5 text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-orange-600/30 hover:bg-orange-700 transition"
           >
-            <span>[UNLOCK FLOOR CONSOLE]</span>
+            <span>Unlock Floor Console</span>
             <ArrowRight className="h-4 w-4 stroke-[2.5]" />
           </motion.button>
         </div>

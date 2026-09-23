@@ -7,6 +7,7 @@ import { WaiterTabletLandscapeHousing } from './WaiterTabletLandscapeHousing';
 import {
   Bell,
   CheckCircle2,
+  Check,
   Clock,
   UtensilsCrossed,
   AlertTriangle,
@@ -15,6 +16,9 @@ import {
   Plus,
   ArrowRight,
   Layers,
+  Activity,
+  BarChart3,
+  LogOut,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -163,26 +167,27 @@ export const TabletScreen2TablesFeed: React.FC = () => {
         {/* TOP FLOOR METRICS HEADER */}
         <div className="border-b-2 border-slate-800 bg-white px-5 py-2.5 flex flex-wrap items-center justify-between gap-3 shrink-0 select-none">
           <div className="flex items-center gap-2 flex-wrap font-mono text-xs">
-            <span className="font-extrabold text-slate-950 uppercase tracking-wider">
-              [FLOOR METRICS]:
+            <span className="font-extrabold text-slate-950 uppercase tracking-wider flex items-center gap-1">
+              <Activity className="h-3.5 w-3.5 text-orange-600" />
+              <span>Floor Metrics:</span>
             </span>
             <span className="border border-slate-300 bg-slate-50 px-2.5 py-1 rounded font-bold text-slate-700">
-              TOTAL: {tables.length}
+              Total Tables: {tables.length}
             </span>
             <span className="border border-orange-500 bg-orange-50 text-orange-800 px-2.5 py-1 rounded font-black">
-              FILLED: {occupiedCount}
+              Filled: {occupiedCount}
             </span>
             <span className="border border-emerald-500 bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded font-black">
-              EMPTY: {vacantCount}
+              Empty: {vacantCount}
             </span>
             <span className="border border-purple-500 bg-purple-50 text-purple-800 px-2.5 py-1 rounded font-black">
-              BILLING: {billingCount}
+              Billing: {billingCount}
             </span>
             <span className="border border-slate-800 bg-slate-900 px-2.5 py-1 rounded font-bold text-white">
-              ACTIVE ORDERS: {activeOrdersCount}
+              Active Orders: {activeOrdersCount}
             </span>
             <span className="border border-slate-300 bg-slate-50 px-2.5 py-1 rounded font-bold text-slate-700">
-              GUESTS: {totalGuests}
+              Guests: {totalGuests}
             </span>
           </div>
 
@@ -195,7 +200,8 @@ export const TabletScreen2TablesFeed: React.FC = () => {
               onClick={() => setCurrentScreen(10)}
               className="border border-slate-800 bg-slate-900 hover:bg-black text-white px-3 py-1 rounded-lg font-bold transition flex items-center gap-1.5 shadow-2xs"
             >
-              <span>📊 [SHIFT STATS]</span>
+              <BarChart3 className="h-3.5 w-3.5" />
+              <span>Shift Stats</span>
             </button>
           </div>
         </div>
@@ -262,7 +268,7 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                 <span>FLOOR TABLES MATRIX — {selectedSection}</span>
               </span>
               <span className="text-[10.5px] font-bold text-slate-500">
-                [TAP CARD = TABLE HUB • [+ ORDER] = TAKE ORDER]
+                Tap card for table hub • Quick order
               </span>
             </div>
 
@@ -284,7 +290,7 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                     <div className="flex justify-between items-center border-b border-dashed border-slate-300 pb-2 font-mono">
                       <div className="flex items-center gap-1.5">
                         <strong className="text-sm font-black text-slate-950">
-                          [{table.number}]
+                          Table {table.number}
                         </strong>
                         {table.number === 'A-04' && (
                           <span className="text-amber-500 text-xs font-black">★</span>
@@ -308,7 +314,7 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                               • {item.quantity}x {item.name}
                             </span>
                             <span className="text-[9.5px] font-bold text-slate-500 ml-1 shrink-0">
-                              [{item.status}]
+                              {item.status}
                             </span>
                           </div>
                         ))
@@ -336,8 +342,8 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                         onClick={(e) => handleTakeOrder(e, table.number)}
                         className="flex-1 py-1.5 px-1 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-[10px] font-black transition flex items-center justify-center gap-1 shadow-2xs active:scale-95"
                       >
-                        <Plus className="h-3 w-3 stroke-[3]" />
-                        <span>[ORDER]</span>
+                        <Plus className="h-3 w-3 stroke-[2.5]" />
+                        <span>Order</span>
                       </button>
 
                       {hasReadyDish ? (
@@ -346,15 +352,17 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                           onClick={(e) => handleServedClick(e, table.number)}
                           className="flex-1 py-1.5 px-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-[10px] font-bold transition flex items-center justify-center gap-1 shadow-2xs active:scale-95"
                         >
-                          ✓ [SERVED]
+                          <Check className="h-3 w-3 stroke-[2.5]" />
+                          <span>Served</span>
                         </button>
                       ) : (
                         <button
                           type="button"
                           onClick={(e) => handleVacateClick(e, table.number)}
-                          className="flex-1 py-1.5 px-1 border border-slate-300 hover:bg-stone-100 text-slate-700 rounded-lg text-[10px] font-bold transition flex items-center justify-center"
+                          className="flex-1 py-1.5 px-1 border border-slate-300 hover:bg-stone-100 text-slate-700 rounded-lg text-[10px] font-bold transition flex items-center justify-center gap-1"
                         >
-                          {table.status === 'BILLING' ? '[PAY/VAC]' : '[VACATE]'}
+                          <LogOut className="h-3 w-3" />
+                          <span>{table.status === 'BILLING' ? 'Bill / Vacate' : 'Vacate'}</span>
                         </button>
                       )}
                     </div>
@@ -386,7 +394,7 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                   >
                     <div>
                       <strong className="text-xs font-black text-slate-900 block">
-                        [{ping.tableNumber}: REQUESTED {ping.type}]
+                        Table {ping.tableNumber} • {ping.type}
                       </strong>
                       <span className="text-[10px] text-slate-500 font-bold">
                         ⏱ {ping.timestamp} • {ping.guestName}
@@ -395,9 +403,10 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleResolvePing(ping.id, ping.tableNumber)}
-                      className="bg-orange-600 hover:bg-orange-700 text-white text-[10.5px] font-bold px-3 py-1.5 rounded-lg transition shadow-2xs shrink-0 active:scale-95"
+                      className="bg-orange-600 hover:bg-orange-700 text-white text-[10.5px] font-bold px-3 py-1.5 rounded-lg transition shadow-2xs shrink-0 active:scale-95 flex items-center gap-1.5"
                     >
-                      [RESOLVE]
+                      <Check className="h-3.5 w-3.5 stroke-[2.5]" />
+                      <span>Resolve</span>
                     </button>
                   </div>
                 ))
@@ -435,7 +444,7 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                     >
                       <div>
                         <strong className="text-xs font-black text-slate-900 block">
-                          [{item.tableNumber}: {totalQty}x {dishTitle} READY]
+                          Table {item.tableNumber} • {totalQty}x {dishTitle}
                         </strong>
                         <span className="text-[10px] text-slate-500 font-bold">
                           ⏱ {item.timestamp} • Chef Pass Window
@@ -446,9 +455,10 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                         onClick={() =>
                           handleServeItem(item.id, item.items[0]?.id ?? '', item.tableNumber)
                         }
-                        className="bg-emerald-700 hover:bg-emerald-800 text-white text-[10.5px] font-bold px-3 py-1.5 rounded-lg transition shadow-2xs shrink-0 active:scale-95"
+                        className="bg-emerald-700 hover:bg-emerald-800 text-white text-[10.5px] font-bold px-3 py-1.5 rounded-lg transition shadow-2xs shrink-0 active:scale-95 flex items-center gap-1.5"
                       >
-                        [SERVED]
+                        <CheckCircle2 className="h-3.5 w-3.5" />
+                        <span>Served</span>
                       </button>
                     </div>
                   );

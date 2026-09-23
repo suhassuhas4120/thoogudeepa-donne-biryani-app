@@ -89,10 +89,10 @@ export const TabletScreen1Login: React.FC = () => {
         <div className="w-[42%] border-r-2 border-slate-800 bg-slate-100 p-8 flex flex-col justify-between select-none">
           <div>
             {/* Hotel Logo Space */}
-            <div className="w-full h-28 border-2 border-dashed border-slate-400 bg-white rounded-xl flex flex-col items-center justify-center gap-2 mb-6">
+            <div className="w-full h-28 border-2 border-dashed border-slate-300 bg-white rounded-xl flex flex-col items-center justify-center gap-2 mb-6">
               <span className="text-3xl">🍗</span>
               <span className="font-mono text-xs font-black tracking-wider text-slate-700">
-                [ESTABLISHMENT LOGO SPACE]
+                Thoogudeepa Donne Biryani
               </span>
             </div>
 
@@ -100,37 +100,37 @@ export const TabletScreen1Login: React.FC = () => {
               THOOGUDEEPA DONNE BIRYANI MANE
             </h1>
             <p className="font-mono text-xs font-extrabold text-orange-600 mt-1 uppercase tracking-wider">
-              [FLOOR CAPTAIN / WAITER SERVICE CONSOLE]
+              Floor Captain / Waiter Service Console
             </p>
 
             {/* Active Shift Announcement */}
             <div className="mt-6 border border-slate-300 bg-white rounded-xl p-4 flex flex-col gap-2 font-mono text-xs shadow-2xs">
               <span className="font-bold text-slate-500 uppercase text-[10px]">
-                [ACTIVE SHIFT ANNOUNCEMENT]:
+                Active Shift Announcement:
               </span>
               <div className="font-bold text-slate-900 text-sm">
-                [SHIFT A: 08:00 AM - 04:00 PM]
+                Shift A: 08:00 AM - 04:00 PM
               </div>
               <div className="text-slate-600 text-[11px]">
-                [ASSIGNED ZONE: MAIN DINING HALL • SECTION A &amp; B]
+                Assigned Zone: Main Dining Hall • Section A &amp; B
               </div>
               <div className="text-slate-600 text-[11px]">
-                [TABLES UNDER MANAGEMENT: 16 ACTIVE TABLES]
+                Tables Under Management: 16 Active Tables
               </div>
             </div>
 
             {/* Service Protocol Check */}
             <div className="mt-4 border border-slate-300 bg-white rounded-xl p-4 flex flex-col gap-2 font-mono text-[11px] shadow-2xs">
               <span className="font-bold text-slate-500 uppercase text-[10px]">
-                [SERVICE PROTOCOL CHECK]:
+                Service Protocol Check:
               </span>
               <div className="text-slate-700 flex items-center gap-2">
                 <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-                <span>[CHECK WATER BOTTLES &amp; CUTLERY STANDS]</span>
+                <span>Check water bottles &amp; cutlery stands</span>
               </div>
               <div className="text-slate-700 flex items-center gap-2">
                 <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-                <span>[CONFIRM KITCHEN KDS CHEF CONNECTION]</span>
+                <span>Confirm kitchen KDS chef connection</span>
               </div>
             </div>
           </div>
@@ -138,7 +138,7 @@ export const TabletScreen1Login: React.FC = () => {
           {/* Bottom Company Platform Tag */}
           <div className="border-t border-dashed border-slate-400 pt-4 text-center">
             <span className="font-mono text-[10px] text-slate-500 font-bold">
-              [POWERED BY THOOGUDEEPA RESTAURANT OS • TABLET CLIENT v2.4]
+              Powered by Thoogudeepa Restaurant OS • Tablet Client v2.4
             </span>
           </div>
         </div>
@@ -150,7 +150,7 @@ export const TabletScreen1Login: React.FC = () => {
             <div className="flex items-center gap-2">
               <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               <div className="font-mono text-[10px] font-bold text-slate-800">
-                <span className="text-orange-600 font-black">[SHIFT ACTIVE]</span> Peak Rush (12:00 - 23:00)
+                <span className="text-orange-600 font-black">SHIFT ACTIVE</span> Peak Rush (12:00 - 23:00)
               </div>
             </div>
             <span className="font-mono text-[9px] font-black text-slate-500 bg-white border border-slate-200 rounded-md px-1.5 py-0.5">
@@ -180,8 +180,8 @@ export const TabletScreen1Login: React.FC = () => {
           {/* Quick Staff Preset Selector (Matching Mobile Orange Tints) */}
           <div className="max-w-[460px] mx-auto w-full">
             <label className="block font-mono text-[11px] font-bold text-slate-600 mb-1.5 flex items-center justify-between">
-              <span>[SELECT CAPTAIN PROFILE]:</span>
-              <span className="text-[10px] text-orange-600 font-extrabold">[TAP TO SELECT]</span>
+              <span>Select Captain Profile:</span>
+              <span className="text-[10px] text-orange-600 font-extrabold">Tap to select</span>
             </label>
             <div className="grid grid-cols-2 gap-2">
               {CAPTAIN_PROFILES.map((prof) => {
@@ -328,16 +328,17 @@ export const TabletScreen1Login: React.FC = () => {
             <button
               type="button"
               onClick={handleClear}
-              className="flex-1 py-3.5 border border-slate-300 rounded-2xl font-mono text-xs font-bold text-slate-700 bg-stone-100 hover:bg-stone-200 transition"
+              className="flex-1 py-3.5 border border-slate-300 rounded-2xl font-mono text-xs font-bold text-slate-700 bg-stone-100 hover:bg-stone-200 transition flex items-center justify-center gap-1.5 shadow-2xs"
             >
-              [RESET]
+              <RotateCcw className="h-4 w-4" />
+              <span>Reset</span>
             </button>
             <button
               type="button"
               onClick={handleLogin}
               className="flex-[2] py-3.5 rounded-2xl font-mono text-xs font-black text-white bg-orange-600 hover:bg-orange-700 transition shadow-lg shadow-orange-600/30 flex items-center justify-center gap-2"
             >
-              <span>[UNLOCK FLOOR CONSOLE]</span>
+              <span>Unlock Floor Console</span>
               <ArrowRight className="h-4 w-4 stroke-[2.5]" />
             </button>
           </div>

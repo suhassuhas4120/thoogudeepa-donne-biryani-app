@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Flame,
   CheckCircle2,
+  Check,
   AlertCircle,
   Plus,
   Utensils,
@@ -207,7 +208,7 @@ export const ScreenW2TablesFeed: React.FC = () => {
               </span>
             </span>
             <span className="text-[9px] font-mono font-bold text-slate-400">
-              [TAP CARD = DETAIL • [+ ORDER] = MENU]
+              Tap card for details • Quick Order
             </span>
           </div>
 
@@ -226,7 +227,7 @@ export const ScreenW2TablesFeed: React.FC = () => {
                   <div>
                     <div className="flex items-center justify-between font-mono">
                       <div className="flex items-center gap-1">
-                        <span className="text-sm font-black text-slate-950">[{t.number}]</span>
+                        <span className="text-sm font-black text-slate-950">Table {t.number}</span>
                         {t.number === 'A-04' && (
                           <span className="text-amber-500 text-xs font-black">★</span>
                         )}
@@ -264,10 +265,10 @@ export const ScreenW2TablesFeed: React.FC = () => {
                     <button
                       type="button"
                       onClick={(e) => handleTakeOrder(e, t.number)}
-                      className="px-2 py-1 rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-mono text-[9.5px] font-black transition flex items-center gap-1 shadow-2xs active:scale-95"
+                      className="px-2.5 py-1 rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-mono text-[9.5px] font-black transition flex items-center gap-1 shadow-2xs active:scale-95"
                     >
-                      <Plus className="h-3 w-3 stroke-[3]" />
-                      <span>ORDER</span>
+                      <Plus className="h-3 w-3 stroke-[2.5]" />
+                      <span>Order</span>
                     </button>
                   </div>
                 </motion.div>
@@ -334,7 +335,7 @@ export const ScreenW2TablesFeed: React.FC = () => {
                   >
                     <div className="min-w-0 flex-1 mr-2">
                       <div className="font-mono font-black text-slate-900 text-[11px] truncate">
-                        TABLE [{p.tableNumber}] • {p.type}
+                        Table {p.tableNumber} • {p.type}
                       </div>
                       <div className="text-[9.5px] text-slate-500 font-mono">
                         {p.guestName} • {p.timestamp}
@@ -343,9 +344,10 @@ export const ScreenW2TablesFeed: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleResolvePing(p.id, p.tableNumber)}
-                      className="rounded-lg bg-orange-600 text-white px-2.5 py-1 text-[10px] font-mono font-bold hover:bg-orange-700 active:scale-95 transition shadow-2xs shrink-0"
+                      className="rounded-lg bg-orange-600 text-white px-2.5 py-1 text-[10px] font-mono font-bold hover:bg-orange-700 active:scale-95 transition shadow-2xs shrink-0 flex items-center gap-1"
                     >
-                      [RESOLVE]
+                      <Check className="h-3 w-3 stroke-[2.5]" />
+                      <span>Resolve</span>
                     </button>
                   </div>
                 ))
@@ -370,7 +372,7 @@ export const ScreenW2TablesFeed: React.FC = () => {
                   >
                     <div className="min-w-0 flex-1 mr-2">
                       <div className="font-mono font-black text-slate-900 text-[11px] truncate">
-                        [{kr.tableNumber}] {totalQty}x {dishTitle}
+                        Table {kr.tableNumber} • {totalQty}x {dishTitle}
                       </div>
                       <div className="text-[9.5px] text-slate-500 font-mono">
                         Pass ready at {kr.timestamp} • Chef Pick-up
@@ -381,9 +383,10 @@ export const ScreenW2TablesFeed: React.FC = () => {
                       onClick={() =>
                         handleServeItem(kr.id, kr.items[0]?.id ?? '', kr.tableNumber)
                       }
-                      className="rounded-lg bg-emerald-700 text-white px-2.5 py-1 text-[10px] font-mono font-bold hover:bg-emerald-800 active:scale-95 transition shadow-2xs shrink-0"
+                      className="rounded-lg bg-emerald-700 text-white px-2.5 py-1 text-[10px] font-mono font-bold hover:bg-emerald-800 active:scale-95 transition shadow-2xs shrink-0 flex items-center gap-1"
                     >
-                      [SERVED]
+                      <CheckCircle2 className="h-3 w-3" />
+                      <span>Served</span>
                     </button>
                   </div>
                 );

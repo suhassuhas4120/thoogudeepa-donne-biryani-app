@@ -161,6 +161,9 @@ interface SharedBridgeState {
 
   /** Waiter marks a kitchen-ready item as served → removes from waiter feed + updates table item status */
   waiterMarkKitchenItemServed: (ticketId: string, itemId: string) => void;
+
+  /** Reset all portals and tables back to clean initial state */
+  resetToFreshDemoState: () => void;
 }
 
 /* ── Store Implementation ───────────────────────────────────────── */
@@ -221,6 +224,13 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
 
   /* ─── Customer Pings Waiter ──────────────────────────────────── */
   customerPingsWaiter: (tableNumber, type, guestName, msg) => {
+    // Deduplication: prevent duplicate pending pings from same table for same reason
+    const currentPings = get().pings;
+    const hasDuplicate = currentPings.some(
+      (p) => p.tableNumber === tableNumber && p.type === type && p.status === 'PENDING'
+    );
+    if (hasDuplicate) return;
+
     const ping: SharedPing = {
       id: 'p-' + Date.now(),
       tableNumber,
@@ -467,10 +477,42 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
       }),
     }));
   },
+
+  /* ─── Reset to Fresh Demo State ──────────────────────────────── */
+  resetToFreshDemoState: () => {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem('thoogudeepa_bridge_v1');
+      } catch {}
+    }
+    set({
+      tables: freshTables,
+      kdsTickets: [],
+      pings: [],
+      inventory86: freshInventory86,
+      shiftStats: {
+        tablesServed: 0,
+        totalRevenue: 0,
+        tipsEarned: 0,
+        avgTurnaroundMinutes: 38,
+      },
+    });
+  },
 }));
 
 /* ── Real-Time Cross-Tab & Multi-Device Synchronization ───────────── */
 if (typeof window !== 'undefined') {
+  // 0. Rehydrate from localStorage if available
+  try {
+    const saved = localStorage.getItem('thoogudeepa_bridge_v1');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed && Array.isArray(parsed.tables)) {
+        useSharedBridge.setState(parsed);
+      }
+    }
+  } catch {}
+
   // 1. Native Cross-Tab Sync via BroadcastChannel (0ms latency, zero dependencies)
   if ('BroadcastChannel' in window) {
     const syncChannel = new BroadcastChannel('thoogudeepa_bridge_sync');
@@ -485,6 +527,20 @@ if (typeof window !== 'undefined') {
     };
 
     useSharedBridge.subscribe((state) => {
+      // Save state to localStorage for refresh persistence
+      try {
+        localStorage.setItem(
+          'thoogudeepa_bridge_v1',
+          JSON.stringify({
+            tables: state.tables,
+            kdsTickets: state.kdsTickets,
+            pings: state.pings,
+            inventory86: state.inventory86,
+            shiftStats: state.shiftStats,
+          })
+        );
+      } catch {}
+
       if (isBroadcasting) return;
       try {
         syncChannel.postMessage({

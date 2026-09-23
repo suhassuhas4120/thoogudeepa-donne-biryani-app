@@ -159,19 +159,21 @@ export const TabletScreen1Login: React.FC = () => {
 
           <div className="max-w-[460px] mx-auto w-full">
             <div className="flex items-center justify-between">
-              <span className="font-mono text-xs font-bold text-slate-500 uppercase">
-                [AUTHENTICATION CREDENTIALS]:
-              </span>
+              <div>
+                <span className="font-mono text-[10.5px] font-bold text-slate-400 uppercase tracking-wider block">
+                  CAPTAIN TERMINAL ACCESS
+                </span>
+                <h2 className="text-base font-black text-slate-900 font-mono">
+                  Floor Captain Verification
+                </h2>
+              </div>
               {matchedProfile && (
-                <span className="font-mono text-xs font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-300 flex items-center gap-1">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
-                  {matchedProfile.role}
+                <span className="font-mono text-xs font-black text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-300 flex items-center gap-1.5 shadow-2xs">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                  <span>{matchedProfile.role}</span>
                 </span>
               )}
             </div>
-            <h2 className="text-lg font-black text-slate-950 font-mono mt-1">
-              [ENTER WAITER NAME &amp; NUMBER LOCK PIN]
-            </h2>
           </div>
 
           {/* Quick Staff Preset Selector (Matching Mobile Orange Tints) */}
@@ -212,8 +214,8 @@ export const TabletScreen1Login: React.FC = () => {
 
           {/* Waiter Name Input */}
           <div className="max-w-[460px] mx-auto w-full">
-            <label className="block font-mono text-[11px] font-bold text-slate-600 mb-1">
-              [ENTER WAITER / CAPTAIN NAME]:
+            <label className="block font-mono text-[11px] font-bold text-slate-600 mb-1 uppercase">
+              Captain Name
             </label>
             <input
               type="text"
@@ -229,8 +231,8 @@ export const TabletScreen1Login: React.FC = () => {
 
           {/* Floor Section Selection (Matching Mobile Orange Badge) */}
           <div className="max-w-[460px] mx-auto w-full">
-            <label className="block font-mono text-[11px] font-bold text-slate-600 mb-1">
-              [ASSIGNED FLOOR SECTION]:
+            <label className="block font-mono text-[11px] font-bold text-slate-600 mb-1 uppercase">
+              Assigned Floor Zone
             </label>
             <div className="grid grid-cols-2 gap-2">
               {sections.map((sec) => (
@@ -253,7 +255,7 @@ export const TabletScreen1Login: React.FC = () => {
           {/* PIN Lock Indicator (Matching Mobile Emerald & Dots) */}
           <div className="max-w-[460px] mx-auto w-full">
             <div className="flex justify-between items-center mb-1 font-mono text-[11px]">
-              <label className="font-bold text-slate-600">[NUMBER LOCK PASSWORD / PIN]:</label>
+              <label className="font-bold text-slate-600 uppercase">4-Digit Security PIN</label>
               <span className={`font-bold font-mono ${pin.length === 4 ? 'text-emerald-700' : 'text-slate-400'}`}>
                 {pin.length === 4 ? '✓ PIN ENTERED &amp; VERIFIED' : `(${4 - pin.length} digits remaining)`}
               </span>

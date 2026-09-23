@@ -82,14 +82,62 @@ export interface SharedShiftStats {
 
 /* ── Initial Data ───────────────────────────────────────────────── */
 const freshTables: SharedTable[] = [
-  { id: 't-1', number: 'A-01', section: 'SECTION A', capacity: 4, status: 'VACANT', guestCount: 0, seatedTime: '--', currentBill: 0, serverName: 'Captain Ramesh', kotCount: 0 },
+  // SECTION A (4 Tables)
+  { id: 't-1', number: 'A-01', section: 'SECTION A', capacity: 4, status: 'OCCUPIED', guestCount: 3, seatedTime: '12:20 PM', currentBill: 740, serverName: 'Captain Ramesh', kotCount: 1, activeItems: [{ name: 'Mutton Donne Biryani', quantity: 2, status: 'Cooking' }, { name: 'Chicken Guntur Fry', quantity: 1, status: 'Ready' }] },
   { id: 't-2', number: 'A-02', section: 'SECTION A', capacity: 2, status: 'VACANT', guestCount: 0, seatedTime: '--', currentBill: 0, serverName: 'Captain Ramesh', kotCount: 0 },
-  { id: 't-3', number: 'A-03', section: 'SECTION A', capacity: 6, status: 'VACANT', guestCount: 0, seatedTime: '--', currentBill: 0, serverName: 'Captain Ramesh', kotCount: 0 },
-  { id: 't-4', number: 'A-04', section: 'SECTION A', capacity: 4, status: 'VACANT', guestCount: 0, seatedTime: '--', currentBill: 0, serverName: 'Captain Ramesh', kotCount: 0 },
+  { id: 't-3', number: 'A-03', section: 'SECTION A', capacity: 6, status: 'BILLING', guestCount: 5, seatedTime: '11:45 AM', currentBill: 1680, serverName: 'Captain Ramesh', kotCount: 2, activeItems: [{ name: 'Donne Biryani Rice', quantity: 3, status: 'Served' }] },
+  { id: 't-4', number: 'A-04', section: 'SECTION A', capacity: 4, status: 'OCCUPIED', guestCount: 4, seatedTime: '12:35 PM', currentBill: 1120, serverName: 'Captain Ramesh', kotCount: 1, activeItems: [{ name: 'Chicken Donne Biryani', quantity: 2, status: 'Ready' }] },
+
+  // SECTION B (4 Tables)
   { id: 't-5', number: 'B-01', section: 'SECTION B', capacity: 4, status: 'VACANT', guestCount: 0, seatedTime: '--', currentBill: 0, serverName: 'Captain Suresh', kotCount: 0 },
-  { id: 't-6', number: 'B-02', section: 'SECTION B', capacity: 2, status: 'VACANT', guestCount: 0, seatedTime: '--', currentBill: 0, serverName: 'Captain Suresh', kotCount: 0 },
-  { id: 't-7', number: 'B-03', section: 'SECTION B', capacity: 6, status: 'VACANT', guestCount: 0, seatedTime: '--', currentBill: 0, serverName: 'Captain Suresh', kotCount: 0 },
-  { id: 't-8', number: 'C-01', section: 'SECTION C', capacity: 8, status: 'VACANT', guestCount: 0, seatedTime: '--', currentBill: 0, serverName: 'Captain Vijay', kotCount: 0 },
+  { id: 't-6', number: 'B-02', section: 'SECTION B', capacity: 2, status: 'OCCUPIED', guestCount: 2, seatedTime: '12:40 PM', currentBill: 560, serverName: 'Captain Suresh', kotCount: 1, activeItems: [{ name: 'Egg Donne Biryani', quantity: 2, status: 'Ready' }] },
+  { id: 't-7', number: 'B-03', section: 'SECTION B', capacity: 6, status: 'CLEANING', guestCount: 0, seatedTime: '--', currentBill: 0, serverName: 'Captain Suresh', kotCount: 0 },
+  { id: 't-8', number: 'B-04', section: 'SECTION B', capacity: 4, status: 'VACANT', guestCount: 0, seatedTime: '--', currentBill: 0, serverName: 'Captain Suresh', kotCount: 0 },
+
+  // TERRACE ROOFTOP (4 Tables)
+  { id: 't-9', number: 'T-01', section: 'TERRACE', capacity: 4, status: 'OCCUPIED', guestCount: 4, seatedTime: '12:15 PM', currentBill: 1350, serverName: 'Captain Vijay', kotCount: 1, activeItems: [{ name: 'Special Mutton Biryani', quantity: 2, status: 'Cooking' }] },
+  { id: 't-10', number: 'T-02', section: 'TERRACE', capacity: 2, status: 'VACANT', guestCount: 0, seatedTime: '--', currentBill: 0, serverName: 'Captain Vijay', kotCount: 0 },
+  { id: 't-11', number: 'T-03', section: 'TERRACE', capacity: 4, status: 'OCCUPIED', guestCount: 3, seatedTime: '12:50 PM', currentBill: 890, serverName: 'Captain Vijay', kotCount: 1 },
+  { id: 't-12', number: 'T-04', section: 'TERRACE', capacity: 6, status: 'VACANT', guestCount: 0, seatedTime: '--', currentBill: 0, serverName: 'Captain Vijay', kotCount: 0 },
+
+  // FAMILY DINING (4 Tables)
+  { id: 't-13', number: 'F-01', section: 'FAMILY DINING', capacity: 8, status: 'OCCUPIED', guestCount: 7, seatedTime: '12:10 PM', currentBill: 2450, serverName: 'Captain Anand', kotCount: 2, activeItems: [{ name: 'Family Biryani Combo', quantity: 1, status: 'Cooking' }] },
+  { id: 't-14', number: 'F-02', section: 'FAMILY DINING', capacity: 6, status: 'VACANT', guestCount: 0, seatedTime: '--', currentBill: 0, serverName: 'Captain Anand', kotCount: 0 },
+  { id: 't-15', number: 'F-03', section: 'FAMILY DINING', capacity: 8, status: 'BILLING', guestCount: 6, seatedTime: '11:50 AM', currentBill: 2190, serverName: 'Captain Anand', kotCount: 2 },
+  { id: 't-16', number: 'F-04', section: 'FAMILY DINING', capacity: 4, status: 'VACANT', guestCount: 0, seatedTime: '--', currentBill: 0, serverName: 'Captain Anand', kotCount: 0 },
+];
+
+const initialPings: SharedPing[] = [
+  { id: 'p-1', tableNumber: 'A-01', type: 'Extra Gravy & Water', timestamp: '2m ago', status: 'PENDING', guestName: 'Karthik S.' },
+  { id: 'p-2', tableNumber: 'T-01', type: 'Call Floor Captain', timestamp: '5m ago', status: 'PENDING', guestName: 'Divya R.' },
+];
+
+const initialTickets: SharedKDSTicket[] = [
+  {
+    id: 'KDS-101',
+    tableNumber: 'A-04',
+    serverName: 'Captain Ramesh',
+    timestamp: '12:45 PM',
+    elapsedMinutes: 8,
+    status: 'READY',
+    source: 'WAITER',
+    items: [
+      { id: 'ki-1', name: 'Chicken Donne Biryani', quantity: 2, stage: 'PLATED', prepMode: 'Dine-In' },
+      { id: 'ki-2', name: 'Chicken Guntur Fry', quantity: 1, stage: 'PLATED', prepMode: 'Dine-In' },
+    ],
+  },
+  {
+    id: 'KDS-102',
+    tableNumber: 'B-02',
+    serverName: 'Captain Suresh',
+    timestamp: '12:48 PM',
+    elapsedMinutes: 5,
+    status: 'READY',
+    source: 'WAITER',
+    items: [
+      { id: 'ki-3', name: 'Egg Donne Biryani', quantity: 2, stage: 'PLATED', prepMode: 'Dine-In' },
+    ],
+  },
 ];
 
 const freshInventory86: SharedMenuItem86[] = INITIAL_MENU_ITEMS.map((item) => ({
@@ -166,8 +214,8 @@ interface SharedBridgeState {
 /* ── Store Implementation ───────────────────────────────────────── */
 export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
   tables: freshTables,
-  kdsTickets: [],
-  pings: [],
+  kdsTickets: initialTickets,
+  pings: initialPings,
   inventory86: freshInventory86,
   shiftStats: {
     tablesServed: 0,

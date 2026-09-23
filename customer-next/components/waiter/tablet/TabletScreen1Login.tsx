@@ -25,22 +25,37 @@ export const TabletScreen1Login: React.FC = () => {
     useWaiterStore();
   const [pin, setPin] = useState('');
   const [selectedProfilePin, setSelectedProfilePin] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const sections = ['SECTION A & B', 'TERRACE ROOFTOP', 'FAMILY AC DINING', 'ALL SECTIONS'];
+
+  const matchedProfile = CAPTAIN_PROFILES.find((p) => p.name === activeCaptain);
+  const expectedPin = selectedProfilePin || (matchedProfile ? matchedProfile.pin : null);
+  const isVerified = Boolean(activeCaptain && pin.length === 4 && expectedPin && pin === expectedPin);
 
   const handleNum = (num: string) => {
     if (pin.length < 4) {
       const nextPin = pin + num;
       setPin(nextPin);
+      setErrorMessage(null);
 
       if (nextPin.length === 4) {
-        const matched = CAPTAIN_PROFILES.find((p) => p.pin === nextPin);
-        if (matched) {
-          setActiveCaptain(matched.name);
-          setActiveSection(matched.section);
-          setSelectedProfilePin(matched.pin);
-        } else if (!activeCaptain) {
-          setActiveCaptain('Captain Ramesh');
+        if (expectedPin) {
+          if (nextPin !== expectedPin) {
+            setErrorMessage(`Incorrect password for ${activeCaptain || 'Captain'}.`);
+          } else {
+            setErrorMessage(null);
+          }
+        } else {
+          const matched = CAPTAIN_PROFILES.find((p) => p.pin === nextPin);
+          if (matched) {
+            setActiveCaptain(matched.name);
+            setActiveSection(matched.section);
+            setSelectedProfilePin(matched.pin);
+            setErrorMessage(null);
+          } else {
+            setErrorMessage('Invalid PIN. Please select your captain name first.');
+          }
         }
       }
     }
@@ -50,34 +65,47 @@ export const TabletScreen1Login: React.FC = () => {
     setActiveCaptain(profile.name);
     setActiveSection(profile.section);
     setSelectedProfilePin(profile.pin);
-    setPin(profile.pin); // Automatically fills the PIN code
+    setPin(''); // Never auto-fill password to preserve captain privacy!
+    setErrorMessage(null);
   };
 
   const handleDel = () => {
     setPin((p) => p.slice(0, -1));
+    setErrorMessage(null);
   };
 
   const handleClear = () => {
     setPin('');
+    setErrorMessage(null);
+  };
+
+  const handleReset = () => {
+    setPin('');
     setSelectedProfilePin(null);
+    setErrorMessage(null);
     setActiveCaptain('');
+    setActiveSection('SECTION A & B');
   };
 
   const handleLogin = () => {
-    if (pin.length === 4) {
-      const matched = CAPTAIN_PROFILES.find((p) => p.pin === pin);
-      if (matched && (!activeCaptain || activeCaptain === '')) {
-        setActiveCaptain(matched.name);
-        setActiveSection(matched.section);
-      }
-    }
     if (!activeCaptain || activeCaptain.trim() === '') {
-      setActiveCaptain('Captain Ramesh');
+      setErrorMessage('Please select your Captain name first.');
+      return;
     }
+
+    if (pin.length < 4) {
+      setErrorMessage(`Please enter the 4-digit password for ${activeCaptain}.`);
+      return;
+    }
+
+    if (expectedPin && pin !== expectedPin) {
+      setErrorMessage(`Incorrect password for ${activeCaptain}. Access denied.`);
+      return;
+    }
+
+    setErrorMessage(null);
     setCurrentScreen(2);
   };
-
-  const matchedProfile = CAPTAIN_PROFILES.find((p) => p.pin === pin || p.name === activeCaptain);
 
   return (
     <WaiterTabletLandscapeHousing
@@ -177,15 +205,18 @@ export const TabletScreen1Login: React.FC = () => {
             </div>
           </div>
 
-          {/* Quick Staff Preset Selector (Matching Mobile Orange Tints) */}
+          {/* Quick Staff Preset Selector */}
           <div className="max-w-[460px] mx-auto w-full">
-            <label className="block font-mono text-[11px] font-bold text-slate-600 mb-1.5 flex items-center justify-between">
-              <span>Select Captain Profile:</span>
-              <span className="text-[10px] text-orange-600 font-extrabold">Tap to select</span>
+            <label className="block font-mono text-xs font-black text-slate-600 mb-1.5 flex items-center justify-between">
+              <span className="flex items-center gap-1.5">
+                <UserCheck className="h-3.5 w-3.5 text-orange-600" />
+                <span>SELECT CAPTAIN PROFILE:</span>
+              </span>
+              <span className="text-[10px] text-orange-600 font-extrabold uppercase">Tap name to choose</span>
             </label>
             <div className="grid grid-cols-2 gap-2">
               {CAPTAIN_PROFILES.map((prof) => {
-                const isSelected = selectedProfilePin === prof.pin || activeCaptain === prof.name;
+                const isSelected = activeCaptain === prof.name;
                 return (
                   <button
                     key={prof.pin}
@@ -213,24 +244,34 @@ export const TabletScreen1Login: React.FC = () => {
             </div>
           </div>
 
-          {/* Waiter Name Input */}
+          {/* Selected Captain Card */}
           <div className="max-w-[460px] mx-auto w-full">
             <label className="block font-mono text-[11px] font-bold text-slate-600 mb-1 uppercase">
-              Captain Name
+              Selected Captain
             </label>
-            <input
-              type="text"
-              value={activeCaptain}
-              onChange={(e) => {
-                setActiveCaptain(e.target.value);
-                setSelectedProfilePin(null);
-              }}
-              className="w-full border border-slate-300 rounded-xl px-4 py-2 font-mono text-sm font-bold text-slate-900 bg-stone-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-              placeholder="e.g. Captain Ramesh"
-            />
+            <div className="px-4 py-2.5 rounded-xl border border-slate-200 bg-stone-50 flex items-center justify-between font-mono">
+              {matchedProfile ? (
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="text-xl">{matchedProfile.avatar}</span>
+                  <div className="min-w-0">
+                    <div className="text-sm font-black text-slate-900 truncate">{matchedProfile.name}</div>
+                    <div className="text-xs font-bold text-slate-500 truncate">{matchedProfile.role} • {matchedProfile.section}</div>
+                  </div>
+                </div>
+              ) : (
+                <span className="text-xs font-bold text-slate-400 italic">
+                  Tap your captain profile above
+                </span>
+              )}
+              {matchedProfile && (
+                <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-md shrink-0">
+                  Active
+                </span>
+              )}
+            </div>
           </div>
 
-          {/* Floor Section Selection (Matching Mobile Orange Badge) */}
+          {/* Floor Section Selection */}
           <div className="max-w-[460px] mx-auto w-full">
             <label className="block font-mono text-[11px] font-bold text-slate-600 mb-1 uppercase">
               Assigned Floor Zone
@@ -253,18 +294,34 @@ export const TabletScreen1Login: React.FC = () => {
             </div>
           </div>
 
-          {/* PIN Lock Indicator (Matching Mobile Emerald & Dots) */}
+          {/* PIN Lock Indicator */}
           <div className="max-w-[460px] mx-auto w-full">
             <div className="flex justify-between items-center mb-1 font-mono text-[11px]">
-              <label className="font-bold text-slate-600 uppercase">4-Digit Security PIN</label>
-              <span className={`font-bold font-mono ${pin.length === 4 ? 'text-emerald-700' : 'text-slate-400'}`}>
-                {pin.length === 4 ? '✓ PIN ENTERED &amp; VERIFIED' : `(${4 - pin.length} digits remaining)`}
+              <label className="font-bold text-slate-600 uppercase">
+                {activeCaptain ? `4-Digit PIN for ${activeCaptain.toUpperCase()}` : '4-Digit Security PIN'}
+              </label>
+              <span
+                className={`font-bold font-mono ${
+                  isVerified
+                    ? 'text-emerald-700'
+                    : errorMessage
+                    ? 'text-rose-600'
+                    : 'text-slate-400'
+                }`}
+              >
+                {isVerified
+                  ? '✓ PIN VERIFIED'
+                  : errorMessage
+                  ? '⚠ ACCESS DENIED'
+                  : `(${4 - pin.length} digits remaining)`}
               </span>
             </div>
             <div
-              className={`h-11 rounded-xl bg-white border-2 flex items-center justify-center gap-4 shadow-2xs transition ${
-                pin.length === 4
-                  ? 'border-emerald-500 bg-emerald-50/30'
+              className={`h-13 rounded-2xl bg-white border-2 flex items-center justify-center gap-4 shadow-2xs transition ${
+                errorMessage
+                  ? 'border-rose-400 bg-rose-50/40'
+                  : isVerified
+                  ? 'border-emerald-500 bg-emerald-50/40'
                   : 'border-slate-300'
               }`}
             >
@@ -273,10 +330,12 @@ export const TabletScreen1Login: React.FC = () => {
                 return (
                   <div
                     key={idx}
-                    className={`h-3.5 w-3.5 rounded-full border-2 transition-all ${
+                    className={`h-4 w-4 rounded-full border-2 transition-all ${
                       filled
-                        ? pin.length === 4
+                        ? isVerified
                           ? 'bg-emerald-600 border-emerald-600 scale-110'
+                          : errorMessage
+                          ? 'bg-rose-500 border-rose-500'
                           : 'bg-slate-900 border-slate-900'
                         : 'border-slate-300 bg-transparent'
                     }`}
@@ -284,16 +343,34 @@ export const TabletScreen1Login: React.FC = () => {
                 );
               })}
             </div>
+
+            {/* Error or Verified Status Banner */}
+            {errorMessage ? (
+              <p className="text-xs font-mono text-rose-600 font-bold mt-1.5 text-center bg-rose-50 border border-rose-200 py-1.5 px-3 rounded-lg">
+                ⚠ {errorMessage}
+              </p>
+            ) : isVerified ? (
+              <p className="text-xs font-mono text-emerald-700 font-bold mt-1.5 text-center bg-emerald-50 border border-emerald-200 py-1.5 px-3 rounded-lg flex items-center justify-center gap-1.5">
+                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                <span>Password Verified for {activeCaptain} • Ready to Unlock Console</span>
+              </p>
+            ) : (
+              <p className="text-[11px] font-mono text-slate-400 font-bold mt-1 text-center">
+                {activeCaptain
+                  ? `Enter confidential 4-digit PIN for ${activeCaptain}`
+                  : 'Select your captain name above to enter password'}
+              </p>
+            )}
           </div>
 
-          {/* Keypad Grid */}
+          {/* Keypad Grid (Scaled to h-13 with text-xl for 10" Tablet) */}
           <div className="grid grid-cols-3 gap-2 max-w-[460px] mx-auto w-full">
             {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((num) => (
               <button
                 key={num}
                 type="button"
                 onClick={() => handleNum(num)}
-                className="h-11 font-mono text-base font-black bg-white border border-slate-200 rounded-xl hover:bg-stone-100 active:scale-95 transition shadow-2xs flex items-center justify-center text-slate-900"
+                className="h-13 font-mono text-xl font-black bg-white border border-slate-200 rounded-xl hover:bg-stone-100 active:scale-95 transition shadow-2xs flex items-center justify-center text-slate-900"
               >
                 {num}
               </button>
@@ -301,34 +378,34 @@ export const TabletScreen1Login: React.FC = () => {
             <button
               type="button"
               onClick={handleDel}
-              className="h-11 font-mono text-xs font-bold bg-stone-100 border border-slate-200 rounded-xl hover:bg-stone-200 active:scale-95 transition text-slate-700 flex items-center justify-center gap-1"
+              className="h-13 font-mono text-xs font-bold bg-stone-100 border border-slate-200 rounded-xl hover:bg-stone-200 active:scale-95 transition text-slate-700 flex items-center justify-center gap-1"
             >
-              <Delete className="h-3.5 w-3.5" />
+              <Delete className="h-4 w-4" />
               <span>DEL</span>
             </button>
             <button
               type="button"
               onClick={() => handleNum('0')}
-              className="h-11 font-mono text-base font-black bg-white border border-slate-200 rounded-xl hover:bg-stone-100 active:scale-95 transition shadow-2xs flex items-center justify-center text-slate-900"
+              className="h-13 font-mono text-xl font-black bg-white border border-slate-200 rounded-xl hover:bg-stone-100 active:scale-95 transition shadow-2xs flex items-center justify-center text-slate-900"
             >
               0
             </button>
             <button
               type="button"
               onClick={handleClear}
-              className="h-11 font-mono text-xs font-bold bg-stone-100 border border-slate-200 rounded-xl hover:bg-stone-200 active:scale-95 transition text-slate-700 flex items-center justify-center gap-1"
+              className="h-13 font-mono text-xs font-bold bg-stone-100 border border-slate-200 rounded-xl hover:bg-stone-200 active:scale-95 transition text-slate-700 flex items-center justify-center gap-1"
             >
-              <RotateCcw className="h-3.5 w-3.5" />
+              <RotateCcw className="h-4 w-4" />
               <span>CLR</span>
             </button>
           </div>
 
-          {/* Action Buttons (Matching Signature Orange CTA) */}
+          {/* Action Buttons (Scaled py-4 text-xs font-black for 10" Tablet) */}
           <div className="flex gap-3 max-w-[460px] mx-auto w-full">
             <button
               type="button"
-              onClick={handleClear}
-              className="flex-1 py-3.5 border border-slate-300 rounded-2xl font-mono text-xs font-bold text-slate-700 bg-stone-100 hover:bg-stone-200 transition flex items-center justify-center gap-1.5 shadow-2xs"
+              onClick={handleReset}
+              className="flex-1 py-4 border border-slate-300 rounded-2xl font-mono text-xs font-bold text-slate-700 bg-stone-100 hover:bg-stone-200 transition flex items-center justify-center gap-1.5 shadow-2xs active:scale-95"
             >
               <RotateCcw className="h-4 w-4" />
               <span>Reset</span>
@@ -336,7 +413,11 @@ export const TabletScreen1Login: React.FC = () => {
             <button
               type="button"
               onClick={handleLogin}
-              className="flex-[2] py-3.5 rounded-2xl font-mono text-xs font-black text-white bg-orange-600 hover:bg-orange-700 transition shadow-lg shadow-orange-600/30 flex items-center justify-center gap-2"
+              className={`flex-[2] py-4 rounded-2xl font-mono text-xs font-black text-white transition flex items-center justify-center gap-2 active:scale-95 ${
+                isVerified
+                  ? 'bg-orange-600 hover:bg-orange-700 shadow-lg shadow-orange-600/30 ring-2 ring-orange-400'
+                  : 'bg-slate-800 hover:bg-slate-900 shadow-2xs'
+              }`}
             >
               <span>Unlock Floor Console</span>
               <ArrowRight className="h-4 w-4 stroke-[2.5]" />

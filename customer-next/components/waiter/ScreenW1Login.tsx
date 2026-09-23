@@ -38,32 +38,37 @@ export const ScreenW1Login: React.FC = () => {
 
   const [pin, setPin] = useState('');
   const [selectedProfilePin, setSelectedProfilePin] = useState<string | null>(null);
-  const [pinError, setPinError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const sections = ['ALL', 'SECTION A', 'SECTION B', 'TERRACE', 'FAMILY DINING'];
+
+  const matchedProfile = CAPTAIN_PROFILES.find((p) => p.name === activeCaptain);
+  const expectedPin = selectedProfilePin || (matchedProfile ? matchedProfile.pin : null);
+  const isVerified = Boolean(activeCaptain && pin.length === 4 && expectedPin && pin === expectedPin);
 
   const handleNum = (num: string) => {
     if (pin.length < 4) {
       const nextPin = pin + num;
       setPin(nextPin);
-      setPinError(false);
+      setErrorMessage(null);
 
       if (nextPin.length === 4) {
-        if (selectedProfilePin) {
-          if (nextPin !== selectedProfilePin) {
-            setPinError(true);
+        if (expectedPin) {
+          if (nextPin !== expectedPin) {
+            setErrorMessage(`Incorrect password for ${activeCaptain || 'Captain'}.`);
           } else {
-            setPinError(false);
+            setErrorMessage(null);
           }
         } else {
+          // If no captain was selected yet, check if entered PIN matches any captain
           const matched = CAPTAIN_PROFILES.find((p) => p.pin === nextPin);
           if (matched) {
             setActiveCaptain(matched.name);
             setActiveSection(matched.section);
             setSelectedProfilePin(matched.pin);
-            setPinError(false);
+            setErrorMessage(null);
           } else {
-            setPinError(true);
+            setErrorMessage('Invalid PIN. Please select your captain name above.');
           }
         }
       }
@@ -74,55 +79,47 @@ export const ScreenW1Login: React.FC = () => {
     setActiveCaptain(profile.name);
     setActiveSection(profile.section);
     setSelectedProfilePin(profile.pin);
-    setPin(profile.pin); // Automatically fills the PIN code
-    setPinError(false);
+    setPin(''); // Never auto-fill password to preserve staff privacy!
+    setErrorMessage(null);
   };
 
   const handleClear = () => {
     setPin('');
-    setSelectedProfilePin(null);
-    setPinError(false);
+    setErrorMessage(null);
   };
 
   const handleReset = () => {
     setPin('');
     setSelectedProfilePin(null);
-    setPinError(false);
+    setErrorMessage(null);
     setActiveCaptain('');
     setActiveSection('SECTION A');
   };
 
   const handleDelete = () => {
     setPin((p) => p.slice(0, -1));
-    setPinError(false);
+    setErrorMessage(null);
   };
 
   const handleLogin = () => {
-    if (pin.length > 0 && pin.length < 4) {
-      setPinError(true);
+    if (!activeCaptain || activeCaptain.trim() === '') {
+      setErrorMessage('Please select your Captain name first.');
       return;
     }
 
-    if (pin.length === 4) {
-      if (selectedProfilePin && pin !== selectedProfilePin) {
-        setPinError(true);
-        return;
-      }
-      const matched = CAPTAIN_PROFILES.find((p) => p.pin === pin);
-      if (matched) {
-        setActiveCaptain(matched.name);
-        setActiveSection(matched.section);
-      }
+    if (pin.length < 4) {
+      setErrorMessage(`Please enter the 4-digit password for ${activeCaptain}.`);
+      return;
     }
 
-    if (!activeCaptain || activeCaptain.trim() === '') {
-      setActiveCaptain('Captain Ramesh');
+    if (expectedPin && pin !== expectedPin) {
+      setErrorMessage(`Incorrect password for ${activeCaptain}. Access denied.`);
+      return;
     }
 
+    setErrorMessage(null);
     setCurrentScreen(2);
   };
-
-  const matchedProfile = CAPTAIN_PROFILES.find((p) => p.pin === pin || p.name === activeCaptain);
 
   return (
     <WaiterTabletHousing screenNumber={1} screenTitle="CAPTAIN AUTH &amp; SECTION LOGIN">
@@ -181,27 +178,37 @@ export const ScreenW1Login: React.FC = () => {
             </div>
           </div>
 
-          {/* Captain Name & Floor Section Details */}
+          {/* Captain Selection & Floor Section Details */}
           <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-xs space-y-2">
             <div>
               <label className="text-[10px] font-bold text-slate-500 font-mono uppercase flex items-center justify-between">
-                <span>Assigned Captain Name</span>
+                <span>Selected Captain</span>
                 {matchedProfile && (
                   <span className="text-emerald-700 font-black text-[9.5px]">
                     ✓ {matchedProfile.role}
                   </span>
                 )}
               </label>
-              <input
-                type="text"
-                value={activeCaptain}
-                onChange={(e) => {
-                  setActiveCaptain(e.target.value);
-                  setSelectedProfilePin(null);
-                }}
-                placeholder="e.g. Captain Ramesh"
-                className="w-full mt-1 px-3 py-1.5 rounded-xl border border-slate-200 bg-stone-50 text-xs font-black text-slate-900 focus:outline-none focus:border-orange-500"
-              />
+              <div className="mt-1 px-3 py-2 rounded-xl border border-slate-200 bg-stone-50 flex items-center justify-between font-mono">
+                {matchedProfile ? (
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className="text-base">{matchedProfile.avatar}</span>
+                    <div className="min-w-0">
+                      <div className="text-xs font-black text-slate-900 truncate">{matchedProfile.name}</div>
+                      <div className="text-[9.5px] font-bold text-slate-500 truncate">{matchedProfile.role}</div>
+                    </div>
+                  </div>
+                ) : (
+                  <span className="text-xs font-bold text-slate-400 italic">
+                    Tap a captain profile above
+                  </span>
+                )}
+                {matchedProfile && (
+                  <span className="text-[9.5px] font-black text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md shrink-0">
+                    Active
+                  </span>
+                )}
+              </div>
             </div>
 
             <div>
@@ -231,18 +238,30 @@ export const ScreenW1Login: React.FC = () => {
           <div>
             <div className="flex items-center justify-between mb-1 px-0.5">
               <span className="text-[10px] font-bold font-mono uppercase tracking-wider text-slate-500">
-                Enter 4-Digit Security PIN
+                {activeCaptain ? `PIN FOR ${activeCaptain.toUpperCase()}` : '4-DIGIT SECURITY PIN'}
               </span>
-              <span className={`text-[10px] font-mono font-bold ${pin.length === 4 ? 'text-emerald-600' : 'text-slate-400'}`}>
-                {pin.length === 4 ? '✓ PIN ENTERED' : `(${4 - pin.length} digits left)`}
+              <span
+                className={`text-[10px] font-mono font-bold ${
+                  isVerified
+                    ? 'text-emerald-600'
+                    : errorMessage
+                    ? 'text-rose-600'
+                    : 'text-slate-400'
+                }`}
+              >
+                {isVerified
+                  ? '✓ PIN VERIFIED'
+                  : errorMessage
+                  ? '⚠ ACCESS DENIED'
+                  : `(${4 - pin.length} digits left)`}
               </span>
             </div>
 
             <div
               className={`h-11 rounded-xl bg-white border-2 flex items-center justify-center gap-4 shadow-2xs transition ${
-                pinError
+                errorMessage
                   ? 'border-rose-400 bg-rose-50/50'
-                  : pin.length === 4
+                  : isVerified
                   ? 'border-emerald-500 bg-emerald-50/30'
                   : 'border-slate-300'
               }`}
@@ -252,11 +271,13 @@ export const ScreenW1Login: React.FC = () => {
                 return (
                   <motion.div
                     key={idx}
-                    animate={filled ? { scale: [1, 1.2, 1] } : { scale: 1 }}
+                    animate={filled ? { scale: [1, 1.25, 1] } : { scale: 1 }}
                     className={`h-3.5 w-3.5 rounded-full border-2 transition-all ${
                       filled
-                        ? pin.length === 4
+                        ? isVerified
                           ? 'bg-emerald-600 border-emerald-600'
+                          : errorMessage
+                          ? 'bg-rose-500 border-rose-500'
                           : 'bg-slate-900 border-slate-900'
                         : 'border-slate-300 bg-transparent'
                     }`}
@@ -264,9 +285,22 @@ export const ScreenW1Login: React.FC = () => {
                 );
               })}
             </div>
-            {pinError && (
-              <p className="text-[10px] font-mono text-rose-600 font-bold mt-1 text-center">
-                Please enter a full 4-digit PIN (e.g. 1001)
+
+            {/* Error or Verified Status Message */}
+            {errorMessage ? (
+              <p className="text-[10px] font-mono text-rose-600 font-bold mt-1 text-center bg-rose-50 border border-rose-200 py-1 px-2 rounded-lg">
+                ⚠ {errorMessage}
+              </p>
+            ) : isVerified ? (
+              <p className="text-[10px] font-mono text-emerald-700 font-bold mt-1 text-center bg-emerald-50 border border-emerald-200 py-1 px-2 rounded-lg flex items-center justify-center gap-1">
+                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                <span>Password Verified for {activeCaptain} • Tap Unlock</span>
+              </p>
+            ) : (
+              <p className="text-[9.5px] font-mono text-slate-400 font-bold mt-1 text-center">
+                {activeCaptain
+                  ? `Enter 4-digit password for ${activeCaptain}`
+                  : 'Select your captain name above to enter password'}
               </p>
             )}
           </div>
@@ -323,7 +357,11 @@ export const ScreenW1Login: React.FC = () => {
             whileTap={{ scale: 0.98 }}
             type="button"
             onClick={handleLogin}
-            className="flex-[2] flex items-center justify-center gap-2 rounded-2xl bg-orange-600 py-3.5 text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-orange-600/30 hover:bg-orange-700 transition"
+            className={`flex-[2] flex items-center justify-center gap-2 rounded-2xl py-3.5 text-xs font-black uppercase tracking-wider text-white transition ${
+              isVerified
+                ? 'bg-orange-600 hover:bg-orange-700 shadow-lg shadow-orange-600/30 ring-2 ring-orange-400'
+                : 'bg-slate-800 hover:bg-slate-900 shadow-2xs'
+            }`}
           >
             <span>Unlock Floor Console</span>
             <ArrowRight className="h-4 w-4 stroke-[2.5]" />

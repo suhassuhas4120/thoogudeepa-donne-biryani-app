@@ -56,7 +56,7 @@ To publish this project online so all 7 developers can clone and collaborate:
 3. **Important**: Leave "Add a README" and ".gitignore" **unchecked** (they are already created in this project).
 
 ### Step B: Push This Local Repository to GitHub
-Open your terminal in `C:\Users\HP\.gemini\antigravity\scratch\hospitality-saas-app` and run:
+Open your terminal inside the `thoogudeepa-donne-biryani-app` project folder and run:
 
 ```bash
 # 1. Link your remote GitHub repository (already configured!)

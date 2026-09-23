@@ -80,6 +80,7 @@ export const ScreenW1Login: React.FC = () => {
 
   const handleClear = () => {
     setPin('');
+    setSelectedProfilePin(null);
     setPinError(false);
   };
 

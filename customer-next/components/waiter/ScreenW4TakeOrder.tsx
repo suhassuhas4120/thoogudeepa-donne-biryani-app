@@ -19,6 +19,27 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+// FSSAI Food Safety standard Veg / Non-Veg badge
+const FoodTypeBadge: React.FC<{ isVeg: boolean }> = ({ isVeg }) => (
+  <div
+    className={`w-3 h-3 border rounded-xs flex items-center justify-center p-0.5 shrink-0 ${
+      isVeg ? 'border-emerald-600 bg-emerald-50/60' : 'border-rose-700 bg-rose-50/60'
+    }`}
+    title={isVeg ? 'Vegetarian' : 'Non-Vegetarian'}
+  >
+    <div
+      className={`w-1.5 h-1.5 rounded-full ${
+        isVeg ? 'bg-emerald-600' : 'bg-rose-700'
+      }`}
+    />
+  </div>
+);
+
+const isVegItem = (item: MenuItem) => {
+  const name = item.name.toLowerCase();
+  return name.includes('paneer') || name.includes('payasam') || name.includes('veg');
+};
+
 export const ScreenW4TakeOrder: React.FC = () => {
   const {
     setCurrentScreen,
@@ -34,6 +55,11 @@ export const ScreenW4TakeOrder: React.FC = () => {
   const [query, setQuery] = useState('');
 
   const categories = ['ALL', 'Rice & Bowls', 'Starters', 'Desserts'];
+
+  const getCategoryCount = (cat: string) => {
+    if (cat === 'ALL') return INITIAL_MENU_ITEMS.length;
+    return INITIAL_MENU_ITEMS.filter((i) => i.category === cat).length;
+  };
 
   const filtered = INITIAL_MENU_ITEMS.filter((i) => {
     const matchCat = selectedCat === 'ALL' || i.category === selectedCat;
@@ -70,7 +96,7 @@ export const ScreenW4TakeOrder: React.FC = () => {
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => setCurrentScreen(5)}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-orange-600 text-white font-mono text-xs font-black shadow-md shadow-orange-600/20"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-orange-600 text-white font-mono text-xs font-black shadow-md shadow-orange-600/20 active:scale-95"
             >
               <ShoppingBag className="h-3.5 w-3.5" />
               <span>Cart ({cartCount}) • ₹ {cartTotal}</span>
@@ -104,125 +130,155 @@ export const ScreenW4TakeOrder: React.FC = () => {
             <button
               key={c}
               onClick={() => setSelectedCat(c)}
-              className={`px-3 py-1.5 rounded-xl text-[10.5px] font-black whitespace-nowrap transition border ${
+              className={`px-3 py-1.5 rounded-xl text-[10.5px] font-black whitespace-nowrap transition border flex items-center gap-1 ${
                 selectedCat === c
                   ? 'bg-slate-900 text-white border-slate-900 shadow-2xs'
                   : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
               }`}
             >
-              {c}
+              <span>{c}</span>
+              <span
+                className={`text-[9px] px-1.5 py-0.2 rounded-full font-mono ${
+                  selectedCat === c ? 'bg-slate-800 text-slate-200' : 'bg-slate-100 text-slate-500'
+                }`}
+              >
+                {getCategoryCount(c)}
+              </span>
             </button>
           ))}
         </div>
 
         {/* Food Items 2-Col Grid */}
         <div className="flex-1 overflow-y-auto grid grid-cols-2 gap-2 pb-1">
-          {filtered.map((item) => {
-            const item86 = inventory86.find((i) => i.id === item.id);
-            const isSoldOut = !!item86?.is86;
-            const cartItems = orderCart.filter((ci) => ci.menuItem.id === item.id);
-            const totalQty = cartItems.reduce((acc, ci) => acc + ci.quantity, 0);
-
-            return (
-              <div
-                key={item.id}
-                className={`rounded-2xl border p-2.5 flex flex-col justify-between shadow-2xs transition ${
-                  isSoldOut
-                    ? 'bg-stone-50 border-rose-200 opacity-60'
-                    : totalQty > 0
-                    ? 'bg-orange-50/40 border-orange-300'
-                    : 'bg-white border-slate-200'
-                }`}
+          {filtered.length === 0 ? (
+            <div className="col-span-2 py-12 flex flex-col items-center justify-center text-center">
+              <Search className="h-7 w-7 text-slate-300 mb-1.5" />
+              <p className="text-xs font-bold text-slate-800">
+                No dishes found matching &quot;{query}&quot;
+              </p>
+              <button
+                onClick={() => {
+                  setQuery('');
+                  setSelectedCat('ALL');
+                }}
+                className="mt-2.5 px-3 py-1 bg-slate-900 text-white text-[11px] font-bold rounded-lg transition"
               >
-                <div>
-                  <div className="flex items-start justify-between gap-1">
-                    <span className="text-xs font-black text-slate-900 line-clamp-1">
-                      {item.name}
-                    </span>
-                    {isSoldOut ? (
-                      <span className="text-[8px] font-black bg-rose-600 text-white px-1 py-0.2 rounded shrink-0">
-                        86 SOLD
-                      </span>
-                    ) : item.badge ? (
-                      <span className="text-[8px] font-bold bg-amber-100 text-amber-800 px-1 py-0.2 rounded border border-amber-200 shrink-0">
-                        {item.badge}
-                      </span>
-                    ) : null}
-                  </div>
-                  <div className="text-xs font-black text-orange-600 mt-0.5">
-                    ₹ {item.price}
-                  </div>
-                </div>
+                Clear Search
+              </button>
+            </div>
+          ) : (
+            filtered.map((item) => {
+              const item86 = inventory86.find((i) => i.id === item.id);
+              const isSoldOut = !!item86?.is86;
+              const cartItems = orderCart.filter((ci) => ci.menuItem.id === item.id);
+              const totalQty = cartItems.reduce((acc, ci) => acc + ci.quantity, 0);
 
-                <div className="mt-2.5 flex gap-1">
-                  {isSoldOut ? (
-                    <div className="w-full py-1.5 rounded-xl text-[10px] font-black flex items-center justify-center gap-1 bg-stone-200 text-slate-400 border border-slate-300 cursor-not-allowed">
-                      <Ban className="h-3 w-3" />
-                      <span>Sold Out</span>
+              return (
+                <div
+                  key={item.id}
+                  className={`rounded-2xl border p-2.5 flex flex-col justify-between shadow-2xs transition ${
+                    isSoldOut
+                      ? 'bg-stone-50 border-rose-200 opacity-60'
+                      : totalQty > 0
+                      ? 'bg-orange-50/40 border-orange-300'
+                      : 'bg-white border-slate-200'
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-1 mb-1">
+                      <FoodTypeBadge isVeg={isVegItem(item)} />
+                      {isSoldOut ? (
+                        <span className="text-[8px] font-black bg-rose-600 text-white px-1 py-0.2 rounded shrink-0">
+                          86 SOLD
+                        </span>
+                      ) : item.badge ? (
+                        <span className="text-[8px] font-bold bg-amber-100 text-amber-800 px-1 py-0.2 rounded border border-amber-200 shrink-0">
+                          {item.badge}
+                        </span>
+                      ) : null}
                     </div>
-                  ) : totalQty > 0 ? (
-                    <div className="w-full flex items-center gap-1">
-                      <div className="flex-1 flex items-center justify-between bg-orange-600 text-white rounded-xl px-1.5 py-1 shadow-2xs">
+                    <div className="text-xs font-black text-slate-900 line-clamp-2 leading-snug">
+                      {item.name}
+                    </div>
+                    <div className="text-xs font-black text-orange-600 mt-1 font-mono">
+                      ₹ {item.price}
+                    </div>
+                  </div>
+
+                  <div className="mt-2.5 flex gap-1">
+                    {isSoldOut ? (
+                      <div className="w-full py-1.5 rounded-xl text-[10px] font-black flex items-center justify-center gap-1 bg-stone-200 text-slate-400 border border-slate-300 cursor-not-allowed">
+                        <Ban className="h-3 w-3" />
+                        <span>Sold Out</span>
+                      </div>
+                    ) : totalQty > 0 ? (
+                      <div className="w-full flex items-center gap-1">
+                        <div className="flex-1 flex items-center justify-between bg-orange-600 text-white rounded-xl px-1.5 py-1 shadow-2xs">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (cartItems[0]) {
+                                updateOrderCartQty(cartItems[0].cartItemId, -1);
+                              }
+                            }}
+                            className="p-1 hover:bg-orange-700 rounded-lg transition active:scale-90"
+                          >
+                            <Minus className="h-3 w-3 stroke-[2.5]" />
+                          </button>
+                          <span className="text-xs font-black">{totalQty}</span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (cartItems[0]) {
+                                updateOrderCartQty(cartItems[0].cartItemId, 1);
+                              } else {
+                                addToOrderCart(item);
+                              }
+                            }}
+                            className="p-1 hover:bg-orange-700 rounded-lg transition active:scale-90"
+                          >
+                            <Plus className="h-3 w-3 stroke-[2.5]" />
+                          </button>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => setCurrentScreen(5)}
+                          className="p-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-700 border border-slate-200 transition active:scale-95 shrink-0"
+                          title="Customize Options"
+                        >
+                          <SlidersHorizontal className="h-3.5 w-3.5 text-slate-700" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="w-full flex items-center gap-1">
+                        <motion.button
+                          whileTap={{ scale: 0.95 }}
+                          type="button"
+                          onClick={() => addToOrderCart(item)}
+                          className="flex-1 py-1.5 rounded-xl text-[10.5px] font-black flex items-center justify-center gap-1 bg-orange-50 border border-orange-200 text-orange-800 hover:bg-orange-100 transition shadow-2xs"
+                        >
+                          <Plus className="h-3 w-3 stroke-[2.5]" />
+                          <span>Add</span>
+                        </motion.button>
                         <button
                           type="button"
                           onClick={() => {
-                            if (cartItems[0]) {
-                              updateOrderCartQty(cartItems[0].cartItemId, -1);
-                            }
+                            addToOrderCart(item);
+                            setCurrentScreen(5);
                           }}
-                          className="p-1 hover:bg-orange-700 rounded-lg transition active:scale-90"
+                          className="p-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-700 border border-slate-200 transition active:scale-95 shrink-0"
+                          title="Customize Options"
                         >
-                          <Minus className="h-3 w-3 stroke-[2.5]" />
-                        </button>
-                        <span className="text-xs font-black">{totalQty}</span>
-                        <button
-                          type="button"
-                          onClick={() => addToOrderCart(item)}
-                          className="p-1 hover:bg-orange-700 rounded-lg transition active:scale-90"
-                        >
-                          <Plus className="h-3 w-3 stroke-[2.5]" />
+                          <SlidersHorizontal className="h-3.5 w-3.5 text-slate-700" />
                         </button>
                       </div>
-
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setCurrentScreen(5);
-                        }}
-                        className="px-2 py-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-700 text-[10px] font-bold border border-slate-200"
-                        title="Customize"
-                      >
-                        <SlidersHorizontal className="h-3 w-3 text-slate-600" />
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="w-full flex gap-1">
-                      <motion.button
-                        whileTap={{ scale: 0.95 }}
-                        type="button"
-                        onClick={() => addToOrderCart(item)}
-                        className="flex-1 py-1.5 rounded-xl text-[10.5px] font-black flex items-center justify-center gap-1 bg-orange-50 border border-orange-200 text-orange-800 hover:bg-orange-100 transition shadow-2xs"
-                      >
-                        <Plus className="h-3 w-3 stroke-[2.5]" />
-                        <span>Add</span>
-                      </motion.button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          addToOrderCart(item);
-                          setCurrentScreen(5);
-                        }}
-                        className="px-2 py-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-600 text-[10px] font-bold border border-slate-200"
-                        title="Customize item"
-                      >
-                        Opt
-                      </button>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
 
         {/* Cart Bottom CTA */}
@@ -230,7 +286,7 @@ export const ScreenW4TakeOrder: React.FC = () => {
           <motion.button
             whileTap={{ scale: 0.98 }}
             onClick={() => setCurrentScreen(5)}
-            className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-orange-600 text-white font-mono text-xs font-black shadow-lg shadow-orange-600/25 shrink-0"
+            className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-orange-600 text-white font-mono text-xs font-black shadow-lg shadow-orange-600/25 shrink-0 active:scale-95"
           >
             <div className="flex items-center gap-2">
               <ShoppingBag className="h-4 w-4" />

@@ -50,7 +50,7 @@ export const TabletScreen1Login: React.FC = () => {
     setActiveCaptain(profile.name);
     setActiveSection(profile.section);
     setSelectedProfilePin(profile.pin);
-    setPin(''); // Keep secret PIN empty so waiter must enter it securely
+    setPin(profile.pin); // Automatically fills the PIN code
   };
 
   const handleDel = () => {

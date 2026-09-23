@@ -10,8 +10,8 @@
 - [ ] Person 6: Bharath & Suhas M (`feature/suhas-bharath-ui-ux`)
 - [ ] Person 7: Manjunath (`feature/manjunath-qa-devops`)
 
-### Related Tasks
-<!-- Reference the tasks completed from TEAM_10_TASKS_ROADMAP.md (e.g. Task 1.1, Task 2.3) -->
+### Related Feature / Issue
+<!-- Reference the feature, screen, or bug worked on -->
 
 ### Changes Made
 - 

@@ -84,6 +84,14 @@ export const ScreenW1Login: React.FC = () => {
     setPinError(false);
   };
 
+  const handleReset = () => {
+    setPin('');
+    setSelectedProfilePin(null);
+    setPinError(false);
+    setActiveCaptain('');
+    setActiveSection('SECTION A');
+  };
+
   const handleDelete = () => {
     setPin((p) => p.slice(0, -1));
     setPinError(false);
@@ -301,16 +309,26 @@ export const ScreenW1Login: React.FC = () => {
           </div>
         </div>
 
-        {/* Unlock Action Button */}
-        <motion.button
-          whileTap={{ scale: 0.98 }}
-          type="button"
-          onClick={handleLogin}
-          className="w-full mt-2 flex items-center justify-center gap-2 rounded-2xl bg-orange-600 py-3.5 text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-orange-600/30 hover:bg-orange-700 transition"
-        >
-          <span>[UNLOCK FLOOR CONSOLE]</span>
-          <ArrowRight className="h-4 w-4 stroke-[2.5]" />
-        </motion.button>
+        {/* Bottom Actions: Reset & Unlock */}
+        <div className="flex gap-2 mt-2">
+          <button
+            type="button"
+            onClick={handleReset}
+            className="flex-1 py-3.5 border border-slate-300 rounded-2xl font-mono text-xs font-bold text-slate-700 bg-stone-100 hover:bg-stone-200 transition active:scale-95 flex items-center justify-center gap-1.5 shadow-2xs"
+          >
+            <RotateCcw className="h-3.5 w-3.5" />
+            <span>[RESET]</span>
+          </button>
+          <motion.button
+            whileTap={{ scale: 0.98 }}
+            type="button"
+            onClick={handleLogin}
+            className="flex-[2] flex items-center justify-center gap-2 rounded-2xl bg-orange-600 py-3.5 text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-orange-600/30 hover:bg-orange-700 transition"
+          >
+            <span>[UNLOCK FLOOR CONSOLE]</span>
+            <ArrowRight className="h-4 w-4 stroke-[2.5]" />
+          </motion.button>
+        </div>
       </div>
     </WaiterTabletHousing>
   );

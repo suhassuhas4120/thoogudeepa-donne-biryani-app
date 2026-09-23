@@ -60,6 +60,7 @@ export const TabletScreen1Login: React.FC = () => {
   const handleClear = () => {
     setPin('');
     setSelectedProfilePin(null);
+    setActiveCaptain('');
   };
 
   const handleLogin = () => {

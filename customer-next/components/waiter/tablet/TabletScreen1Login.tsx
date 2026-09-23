@@ -174,7 +174,7 @@ export const TabletScreen1Login: React.FC = () => {
         {/* RIGHT 58%: AUTHENTICATION KEYPAD TERMINAL */}
         <div className="w-[58%] bg-white p-8 flex flex-col justify-center gap-4 overflow-y-auto">
           {/* Top Live Shift Banner (Matching Mobile) */}
-          <div className="max-w-[460px] mx-auto w-full rounded-2xl border border-orange-200/80 bg-gradient-to-r from-orange-50 via-amber-50 to-orange-50 p-2.5 shadow-2xs flex items-center justify-between">
+          <div className="max-w-[480px] mx-auto w-full rounded-2xl border border-orange-200/80 bg-gradient-to-r from-orange-50 via-amber-50 to-orange-50 p-2.5 shadow-2xs flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               <div className="font-mono text-[10px] font-bold text-slate-800">
@@ -186,7 +186,7 @@ export const TabletScreen1Login: React.FC = () => {
             </span>
           </div>
 
-          <div className="max-w-[460px] mx-auto w-full">
+          <div className="max-w-[480px] mx-auto w-full">
             <div className="flex items-center justify-between">
               <div>
                 <span className="font-mono text-[10.5px] font-bold text-slate-400 uppercase tracking-wider block">
@@ -206,7 +206,7 @@ export const TabletScreen1Login: React.FC = () => {
           </div>
 
           {/* Quick Staff Preset Selector */}
-          <div className="max-w-[460px] mx-auto w-full">
+          <div className="max-w-[480px] mx-auto w-full">
             <label className="block font-mono text-xs font-black text-slate-600 mb-1.5 flex items-center justify-between">
               <span className="flex items-center gap-1.5">
                 <UserCheck className="h-3.5 w-3.5 text-orange-600" />
@@ -245,7 +245,7 @@ export const TabletScreen1Login: React.FC = () => {
           </div>
 
           {/* Selected Captain Card */}
-          <div className="max-w-[460px] mx-auto w-full">
+          <div className="max-w-[480px] mx-auto w-full">
             <label className="block font-mono text-[11px] font-bold text-slate-600 mb-1 uppercase">
               Selected Captain
             </label>
@@ -272,7 +272,7 @@ export const TabletScreen1Login: React.FC = () => {
           </div>
 
           {/* Floor Section Selection */}
-          <div className="max-w-[460px] mx-auto w-full">
+          <div className="max-w-[480px] mx-auto w-full">
             <label className="block font-mono text-[11px] font-bold text-slate-600 mb-1 uppercase">
               Assigned Floor Zone
             </label>
@@ -294,14 +294,15 @@ export const TabletScreen1Login: React.FC = () => {
             </div>
           </div>
 
-          {/* PIN Lock Indicator */}
-          <div className="max-w-[460px] mx-auto w-full">
-            <div className="flex justify-between items-center mb-1 font-mono text-[11px]">
-              <label className="font-bold text-slate-600 uppercase">
-                {activeCaptain ? `4-Digit PIN for ${activeCaptain.toUpperCase()}` : '4-Digit Security PIN'}
+          {/* PIN Lock Indicator - Enlarged Tablet Display */}
+          <div className="max-w-[480px] mx-auto w-full">
+            <div className="flex justify-between items-center mb-1.5 font-mono text-xs">
+              <label className="font-extrabold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <ShieldCheck className="h-4 w-4 text-orange-600" />
+                <span>{activeCaptain ? `4-Digit PIN for ${activeCaptain.toUpperCase()}` : '4-Digit Security PIN'}</span>
               </label>
               <span
-                className={`font-bold font-mono ${
+                className={`font-black font-mono text-xs ${
                   isVerified
                     ? 'text-emerald-700'
                     : errorMessage
@@ -316,46 +317,56 @@ export const TabletScreen1Login: React.FC = () => {
                   : `(${4 - pin.length} digits remaining)`}
               </span>
             </div>
+
+            {/* Prominent 4-Slot POS PIN Box Container */}
             <div
-              className={`h-13 rounded-2xl bg-white border-2 flex items-center justify-center gap-4 shadow-2xs transition ${
+              className={`rounded-2xl border-2 p-3 transition-all flex items-center justify-center shadow-xs ${
                 errorMessage
-                  ? 'border-rose-400 bg-rose-50/40'
+                  ? 'border-rose-400 bg-rose-50/60'
                   : isVerified
-                  ? 'border-emerald-500 bg-emerald-50/40'
-                  : 'border-slate-300'
+                  ? 'border-emerald-500 bg-emerald-50/50 ring-2 ring-emerald-500/20'
+                  : 'border-slate-300 bg-stone-50/90'
               }`}
             >
-              {[0, 1, 2, 3].map((idx) => {
-                const filled = pin.length > idx;
-                return (
-                  <div
-                    key={idx}
-                    className={`h-4 w-4 rounded-full border-2 transition-all ${
-                      filled
-                        ? isVerified
-                          ? 'bg-emerald-600 border-emerald-600 scale-110'
-                          : errorMessage
-                          ? 'bg-rose-500 border-rose-500'
-                          : 'bg-slate-900 border-slate-900'
-                        : 'border-slate-300 bg-transparent'
-                    }`}
-                  />
-                );
-              })}
+              <div className="flex items-center justify-center gap-4 py-1">
+                {[0, 1, 2, 3].map((idx) => {
+                  const filled = pin.length > idx;
+                  return (
+                    <div
+                      key={idx}
+                      className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center transition-all ${
+                        filled
+                          ? isVerified
+                            ? 'border-emerald-600 bg-emerald-600 text-white shadow-md scale-105'
+                            : errorMessage
+                            ? 'border-rose-500 bg-rose-500 text-white shadow-sm scale-105'
+                            : 'border-slate-900 bg-slate-900 text-white shadow-xs scale-105'
+                          : 'border-slate-300 bg-white shadow-2xs'
+                      }`}
+                    >
+                      {filled ? (
+                        <span className="text-2xl font-black leading-none">●</span>
+                      ) : (
+                        <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Error or Verified Status Banner */}
             {errorMessage ? (
-              <p className="text-xs font-mono text-rose-600 font-bold mt-1.5 text-center bg-rose-50 border border-rose-200 py-1.5 px-3 rounded-lg">
-                ⚠ {errorMessage}
+              <p className="text-xs font-mono text-rose-600 font-bold mt-2 text-center bg-rose-50 border border-rose-200 py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 shadow-2xs">
+                <span>⚠ {errorMessage}</span>
               </p>
             ) : isVerified ? (
-              <p className="text-xs font-mono text-emerald-700 font-bold mt-1.5 text-center bg-emerald-50 border border-emerald-200 py-1.5 px-3 rounded-lg flex items-center justify-center gap-1.5">
+              <p className="text-xs font-mono text-emerald-800 font-black mt-2 text-center bg-emerald-50 border border-emerald-300 py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 shadow-2xs">
                 <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
                 <span>Password Verified for {activeCaptain} • Ready to Unlock Console</span>
               </p>
             ) : (
-              <p className="text-[11px] font-mono text-slate-400 font-bold mt-1 text-center">
+              <p className="text-xs font-mono text-slate-500 font-bold mt-1.5 text-center">
                 {activeCaptain
                   ? `Enter confidential 4-digit PIN for ${activeCaptain}`
                   : 'Select your captain name above to enter password'}
@@ -363,14 +374,14 @@ export const TabletScreen1Login: React.FC = () => {
             )}
           </div>
 
-          {/* Keypad Grid (Scaled to h-13 with text-xl for 10" Tablet) */}
-          <div className="grid grid-cols-3 gap-2 max-w-[460px] mx-auto w-full">
+          {/* Keypad Grid (Scaled to h-14 with text-xl for 10" Tablet) */}
+          <div className="grid grid-cols-3 gap-2.5 max-w-[480px] mx-auto w-full">
             {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((num) => (
               <button
                 key={num}
                 type="button"
                 onClick={() => handleNum(num)}
-                className="h-13 font-mono text-xl font-black bg-white border border-slate-200 rounded-xl hover:bg-stone-100 active:scale-95 transition shadow-2xs flex items-center justify-center text-slate-900"
+                className="h-14 font-mono text-xl font-black bg-white border border-slate-200 rounded-2xl hover:bg-stone-100 active:scale-95 transition shadow-2xs flex items-center justify-center text-slate-900"
               >
                 {num}
               </button>
@@ -378,7 +389,7 @@ export const TabletScreen1Login: React.FC = () => {
             <button
               type="button"
               onClick={handleDel}
-              className="h-13 font-mono text-xs font-bold bg-stone-100 border border-slate-200 rounded-xl hover:bg-stone-200 active:scale-95 transition text-slate-700 flex items-center justify-center gap-1"
+              className="h-14 font-mono text-xs font-bold bg-stone-100 border border-slate-200 rounded-2xl hover:bg-stone-200 active:scale-95 transition text-slate-700 flex items-center justify-center gap-1"
             >
               <Delete className="h-4 w-4" />
               <span>DEL</span>
@@ -386,26 +397,26 @@ export const TabletScreen1Login: React.FC = () => {
             <button
               type="button"
               onClick={() => handleNum('0')}
-              className="h-13 font-mono text-xl font-black bg-white border border-slate-200 rounded-xl hover:bg-stone-100 active:scale-95 transition shadow-2xs flex items-center justify-center text-slate-900"
+              className="h-14 font-mono text-xl font-black bg-white border border-slate-200 rounded-2xl hover:bg-stone-100 active:scale-95 transition shadow-2xs flex items-center justify-center text-slate-900"
             >
               0
             </button>
             <button
               type="button"
               onClick={handleClear}
-              className="h-13 font-mono text-xs font-bold bg-stone-100 border border-slate-200 rounded-xl hover:bg-stone-200 active:scale-95 transition text-slate-700 flex items-center justify-center gap-1"
+              className="h-14 font-mono text-xs font-bold bg-stone-100 border border-slate-200 rounded-xl hover:bg-stone-200 active:scale-95 transition text-slate-700 flex items-center justify-center gap-1"
             >
               <RotateCcw className="h-4 w-4" />
               <span>CLR</span>
             </button>
           </div>
 
-          {/* Action Buttons (Scaled py-4 text-xs font-black for 10" Tablet) */}
-          <div className="flex gap-3 max-w-[460px] mx-auto w-full">
+          {/* Action Buttons (Scaled py-4 text-sm font-black for 10" Tablet) */}
+          <div className="flex gap-3 max-w-[480px] mx-auto w-full">
             <button
               type="button"
               onClick={handleReset}
-              className="flex-1 py-4 border border-slate-300 rounded-2xl font-mono text-xs font-bold text-slate-700 bg-stone-100 hover:bg-stone-200 transition flex items-center justify-center gap-1.5 shadow-2xs active:scale-95"
+              className="flex-1 py-4 border border-slate-300 rounded-2xl font-mono text-sm font-bold text-slate-700 bg-stone-100 hover:bg-stone-200 transition flex items-center justify-center gap-1.5 shadow-2xs active:scale-95"
             >
               <RotateCcw className="h-4 w-4" />
               <span>Reset</span>
@@ -413,9 +424,9 @@ export const TabletScreen1Login: React.FC = () => {
             <button
               type="button"
               onClick={handleLogin}
-              className={`flex-[2] py-4 rounded-2xl font-mono text-xs font-black text-white transition flex items-center justify-center gap-2 active:scale-95 ${
+              className={`flex-[2] py-4 rounded-2xl font-mono text-sm font-black text-white transition flex items-center justify-center gap-2 active:scale-95 ${
                 isVerified
-                  ? 'bg-orange-600 hover:bg-orange-700 shadow-lg shadow-orange-600/30 ring-2 ring-orange-400'
+                  ? 'bg-orange-600 hover:bg-orange-700 shadow-xl shadow-orange-600/30 ring-2 ring-orange-400'
                   : 'bg-slate-800 hover:bg-slate-900 shadow-2xs'
               }`}
             >

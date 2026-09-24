@@ -196,5 +196,5 @@ export default function KitchenKDSPage() {
         )}
       </div>
     </main>
-  );
+  )
 }

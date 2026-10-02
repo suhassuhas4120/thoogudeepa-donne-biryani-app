@@ -6,7 +6,7 @@ import { useSharedBridge } from '../../store/useSharedBridge';
 import { ScreenHousing } from '../ui/ScreenHousing';
 import { WireHeader } from '../ui/WireHeader';
 import { StickyBottomBar } from '../ui/StickyBottomBar';
-import { ShoppingCart, ArrowRight, Check, Sparkles, Utensils, Ban } from 'lucide-react';
+import { ArrowRight, Check, Sparkles, Ban } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const Screen3ItemDetail: React.FC = () => {
@@ -14,11 +14,11 @@ export const Screen3ItemDetail: React.FC = () => {
   const { inventory86 } = useSharedBridge();
 
   const item = selectedDetailItem;
-  const item86 = inventory86.find((i) => i.id === item.id);
+  const item86 = inventory86?.find((i) => i.id === item.id);
   const isSoldOut = !!item86?.is86;
 
   const [selectedOption, setSelectedOption] = useState<string>(
-    item.optionsGroup1.choices[0] || 'Standard'
+    item.optionsGroup1?.choices[0] || 'Standard'
   );
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
 
@@ -34,151 +34,144 @@ export const Screen3ItemDetail: React.FC = () => {
     setCurrentScreen(4);
   };
 
-  // Compute calculated total
   let currentTotal = item.price;
   selectedAddOns.forEach((addonName) => {
-    const found = item.optionsGroup2.addOns.find((a) => a.name === addonName);
+    const found = item.optionsGroup2?.addOns.find((a) => a.name === addonName);
     if (found) currentTotal += found.extraPrice;
   });
 
   return (
     <ScreenHousing screenNumber={3} screenTitle="DETAILED ITEM PAGE">
-      {/* Top Header */}
+      {/* Header */}
       <WireHeader
-        title="[ITEM DETAILS PAGE]"
+        title="Item Details"
         showBack={true}
         onBack={() => setCurrentScreen(2)}
         showCallWaiter={true}
         showCart={false}
       />
 
-      {/* Scrollable Body */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3.5">
-        {/* Big Item Image Space */}
-        <div>
-          <div className="mb-1 text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono">
-            [BIG ITEM IMAGE SPACE]
-          </div>
-          <div className="relative flex h-44 w-full flex-col items-center justify-center rounded-3xl border-2 border-dashed border-orange-200 bg-gradient-to-tr from-amber-100/60 via-orange-50 to-white p-4 shadow-sm text-center">
-            <span className="text-4xl">🍛</span>
-            <span className="mt-2 font-mono text-xs font-black tracking-wider text-orange-950">
-              [BIG ITEM IMAGE CONTAINER: {item.imagePlaceholder}]
-            </span>
-            <span className="mt-1 rounded-full bg-white/80 px-2.5 py-0.5 text-[10px] font-bold text-slate-600 border border-slate-200">
-              Prep Mode: {item.prepMode}
-            </span>
-          </div>
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#FFFCF7]">
+        {/* Dish Showcase Card */}
+        <div className="relative flex h-52 w-full flex-col items-center justify-center rounded-[28px] overflow-hidden border border-[#E8D5C3] bg-[#F3DFCC]/60 p-4 shadow-sm text-center">
+          <span className="text-6xl">{isSoldOut ? '🚫' : '🍲'}</span>
+          <span className="mt-2 font-mono text-xs font-black uppercase tracking-wider text-[#8A4228]">
+            {item.prepMode || 'Traditional Military Dum'}
+          </span>
+
+          {item.badge && !isSoldOut && (
+            <div className="absolute top-3 right-3 rounded-full bg-[#8A4228] px-3 py-1 text-[9px] font-black uppercase tracking-wider text-[#FFFCF7] shadow-xs">
+              {item.badge}
+            </div>
+          )}
+
+          {isSoldOut && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/60 font-mono text-sm font-black uppercase tracking-wider text-rose-300">
+              Sold Out (86)
+            </div>
+          )}
         </div>
 
-        {/* Item Name & Price */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-xs">
-          <div className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono">
-            [ITEM NAME]
+        {/* Item Title & Pricing */}
+        <div className="rounded-[24px] border border-[#E8D5C3] bg-[#FFFCF7] p-4 shadow-xs">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h2 className="text-base font-black text-[#5B5049]">{item.name}</h2>
+              <span className="mt-1 inline-block rounded-md border border-[#E8D5C3] bg-[#F3DFCC]/80 px-2 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide text-[#8A4228]">
+                {item.category}
+              </span>
+            </div>
+            <div className="text-right">
+              <span className="font-mono text-lg font-black text-[#8A4228]">₹{item.price}</span>
+            </div>
           </div>
-          <div className="text-base font-black text-slate-900 mt-0.5">
-            [{item.name}]
-          </div>
-          <div className="text-sm font-extrabold text-orange-600 font-mono mt-0.5">
-            [PRICE: ₹ {item.price}]
-          </div>
-        </div>
-
-        {/* Item Details */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-xs">
-          <div className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono">
-            [ITEM DETAILS / DESCRIPTION]
-          </div>
-          <p className="text-xs leading-relaxed text-slate-600 mt-1">
-            [{item.description}]
+          <p className="mt-2 text-xs font-medium text-[#5B5049]/80 leading-relaxed">
+            {item.description}
           </p>
         </div>
 
-        {/* Customisable Options Group 1 */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-xs">
-          <div className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono">
-            [CUSTOMISABLE OPTIONS: GROUP 1]
+        {/* Portion / Preparation Option */}
+        {item.optionsGroup1?.choices?.length > 0 && (
+          <div className="rounded-[24px] border border-[#E8D5C3] bg-[#FFFCF7] p-4 shadow-xs">
+            <div className="mb-2.5 text-[10px] font-black uppercase tracking-[0.16em] text-[#5B5049]/70 font-mono">
+              {item.optionsGroup1.title || 'Select Portion / Style'}
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {item.optionsGroup1.choices.map((choice) => {
+                const isSelected = selectedOption === choice;
+                return (
+                  <button
+                    key={choice}
+                    onClick={() => setSelectedOption(choice)}
+                    className={`flex items-center justify-between rounded-2xl border p-3 text-xs font-black transition ${
+                      isSelected
+                        ? 'border-[#8A4228] bg-[#F3DFCC] text-[#8A4228] shadow-xs'
+                        : 'border-[#E8D5C3] bg-[#FFFCF7] text-[#5B5049] hover:bg-[#F3DFCC]/40'
+                    }`}
+                  >
+                    <span>{choice}</span>
+                    {isSelected && <Check className="h-4 w-4 stroke-[3] text-[#8A4228]" />}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-          <div className="mt-2 space-y-1.5">
-            {item.optionsGroup1.choices.map((choice) => {
-              const isSelected = selectedOption === choice;
-              return (
-                <label
-                  key={choice}
-                  className={`flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold cursor-pointer border transition ${
-                    isSelected
-                      ? 'border-orange-500 bg-orange-50/70 text-orange-950'
-                      : 'border-slate-200 bg-stone-50/60 text-slate-700 hover:bg-stone-100'
-                  }`}
-                >
-                  <span>[{choice.toUpperCase()}]</span>
-                  <input
-                    type="radio"
-                    name="screen3-opt1"
-                    checked={isSelected}
-                    onChange={() => setSelectedOption(choice)}
-                    className="accent-orange-600 h-4 w-4"
-                  />
-                </label>
-              );
-            })}
-          </div>
-        </div>
+        )}
 
-        {/* Customisable Options Group 2: Add-Ons */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-xs">
-          <div className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono">
-            [CUSTOMISABLE OPTIONS: ADD-ONS]
+        {/* Add-ons */}
+        {item.optionsGroup2?.addOns?.length > 0 && (
+          <div className="rounded-[24px] border border-[#E8D5C3] bg-[#FFFCF7] p-4 shadow-xs">
+            <div className="mb-2.5 text-[10px] font-black uppercase tracking-[0.16em] text-[#5B5049]/70 font-mono">
+              {item.optionsGroup2.title || 'Popular Add-Ons'}
+            </div>
+            <div className="space-y-2">
+              {item.optionsGroup2.addOns.map((addon) => {
+                const isSelected = selectedAddOns.includes(addon.name);
+                return (
+                  <button
+                    key={addon.name}
+                    onClick={() => handleToggleAddOn(addon.name)}
+                    className={`flex w-full items-center justify-between rounded-2xl border p-3 text-xs font-black transition ${
+                      isSelected
+                        ? 'border-[#8A4228] bg-[#F3DFCC] text-[#8A4228]'
+                        : 'border-[#E8D5C3] bg-[#FFFCF7] text-[#5B5049] hover:bg-[#F3DFCC]/40'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div
+                        className={`flex h-4 w-4 items-center justify-center rounded-md border ${
+                          isSelected ? 'border-[#8A4228] bg-[#8A4228] text-white' : 'border-[#E8D5C3]'
+                        }`}
+                      >
+                        {isSelected && <Check className="h-3 w-3 stroke-[3]" />}
+                      </div>
+                      <span>{addon.name}</span>
+                    </div>
+                    <span className="font-mono text-xs text-[#8A4228]">+₹{addon.extraPrice}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
-          <div className="mt-2 space-y-1.5">
-            {item.optionsGroup2.addOns.map((addon) => {
-              const isChecked = selectedAddOns.includes(addon.name);
-              return (
-                <label
-                  key={addon.name}
-                  className={`flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold cursor-pointer border transition ${
-                    isChecked
-                      ? 'border-orange-500 bg-orange-50/70 text-orange-950'
-                      : 'border-slate-200 bg-stone-50/60 text-slate-700 hover:bg-stone-100'
-                  }`}
-                >
-                  <div className="flex items-center gap-1.5">
-                    <span>[{addon.name.toUpperCase()}]</span>
-                    <span className="font-mono text-orange-600 font-bold">(+₹ {addon.extraPrice})</span>
-                  </div>
-                  <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={() => handleToggleAddOn(addon.name)}
-                    className="accent-orange-600 h-4 w-4 rounded"
-                  />
-                </label>
-              );
-            })}
-          </div>
-        </div>
+        )}
       </div>
 
-      {/* Bottom Sticky: Go To Cart Button */}
-      <StickyBottomBar label="[GO TO CART BUTTON]">
+      {/* Sticky Bottom Bar */}
+      <StickyBottomBar>
         <motion.button
-          whileTap={{ scale: isSoldOut ? 1 : 0.98 }}
-          disabled={isSoldOut}
+          whileTap={{ scale: 0.98 }}
           onClick={handleAddAndGoToCart}
-          className={`flex w-full items-center justify-between rounded-2xl px-4 py-3.5 text-xs font-extrabold uppercase tracking-wider text-white shadow-lg transition ${
+          disabled={isSoldOut}
+          className={`flex w-full items-center justify-between rounded-[20px] px-4 py-3.5 text-xs font-black uppercase tracking-[0.14em] shadow-lg transition ${
             isSoldOut
-              ? 'bg-stone-300 text-slate-500 cursor-not-allowed shadow-none'
-              : 'bg-orange-600 shadow-orange-600/30 hover:bg-orange-700'
+              ? 'bg-stone-300 text-stone-500 cursor-not-allowed'
+              : 'bg-[#8A4228] text-[#FFFCF7] hover:bg-[#71351F]'
           }`}
         >
+          <span>{isSoldOut ? 'Item Sold Out' : 'Add to Cart & Review'}</span>
           <div className="flex items-center gap-2">
-            {isSoldOut ? <Ban className="h-4 w-4" /> : <ShoppingCart className="h-4 w-4 stroke-[2.2]" />}
-            <span>{isSoldOut ? '🚫 [ITEM SOLD OUT IN KITCHEN (86)]' : '🛒 [ADD & GO TO CART]'}</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="font-mono text-sm font-bold text-amber-200">
-              ₹ {currentTotal}
-            </span>
-            {!isSoldOut && <ArrowRight className="h-4 w-4 stroke-[2.5]" />}
+            <span className="font-mono text-sm font-bold text-[#F3DFCC]">₹{currentTotal}</span>
+            <ArrowRight className="h-4 w-4 stroke-[2.5]" />
           </div>
         </motion.button>
       </StickyBottomBar>

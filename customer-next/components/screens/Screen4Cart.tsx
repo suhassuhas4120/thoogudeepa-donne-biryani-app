@@ -5,7 +5,7 @@ import { useCustomer } from '../../context/CustomerContext';
 import { ScreenHousing } from '../ui/ScreenHousing';
 import { WireHeader } from '../ui/WireHeader';
 import { StickyBottomBar } from '../ui/StickyBottomBar';
-import { Plus, Minus, Flame, ArrowRight, ShoppingBag, Utensils, CheckCircle2 } from 'lucide-react';
+import { Plus, Minus, ArrowRight, ShoppingBag, CheckCircle2, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const Screen4Cart: React.FC = () => {
@@ -13,66 +13,67 @@ export const Screen4Cart: React.FC = () => {
     setCurrentScreen,
     cart,
     updateCartQuantity,
+    removeCartItem,
     orderSeparately,
     placeAllOrders,
   } = useCustomer();
 
-  const [separateNotice, setSeparateNotice] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
   const handleSeparateOrder = (cartItemId: string, name: string) => {
     orderSeparately(cartItemId);
-    setSeparateNotice(`Order fired separately for ${name}!`);
-    setTimeout(() => setSeparateNotice(null), 2500);
+    setNotice(`Fired separately for ${name}!`);
+    setTimeout(() => setNotice(null), 2500);
   };
 
   const totalCartAmount = cart.reduce((sum, item) => sum + item.totalPrice, 0);
+  const unplacedCount = cart.filter((c) => !c.isOrdered).length;
 
   return (
-    <ScreenHousing screenNumber={4} screenTitle="CART PAGE">
+    <ScreenHousing screenNumber={4} screenTitle="CART">
       {/* Header */}
       <WireHeader
-        title="[CART PAGE]"
+        title="Cart"
         showBack={true}
         onBack={() => setCurrentScreen(2)}
         showCallWaiter={true}
         showCart={false}
       />
 
-      {/* Cart Items List */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
-        <div className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono">
-          [SELECTED ITEMS LIST WITH IMAGE, PRICE &amp; CUSTOMISED DETAILS]
-        </div>
+      <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#FFFCF7]">
+        {/* Notice */}
+        <AnimatePresence>
+          {notice && (
+            <motion.div
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="flex items-center gap-2 rounded-2xl bg-[#8A4228] px-3.5 py-2.5 text-xs font-black text-[#FFFCF7] shadow-md"
+            >
+              <CheckCircle2 className="h-4 w-4 text-[#F3DFCC]" />
+              <span>⚡ {notice}</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {separateNotice && (
-          <motion.div
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-2 rounded-xl bg-slate-900 px-3.5 py-2.5 text-xs font-bold text-white shadow-md"
-          >
-            <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-            <span>⚡ {separateNotice}</span>
-          </motion.div>
-        )}
-
+        {/* Empty State */}
         {cart.length === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-xs">
-            <ShoppingBag className="h-12 w-12 text-slate-300 stroke-[1.5]" />
-            <div className="mt-3 text-sm font-extrabold text-slate-900">[CART IS EMPTY]</div>
-            <p className="mt-1 text-xs text-slate-500">Explore the delicious menu and add dishes</p>
+          <div className="flex flex-col items-center justify-center rounded-[28px] border border-[#E8D5C3] bg-[#FFFCF7] p-8 text-center shadow-xs">
+            <ShoppingBag className="h-12 w-12 text-[#E8D5C3] stroke-[1.5]" />
+            <div className="mt-3 text-sm font-extrabold text-[#5B5049]">Your Cart Is Empty</div>
+            <p className="mt-1 text-xs text-[#5B5049]/70">Explore our delicious authentic Donne Biryanis &amp; Starters</p>
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => setCurrentScreen(2)}
-              className="mt-4 rounded-xl bg-orange-600 px-4 py-2 text-xs font-extrabold text-white shadow-sm"
+              className="mt-4 rounded-2xl bg-[#8A4228] px-5 py-2.5 text-xs font-black uppercase tracking-wider text-[#FFFCF7] shadow-sm hover:bg-[#71351F] transition"
             >
-              [BROWSE MENU]
+              Browse Menu
             </motion.button>
           </div>
         ) : (
           <AnimatePresence>
             {cart.map((ci) => {
-              const isLocked = !!ci.isOrdered;
-
+              const isOrdered = !!ci.isOrdered;
               return (
                 <motion.div
                   key={ci.cartItemId}
@@ -80,83 +81,92 @@ export const Screen4Cart: React.FC = () => {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className={`flex flex-col gap-2.5 rounded-2xl border p-3 shadow-xs transition ${
-                    isLocked
-                      ? 'bg-slate-50/90 border-slate-200 opacity-80'
-                      : 'bg-white border-slate-200/90'
+                  className={`flex flex-col gap-2.5 rounded-[22px] border p-3.5 shadow-xs transition ${
+                    isOrdered
+                      ? 'border-[#E8D5C3] bg-stone-50/80 opacity-80'
+                      : 'border-[#E8D5C3] bg-[#FFFCF7]'
                   }`}
                 >
-                  <div className="flex items-center gap-3">
-                    {/* Thumbnail */}
-                    <div className="flex h-14 w-14 flex-shrink-0 flex-col items-center justify-center rounded-xl border border-dashed border-orange-200 bg-gradient-to-br from-amber-50 to-orange-50 text-[10px] font-black text-orange-900 font-mono">
-                      <span className="text-base">{isLocked ? '🔒' : '🥘'}</span>
-                      <span>[IMG]</span>
-                    </div>
-
-                    {/* Details */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="truncate text-xs font-extrabold text-slate-900">
-                          [{ci.menuItem.name}]
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-black text-[#5B5049]">
+                          {ci.menuItem.name}
                         </span>
-                        {isLocked && (
-                          <span className="rounded bg-slate-200 text-slate-700 text-[9px] font-mono font-bold px-1.5 py-0.2">
-                            [ALREADY SENT TO KITCHEN]
+                        {isOrdered && (
+                          <span className="rounded-full bg-emerald-100 px-2 py-0.5 font-mono text-[9px] font-black text-emerald-800">
+                            Sent To Kitchen
                           </span>
                         )}
                       </div>
-                      <div className="text-[10.5px] text-slate-500 line-clamp-1 mt-0.5">
-                        [CUSTOM: {ci.selectedOption}
-                        {ci.selectedAddOns.length > 0 ? ` + ${ci.selectedAddOns.join(', ')}` : ''}]
-                      </div>
-                      <div className="font-mono text-xs font-black text-slate-900 mt-1">
-                        [PRICE: ₹ {ci.totalPrice}]
+
+                      {/* Options & Addons */}
+                      {(ci.selectedOption || ci.selectedAddOns?.length > 0) && (
+                        <div className="mt-1 flex flex-wrap gap-1">
+                          {ci.selectedOption && (
+                            <span className="rounded-md border border-[#E8D5C3] bg-[#F3DFCC]/60 px-1.5 py-0.5 text-[9.5px] font-bold text-[#8A4228]">
+                              {ci.selectedOption}
+                            </span>
+                          )}
+                          {ci.selectedAddOns?.map((addon) => (
+                            <span
+                              key={addon}
+                              className="rounded-md border border-[#E8D5C3] bg-[#F3DFCC]/60 px-1.5 py-0.5 text-[9.5px] font-bold text-[#8A4228]"
+                            >
+                              +{addon}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="mt-1.5 font-mono text-xs font-black text-[#8A4228]">
+                        ₹{ci.totalPrice}
                       </div>
                     </div>
 
-                    {/* Quantity Stepper (+,-) */}
-                    <div className={`flex items-center gap-1.5 rounded-xl border p-1 shadow-xs ${
-                      isLocked ? 'bg-slate-100 border-slate-200 opacity-60' : 'bg-stone-50 border-slate-200'
-                    }`}>
-                      <motion.button
-                        whileTap={{ scale: isLocked ? 1 : 0.85 }}
-                        disabled={isLocked}
-                        onClick={() => !isLocked && updateCartQuantity(ci.cartItemId, -1)}
-                        className={`flex h-6 w-6 items-center justify-center rounded-lg bg-white font-black text-slate-700 shadow-xs ${
-                          isLocked ? 'cursor-not-allowed opacity-40' : 'hover:bg-slate-100'
-                        }`}
-                      >
-                        <Minus className="h-3 w-3 stroke-[2.5]" />
-                      </motion.button>
-                      <span className="min-w-5 text-center font-mono text-xs font-black text-slate-900">
-                        {ci.quantity}
+                    {/* Stepper or Ordered Badge */}
+                    {!isOrdered ? (
+                      <div className="flex items-center gap-1 rounded-full border border-[#8A4228] bg-[#F3DFCC] p-0.5 shadow-xs">
+                        <button
+                          onClick={() => updateCartQuantity(ci.cartItemId, -1)}
+                          className="flex h-6 w-6 items-center justify-center rounded-full bg-[#8A4228] text-white hover:bg-[#71351F]"
+                        >
+                          <Minus className="h-3 w-3 stroke-[3]" />
+                        </button>
+                        <span className="px-2 text-xs font-black text-[#8A4228] font-mono">
+                          {ci.quantity}
+                        </span>
+                        <button
+                          onClick={() => updateCartQuantity(ci.cartItemId, 1)}
+                          className="flex h-6 w-6 items-center justify-center rounded-full bg-[#8A4228] text-white hover:bg-[#71351F]"
+                        >
+                          <Plus className="h-3 w-3 stroke-[3]" />
+                        </button>
+                      </div>
+                    ) : (
+                      <span className="font-mono text-xs font-black text-[#5B5049]">
+                        Qty: {ci.quantity}
                       </span>
-                      <motion.button
-                        whileTap={{ scale: isLocked ? 1 : 0.85 }}
-                        disabled={isLocked}
-                        onClick={() => !isLocked && updateCartQuantity(ci.cartItemId, 1)}
-                        className={`flex h-6 w-6 items-center justify-center rounded-lg bg-white font-black text-slate-700 shadow-xs ${
-                          isLocked ? 'cursor-not-allowed opacity-40' : 'hover:bg-slate-100'
-                        }`}
-                      >
-                        <Plus className="h-3 w-3 stroke-[2.5]" />
-                      </motion.button>
-                    </div>
+                    )}
                   </div>
 
-                  {/* Separate Ordering Button or Locked Status */}
-                  {isLocked ? (
-                    <div className="rounded-xl border border-dashed border-slate-200 bg-white/60 py-1 text-center text-[10px] font-mono font-bold text-slate-500">
-                      ✓ [ACTIVE DISH IN KITCHEN • ORDER PROTECTED AGAINST DUPLICATION]
+                  {/* Actions for unplaced items */}
+                  {!isOrdered && (
+                    <div className="flex items-center justify-between border-t border-[#E8D5C3]/60 pt-2 text-[10px]">
+                      <button
+                        onClick={() => handleSeparateOrder(ci.cartItemId, ci.menuItem.name)}
+                        className="font-bold text-[#D08A52] hover:underline"
+                      >
+                        ⚡ Order Separately
+                      </button>
+                      <button
+                        onClick={() => removeCartItem(ci.cartItemId)}
+                        className="flex items-center gap-1 font-bold text-rose-500 hover:text-rose-700"
+                      >
+                        <Trash2 className="h-3 w-3" />
+                        <span>Remove</span>
+                      </button>
                     </div>
-                  ) : (
-                    <motion.button
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => handleSeparateOrder(ci.cartItemId, ci.menuItem.name)}
-                      className="rounded-xl border border-slate-200 bg-stone-50/70 py-1.5 text-[10.5px] font-extrabold uppercase tracking-wide text-slate-700 hover:bg-stone-100 transition"
-                    >
-                      [ORDER THIS ITEM SEPARATELY]
-                    </motion.button>
                   )}
                 </motion.div>
               );
@@ -165,42 +175,26 @@ export const Screen4Cart: React.FC = () => {
         )}
       </div>
 
-      {/* Bottom Sticky: Place Order Button */}
-      {(() => {
-        const newItems = cart.filter((c) => !c.isOrdered);
-        const newItemsTotal = newItems.reduce((sum, item) => sum + item.totalPrice, 0);
-        const hasNewItems = newItems.length > 0;
+      {/* Sticky Bottom Bar */}
+      {cart.length > 0 && (
+        <StickyBottomBar>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-xs font-black text-[#5B5049]">
+              <span>Cart Subtotal</span>
+              <span className="font-mono text-sm text-[#8A4228]">₹{totalCartAmount}</span>
+            </div>
 
-        return (
-          <StickyBottomBar label="[PLACE ALL ORDERS BUTTON]">
             <motion.button
               whileTap={{ scale: 0.98 }}
-              disabled={cart.length === 0}
               onClick={placeAllOrders}
-              className={`flex w-full items-center justify-between rounded-2xl px-4 py-3.5 text-xs font-extrabold uppercase tracking-wider text-white shadow-lg transition ${
-                hasNewItems
-                  ? 'bg-orange-600 shadow-orange-600/30 hover:bg-orange-700'
-                  : 'bg-slate-900 shadow-slate-900/30 hover:bg-slate-800'
-              }`}
+              className="flex w-full items-center justify-between rounded-[20px] bg-[#8A4228] px-4 py-3.5 text-xs font-black uppercase tracking-[0.14em] text-[#FFFCF7] shadow-lg transition hover:bg-[#71351F]"
             >
-              <div className="flex items-center gap-2">
-                <Flame className="h-4 w-4 stroke-[2.2]" />
-                <span>
-                  {hasNewItems
-                    ? `🔥 [PLACE ORDER (${newItems.length} NEW ITEM${newItems.length > 1 ? 'S' : ''})]`
-                    : '✓ [ALL ITEMS SENT TO KITCHEN ➔ TRACK LIVE]'}
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-mono text-sm font-bold text-amber-200">
-                  ₹ {hasNewItems ? newItemsTotal : totalCartAmount}
-                </span>
-                <ArrowRight className="h-4 w-4 stroke-[2.5]" />
-              </div>
+              <span>{unplacedCount > 0 ? 'Place Order (Send to Kitchen)' : 'View Live Tracking'}</span>
+              <ArrowRight className="h-4 w-4 stroke-[2.5]" />
             </motion.button>
-          </StickyBottomBar>
-        );
-      })()}
+          </div>
+        </StickyBottomBar>
+      )}
     </ScreenHousing>
   );
 };

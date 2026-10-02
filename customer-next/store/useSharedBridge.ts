@@ -27,6 +27,7 @@ export interface SharedKDSItem {
   prepMode: string;
   options?: string;
   addOns?: string[];
+  notes?: string;
 }
 
 export interface SharedKDSTicket {
@@ -151,6 +152,9 @@ interface SharedBridgeState {
   /** Kitchen dismisses a notification */
   kitchenDismissNotification: (notifId: string) => void;
   kitchenDismissAllNotifications: () => void;
+
+  /** Kitchen calls floor waiter to pass */
+  callFloorWaiter: (tableNumber: string, reason?: string) => void;
 
   // ── Waiter actions ──────────────────────────────────────────────
   /** Waiter fires KOT → adds KDS ticket to kitchen */
@@ -462,6 +466,11 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
     set((state) => ({
       kitchenNotifications: state.kitchenNotifications.map((n) => ({ ...n, dismissed: true })),
     }));
+  },
+
+  /* ─── Kitchen Calls Floor Waiter ─────────────────────────────── */
+  callFloorWaiter: (tableNumber, reason = 'Dishes Ready for Pickup') => {
+    get().customerPingsWaiter(tableNumber, 'FOOD', 'Kitchen Pass', reason);
   },
 
   /* ─── Waiter Fires KOT ───────────────────────────────────────── */

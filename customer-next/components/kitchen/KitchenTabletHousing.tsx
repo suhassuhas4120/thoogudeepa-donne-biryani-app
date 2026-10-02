@@ -1,9 +1,9 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
-import { Wifi, Bell, Flame, ChefHat } from 'lucide-react';
+import { Wifi, Flame } from 'lucide-react';
 import { useKitchenStore } from '../../store/useKitchenStore';
-import { useSharedBridge } from '../../store/useSharedBridge';
+import { STATION_LABELS } from '../../types/kitchen';
 
 interface KitchenTabletHousingProps {
   children: React.ReactNode;
@@ -20,16 +20,9 @@ export const KitchenTabletHousing: React.FC<KitchenTabletHousingProps> = ({
 }) => {
   const {
     activeStation,
-    chefName,
-    callFloorWaiter,
     waiterAlertNotice,
     dismissWaiterAlert,
   } = useKitchenStore();
-
-  // Live unread new-order notifications from bridge
-  const unreadCount = useSharedBridge((s) =>
-    s.kitchenNotifications.filter((n) => !n.dismissed).length
-  );
 
   return (
     <div className="flex flex-col items-center w-full max-w-[1080px] shrink-0">
@@ -53,36 +46,16 @@ export const KitchenTabletHousing: React.FC<KitchenTabletHousingProps> = ({
           <div className="h-1 w-4 rounded-full bg-slate-700" />
         </div>
 
-        {/* KDS Tablet Status Header */}
-        <header className="h-11 bg-white border-b border-slate-200 px-5 flex items-center justify-between text-xs font-bold select-none shrink-0 z-20">
+        {/* KDS Tablet Status Header — no profile, no chef name */}
+        <header className="h-12 bg-white border-b border-slate-200 px-5 flex items-center justify-between text-xs font-bold select-none shrink-0 z-30">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 text-orange-700 font-black font-mono">
               <Flame className="h-4 w-4 text-orange-600 fill-orange-500" />
               <span>THOOGUDEEPA KDS</span>
             </div>
-            <span className="text-slate-300">|</span>
-            <span className="rounded-md border border-slate-200 bg-stone-50 px-2 py-0.5 text-[10.5px] font-mono text-slate-700">
-              STATION: {activeStation}
-            </span>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 text-slate-600 font-medium text-[11px]">
-              <ChefHat className="h-3.5 w-3.5 text-slate-500" />
-              <span>{chefName}</span>
-            </div>
-            <button
-              onClick={() => callFloorWaiter('ALL', 'Kitchen Dispatch Calling')}
-              className="relative flex items-center gap-1 rounded-lg border border-orange-200 bg-orange-50 px-2.5 py-1 text-[10.5px] font-extrabold text-orange-800 hover:bg-orange-100 transition shadow-2xs"
-            >
-              <Bell className="h-3 w-3 text-orange-600" />
-              <span>[CALL WAITER]</span>
-              {unreadCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-white text-[8px] font-black animate-pulse">
-                  {unreadCount}
-                </span>
-              )}
-            </button>
             <div className="flex items-center gap-1 text-emerald-600 font-mono text-[10px] font-bold">
               <Wifi className="h-3.5 w-3.5" />
               <span>ONLINE</span>

@@ -1,11 +1,6 @@
 import { create } from 'zustand';
-import {
-  KitchenScreenId,
-  KitchenStation,
-  KDSTicket,
-} from '../types/kitchen';
+import { KitchenScreenId, KitchenStation, KDSTicket } from '../types/kitchen';
 import { OrderStage } from '../types/customer';
-import { INITIAL_MENU_ITEMS } from '../data/menuItems';
 import { useSharedBridge } from './useSharedBridge';
 
 interface KitchenStoreState {
@@ -13,42 +8,32 @@ interface KitchenStoreState {
   previousScreen: KitchenScreenId;
   viewMode: 'single' | 'all';
   activeStation: KitchenStation;
-  chefName: string;
   selectedTableNumber: string;
   soundAlertsEnabled: boolean;
-
-  // Local-only tickets (seed for screen until bridge has real orders)
   tickets: KDSTicket[];
+  waiterAlertNotice: string | null;
 
-  // Actions
   setCurrentScreen: (screen: KitchenScreenId) => void;
   setViewMode: (mode: 'single' | 'all') => void;
   setActiveStation: (station: KitchenStation) => void;
-  setChefName: (name: string) => void;
   setSelectedTableNumber: (table: string) => void;
   toggleSoundAlerts: () => void;
-  // These also write to shared bridge for cross-section sync:
   bumpItemStage: (ticketId: string, itemId: string) => void;
   bumpTable: (ticketId: string) => void;
   callFloorWaiter: (tableNumber: string, reason?: string) => void;
-  kitchenClearCompleted: () => void;
-  waiterAlertNotice: string | null;
   dismissWaiterAlert: () => void;
+  resetKitchenDemo: () => void;
 }
-
-// No pre-seeded tickets — they come from customer orders / waiter KOTs via bridge
-// Keep a few demo tickets only for the standalone kitchen demo mode
-const demoTickets: KDSTicket[] = [];
 
 export const useKitchenStore = create<KitchenStoreState>((set) => ({
   currentScreen: 1,
   previousScreen: 1,
   viewMode: 'single',
-  activeStation: 'MAIN',
-  chefName: 'Master Chef Manjunath',
-  selectedTableNumber: 'A-04',
+  activeStation: 'MASTER_DISPATCH',
+  selectedTableNumber: '',
   soundAlertsEnabled: true,
-  tickets: demoTickets,
+  // ✅ No demo tickets — real orders come from bridge only
+  tickets: [],
   waiterAlertNotice: null,
 
   setCurrentScreen: (screen) =>
@@ -59,16 +44,12 @@ export const useKitchenStore = create<KitchenStoreState>((set) => ({
 
   setViewMode: (mode) => set({ viewMode: mode }),
   setActiveStation: (station) => set({ activeStation: station }),
-  setChefName: (name) => set({ chefName: name }),
   setSelectedTableNumber: (table) => set({ selectedTableNumber: table }),
   toggleSoundAlerts: () =>
     set((state) => ({ soundAlertsEnabled: !state.soundAlertsEnabled })),
 
   bumpItemStage: (ticketId, itemId) => {
-    // Also bump in shared bridge
     useSharedBridge.getState().kitchenBumpItemStage(ticketId, itemId);
-
-    // Local tickets (demo mode)
     set((state) => {
       const stageOrder: OrderStage[] = ['PLACED', 'PREP', 'PLATED', 'SERVED'];
       const newTickets = state.tickets.map((t) => {
@@ -77,7 +58,9 @@ export const useKitchenStore = create<KitchenStoreState>((set) => ({
           if (it.id !== itemId) return it;
           const curIdx = stageOrder.indexOf(it.stage);
           const nextStage =
-            curIdx < stageOrder.length - 1 ? stageOrder[curIdx + 1] : stageOrder[curIdx];
+            curIdx < stageOrder.length - 1
+              ? stageOrder[curIdx + 1]
+              : stageOrder[curIdx];
           return { ...it, stage: nextStage };
         });
         const allPlated = newItems.every(
@@ -87,7 +70,11 @@ export const useKitchenStore = create<KitchenStoreState>((set) => ({
         return {
           ...t,
           items: newItems,
-          status: (allServed ? 'COMPLETED' : allPlated ? 'READY' : 'PREP') as KDSTicket['status'],
+          status: (allServed
+            ? 'COMPLETED'
+            : allPlated
+            ? 'READY'
+            : 'PREP') as KDSTicket['status'],
         };
       });
       return { tickets: newTickets };
@@ -102,29 +89,28 @@ export const useKitchenStore = create<KitchenStoreState>((set) => ({
         return {
           ...t,
           status: 'READY',
-          items: t.items.map((i) => ({ ...i, stage: 'PLATED' })),
+          items: t.items.map((i) => ({ ...i, stage: 'PLATED' as OrderStage })),
         };
       }),
     }));
   },
 
   callFloorWaiter: (tableNumber, reason = 'Dishes Ready for Pickup') => {
+    useSharedBridge.getState().callFloorWaiter(tableNumber, reason);
     set({
       waiterAlertNotice: `[NOTIFICATION TRANSMITTED] Floor Captain alerted for Table ${tableNumber}: ${reason}`,
     });
+    setTimeout(() => {
+      set((state) =>
+        state.waiterAlertNotice ? { waiterAlertNotice: null } : state
+      );
+    }, 4000);
   },
 
   dismissWaiterAlert: () => set({ waiterAlertNotice: null }),
 
-  kitchenClearCompleted: () => {
-    useSharedBridge.getState().kitchenClearCompleted();
-  },
+  resetKitchenDemo: () => set({ tickets: [] }),
 }));
 
-/* ── Selectors that read from the shared bridge ──────────────────── */
-
-/** All KDS tickets from bridge (real orders) */
 export const useBridgeKDSTickets = () => useSharedBridge((s) => s.kdsTickets);
-
-/** Menu 86 inventory from bridge */
 export const useBridgeInventory86 = () => useSharedBridge((s) => s.inventory86);

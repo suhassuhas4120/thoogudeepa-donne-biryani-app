@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useKitchenStore } from '../../store/useKitchenStore';
 import { useSharedBridge, getCanonicalDishKey } from '../../store/useSharedBridge';
+import { useRealtimeAllTickets } from '../../hooks/useRealtimeTickets';
+import { updateItemStage, bulkUpdateItemStageByName, completeTicket } from '../../lib/db';
 import { KitchenTabletHousing } from './KitchenTabletHousing';
 import {
   Clock,
@@ -86,6 +88,9 @@ export const ScreenK2Overview: React.FC = () => {
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // ── Supabase Realtime — primary source for cross-device orders ────
+  const { tickets: supabaseTickets } = useRealtimeAllTickets();
+
   const showToast = (msg: string) => {
     if (toastTimer.current) clearTimeout(toastTimer.current);
     setToastMsg(msg);
@@ -101,23 +106,48 @@ export const ScreenK2Overview: React.FC = () => {
 
   // ── Convert bridge tickets to K2Table format ─────────────────────
   const activeTables: K2Table[] = React.useMemo(() => {
-    return bridgeTickets
-      .filter((tk) => tk.status !== 'COMPLETED')
-      .map((tk) => ({
-        id: tk.id,
-        tableNumber: `TABLE ${tk.tableNumber}`,
-        kotNumber: tk.id.replace('KDS-', ''),
-        elapsedMinutes: tk.elapsedMinutes || 1,
-        serverName: tk.serverName || 'Captain',
-        isVip: tk.source === 'CUSTOMER',
-        items: tk.items.map((it) => ({
-          id: it.id,
-          name: it.name,
-          quantity: it.quantity,
-          stage: toK2Stage(it.stage),
-        })),
-      }));
-  }, [bridgeTickets, tick]);
+    // Prefer Supabase tickets (real-time, cross-device)
+    // Fall back to bridge tickets (same-device, BroadcastChannel)
+    const useSupa = supabaseTickets.length > 0;
+
+    const sourceTickets = useSupa
+      ? supabaseTickets
+          .filter(t => t.status !== 'COMPLETED')
+          .map(t => ({
+            id: t.id,
+            tableNumber: `TABLE ${t.tableId}`,
+            kotNumber: t.id.replace('KDS-', ''),
+            elapsedMinutes: Math.max(1, Math.round(
+              (Date.now() - new Date(t.createdAt).getTime()) / 60000
+            )),
+            serverName: t.customerName || 'Guest',
+            isVip: true,
+            items: t.items.map(it => ({
+              id: it.id,
+              name: it.name,
+              quantity: it.quantity,
+              stage: toK2Stage(it.stage),
+            })),
+          }))
+      : bridgeTickets
+          .filter(tk => tk.status !== 'COMPLETED')
+          .map(tk => ({
+            id: tk.id,
+            tableNumber: `TABLE ${tk.tableNumber}`,
+            kotNumber: tk.id.replace('KDS-', ''),
+            elapsedMinutes: tk.elapsedMinutes || 1,
+            serverName: tk.serverName || 'Captain',
+            isVip: tk.source === 'CUSTOMER',
+            items: tk.items.map(it => ({
+              id: it.id,
+              name: it.name,
+              quantity: it.quantity,
+              stage: toK2Stage(it.stage),
+            })),
+          }));
+
+    return sourceTickets;
+  }, [supabaseTickets, bridgeTickets, tick]);
 
   // ── Bulk Aggregation: computed live from bridge tickets ───────────
   const bulkAggregation = React.useMemo(() => {
@@ -175,14 +205,23 @@ export const ScreenK2Overview: React.FC = () => {
     return 'RECEIVED';
   };
 
-  // ── Item stage handler ────────────────────────────────────────────
+  // ── Item stage handler — writes to Supabase + local bridge ──────
   const handleSetItemStage = (ticketId: string, itemId: string, newStage: K2Stage) => {
-    kitchenSetItemStage(ticketId, itemId, toBridgeStage(newStage));
+    const bridgeStage = toBridgeStage(newStage);
+    // Write to Supabase (primary — cross-device)
+    updateItemStage(itemId, bridgeStage).catch(console.error);
+    // Write to local bridge (fallback — same-device)
+    kitchenSetItemStage(ticketId, itemId, bridgeStage);
   };
 
-  // ── Bulk stage handler ────────────────────────────────────────────
+  // ── Bulk stage handler — writes to Supabase + local bridge ──────
   const handleSetBulkStage = (displayName: string, newStage: K2Stage) => {
-    kitchenSetBulkItemStage(displayName, toBridgeStage(newStage));
+    const bridgeStage = toBridgeStage(newStage);
+    const canonical = getCanonicalDishKey(displayName);
+    // Write to Supabase (primary)
+    bulkUpdateItemStageByName(canonical, bridgeStage).catch(console.error);
+    // Write to local bridge (fallback)
+    kitchenSetBulkItemStage(displayName, bridgeStage);
     showToast(`✅ All "${displayName}" → ${newStage}`);
   };
 

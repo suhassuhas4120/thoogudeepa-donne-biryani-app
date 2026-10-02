@@ -231,24 +231,49 @@ export const useCustomerStore = create<CustomerStoreState>((set) => ({
     set((state) => {
       const newlyAddedItems = state.cart.filter((c) => !c.isOrdered);
       if (newlyAddedItems.length === 0) {
-        return {
-          currentScreen: 5,
-        };
+        return { currentScreen: 5 };
       }
 
-      // Push only newlyAddedItems to shared bridge → Kitchen KDS + Waiter table updates
-      const bridge = useSharedBridge.getState();
-      bridge.customerPlacesOrder(
-        state.tableNumber,
-        state.guestName || 'Guest',
-        1, // at least 1 guest
-        newlyAddedItems.map((c) => ({
-          item: c.menuItem,
-          selectedOption: c.selectedOption,
-          addOns: c.selectedAddOns,
-          quantity: c.quantity,
-        }))
-      );
+      // Read seat from URL params
+      const params = typeof window !== 'undefined'
+        ? new URLSearchParams(window.location.search)
+        : new URLSearchParams();
+      const seatNumber = parseInt(params.get('seat') || '1', 10);
+      const tableId = (params.get('table') || state.tableNumber || 'A-01').toUpperCase();
+
+      // Build a stable ticket ID
+      const ts = Date.now();
+      const tblTag = tableId.replace('-', '');
+      const ticketId = `KDS-${tblTag}-${ts}-001`;
+
+      // Fire-and-forget to Supabase (async, non-blocking)
+      import('../lib/db').then(({ placeOrderToSupabase }) => {
+        placeOrderToSupabase({
+          tableId,
+          seatNumber,
+          customerName: state.guestName || 'Guest',
+          cartItems: newlyAddedItems,
+          ticketId,
+        }).catch((err) => {
+          console.error('[placeAllOrders] Supabase error:', err);
+        });
+      });
+
+      // Also push to local bridge as fallback (same-device BroadcastChannel)
+      try {
+        const bridge = useSharedBridge.getState();
+        bridge.customerPlacesOrder(
+          tableId,
+          state.guestName || 'Guest',
+          seatNumber,
+          newlyAddedItems.map((c) => ({
+            item: c.menuItem,
+            selectedOption: c.selectedOption,
+            addOns: c.selectedAddOns,
+            quantity: c.quantity,
+          }))
+        );
+      } catch (_) { /* bridge optional */ }
 
       const newTracking: IndividualItemTracking[] = newlyAddedItems.map((c) => ({
         id: 'track-' + c.cartItemId,
@@ -262,10 +287,11 @@ export const useCustomerStore = create<CustomerStoreState>((set) => ({
 
       return {
         cart: updatedCart,
+        tableNumber: tableId,
         itemTracking: [...state.itemTracking, ...newTracking],
-        orderStage: 'PREP',
+        orderStage: 'PLACED',
         previousScreen: state.currentScreen,
-        currentScreen: 5, // Proceed to Live Tracking Screen 5
+        currentScreen: 5,
       };
     });
   },

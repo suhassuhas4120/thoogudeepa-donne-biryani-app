@@ -17,20 +17,26 @@ export const Screen1Welcome: React.FC = () => {
   return (
     <ScreenHousing screenNumber={1} screenTitle="WELCOME & CONNECT">
       <div className="flex h-full flex-col justify-between p-6 bg-gradient-to-b from-amber-50/40 via-white to-stone-50">
-        {/* Top: Venue Logo & Name */}
+        {/* Top: Venue Logo & Name with QR Scan Logo Animation */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
           className="flex flex-col items-center text-center gap-3 pt-4"
         >
           <div className="text-[10px] font-bold uppercase tracking-wider text-orange-600 font-mono">
-            [LOGO SPACE]
+            [LOGO ANIMATION ON QR SCAN]
           </div>
 
-          <div className="relative flex h-24 w-24 flex-col items-center justify-center rounded-3xl border-2 border-orange-200/80 bg-gradient-to-tr from-amber-100 to-orange-50 p-2 shadow-md shadow-orange-500/10">
+          <motion.div
+            initial={{ rotate: -8, scale: 0.85 }}
+            animate={{ rotate: 0, scale: 1 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 12, delay: 0.15 }}
+            className="relative flex h-24 w-24 flex-col items-center justify-center rounded-3xl border-2 border-orange-200/80 bg-gradient-to-tr from-amber-100 to-orange-50 p-2 shadow-md shadow-orange-500/10"
+          >
             <Crown className="h-10 w-10 text-orange-600 stroke-[1.8]" />
             <span className="mt-1 text-[8.5px] font-black tracking-wider text-orange-950 text-center uppercase">THOOGUDEEPA</span>
-          </div>
+          </motion.div>
 
           <div className="mt-2 w-full">
             <div className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono">
@@ -43,17 +49,17 @@ export const Screen1Welcome: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Middle: Single Wi-Fi Connect & Customer Name */}
+        {/* Middle: Wi-Fi Connect & Continue with Mobile Data Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="flex flex-col gap-4 my-auto"
+          transition={{ delay: 0.3 }}
+          className="flex flex-col gap-3 my-auto"
         >
-          {/* Single Wi-Fi Connecting Button */}
+          {/* Wi-Fi Connect Button */}
           <div>
             <div className="mb-1 text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono">
-              [SINGLE WI-FI CONNECTING BUTTON]
+              [WIFI CONNECT BUTTON]
             </div>
             <motion.button
               whileTap={{ scale: 0.98 }}
@@ -72,9 +78,27 @@ export const Screen1Welcome: React.FC = () => {
               ) : (
                 <>
                   <Wifi className="h-4 w-4 text-orange-600 animate-pulse" />
-                  <span>[CONNECT TO VENUE WI-FI]</span>
+                  <span>[CONNECT TO RESTAURANT FREE WI-FI]</span>
                 </>
               )}
+            </motion.button>
+          </div>
+
+          {/* Continue with Mobile Data Button */}
+          <div>
+            <div className="mb-1 text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono">
+              [CONTINUE WITH MOBILE DATA BUTTON]
+            </div>
+            <motion.button
+              whileTap={{ scale: 0.98 }}
+              onClick={() => {
+                if (!guestName.trim()) setGuestName('Guest (Table A-04)');
+                setCurrentScreen(2);
+              }}
+              className="flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white py-3 px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 transition shadow-xs"
+            >
+              <span>🌐</span>
+              <span>[CONTINUE WITH MOBILE DATA]</span>
             </motion.button>
           </div>
 

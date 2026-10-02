@@ -6,7 +6,7 @@ import { useSharedBridge } from '../../store/useSharedBridge';
 import { WaiterTabletHousing } from './WaiterTabletHousing';
 import { INITIAL_MENU_ITEMS } from '../../data/menuItems';
 import { MenuItem } from '../../types/customer';
-import { ArrowLeft, Search, Plus, ShoppingBag, ArrowRight, Ban } from 'lucide-react';
+import { ArrowLeft, Search, Plus, Minus, ShoppingBag, ArrowRight, Ban } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const ScreenW4TakeOrder: React.FC = () => {
@@ -15,6 +15,7 @@ export const ScreenW4TakeOrder: React.FC = () => {
     selectedTableNumber,
     orderCart,
     addToOrderCart,
+    updateOrderCartQty,
   } = useWaiterStore();
 
   const { inventory86 } = useSharedBridge();
@@ -102,18 +103,54 @@ export const ScreenW4TakeOrder: React.FC = () => {
                   </div>
                 </div>
                 <div className="mt-2 flex gap-1">
-                  <button
-                    disabled={isSoldOut}
-                    onClick={() => !isSoldOut && addToOrderCart(item)}
-                    className={`flex-1 py-1.5 rounded-lg text-[10px] font-mono font-black flex items-center justify-center gap-1 transition ${
-                      isSoldOut
-                        ? 'bg-stone-200 text-slate-400 cursor-not-allowed border border-slate-300'
-                        : 'bg-orange-50 border border-orange-200 text-orange-800 hover:bg-orange-100'
-                    }`}
-                  >
-                    {isSoldOut ? <Ban className="h-2.5 w-2.5" /> : <Plus className="h-3 w-3" />}
-                    <span>{isSoldOut ? '[SOLD OUT]' : '[ADD]'}</span>
-                  </button>
+                  {(() => {
+                    const inCart = orderCart.find((ci) => ci.menuItem.id === item.id);
+                    const qty = inCart ? inCart.quantity : 0;
+
+                    if (isSoldOut) {
+                      return (
+                        <button
+                          disabled
+                          className="flex-1 py-1.5 rounded-lg text-[10px] font-mono font-black flex items-center justify-center gap-1 bg-stone-200 text-slate-400 cursor-not-allowed border border-slate-300"
+                        >
+                          <Ban className="h-2.5 w-2.5" />
+                          <span>[SOLD OUT]</span>
+                        </button>
+                      );
+                    }
+
+                    if (qty === 0) {
+                      return (
+                        <button
+                          onClick={() => addToOrderCart(item)}
+                          className="flex-1 py-1.5 rounded-lg text-[10px] font-mono font-black flex items-center justify-center gap-1 transition bg-orange-50 border border-orange-200 text-orange-800 hover:bg-orange-100 shadow-2xs"
+                        >
+                          <Plus className="h-3 w-3" />
+                          <span>[+ ADD]</span>
+                        </button>
+                      );
+                    }
+
+                    return (
+                      <div className="flex-1 flex items-center justify-between rounded-lg border border-orange-300 bg-orange-50 px-1 py-0.5">
+                        <button
+                          onClick={() => inCart && updateOrderCartQty(inCart.cartItemId, -1)}
+                          className="w-5 h-5 rounded bg-white text-slate-900 font-black flex items-center justify-center text-xs shadow-2xs"
+                        >
+                          <Minus className="h-2.5 w-2.5" />
+                        </button>
+                        <span className="font-mono text-xs font-black text-orange-950">
+                          {qty}
+                        </span>
+                        <button
+                          onClick={() => inCart && updateOrderCartQty(inCart.cartItemId, 1)}
+                          className="w-5 h-5 rounded bg-orange-600 text-white font-black flex items-center justify-center text-xs shadow-2xs"
+                        >
+                          <Plus className="h-2.5 w-2.5" />
+                        </button>
+                      </div>
+                    );
+                  })()}
                   {!isSoldOut && (
                     <button
                       onClick={() => {

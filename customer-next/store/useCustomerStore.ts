@@ -135,6 +135,7 @@ export const useCustomerStore = create<CustomerStoreState>((set) => ({
     set((state) => {
       const existingIndex = state.cart.findIndex(
         (ci) =>
+          !ci.isOrdered &&
           ci.menuItem.id === item.id &&
           ci.selectedOption === selectedOption &&
           JSON.stringify([...ci.selectedAddOns].sort()) ===
@@ -228,15 +229,20 @@ export const useCustomerStore = create<CustomerStoreState>((set) => ({
 
   placeAllOrders: () => {
     set((state) => {
-      if (state.cart.length === 0) return state;
+      const newlyAddedItems = state.cart.filter((c) => !c.isOrdered);
+      if (newlyAddedItems.length === 0) {
+        return {
+          currentScreen: 5,
+        };
+      }
 
-      // Push to shared bridge → Kitchen KDS + Waiter table updates immediately
+      // Push only newlyAddedItems to shared bridge → Kitchen KDS + Waiter table updates
       const bridge = useSharedBridge.getState();
       bridge.customerPlacesOrder(
         state.tableNumber,
         state.guestName || 'Guest',
         1, // at least 1 guest
-        state.cart.map((c) => ({
+        newlyAddedItems.map((c) => ({
           item: c.menuItem,
           selectedOption: c.selectedOption,
           addOns: c.selectedAddOns,
@@ -244,7 +250,7 @@ export const useCustomerStore = create<CustomerStoreState>((set) => ({
         }))
       );
 
-      const newTracking: IndividualItemTracking[] = state.cart.map((c) => ({
+      const newTracking: IndividualItemTracking[] = newlyAddedItems.map((c) => ({
         id: 'track-' + c.cartItemId,
         name: `${c.menuItem.name} × ${c.quantity}`,
         prepMode: c.prepMode,
@@ -252,8 +258,11 @@ export const useCustomerStore = create<CustomerStoreState>((set) => ({
         stage: 'PREP' as OrderStage,
       }));
 
+      const updatedCart = state.cart.map((c) => ({ ...c, isOrdered: true }));
+
       return {
-        itemTracking: newTracking,
+        cart: updatedCart,
+        itemTracking: [...state.itemTracking, ...newTracking],
         orderStage: 'PREP',
         previousScreen: state.currentScreen,
         currentScreen: 5, // Proceed to Live Tracking Screen 5

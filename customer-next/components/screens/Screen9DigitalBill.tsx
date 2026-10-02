@@ -23,8 +23,7 @@ export const Screen9DigitalBill: React.FC = () => {
 
   const subtotal = cart.length > 0 ? cart.reduce((s, i) => s + i.totalPrice, 0) : payment.subtotal;
   const tax = Math.round(subtotal * 0.05);
-  const discount = payment.redeemPoints ? 50 : 0;
-  const paidTotal = subtotal + tax + payment.tipAmount - discount;
+  const paidTotal = subtotal + tax + payment.tipAmount;
 
   const handleDownload = () => {
     setDownloadMsg(true);
@@ -103,19 +102,13 @@ export const Screen9DigitalBill: React.FC = () => {
                 <span className="font-mono">[₹ {payment.tipAmount}]</span>
               </div>
             )}
-            {discount > 0 && (
-              <div className="flex justify-between font-medium text-emerald-600">
-                <span>[POINTS DISCOUNT]</span>
-                <span className="font-mono">[- ₹ {discount}]</span>
-              </div>
-            )}
             <div className="flex justify-between items-center pt-2 font-black text-slate-900 border-t border-slate-100 text-sm">
               <span>[PAID TOTAL]</span>
               <span className="font-mono text-base font-black text-slate-900">[₹ {paidTotal}]</span>
             </div>
           </div>
 
-          {/* Paid Mode & Points Earned */}
+          {/* Paid Mode & Payment Status */}
           <div className="flex justify-between items-center pt-3 border-t border-dashed border-slate-200 text-xs">
             <div>
               <div className="text-[9px] font-bold uppercase tracking-wider text-slate-400 font-mono">
@@ -127,11 +120,11 @@ export const Screen9DigitalBill: React.FC = () => {
             </div>
             <div className="text-right">
               <div className="text-[9px] font-bold uppercase tracking-wider text-slate-400 font-mono">
-                [POINTS EARNED]
+                [PAYMENT STATUS]
               </div>
               <div className="font-black text-emerald-700 text-[11px] mt-0.5 flex items-center justify-end gap-1">
-                <Sparkles className="h-3 w-3 text-amber-500" />
-                <span>[+50 REWARD PTS]</span>
+                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                <span>[PAID & SETTLED]</span>
               </div>
             </div>
           </div>

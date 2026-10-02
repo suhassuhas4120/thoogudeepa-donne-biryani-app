@@ -8,7 +8,7 @@ import { WireHeader } from '../ui/WireHeader';
 import { StickyBottomBar } from '../ui/StickyBottomBar';
 import { ItemDrawer } from '../ui/ItemDrawer';
 import { MenuItem } from '../../types/customer';
-import { Search, Plus, Sparkles, ArrowRight, ShoppingCart, Flame, Utensils, Ban, Clock } from 'lucide-react';
+import { Search, Plus, Minus, Sparkles, ArrowRight, ShoppingCart, Flame, Utensils, Ban, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const Screen2Menu: React.FC = () => {
@@ -17,6 +17,7 @@ export const Screen2Menu: React.FC = () => {
     menuItems,
     setSelectedDetailItem,
     addToCart,
+    updateCartQuantity,
     cart,
     venueName,
     tableNumber,
@@ -66,6 +67,26 @@ export const Screen2Menu: React.FC = () => {
     addToCart(item, selectedOption, selectedAddOns, quantity);
     setAddedNotice(`Added ${item.name}!`);
     setTimeout(() => setAddedNotice(null), 1800);
+  };
+
+  const handleDecrementItem = (e: React.MouseEvent, itemId: string) => {
+    e.stopPropagation();
+    const matching = cart.filter((ci) => ci.menuItem.id === itemId);
+    if (matching.length > 0) {
+      const last = matching[matching.length - 1];
+      updateCartQuantity(last.cartItemId, -1);
+    }
+  };
+
+  const handleIncrementItem = (e: React.MouseEvent, item: MenuItem) => {
+    e.stopPropagation();
+    const matching = cart.filter((ci) => ci.menuItem.id === item.id);
+    if (matching.length > 0) {
+      const last = matching[matching.length - 1];
+      updateCartQuantity(last.cartItemId, 1);
+    } else {
+      addToCart(item);
+    }
   };
 
   const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -173,6 +194,9 @@ export const Screen2Menu: React.FC = () => {
           const item86 = inventory86.find((i) => i.id === item.id);
           const isSoldOut = !!item86?.is86;
           const prepDelay = item86?.prepDelayMinutes || 0;
+          const itemCartQty = cart
+            .filter((ci) => ci.menuItem.id === item.id)
+            .reduce((sum, ci) => sum + ci.quantity, 0);
 
           return (
             <motion.div
@@ -227,29 +251,48 @@ export const Screen2Menu: React.FC = () => {
                 </div>
               </div>
 
-              {/* Add Button */}
-              <motion.button
-                whileTap={{ scale: isSoldOut ? 1 : 0.95 }}
-                disabled={isSoldOut}
-                onClick={(e) => {
-                  if (isSoldOut) return;
-                  handleOpenDrawer(e, item);
-                }}
-                className={`mt-2 flex w-full items-center justify-center gap-1 rounded-xl py-1.5 text-[11px] font-extrabold uppercase tracking-wide transition ${
-                  isSoldOut
-                    ? 'bg-stone-200 text-slate-400 border border-slate-300 cursor-not-allowed'
-                    : 'border border-orange-300 bg-orange-50/80 text-orange-700 hover:bg-orange-600 hover:text-white'
-                }`}
-              >
-                {isSoldOut ? (
+              {/* Add Button or Quantity Stepper */}
+              {isSoldOut ? (
+                <div className="mt-2 flex w-full items-center justify-center rounded-xl bg-stone-200 py-1.5 text-[11px] font-extrabold uppercase text-slate-400 border border-slate-300 cursor-not-allowed">
                   <span>[SOLD OUT]</span>
-                ) : (
-                  <>
-                    <Plus className="h-3 w-3 stroke-[2.5]" />
-                    <span>[+ ADD]</span>
-                  </>
-                )}
-              </motion.button>
+                </div>
+              ) : itemCartQty > 0 ? (
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="mt-2 flex w-full items-center justify-between rounded-xl border border-orange-500 bg-orange-50 px-1.5 py-1 text-xs font-black text-orange-950 shadow-xs"
+                >
+                  <motion.button
+                    type="button"
+                    whileTap={{ scale: 0.85 }}
+                    onClick={(e) => handleDecrementItem(e, item.id)}
+                    className="flex h-6 w-6 items-center justify-center rounded-lg bg-white border border-orange-200 text-orange-700 hover:bg-orange-600 hover:text-white transition shadow-2xs"
+                    title="Remove 1 item"
+                  >
+                    <Minus className="h-3.5 w-3.5 stroke-[3]" />
+                  </motion.button>
+                  <span className="font-mono text-xs font-black text-slate-900 tracking-tight">
+                    [{itemCartQty}]
+                  </span>
+                  <motion.button
+                    type="button"
+                    whileTap={{ scale: 0.85 }}
+                    onClick={(e) => handleIncrementItem(e, item)}
+                    className="flex h-6 w-6 items-center justify-center rounded-lg bg-orange-600 text-white hover:bg-orange-700 transition shadow-2xs"
+                    title="Add 1 more item"
+                  >
+                    <Plus className="h-3.5 w-3.5 stroke-[3]" />
+                  </motion.button>
+                </div>
+              ) : (
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  onClick={(e) => handleOpenDrawer(e, item)}
+                  className="mt-2 flex w-full items-center justify-center gap-1 rounded-xl border border-orange-300 bg-orange-50/80 py-1.5 text-[11px] font-extrabold uppercase tracking-wide text-orange-700 hover:bg-orange-600 hover:text-white transition"
+                >
+                  <Plus className="h-3.5 w-3.5 stroke-[2.5]" />
+                  <span>[ADD]</span>
+                </motion.button>
+              )}
             </motion.div>
           );
         })}

@@ -113,6 +113,16 @@ interface SharedBridgeState {
   inventory86: SharedMenuItem86[];
   shiftStats: SharedShiftStats;
 
+  // NEW kitchen notification queue — never shown to customer
+  kitchenNotifications: Array<{
+    id: string;
+    ticketId: string;
+    tableNumber: string;
+    itemCount: number;
+    timestamp: string;
+    dismissed: boolean;
+  }>;
+
   // ── Customer actions ────────────────────────────────────────────
   /** Customer places order → adds KDS ticket + sets table as OCCUPIED */
   customerPlacesOrder: (
@@ -130,11 +140,17 @@ interface SharedBridgeState {
    *  creates a kitchenReadyItem visible in waiter feed */
   kitchenBumpItemStage: (ticketId: string, itemId: string) => void;
   kitchenSetItemStage: (ticketId: string, itemId: string, stage: OrderStage) => void;
+  kitchenSetBulkItemStage: (itemName: string, stage: OrderStage) => void;
   kitchenBumpTable: (ticketId: string) => void;
+  kitchenClearCompleted: () => void;
 
   /** Kitchen toggles 86 (out of stock) — affects customer menu immediately */
   kitchenToggle86: (itemId: string) => void;
   kitchenUpdatePrepDelay: (itemId: string, deltaMinutes: number) => void;
+
+  /** Kitchen dismisses a notification */
+  kitchenDismissNotification: (notifId: string) => void;
+  kitchenDismissAllNotifications: () => void;
 
   // ── Waiter actions ──────────────────────────────────────────────
   /** Waiter fires KOT → adds KDS ticket to kitchen */
@@ -166,6 +182,17 @@ interface SharedBridgeState {
   resetToFreshDemoState: () => void;
 }
 
+/* ── Canonical dish key: strips seat/table tags, normalizes for bulk grouping */
+export const getCanonicalDishKey = (name: string): string => {
+  return name
+    .replace(/\[Seat \d+\]/gi, '')
+    .replace(/\[Table [^\]]+\]/gi, '')
+    .replace(/[\[\]()]/g, '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
+};
+
 /* ── Store Implementation ───────────────────────────────────────── */
 export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
   tables: freshTables,
@@ -178,6 +205,7 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
     tipsEarned: 0,
     avgTurnaroundMinutes: 38,
   },
+  kitchenNotifications: [],
 
   /* ─── Customer Places Order ──────────────────────────────────── */
   customerPlacesOrder: (tableNumber, guestName, guestCount, items) => {
@@ -200,22 +228,37 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
       })),
     };
     const orderTotal = items.reduce((s, i) => s + i.item.price * i.quantity, 0);
+
+    // Create kitchen notification for new order
+    const notif = {
+      id: `notif-${Date.now()}`,
+      ticketId: ticket.id,
+      tableNumber,
+      itemCount: items.reduce((s, i) => s + i.quantity, 0),
+      timestamp: nowTime(),
+      dismissed: false,
+    };
+
     set((state) => ({
       kdsTickets: [...state.kdsTickets, ticket],
+      kitchenNotifications: [...state.kitchenNotifications, notif],
       tables: state.tables.map((t) =>
         t.number === tableNumber
           ? {
               ...t,
               status: 'OCCUPIED',
               guestCount: guestCount || t.guestCount || 1,
-              seatedTime: nowTime(),
+              seatedTime: t.seatedTime === '--' ? nowTime() : t.seatedTime,
               currentBill: t.currentBill + orderTotal,
               kotCount: t.kotCount + 1,
-              activeItems: items.map((i) => ({
-                name: i.item.name,
-                quantity: i.quantity,
-                status: 'Cooking',
-              })),
+              activeItems: [
+                ...(t.activeItems || []),
+                ...items.map((i) => ({
+                  name: i.item.name,
+                  quantity: i.quantity,
+                  status: 'Placed',
+                })),
+              ],
             }
           : t
       ),
@@ -257,10 +300,11 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
         });
         const allPlated = newItems.every((i) => i.stage === 'PLATED' || i.stage === 'SERVED');
         const allServed = newItems.every((i) => i.stage === 'SERVED');
+        const anyPrep = newItems.some((i) => i.stage === 'PREP');
         return {
           ...t,
           items: newItems,
-          status: (allServed ? 'COMPLETED' : allPlated ? 'READY' : 'PREP') as SharedKDSTicket['status'],
+          status: (allServed ? 'COMPLETED' : allPlated ? 'READY' : anyPrep ? 'PREP' : 'NEW') as SharedKDSTicket['status'],
         };
       });
 
@@ -273,7 +317,7 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
           activeItems: ticket.items.map((it) => ({
             name: it.name,
             quantity: it.quantity,
-            status: it.stage === 'PLATED' ? 'Ready' : it.stage === 'PREP' ? 'Cooking' : it.stage,
+            status: it.stage === 'SERVED' ? 'Served' : it.stage === 'PLATED' ? 'Ready' : it.stage === 'PREP' ? 'Cooking' : 'Placed',
           })),
         };
       });
@@ -293,10 +337,11 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
         });
         const allPlated = newItems.every((i) => i.stage === 'PLATED' || i.stage === 'SERVED');
         const allServed = newItems.every((i) => i.stage === 'SERVED');
+        const anyPrep = newItems.some((i) => i.stage === 'PREP');
         return {
           ...t,
           items: newItems,
-          status: (allServed ? 'COMPLETED' : allPlated ? 'READY' : stage === 'PREP' ? 'PREP' : 'NEW') as SharedKDSTicket['status'],
+          status: (allServed ? 'COMPLETED' : allPlated ? 'READY' : anyPrep ? 'PREP' : 'NEW') as SharedKDSTicket['status'],
         };
       });
 
@@ -309,7 +354,52 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
           activeItems: ticket.items.map((it) => ({
             name: it.name,
             quantity: it.quantity,
-            status: it.stage === 'PLATED' ? 'Ready' : it.stage === 'PREP' ? 'Cooking' : it.stage === 'SERVED' ? 'Served' : 'Placed',
+            status: it.stage === 'SERVED' ? 'Served' : it.stage === 'PLATED' ? 'Ready' : it.stage === 'PREP' ? 'Cooking' : 'Placed',
+          })),
+        };
+      });
+
+      return { kdsTickets: newTickets, tables: updatedTables };
+    });
+  },
+
+  /* ─── Kitchen Sets Bulk Item Stage (Cross-Table & Cross-Portal) ─── */
+  kitchenSetBulkItemStage: (itemName, stage) => {
+    const targetKey = getCanonicalDishKey(itemName);
+    set((state) => {
+      const newTickets = state.kdsTickets.map((t) => {
+        let ticketHasItem = false;
+        const newItems = t.items.map((it) => {
+          const itemKey = getCanonicalDishKey(it.name);
+          if (itemKey === targetKey || itemKey.includes(targetKey) || targetKey.includes(itemKey)) {
+            ticketHasItem = true;
+            return { ...it, stage };
+          }
+          return it;
+        });
+
+        if (!ticketHasItem) return t;
+
+        const allPlated = newItems.every((i) => i.stage === 'PLATED' || i.stage === 'SERVED');
+        const allServed = newItems.every((i) => i.stage === 'SERVED');
+        const anyPrep = newItems.some((i) => i.stage === 'PREP');
+        return {
+          ...t,
+          items: newItems,
+          status: (allServed ? 'COMPLETED' : allPlated ? 'READY' : anyPrep ? 'PREP' : 'NEW') as SharedKDSTicket['status'],
+        };
+      });
+
+      // Update activeItems on all matching tables
+      const updatedTables = state.tables.map((tbl) => {
+        const ticket = newTickets.find((tk) => tk.tableNumber === tbl.number);
+        if (!ticket) return tbl;
+        return {
+          ...tbl,
+          activeItems: ticket.items.map((it) => ({
+            name: it.name,
+            quantity: it.quantity,
+            status: it.stage === 'SERVED' ? 'Served' : it.stage === 'PLATED' ? 'Ready' : it.stage === 'PREP' ? 'Cooking' : 'Placed',
           })),
         };
       });
@@ -329,6 +419,13 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
           items: t.items.map((i) => ({ ...i, stage: 'PLATED' })),
         };
       }),
+    }));
+  },
+
+  /* ─── Kitchen Clear Completed ─────────────────────────────────── */
+  kitchenClearCompleted: () => {
+    set((state) => ({
+      kdsTickets: state.kdsTickets.filter((t) => t.status !== 'COMPLETED'),
     }));
   },
 
@@ -352,6 +449,21 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
     }));
   },
 
+  /* ─── Kitchen Dismiss Notification ───────────────────────────── */
+  kitchenDismissNotification: (notifId) => {
+    set((state) => ({
+      kitchenNotifications: state.kitchenNotifications.map((n) =>
+        n.id === notifId ? { ...n, dismissed: true } : n
+      ),
+    }));
+  },
+
+  kitchenDismissAllNotifications: () => {
+    set((state) => ({
+      kitchenNotifications: state.kitchenNotifications.map((n) => ({ ...n, dismissed: true })),
+    }));
+  },
+
   /* ─── Waiter Fires KOT ───────────────────────────────────────── */
   waiterFiresKOT: (tableNumber, captainName, items) => {
     const ticket: SharedKDSTicket = {
@@ -371,9 +483,20 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
         options: i.selectedOption,
       })),
     };
+
+    const notif = {
+      id: `notif-${Date.now()}`,
+      ticketId: ticket.id,
+      tableNumber,
+      itemCount: items.reduce((s, i) => s + i.quantity, 0),
+      timestamp: nowTime(),
+      dismissed: false,
+    };
+
     const kotTotal = items.reduce((s, i) => s + i.item.price * i.quantity, 0);
     set((state) => ({
       kdsTickets: [...state.kdsTickets, ticket],
+      kitchenNotifications: [...state.kitchenNotifications, notif],
       tables: state.tables.map((t) =>
         t.number === tableNumber
           ? {
@@ -383,7 +506,7 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
               kotCount: t.kotCount + 1,
               activeItems: [
                 ...(t.activeItems || []),
-                ...items.map((i) => ({ name: i.item.name, quantity: i.quantity, status: 'Cooking' })),
+                ...items.map((i) => ({ name: i.item.name, quantity: i.quantity, status: 'Placed' })),
               ],
             }
           : t
@@ -409,12 +532,13 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
       const source = state.tables.find((t) => t.number === sourceTable);
       if (!target || !source) return state;
       const mergedBill = target.currentBill + source.currentBill;
-      const mergedGuests = target.guestCount + source.guestCount;
+      const mergedGuests = Math.max(2, (target.guestCount || 2) + (source.guestCount || 2));
       return {
         tables: state.tables.map((t) => {
           if (t.number === targetTable) {
             return {
               ...t,
+              status: 'OCCUPIED',
               currentBill: mergedBill,
               guestCount: mergedGuests,
               mergedWith: sourceTable,
@@ -422,7 +546,13 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
             };
           }
           if (t.number === sourceTable) {
-            return { ...t, status: 'VACANT', currentBill: 0, guestCount: 0, mergedWith: targetTable };
+            return {
+              ...t,
+              status: 'OCCUPIED',
+              currentBill: 0,
+              guestCount: 0,
+              mergedWith: targetTable,
+            };
           }
           return t;
         }),
@@ -437,31 +567,53 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
 
   /* ─── Waiter Records Payment ─────────────────────────────────── */
   waiterRecordsPayment: (tableNumber, method, amount) => {
-    set((state) => ({
-      tables: state.tables.map((t) =>
-        t.number === tableNumber ? { ...t, status: 'BILLING' } : t
-      ),
-      shiftStats: {
-        ...state.shiftStats,
-        totalRevenue: state.shiftStats.totalRevenue + amount,
-        tablesServed: state.shiftStats.tablesServed + 1,
-      },
-    }));
+    set((state) => {
+      const targetTbl = state.tables.find((t) => t.number === tableNumber);
+      const partner = targetTbl?.mergedWith;
+      return {
+        tables: state.tables.map((t) =>
+          t.number === tableNumber || (partner && t.number === partner)
+            ? { ...t, status: 'BILLING' }
+            : t
+        ),
+        shiftStats: {
+          ...state.shiftStats,
+          totalRevenue: state.shiftStats.totalRevenue + amount,
+          tablesServed: state.shiftStats.tablesServed + 1,
+        },
+      };
+    });
   },
 
   /* ─── Waiter Vacates Table ───────────────────────────────────── */
   waiterVacatesTable: (tableNumber) => {
-    set((state) => ({
-      tables: state.tables.map((t) =>
-        t.number === tableNumber
-          ? { ...t, status: 'VACANT', currentBill: 0, guestCount: 0, kotCount: 0, seatedTime: '--', activeItems: [] }
-          : t
-      ),
-      // Remove completed KDS tickets for this table
-      kdsTickets: state.kdsTickets.filter(
-        (tk) => !(tk.tableNumber === tableNumber && tk.status === 'COMPLETED')
-      ),
-    }));
+    set((state) => {
+      const targetTbl = state.tables.find((t) => t.number === tableNumber);
+      const partner = targetTbl?.mergedWith;
+      return {
+        tables: state.tables.map((t) =>
+          t.number === tableNumber || (partner && t.number === partner)
+            ? {
+                ...t,
+                status: 'VACANT',
+                currentBill: 0,
+                guestCount: 0,
+                kotCount: 0,
+                seatedTime: '--',
+                activeItems: [],
+                mergedWith: undefined,
+              }
+            : t
+        ),
+        // Remove ALL KDS tickets for this table (completed or not, since table is vacated)
+        kdsTickets: state.kdsTickets.filter(
+          (tk) =>
+            !(
+              (tk.tableNumber === tableNumber || (partner && tk.tableNumber === partner))
+            )
+        ),
+      };
+    });
   },
 
   /* ─── Waiter Marks Kitchen Item Served ───────────────────────── */
@@ -485,11 +637,13 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
         localStorage.removeItem('thoogudeepa_bridge_v1');
       } catch {}
     }
+    ticketCounter = 1;
     set({
       tables: freshTables,
       kdsTickets: [],
       pings: [],
       inventory86: freshInventory86,
+      kitchenNotifications: [],
       shiftStats: {
         tablesServed: 0,
         totalRevenue: 0,
@@ -502,32 +656,92 @@ export const useSharedBridge = create<SharedBridgeState>((set, get) => ({
 
 /* ── Real-Time Cross-Tab & Multi-Device Synchronization ───────────── */
 if (typeof window !== 'undefined') {
+
+  // ── Helper: apply persisted state safely ─────────────────────────
+  const applyPersistedState = (parsed: Record<string, unknown>, suppressBroadcast = false) => {
+    if (!parsed || !Array.isArray(parsed.tables)) return;
+    const cur = useSharedBridge.getState();
+    // Always filter COMPLETED tickets on incoming sync
+    const liveTickets = Array.isArray(parsed.kdsTickets)
+      ? (parsed.kdsTickets as SharedKDSTicket[]).filter((tk) => tk.status !== 'COMPLETED')
+      : cur.kdsTickets;
+    // Validate shiftStats shape before accepting
+    const rawStats = parsed.shiftStats as Partial<typeof cur.shiftStats> | undefined;
+    const safeShiftStats: typeof cur.shiftStats =
+      rawStats &&
+      typeof rawStats.tablesServed === 'number' &&
+      typeof rawStats.totalRevenue === 'number'
+        ? (rawStats as typeof cur.shiftStats)
+        : cur.shiftStats;
+
+    const incoming: Partial<typeof cur> = {
+      tables: parsed.tables as typeof cur.tables,
+      kdsTickets: liveTickets,
+      pings: Array.isArray(parsed.pings) ? (parsed.pings as typeof cur.pings) : cur.pings,
+      inventory86: Array.isArray(parsed.inventory86)
+        ? (parsed.inventory86 as typeof cur.inventory86)
+        : cur.inventory86,
+      shiftStats: safeShiftStats,
+      // kitchenNotifications: merge incoming with local (kitchen device owns these)
+      kitchenNotifications: Array.isArray(parsed.kitchenNotifications)
+        ? (parsed.kitchenNotifications as typeof cur.kitchenNotifications)
+        : cur.kitchenNotifications,
+    };
+    if (suppressBroadcast) {
+      isBroadcasting = true;
+      useSharedBridge.setState(incoming);
+      isBroadcasting = false;
+    } else {
+      useSharedBridge.setState(incoming);
+    }
+  };
+
+
+  // Global flag to prevent broadcast loops
+  let isBroadcasting = false;
+
   // 0. Rehydrate from localStorage if available
   try {
     const saved = localStorage.getItem('thoogudeepa_bridge_v1');
     if (saved) {
       const parsed = JSON.parse(saved);
       if (parsed && Array.isArray(parsed.tables)) {
-        useSharedBridge.setState(parsed);
+        // Filter out COMPLETED tickets on rehydration so old orders don't persist
+        const liveTickets = Array.isArray(parsed.kdsTickets)
+          ? parsed.kdsTickets.filter((tk: SharedKDSTicket) => tk.status !== 'COMPLETED')
+          : [];
+        isBroadcasting = true;
+        useSharedBridge.setState({
+          ...parsed,
+          kdsTickets: liveTickets,
+          // kitchenNotifications are session-only, don't persist them
+          kitchenNotifications: [],
+        });
+        isBroadcasting = false;
+        // Sync ticket counter so new tickets don't collide with saved ones
+        if (liveTickets.length > 0) {
+          const maxNum = liveTickets
+            .map((tk: SharedKDSTicket) => parseInt(tk.id.replace('KDS-', ''), 10) - 100)
+            .reduce((a: number, b: number) => Math.max(a, b), 0);
+          ticketCounter = maxNum + 1;
+        }
       }
     }
   } catch {}
 
   // 1. Native Cross-Tab Sync via BroadcastChannel (0ms latency, zero dependencies)
+  let syncChannel: BroadcastChannel | null = null;
   if ('BroadcastChannel' in window) {
-    const syncChannel = new BroadcastChannel('thoogudeepa_bridge_sync');
-    let isBroadcasting = false;
+    syncChannel = new BroadcastChannel('thoogudeepa_bridge_sync');
 
     syncChannel.onmessage = (event) => {
       if (event.data?.type === 'SYNC_STATE' && event.data.payload) {
-        isBroadcasting = true;
-        useSharedBridge.setState(event.data.payload);
-        isBroadcasting = false;
+        applyPersistedState(event.data.payload, true); // suppress re-broadcast
       }
     };
 
     useSharedBridge.subscribe((state) => {
-      // Save state to localStorage for refresh persistence
+      // Save state to localStorage on every change (persistence + cross-device fallback)
       try {
         localStorage.setItem(
           'thoogudeepa_bridge_v1',
@@ -537,13 +751,15 @@ if (typeof window !== 'undefined') {
             pings: state.pings,
             inventory86: state.inventory86,
             shiftStats: state.shiftStats,
+            // kitchenNotifications intentionally NOT persisted (session-only)
           })
         );
       } catch {}
 
+      // Only broadcast if this change was NOT caused by an incoming broadcast
       if (isBroadcasting) return;
       try {
-        syncChannel.postMessage({
+        syncChannel?.postMessage({
           type: 'SYNC_STATE',
           payload: {
             tables: state.tables,
@@ -551,28 +767,116 @@ if (typeof window !== 'undefined') {
             pings: state.pings,
             inventory86: state.inventory86,
             shiftStats: state.shiftStats,
+            kitchenNotifications: state.kitchenNotifications,
           },
         });
       } catch {
-        // Gracefully ignore if channel closed
+        // Channel may be closed — ignore
       }
     });
   }
 
-  // 2. Optional WebSocket client for multi-device sync (when server.js is running)
+  // 2. visibilitychange Re-Sync — handles mobile tab wakeup after sleep
+  // When a tab comes back to foreground, it may have missed BroadcastChannel messages.
+  // Re-read localStorage to catch up with any changes made by other tabs.
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) return; // tab going to background — nothing to do
+    try {
+      const saved = localStorage.getItem('thoogudeepa_bridge_v1');
+      if (!saved) return;
+      const parsed = JSON.parse(saved);
+      if (!parsed || !Array.isArray(parsed.tables)) return;
+
+      const currentState = useSharedBridge.getState();
+      const savedJson = JSON.stringify({
+        kdsTickets: parsed.kdsTickets,
+        tables: parsed.tables,
+      });
+      const currentJson = JSON.stringify({
+        kdsTickets: currentState.kdsTickets,
+        tables: currentState.tables,
+      });
+
+      // Only update if there's an actual difference (avoid unnecessary re-renders)
+      if (savedJson !== currentJson) {
+        applyPersistedState(parsed, true); // suppress broadcast — we're catching up
+      }
+    } catch {}
+  });
+
+  // 3. localStorage polling fallback (every 3 seconds)
+  // Catches state changes from tabs where BroadcastChannel messages were dropped
+  // (e.g., heavy CPU load, tab sleeping, or browser throttling)
+  let lastSeenTicketsHash = '';
+  setInterval(() => {
+    // Skip polling if this tab is currently broadcasting or if tab is visible
+    // (BroadcastChannel handles the visible case; polling is only a safety net)
+    if (document.hidden) return; // only poll when tab is visible
+    try {
+      const saved = localStorage.getItem('thoogudeepa_bridge_v1');
+      if (!saved) return;
+      const parsed = JSON.parse(saved);
+      if (!parsed || !Array.isArray(parsed.kdsTickets)) return;
+
+      // Quick hash = count + last stage of each ticket item
+      const newHash = parsed.kdsTickets
+        .map((tk: SharedKDSTicket) =>
+          `${tk.id}:${tk.status}:${tk.items.map((i) => i.stage).join(',')}`
+        )
+        .join('|');
+
+      if (newHash !== lastSeenTicketsHash) {
+        lastSeenTicketsHash = newHash;
+        const currentState = useSharedBridge.getState();
+        const liveFromStorage = (parsed.kdsTickets as SharedKDSTicket[])
+          .filter((tk) => tk.status !== 'COMPLETED');
+        const liveInMemory = currentState.kdsTickets;
+
+        // Check if there's a meaningful diff before applying
+        if (JSON.stringify(liveFromStorage) !== JSON.stringify(liveInMemory)) {
+          applyPersistedState(parsed, true);
+        }
+      }
+    } catch {}
+  }, 3000);
+
+  // 4. Optional WebSocket client for cross-device sync (when ws-server is running)
   try {
     const wsHost = window.location.hostname || 'localhost';
-    const wsUrl = `ws://${wsHost}:3000`;
+    const wsPort = 3001;
+    const wsUrl = `ws://${wsHost}:${wsPort}`;
     let ws: WebSocket | null = null;
-    let reconnectTimer: any = null;
+    let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+    let wsConnected = false;
 
     const connectWs = () => {
+      // Don't try WebSocket on surge.sh (static hosting has no WS server)
+      if (window.location.hostname.includes('surge.sh')) return;
       try {
         ws = new WebSocket(wsUrl);
+        ws.onopen = () => {
+          wsConnected = true;
+          const s = useSharedBridge.getState();
+          ws?.send(JSON.stringify({
+            type: 'SYNC_STATE',
+            payload: { tables: s.tables, kdsTickets: s.kdsTickets, pings: s.pings }
+          }));
+        };
+        ws.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            if (data?.type === 'SYNC_STATE' && data.payload) {
+              applyPersistedState(data.payload, true);
+            }
+          } catch {}
+        };
         ws.onerror = () => {
+          wsConnected = false;
           ws?.close();
         };
         ws.onclose = () => {
+          ws = null;
+          wsConnected = false;
           if (!reconnectTimer) {
             reconnectTimer = setTimeout(() => {
               reconnectTimer = null;
@@ -581,13 +885,15 @@ if (typeof window !== 'undefined') {
           }
         };
       } catch {
-        // Fallback cleanly to BroadcastChannel
+        // Fallback to BroadcastChannel only
       }
     };
 
     connectWs();
   } catch {
-    // Fallback cleanly to BroadcastChannel
+    // Fallback to BroadcastChannel only
   }
 }
+
+
 

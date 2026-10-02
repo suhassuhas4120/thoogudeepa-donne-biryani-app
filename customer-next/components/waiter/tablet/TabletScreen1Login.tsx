@@ -70,20 +70,7 @@ export const TabletScreen1Login: React.FC = () => {
               </div>
             </div>
 
-            {/* Service Protocol Check */}
-            <div className="mt-4 border border-slate-300 bg-white rounded-xl p-4 flex flex-col gap-2 font-mono text-[11px] shadow-2xs">
-              <span className="font-bold text-slate-500 uppercase text-[10px]">
-                [SERVICE PROTOCOL CHECK]:
-              </span>
-              <div className="text-slate-700 flex items-center gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-                <span>[CHECK WATER BOTTLES &amp; CUTLERY STANDS]</span>
-              </div>
-              <div className="text-slate-700 flex items-center gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-                <span>[CONFIRM KITCHEN KDS CHEF CONNECTION]</span>
-              </div>
-            </div>
+
           </div>
 
           {/* Bottom Company Platform Tag */}

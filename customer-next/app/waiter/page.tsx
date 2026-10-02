@@ -58,7 +58,6 @@ export default function WaiterTabletPage() {
     { id: 6 as WaiterScreenId, name: '6. Merge/Split Tables', icon: <Users className="h-3.5 w-3.5 text-teal-500" />, mobile: <ScreenW6MergeSplit />, tablet: <TabletScreen6MergeSplit /> },
     { id: 7 as WaiterScreenId, name: '7. Collect Payment', icon: <CreditCard className="h-3.5 w-3.5 text-emerald-500" />, mobile: <ScreenW7Payment />, tablet: <TabletScreen7Payment /> },
     { id: 8 as WaiterScreenId, name: '8. Print & WhatsApp', icon: <Receipt className="h-3.5 w-3.5 text-cyan-600" />, mobile: <ScreenW8PrintBill />, tablet: <TabletScreen8PrintBill /> },
-    { id: 9 as WaiterScreenId, name: '9. Vacate Turnaround', icon: <Trash2 className="h-3.5 w-3.5 text-rose-500" />, mobile: <ScreenW9Vacate />, tablet: <TabletScreen9Vacate /> },
     { id: 10 as WaiterScreenId, name: '10. Shift Performance', icon: <TrendingUp className="h-3.5 w-3.5 text-slate-700" />, mobile: <ScreenW10ShiftStats />, tablet: <TabletScreen10ShiftStats /> },
   ];
 
@@ -86,7 +85,7 @@ export default function WaiterTabletPage() {
               </span>
             </div>
             <h1 className="text-sm font-black tracking-tight text-slate-900 mt-0.5">
-              FLOOR CAPTAIN CONSOLE (10 SCREENS)
+              FLOOR CAPTAIN CONSOLE (MULTI-PANE COMMAND HUB)
             </h1>
           </div>
         </div>
@@ -99,7 +98,7 @@ export default function WaiterTabletPage() {
               className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-slate-600 hover:text-slate-900 transition"
             >
               <Utensils className="h-3.5 w-3.5" />
-              <span>CUSTOMER (12)</span>
+              <span>CUSTOMER (10)</span>
             </Link>
             <Link
               href="/kitchen"
@@ -110,7 +109,7 @@ export default function WaiterTabletPage() {
             </Link>
             <span className="rounded-xl bg-orange-600 text-white px-3 py-1.5 shadow-xs flex items-center gap-1">
               <UserCheck className="h-3.5 w-3.5" />
-              <span>WAITER (10)</span>
+              <span>WAITER PORTAL</span>
             </span>
             <Link
               href="/manager"

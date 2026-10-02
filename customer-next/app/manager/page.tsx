@@ -129,7 +129,7 @@ export default function ManagerPortalPage() {
               className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-slate-600 hover:text-slate-900 transition"
             >
               <Utensils className="h-3.5 w-3.5" />
-              <span>CUSTOMER (12)</span>
+              <span>CUSTOMER (10)</span>
             </Link>
             <Link
               href="/kitchen"

@@ -25,7 +25,7 @@ export const ScreenW3TableDetail: React.FC = () => {
     callKitchenStation,
   } = useWaiterStore();
 
-  const { tables } = useSharedBridge();
+  const { tables, waiterVacatesTable } = useSharedBridge();
 
   const table =
     tables.find((t) => t.number === selectedTableNumber) || tables[3]; // Table A-04 default
@@ -133,14 +133,24 @@ export const ScreenW3TableDetail: React.FC = () => {
 
         {/* Bottom Actions */}
         <div className="space-y-2 pt-2 border-t border-slate-100">
-          <motion.button
-            whileTap={{ scale: 0.98 }}
-            onClick={() => setCurrentScreen(9)}
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-900 text-white font-mono text-xs font-black hover:bg-slate-800 transition shadow-xs"
-          >
-            <Trash2 className="h-3.5 w-3.5 text-rose-400" />
-            <span>[CHECKOUT &amp; VACATE TABLE]</span>
-          </motion.button>
+          {(() => {
+            const isPaymentDone = table.status === 'BILLING';
+            return (
+              <motion.button
+                whileTap={{ scale: isPaymentDone ? 0.98 : 1 }}
+                disabled={!isPaymentDone}
+                onClick={() => isPaymentDone && waiterVacatesTable(table.number)}
+                className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl font-mono text-xs font-black transition shadow-xs ${
+                  isPaymentDone
+                    ? 'bg-rose-700 hover:bg-rose-800 text-white cursor-pointer'
+                    : 'bg-slate-200 text-slate-400 border border-slate-300 cursor-not-allowed opacity-60'
+                }`}
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+                <span>{isPaymentDone ? '[CHECKOUT & VACATE TABLE]' : '[VACATE DISABLED: PAYMENT PENDING]'}</span>
+              </motion.button>
+            );
+          })()}
         </div>
       </div>
     </WaiterTabletHousing>

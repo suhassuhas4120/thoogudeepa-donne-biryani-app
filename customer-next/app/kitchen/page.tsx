@@ -88,7 +88,7 @@ export default function KitchenKDSPage() {
               className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-slate-600 hover:text-slate-900 transition"
             >
               <Utensils className="h-3.5 w-3.5" />
-              <span>CUSTOMER (12)</span>
+              <span>CUSTOMER (10)</span>
             </Link>
             <span className="rounded-xl bg-orange-600 text-white px-3 py-1.5 shadow-xs flex items-center gap-1">
               <Flame className="h-3.5 w-3.5 fill-white" />

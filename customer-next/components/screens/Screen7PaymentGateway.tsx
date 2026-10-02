@@ -83,33 +83,7 @@ export const Screen7PaymentGateway: React.FC = () => {
           </div>
         </div>
 
-        {/* Redeem Points Option */}
-        <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
-          <div className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono mb-1">
-            [REDEEM POINTS OPTION]
-          </div>
-          <label className="flex items-center justify-between cursor-pointer pt-1">
-            <div className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-100 text-amber-800">
-                <Gift className="h-5 w-5" />
-              </div>
-              <div>
-                <div className="text-xs font-black text-slate-900">
-                  [AVAILABLE: {payment.pointsAvailable} POINTS]
-                </div>
-                <div className="text-[10.5px] font-semibold text-emerald-700">
-                  [REDEEM 100 PTS = ₹ 50 OFF]
-                </div>
-              </div>
-            </div>
-            <input
-              type="checkbox"
-              checked={payment.redeemPoints}
-              onChange={toggleRedeemPoints}
-              className="accent-orange-600 h-5 w-5 rounded cursor-pointer"
-            />
-          </label>
-        </div>
+
 
         {/* Different Payment Options */}
         <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm space-y-2">

@@ -28,6 +28,7 @@ export interface CartItem {
   totalPrice: number;
   prepMode: string;
   orderSeparately?: boolean;
+  isOrdered?: boolean;
 }
 
 export type OrderStage = 'PLACED' | 'PREP' | 'PLATED' | 'SERVED';

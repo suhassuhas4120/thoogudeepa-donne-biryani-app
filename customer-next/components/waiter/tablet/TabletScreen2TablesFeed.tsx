@@ -114,13 +114,24 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                     <div className="flex justify-between items-center border-b border-dashed border-slate-300 pb-2 font-mono">
                       <div className="flex items-center gap-1.5">
                         <strong className="text-sm font-black text-slate-950">
-                          [{table.number}]
+                          {table.mergedWith ? `[${table.number} + ${table.mergedWith}]` : `[${table.number}]`}
                         </strong>
-                        {table.number === 'A-04' && (
+                        {table.mergedWith && (
+                          <span className="bg-purple-100 text-purple-900 border border-purple-300 text-[9px] font-black px-1.5 py-0.5 rounded">
+                            🔗 MERGED
+                          </span>
+                        )}
+                        {table.number === 'A-04' && !table.mergedWith && (
                           <span className="text-amber-500 text-xs font-black">★</span>
                         )}
                       </div>
-                      <span className="text-[10px] font-bold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-300">
+                      <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${
+                        table.mergedWith 
+                          ? 'bg-purple-50 text-purple-950 border-purple-300'
+                          : isOccupied 
+                          ? 'bg-orange-50 text-orange-950 border-orange-300' 
+                          : 'text-slate-600 bg-slate-100 border-slate-300'
+                      }`}>
                         {isOccupied ? `⏱ ${table.seatedTime}` : `[${table.status}]`}
                       </span>
                     </div>
@@ -140,7 +151,7 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                         ))
                       ) : (
                         <span className="text-slate-400 italic text-[10.5px]">
-                          [Table Ready • No active orders]
+                          {table.mergedWith ? `[Merged Table • Shared with ${table.mergedWith}]` : '[Table Ready • No active orders]'}
                         </span>
                       )}
                     </div>
@@ -164,13 +175,24 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                       >
                         ✓ [SERVED]
                       </button>
-                      <button
-                        type="button"
-                        onClick={(e) => handleVacateClick(e, table.number)}
-                        className="flex-1 py-1.5 px-1 border border-slate-400 hover:bg-slate-100 text-slate-800 rounded text-[10px] font-bold transition"
-                      >
-                        [VACATE]
-                      </button>
+                      {(() => {
+                        const canVacate = table.status === 'BILLING';
+                        return (
+                          <button
+                            type="button"
+                            disabled={!canVacate}
+                            onClick={(e) => handleVacateClick(e, table.number)}
+                            title={canVacate ? 'Vacate table (Payment confirmed & bill generated)' : 'Disabled: Payment must be confirmed before vacate is enabled'}
+                            className={`flex-1 py-1.5 px-1 rounded text-[10px] font-bold transition ${
+                              canVacate
+                                ? 'border border-rose-600 bg-rose-50 hover:bg-rose-100 text-rose-800 cursor-pointer shadow-2xs'
+                                : 'border border-slate-200 bg-slate-100 text-slate-400 cursor-not-allowed opacity-60'
+                            }`}
+                          >
+                            {canVacate ? '🧹 [VACATE]' : '🔒 [LOCKED]'}
+                          </button>
+                        );
+                      })()}
                     </div>
                   </div>
                 );

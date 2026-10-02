@@ -5,7 +5,7 @@ import { useWaiterStore } from '../../../store/useWaiterStore';
 import { useSharedBridge } from '../../../store/useSharedBridge';
 import { WaiterTabletLandscapeHousing } from './WaiterTabletLandscapeHousing';
 import { INITIAL_MENU_ITEMS } from '../../../data/menuItems';
-import { ArrowLeft, ShoppingBag, Search, Plus, Check, Ban } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Search, Plus, Minus, Check, Ban, Lock } from 'lucide-react';
 
 export const TabletScreen4TakeOrder: React.FC = () => {
   const {
@@ -13,14 +13,16 @@ export const TabletScreen4TakeOrder: React.FC = () => {
     setCurrentScreen,
     orderCart,
     addToOrderCart,
+    updateOrderCartQty,
   } = useWaiterStore();
 
-  const { inventory86 } = useSharedBridge();
+  const { inventory86, tables } = useSharedBridge();
 
   const [search, setSearch] = useState('');
   const [selectedCat, setSelectedCat] = useState('ALL');
   const [addedItemNotice, setAddedItemNotice] = useState<string | null>(null);
 
+  const activeTable = tables.find((t) => t.number === selectedTableNumber) || tables[0];
   const categories = ['ALL', 'BIRYANI', 'STARTERS', 'GRAVY & SIDES', 'BEVERAGES'];
 
   const filteredItems = INITIAL_MENU_ITEMS.filter((item) => {
@@ -79,6 +81,23 @@ export const TabletScreen4TakeOrder: React.FC = () => {
           </button>
         </div>
 
+        {/* ORDER SAFETY BANNER: LOCKED ACTIVE ITEMS */}
+        {activeTable.activeItems && activeTable.activeItems.length > 0 && (
+          <div className="mb-3 border border-slate-300 bg-slate-100 rounded-xl p-3 flex flex-col gap-1.5 shrink-0 text-xs">
+            <span className="flex items-center gap-1.5 font-bold text-slate-700">
+              <Lock className="h-3.5 w-3.5 text-slate-500" />
+              [ALREADY ORDERED &amp; FIRED DISHES (LOCKED AGAINST DUPLICATION)]:
+            </span>
+            <div className="flex flex-wrap gap-2 text-[11px]">
+              {activeTable.activeItems.map((it, idx) => (
+                <span key={idx} className="bg-white border border-slate-300 rounded px-2 py-0.5 text-slate-700 font-bold">
+                  • {it.quantity}x {it.name} [{it.status}]
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* CATEGORIES & SEARCH & FILTERS */}
         <div className="flex gap-2 flex-wrap items-center mb-3 shrink-0">
           {categories.map((cat) => (
@@ -120,6 +139,8 @@ export const TabletScreen4TakeOrder: React.FC = () => {
           {filteredItems.map((item) => {
             const item86 = inventory86.find((i) => i.id === item.id);
             const isSoldOut = !!item86?.is86;
+            const inCart = orderCart.find((ci) => ci.menuItem.id === item.id);
+            const qty = inCart ? inCart.quantity : 0;
 
             return (
               <div
@@ -152,19 +173,46 @@ export const TabletScreen4TakeOrder: React.FC = () => {
                   </p>
                 </div>
 
-                <button
-                  type="button"
-                  disabled={isSoldOut}
-                  onClick={() => !isSoldOut && handleAdd(item)}
-                  className={`w-full py-2 rounded-lg font-black text-xs transition flex items-center justify-center gap-1.5 shadow-2xs mt-1 ${
-                    isSoldOut
-                      ? 'bg-stone-200 text-slate-400 border border-slate-300 cursor-not-allowed'
-                      : 'bg-slate-900 hover:bg-black text-white'
-                  }`}
-                >
-                  {isSoldOut ? <Ban className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
-                  <span>{isSoldOut ? '[SOLD OUT IN KITCHEN]' : `[+ ADD ${item.name.toUpperCase()}]`}</span>
-                </button>
+                {/* Add Button or Stepper */}
+                {isSoldOut ? (
+                  <button
+                    type="button"
+                    disabled
+                    className="w-full py-2 rounded-lg font-black text-xs flex items-center justify-center gap-1.5 bg-stone-200 text-slate-400 border border-slate-300 cursor-not-allowed mt-1"
+                  >
+                    <Ban className="h-3.5 w-3.5" />
+                    <span>[SOLD OUT IN KITCHEN]</span>
+                  </button>
+                ) : qty === 0 ? (
+                  <button
+                    type="button"
+                    onClick={() => handleAdd(item)}
+                    className="w-full py-2 rounded-lg font-black text-xs transition flex items-center justify-center gap-1.5 shadow-2xs mt-1 bg-slate-900 hover:bg-black text-white"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    <span>[+ ADD]</span>
+                  </button>
+                ) : (
+                  <div className="w-full flex items-center justify-between rounded-lg border border-slate-400 bg-stone-50 p-1 mt-1">
+                    <button
+                      type="button"
+                      onClick={() => inCart && updateOrderCartQty(inCart.cartItemId, -1)}
+                      className="w-8 h-7 rounded bg-white hover:bg-slate-100 text-slate-900 font-black flex items-center justify-center border border-slate-300 transition"
+                    >
+                      <Minus className="h-3.5 w-3.5 stroke-[2.5]" />
+                    </button>
+                    <span className="font-mono text-sm font-black text-slate-950">
+                      {qty} ADDED
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => inCart && updateOrderCartQty(inCart.cartItemId, 1)}
+                      className="w-8 h-7 rounded bg-slate-900 hover:bg-black text-white font-black flex items-center justify-center transition"
+                    >
+                      <Plus className="h-3.5 w-3.5 stroke-[2.5]" />
+                    </button>
+                  </div>
+                )}
               </div>
             );
           })}
@@ -174,10 +222,10 @@ export const TabletScreen4TakeOrder: React.FC = () => {
         <div className="mt-3 border-2 border-slate-800 bg-slate-100 rounded-xl px-5 py-3 flex justify-between items-center shrink-0 shadow-xs">
           <div>
             <strong className="text-xs font-black text-slate-950">
-              [CURRENT SELECTION: {cartItemCount} ITEMS ADDED]
+              [NEW ITEMS TO ORDER: {cartItemCount} ITEMS ADDED]
             </strong>
             <span className="text-xs font-bold text-slate-600 ml-3">
-              [ESTIMATED SUBTOTAL: ₹ {cartTotal > 0 ? cartTotal.toFixed(2) : '840.00'}]
+              [NEW SUBTOTAL: ₹ {cartTotal > 0 ? cartTotal.toFixed(2) : '0.00'}]
             </span>
           </div>
 
@@ -186,7 +234,7 @@ export const TabletScreen4TakeOrder: React.FC = () => {
             onClick={() => setCurrentScreen(5)}
             className="bg-slate-900 hover:bg-black text-white px-5 py-2.5 rounded-lg font-black text-xs transition shadow-2xs"
           >
-            [CONFIRM ORDER &amp; CUSTOMIZE ITEMS ➔]
+            [CONFIRM ORDER &amp; CUSTOMIZE ITEMS (SCREEN 5) ➔]
           </button>
         </div>
       </div>

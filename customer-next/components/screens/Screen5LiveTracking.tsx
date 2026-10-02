@@ -1,14 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCustomer } from '../../context/CustomerContext';
 import { useSharedBridge } from '../../store/useSharedBridge';
 import { ScreenHousing } from '../ui/ScreenHousing';
 import { WireHeader } from '../ui/WireHeader';
 import { StickyBottomBar } from '../ui/StickyBottomBar';
 import { OrderStage } from '../../types/customer';
-import { Check, Clock, ChefHat, Sparkles, Star, Plus, ArrowRight, Utensils } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Check, Clock, ChefHat, Plus, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useOrderTrackingQuery } from '../../hooks/useOrderTrackingQuery';
 
 export const Screen5LiveTracking: React.FC = () => {
@@ -20,56 +20,76 @@ export const Screen5LiveTracking: React.FC = () => {
     tableNumber,
   } = useCustomer();
 
-  const { kdsTickets } = useSharedBridge();
-  const myTicket = kdsTickets.find((t) => t.tableNumber === tableNumber);
+  // ── Primary: Zustand selector — re-renders on any ticket change ───
+  const kdsTickets = useSharedBridge((s) => s.kdsTickets);
 
-  // Derive live stage directly from kitchen KDS ticket if available!
-  const currentStage: OrderStage = myTicket
-    ? myTicket.status === 'NEW'
-      ? 'PLACED'
-      : myTicket.status === 'PREP'
-      ? 'PREP'
-      : myTicket.status === 'READY'
-      ? 'PLATED'
-      : 'SERVED'
-    : orderStage;
+  // ── Secondary: forced re-read tick (2s interval) ──────────────────
+  // Safety net: if Zustand selector fires were delayed (React batch, tab throttle)
+  // this tick forces the component to re-compute from current bridge state.
+  const [syncTick, setSyncTick] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setSyncTick((t) => t + 1), 2000);
+    return () => clearInterval(id);
+  }, []);
 
-  const { isFetching: isQuerySyncing } = useOrderTrackingQuery();
+  // ── Tertiary: React Query (3s poll of bridge) ─────────────────────
+  const { isFetching: isQuerySyncing, stageHash } = useOrderTrackingQuery();
 
-  const [savedOrderNotice, setSavedOrderNotice] = useState(false);
+  // Re-read tickets fresh on each render (ensures tick/stageHash trigger works)
+  const currentTickets = useSharedBridge.getState().kdsTickets;
 
-  const stages: { key: OrderStage; label: string; icon: string }[] = [
-    { key: 'PLACED', label: 'PLACED', icon: '📝' },
-    { key: 'PREP', label: 'PREP', icon: '🔥' },
-    { key: 'PLATED', label: 'PLATED', icon: '🍽️' },
-    { key: 'SERVED', label: 'SERVED', icon: '✨' },
+  // ── Find ALL non-completed tickets for this table ─────────────────
+  const myTickets = currentTickets.filter(
+    (t) => t.tableNumber === tableNumber && t.status !== 'COMPLETED'
+  );
+
+  // Flatten all items from all active tickets for this table
+  const allMyItems = myTickets.flatMap((t) => t.items);
+
+  // ── Derive overall stage from all items ──────────────────────────
+  const currentStage: OrderStage = (() => {
+    if (allMyItems.length === 0) return orderStage;
+    const allServed = allMyItems.every((i) => i.stage === 'SERVED');
+    const allPlated = allMyItems.every((i) => i.stage === 'PLATED' || i.stage === 'SERVED');
+    const anyPrep   = allMyItems.some((i) => i.stage === 'PREP');
+    if (allServed) return 'SERVED';
+    if (allPlated) return 'PLATED';
+    if (anyPrep)   return 'PREP';
+    return 'PLACED';
+  })();
+
+  // Sync indicator: live if Zustand selector is active OR query refetching
+  const isSyncing = isQuerySyncing;
+  // stageHash and syncTick ensure re-render even if selector was batched
+  void syncTick;
+  void stageHash;
+
+
+  const stages: { key: OrderStage; label: string; icon: string; desc: string }[] = [
+    { key: 'PLACED', label: 'ORDER PLACED',   icon: '📝', desc: 'Your order has been received by the kitchen.' },
+    { key: 'PREP',   label: 'PREPARING',      icon: '🔥', desc: 'Chefs are cooking your food right now.' },
+    { key: 'PLATED', label: 'READY TO SERVE', icon: '🍽️', desc: 'Food is plated and ready at the pass.' },
+    { key: 'SERVED', label: 'SERVED',         icon: '✨', desc: 'Your food has been delivered. Enjoy!' },
   ];
 
-  const getStageIndex = (stage: OrderStage) => {
-    switch (stage) {
-      case 'PLACED':
-        return 0;
-      case 'PREP':
-        return 1;
-      case 'PLATED':
-        return 2;
-      case 'SERVED':
-        return 3;
-    }
+  const stageKeyToIdx: Record<OrderStage, number> = {
+    PLACED: 0, PREP: 1, PLATED: 2, SERVED: 3,
   };
+  const currentIdx = stageKeyToIdx[currentStage] ?? 0;
 
-  const currentIdx = getStageIndex(currentStage);
-
-  const handleSaveOrder = () => {
-    setSavedOrderNotice(true);
-    setTimeout(() => setSavedOrderNotice(false), 2500);
+  // Item-level stage display config
+  const itemStageConfig: Record<string, { label: string; color: string; pulse: boolean }> = {
+    PLACED: { label: 'ORDER PLACED', color: 'bg-stone-100 text-slate-700 border-slate-200', pulse: false },
+    PREP:   { label: 'PREPARING',    color: 'bg-amber-50 text-amber-800 border-amber-200',  pulse: true  },
+    PLATED: { label: 'READY TO RUN', color: 'bg-blue-50 text-blue-800 border-blue-200',     pulse: true  },
+    SERVED: { label: 'SERVED ✓',     color: 'bg-emerald-50 text-emerald-800 border-emerald-200', pulse: false },
   };
 
   return (
     <ScreenHousing screenNumber={5} screenTitle="LIVE TRACKING PAGE">
       {/* Header */}
       <WireHeader
-        title="[LIVE TRACKING PAGE]"
+        title="[LIVE ORDER TRACKING]"
         showBack={false}
         showCallWaiter={true}
         showCart={false}
@@ -77,40 +97,45 @@ export const Screen5LiveTracking: React.FC = () => {
 
       {/* Body */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {/* Main Live Tracking 4 Stages */}
+
+        {/* ── Live Sync Indicator ──────────────────────────────────── */}
+        <div className="flex items-center justify-between">
+          <span className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono">
+            TABLE {tableNumber} · LIVE ORDER STATUS
+          </span>
+          <span className="flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200">
+            <span className={`h-1.5 w-1.5 rounded-full ${isSyncing ? 'bg-orange-500 animate-spin' : 'bg-emerald-500 animate-ping'}`} />
+            {isSyncing ? 'Syncing...' : 'Live'}
+          </span>
+        </div>
+
+        {/* ── 4-Stage Progress Bar ─────────────────────────────────── */}
         <div className="rounded-3xl border border-slate-200/90 bg-white p-4 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <div className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono">
-              [OVERALL ORDER LIVE TRACKING: 4 STAGES]
-            </div>
-            <span className="flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200">
-              <span className={`h-1.5 w-1.5 rounded-full ${isQuerySyncing ? 'bg-orange-500 animate-spin' : 'bg-emerald-500 animate-ping'}`} />
-              {isQuerySyncing ? 'Syncing Server...' : 'TanStack Query Synced'}
-            </span>
+          <div className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono mb-4">
+            [OVERALL ORDER STAGE]
           </div>
 
           <div className="relative flex justify-between px-2 pt-2 pb-1">
             {/* Background Line */}
             <div className="absolute top-6 left-6 right-6 h-1 bg-slate-100 -z-0" />
             {/* Active Progress Line */}
-            <div
-              className="absolute top-6 left-6 h-1 bg-orange-500 transition-all duration-500 -z-0"
-              style={{ width: `${(currentIdx / 3) * 85}%` }}
+            <motion.div
+              className="absolute top-6 left-6 h-1 bg-orange-500 -z-0"
+              initial={false}
+              animate={{ width: `${(currentIdx / (stages.length - 1)) * 83}%` }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
             />
 
             {stages.map((st, i) => {
-              const isPast = i < currentIdx;
+              const isPast    = i < currentIdx;
               const isCurrent = i === currentIdx;
               return (
                 <div
                   key={st.key}
-                  onClick={() => setOrderStage(st.key)}
-                  className="relative z-10 flex flex-col items-center gap-1.5 cursor-pointer group"
-                  title={`Simulate: ${st.label}`}
+                  className="relative z-10 flex flex-col items-center gap-1.5"
                 >
                   <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: 1.08 }}
                     className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-black transition-all shadow-xs ${
                       isPast
                         ? 'bg-emerald-600 text-white ring-4 ring-emerald-50'
@@ -122,7 +147,7 @@ export const Screen5LiveTracking: React.FC = () => {
                     {isPast ? <Check className="h-4 w-4 stroke-[3]" /> : <span>{st.icon}</span>}
                   </motion.div>
                   <span
-                    className={`text-[9.5px] font-mono tracking-tight font-extrabold ${
+                    className={`text-[9px] font-mono tracking-tight font-extrabold text-center leading-tight ${
                       isCurrent
                         ? 'text-orange-600'
                         : isPast
@@ -130,123 +155,109 @@ export const Screen5LiveTracking: React.FC = () => {
                         : 'text-slate-400'
                     }`}
                   >
-                    [{st.label}]
+                    {st.label}
                   </span>
                 </div>
               );
             })}
           </div>
+
+          {/* Current stage description */}
+          <div className="mt-3 text-center font-mono text-[10.5px] text-slate-600 font-medium bg-stone-50 rounded-xl py-2 px-3 border border-slate-100">
+            {stages[currentIdx]?.desc}
+          </div>
         </div>
 
-        {/* Individual Item Tracking with Prep Modes */}
+        {/* ── Item-by-Item Status ──────────────────────────────────── */}
         <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm space-y-3">
           <div className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono">
-            [INDIVIDUAL ITEM TRACKING WITH PREP MODES]
+            [ITEM-WISE STATUS]
           </div>
 
-          <div className="space-y-2.5">
-            {myTicket && myTicket.items.length > 0 ? (
-              myTicket.items.map((it) => (
-                <div
-                  key={it.id}
-                  className="rounded-2xl border border-slate-100 bg-stone-50/60 p-3"
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-black text-slate-900 truncate">
-                      {it.quantity}x [{it.name}]
-                    </span>
-                    <span className={`rounded-md border px-2 py-0.5 font-mono text-[9px] font-bold whitespace-nowrap ${
-                      it.stage === 'SERVED'
-                        ? 'bg-emerald-100 text-emerald-800 border-emerald-200'
-                        : it.stage === 'PLATED'
-                        ? 'bg-blue-100 text-blue-800 border-blue-200'
-                        : it.stage === 'PREP'
-                        ? 'bg-orange-100 text-orange-800 border-orange-200'
-                        : 'bg-stone-100 text-slate-700 border-slate-200'
-                    }`}>
-                      [STATUS: {it.stage}]
-                    </span>
-                  </div>
-                  <div className="mt-1 flex items-center gap-1.5 text-[10px] font-bold text-slate-500 font-mono">
-                    <ChefHat className="h-3.5 w-3.5 text-orange-500" />
-                    <span>[PREP MODE: {(it.prepMode || 'POT DUM').toUpperCase()}]</span>
-                  </div>
+          <div className="space-y-2">
+            <AnimatePresence>
+              {allMyItems.length > 0 ? (
+                allMyItems.map((it) => {
+                  const cfg = itemStageConfig[it.stage] || itemStageConfig['PLACED'];
+                  return (
+                    <motion.div
+                      key={it.id}
+                      layout
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="rounded-2xl border border-slate-100 bg-stone-50/60 p-3"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs font-black text-slate-900 truncate">
+                          {it.quantity}× {it.name.replace(/\s*\[Seat \d+\]/gi, '').replace(/\s*\[Table [^\]]+\]/gi, '').trim()}
+                        </span>
+                        <span className={`rounded-md border px-2 py-0.5 font-mono text-[9px] font-bold whitespace-nowrap ${cfg.color} ${cfg.pulse ? 'animate-pulse' : ''}`}>
+                          {cfg.label}
+                        </span>
+                      </div>
+                      {it.prepMode && (
+                        <div className="mt-1 flex items-center gap-1.5 text-[10px] font-bold text-slate-500 font-mono">
+                          <ChefHat className="h-3.5 w-3.5 text-orange-500" />
+                          <span>[PREP: {it.prepMode.toUpperCase()}]</span>
+                        </div>
+                      )}
+                    </motion.div>
+                  );
+                })
+              ) : itemTracking.length > 0 ? (
+                itemTracking.map((item) => (
+                  <motion.div
+                    key={item.id}
+                    layout
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="rounded-2xl border border-slate-100 bg-stone-50/60 p-3"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs font-black text-slate-900 truncate">
+                        [{item.name}]
+                      </span>
+                      <span className="rounded-md border border-orange-200 bg-orange-50 px-2 py-0.5 font-mono text-[9px] font-bold text-orange-700 whitespace-nowrap">
+                        {item.status.toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="mt-1 flex items-center gap-1.5 text-[10px] font-bold text-slate-500 font-mono">
+                      <ChefHat className="h-3.5 w-3.5 text-orange-500" />
+                      <span>[PREP: {item.prepMode.toUpperCase()}]</span>
+                    </div>
+                  </motion.div>
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center p-6 text-center text-slate-400 bg-stone-50/50 rounded-2xl border border-dashed border-slate-200">
+                  <Clock className="h-8 w-8 text-slate-300 mb-2 stroke-[1.5]" />
+                  <p className="text-xs font-bold text-slate-700">[WAITING FOR KITCHEN UPDATE]</p>
+                  <p className="text-[10.5px] text-slate-400 mt-0.5">Your order was placed. Kitchen will update stages shortly.</p>
                 </div>
-              ))
-            ) : itemTracking.length > 0 ? (
-              itemTracking.map((item) => (
-                <div
-                  key={item.id}
-                  className="rounded-2xl border border-slate-100 bg-stone-50/60 p-3"
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-black text-slate-900 truncate">
-                      [{item.name}]
-                    </span>
-                    <span className="rounded-md border border-orange-200 bg-orange-50 px-2 py-0.5 font-mono text-[9px] font-bold text-orange-700 whitespace-nowrap">
-                      [STATUS: {item.status.toUpperCase()}]
-                    </span>
-                  </div>
-                  <div className="mt-1 flex items-center gap-1.5 text-[10px] font-bold text-slate-500 font-mono">
-                    <ChefHat className="h-3.5 w-3.5 text-orange-500" />
-                    <span>[PREP MODE: {item.prepMode.toUpperCase()}]</span>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="flex flex-col items-center justify-center p-6 text-center text-slate-400 bg-stone-50/50 rounded-2xl border border-dashed border-slate-200">
-                <ChefHat className="h-8 w-8 text-slate-300 mb-2 stroke-[1.5]" />
-                <p className="text-xs font-bold text-slate-700">[NO ACTIVE DISHES IN KITCHEN]</p>
-                <p className="text-[10.5px] text-slate-400 mt-0.5">Please add and place items from the menu to start tracking.</p>
-              </div>
-            )}
+              )}
+            </AnimatePresence>
           </div>
         </div>
 
-        {/* Secondary Actions */}
-        <div className="space-y-2 pt-1">
-          <div>
-            <div className="mb-1 text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono">
-              [OPTION: ADD MORE ITEMS TO SAME BILL]
-            </div>
-            <motion.button
-              whileTap={{ scale: 0.98 }}
-              onClick={() => setCurrentScreen(2)}
-              className="flex w-full items-center justify-center gap-2 rounded-2xl border border-orange-200 bg-orange-50/60 py-3 text-xs font-extrabold text-orange-700 hover:bg-orange-100 transition shadow-xs"
-            >
-              <Plus className="h-4 w-4 stroke-[2.5]" />
-              <span>[+ ADD MORE ITEMS TO SAME BILL]</span>
-            </motion.button>
-          </div>
-
-          <div>
-            <div className="mb-1 text-[9.5px] font-bold uppercase tracking-wider text-slate-400 font-mono">
-              [OPTION: SAVE ORDER FOR NEXT TIME]
-            </div>
-            <motion.button
-              whileTap={{ scale: 0.98 }}
-              onClick={handleSaveOrder}
-              className="flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white py-3 text-xs font-extrabold text-slate-800 hover:bg-slate-50 transition shadow-xs"
-            >
-              <Star className="h-4 w-4 text-amber-500 fill-amber-400" />
-              <span>
-                {savedOrderNotice
-                  ? '[ORDER SAVED AS FAVORITE!]'
-                  : '⭐ [SAVE ORDER FOR NEXT TIME]'}
-              </span>
-            </motion.button>
-          </div>
-        </div>
+        {/* ── Add More Items ───────────────────────────────────────── */}
+        <motion.button
+          whileTap={{ scale: 0.98 }}
+          onClick={() => setCurrentScreen(2)}
+          className="flex w-full items-center justify-center gap-2 rounded-2xl border border-orange-200 bg-orange-50/60 py-3 text-xs font-extrabold text-orange-700 hover:bg-orange-100 transition shadow-xs"
+        >
+          <Plus className="h-4 w-4 stroke-[2.5]" />
+          <span>[ADD MORE ITEMS TO SAME BILL]</span>
+        </motion.button>
       </div>
 
-      {/* Bottom Sticky: Go To Payment Page Button */}
-      <StickyBottomBar label="[GO TO PAYMENT PAGE BUTTON]">
+      {/* Bottom Sticky: Payment */}
+      <StickyBottomBar label="[GO TO PAYMENT PAGE]">
         <motion.button
           whileTap={{ scale: 0.98 }}
           onClick={() => setCurrentScreen(6)}
           className="flex w-full items-center justify-between rounded-2xl bg-slate-900 px-4 py-3.5 text-xs font-extrabold uppercase tracking-wider text-white shadow-lg transition hover:bg-slate-800"
         >
-          <span>[PROCEED TO PAYMENT (PAGE 1)]</span>
+          <span>[PROCEED TO PAYMENT]</span>
           <ArrowRight className="h-4 w-4 stroke-[2.5]" />
         </motion.button>
       </StickyBottomBar>

@@ -31,6 +31,7 @@ interface KitchenStoreState {
   bumpItemStage: (ticketId: string, itemId: string) => void;
   bumpTable: (ticketId: string) => void;
   callFloorWaiter: (tableNumber: string, reason?: string) => void;
+  kitchenClearCompleted: () => void;
   waiterAlertNotice: string | null;
   dismissWaiterAlert: () => void;
 }
@@ -114,6 +115,10 @@ export const useKitchenStore = create<KitchenStoreState>((set) => ({
   },
 
   dismissWaiterAlert: () => set({ waiterAlertNotice: null }),
+
+  kitchenClearCompleted: () => {
+    useSharedBridge.getState().kitchenClearCompleted();
+  },
 }));
 
 /* ── Selectors that read from the shared bridge ──────────────────── */

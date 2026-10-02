@@ -4,13 +4,14 @@ import React, { useState } from 'react';
 import { useWaiterStore } from '../../../store/useWaiterStore';
 import { useSharedBridge } from '../../../store/useSharedBridge';
 import { WaiterTabletLandscapeHousing } from './WaiterTabletLandscapeHousing';
-import { ArrowLeft, Printer, MessageCircle, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Printer, MessageCircle, CheckCircle2, Trash2 } from 'lucide-react';
 
 export const TabletScreen8PrintBill: React.FC = () => {
   const { setCurrentScreen, selectedTableNumber, orderCart } = useWaiterStore();
-  const { tables } = useSharedBridge();
+  const { tables, waiterVacatesTable } = useSharedBridge();
   const [printSent, setPrintSent] = useState(false);
   const [whatsappSent, setWhatsappSent] = useState(false);
+  const [tableVacated, setTableVacated] = useState(false);
 
   const activeTable = tables.find((t) => t.number === (selectedTableNumber || 'A-04')) || tables[0];
   const subtotal = (activeTable.currentBill || 1430);
@@ -210,13 +211,32 @@ export const TabletScreen8PrintBill: React.FC = () => {
               </button>
             </div>
 
-            {/* Proceed to Vacate */}
-            <button
-              onClick={() => setCurrentScreen(9)}
-              className="w-full border border-slate-400 bg-white hover:bg-slate-100 text-slate-800 rounded-xl font-bold text-xs px-4 py-3 transition flex items-center justify-center gap-2"
-            >
-              🧹 [PROCEED TO TABLE VACATE &amp; TURNAROUND (SCREEN 9) ➔]
-            </button>
+            {/* Direct Vacate (ENABLED ONLY WHEN PAYMENT IS CONFIRMED & BILL GENERATED) */}
+            {(() => {
+              const isPaymentDone = activeTable.status === 'BILLING' || tableVacated;
+              return (
+                <button
+                  disabled={!isPaymentDone}
+                  onClick={() => {
+                    if (!isPaymentDone) return;
+                    waiterVacatesTable(activeTable.number);
+                    setTableVacated(true);
+                    setTimeout(() => {
+                      setTableVacated(false);
+                      setCurrentScreen(2);
+                    }, 2000);
+                  }}
+                  className={`w-full rounded-xl font-black text-xs px-4 py-3.5 transition flex items-center justify-center gap-2 shadow-2xs ${
+                    isPaymentDone
+                      ? 'bg-rose-700 hover:bg-rose-800 text-white cursor-pointer'
+                      : 'bg-slate-200 text-slate-400 border border-slate-300 cursor-not-allowed opacity-60'
+                  }`}
+                >
+                  <Trash2 className="h-4 w-4" />
+                  <span>🧹 {isPaymentDone ? '[VACATE & RESET TABLE FOR NEXT GUEST]' : '[VACATE DISABLED: PAYMENT PENDING]'}</span>
+                </button>
+              );
+            })()}
           </div>
         </div>
       </div>

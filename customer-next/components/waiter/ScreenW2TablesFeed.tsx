@@ -72,10 +72,18 @@ export const ScreenW2TablesFeed: React.FC = () => {
                 onClick={() => handleTableClick(t.number)}
                 className="rounded-xl border border-slate-200 bg-stone-50/70 p-2 text-center cursor-pointer hover:bg-white hover:border-orange-400 transition shadow-2xs"
               >
-                <div className="font-mono text-sm font-black text-slate-900">{t.number}</div>
-                <span className={`inline-block mt-0.5 px-1.5 py-0.5 rounded text-[8.5px] font-mono font-bold border ${getStatusBadge(t.status)}`}>
-                  {t.status}
-                </span>
+                <div className="font-mono text-sm font-black text-slate-900">
+                  {t.mergedWith ? `${t.number}+${t.mergedWith}` : t.number}
+                </div>
+                {t.mergedWith ? (
+                  <span className="inline-block mt-0.5 px-1.5 py-0.5 rounded text-[8.5px] font-mono font-black border bg-purple-100 text-purple-900 border-purple-300">
+                    🔗 MERGED
+                  </span>
+                ) : (
+                  <span className={`inline-block mt-0.5 px-1.5 py-0.5 rounded text-[8.5px] font-mono font-bold border ${getStatusBadge(t.status)}`}>
+                    {t.status}
+                  </span>
+                )}
                 <div className="text-[10px] font-mono text-slate-500 mt-1">
                   {t.status === 'OCCUPIED' || t.status === 'BILLING'
                     ? `₹${t.currentBill} • ${t.seatedTime}`

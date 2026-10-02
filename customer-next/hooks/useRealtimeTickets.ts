@@ -1,10 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { supabase, DbKdsTicket, DbKdsItem } from '../lib/supabase';
+import { supabase } from '../lib/supabase';
 import type { RealtimeChannel } from '@supabase/supabase-js';
 
-// ── Stage ordering for display ────────────────────────────────────────────────
 const STAGE_ORDER = { PLACED: 0, PREP: 1, PLATED: 2, SERVED: 3 } as const;
 
 export type ItemStage = 'PLACED' | 'PREP' | 'PLATED' | 'SERVED';
@@ -23,6 +22,7 @@ export interface TrackedItem {
 export interface TrackedTicket {
   id: string;
   tableId: string;
+  orderId: string;
   seatNumber: number | null;
   customerName: string;
   status: TicketStatus;
@@ -31,108 +31,117 @@ export interface TrackedTicket {
   createdAt: string;
 }
 
-/**
- * Derives the overall "worst" stage from a list of items.
- * PLACED < PREP < PLATED < SERVED
- */
 export function deriveOverallStage(items: TrackedItem[]): ItemStage {
   if (!items.length) return 'PLACED';
-  const allServed  = items.every(i => i.stage === 'SERVED');
-  const allPlated  = items.every(i => STAGE_ORDER[i.stage] >= STAGE_ORDER.PLATED);
-  const anyPrep    = items.some(i => i.stage === 'PREP');
+  const allServed  = items.every((i) => i.stage === 'SERVED');
+  const allPlated  = items.every((i) => STAGE_ORDER[i.stage] >= STAGE_ORDER.PLATED);
+  const anyPrep    = items.some((i) => i.stage === 'PREP');
   if (allServed) return 'SERVED';
   if (allPlated) return 'PLATED';
   if (anyPrep)   return 'PREP';
   return 'PLACED';
 }
 
+function parseSeatFromItemName(name: string): number | null {
+  const match = name.match(/\[seat\s*(\d+)\]/i);
+  return match ? parseInt(match[1], 10) : null;
+}
+
 /**
- * Fetches and subscribes to all active (non-completed) tickets for a table.
- * Returns real-time updated ticket list and helper actions.
+ * Customer hook: Subscribes to live tickets and order items for a specific table.
  */
 export function useRealtimeTickets(tableId: string) {
   const [tickets, setTickets] = useState<TrackedTicket[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const channelRef = useRef<RealtimeChannel | null>(null);
 
-  // ── Helper: map DB rows → TrackedTicket ────────────────────────────────────
-  const toTrackedTicket = useCallback(
-    (t: DbKdsTicket, items: DbKdsItem[]): TrackedTicket => {
-      const trackedItems: TrackedItem[] = items.map(i => ({
-        id: i.id,
-        name: i.name,
-        quantity: i.quantity,
-        stage: i.stage as ItemStage,
-        seatNumber: i.seat_number,
-        unitPrice: i.unit_price,
-        notes: i.notes,
-      }));
-      return {
-        id: t.id,
-        tableId: t.table_id,
-        seatNumber: t.seat_number,
-        customerName: t.customer_name,
-        status: t.status as TicketStatus,
-        items: trackedItems,
-        overallStage: deriveOverallStage(trackedItems),
-        createdAt: t.created_at,
-      };
-    },
-    []
-  );
-
-  // ── Fetch all active tickets for this table ────────────────────────────────
   const fetchTickets = useCallback(async () => {
     if (!tableId) return;
-    const { data, error } = await supabase
+
+    // 1. Fetch tickets for this table
+    const { data: ticketsData, error: tErr } = await supabase
       .from('kds_tickets')
-      .select('*, kds_items(*)')
-      .eq('table_id', tableId)
+      .select('*')
+      .eq('table_number', tableId)
       .neq('status', 'COMPLETED')
       .order('created_at', { ascending: true });
 
-    if (error) {
-      console.error('[useRealtimeTickets] fetch error:', error.message);
+    if (tErr || !ticketsData || ticketsData.length === 0) {
+      setTickets([]);
+      setIsLoading(false);
       return;
     }
 
-    const mapped = (data as (DbKdsTicket & { kds_items: DbKdsItem[] })[]).map(t =>
-      toTrackedTicket(t, t.kds_items ?? [])
-    );
+    const orderIds = ticketsData.map((t) => t.order_id).filter(Boolean);
+
+    // 2. Fetch order items for these orders
+    let itemsData: any[] = [];
+    if (orderIds.length > 0) {
+      const { data: items, error: iErr } = await supabase
+        .from('order_items')
+        .select('*')
+        .in('order_id', orderIds);
+      if (!iErr && items) {
+        itemsData = items;
+      }
+    }
+
+    // 3. Map into TrackedTickets
+    const mapped: TrackedTicket[] = ticketsData.map((t) => {
+      const relatedItems = itemsData.filter((i) => i.order_id === t.order_id);
+      const items: TrackedItem[] = relatedItems.map((i) => ({
+        id: i.id,
+        name: i.name,
+        quantity: i.quantity,
+        stage: (i.stage as ItemStage) || 'PLACED',
+        seatNumber: parseSeatFromItemName(i.name),
+        unitPrice: Number(i.unit_price) || 0,
+        notes: [i.prep_mode, i.selected_option].filter(Boolean).join(' • '),
+      }));
+
+      const detectedSeat = items.find((it) => it.seatNumber !== null)?.seatNumber || null;
+
+      return {
+        id: t.id,
+        tableId: t.table_number,
+        orderId: t.order_id,
+        seatNumber: detectedSeat,
+        customerName: t.server_name || 'Guest',
+        status: (t.status as TicketStatus) || 'NEW',
+        items,
+        overallStage: deriveOverallStage(items),
+        createdAt: t.created_at,
+      };
+    });
+
     setTickets(mapped);
     setIsLoading(false);
-  }, [tableId, toTrackedTicket]);
+  }, [tableId]);
 
-  // ── Subscribe to Supabase Realtime ─────────────────────────────────────────
   useEffect(() => {
     if (!tableId) return;
 
     fetchTickets();
 
-    // Clean up previous channel
     if (channelRef.current) {
       supabase.removeChannel(channelRef.current);
     }
 
     const channel = supabase
-      .channel(`tickets_table_${tableId}`)
+      .channel(`rt_table_${tableId}_${Date.now()}`)
       .on(
         'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'kds_tickets',
-          filter: `table_id=eq.${tableId}`,
-        },
+        { event: '*', schema: 'public', table: 'kds_tickets' },
         () => fetchTickets()
       )
       .on(
         'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'kds_items',
-        },
+        { event: '*', schema: 'public', table: 'order_items' },
+        () => fetchTickets()
+      )
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'orders' },
         () => fetchTickets()
       )
       .subscribe();
@@ -151,57 +160,69 @@ export function useRealtimeTickets(tableId: string) {
 }
 
 /**
- * Kitchen-wide: subscribes to ALL active tickets across all tables.
- * Used by ScreenK2Overview.
+ * Kitchen hook: Subscribes to ALL active tickets across all tables.
  */
 export function useRealtimeAllTickets() {
   const [tickets, setTickets] = useState<TrackedTicket[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const channelRef = useRef<RealtimeChannel | null>(null);
 
-  const toTrackedTicket = useCallback(
-    (t: DbKdsTicket, items: DbKdsItem[]): TrackedTicket => {
-      const trackedItems: TrackedItem[] = items.map(i => ({
-        id: i.id,
-        name: i.name,
-        quantity: i.quantity,
-        stage: i.stage as ItemStage,
-        seatNumber: i.seat_number,
-        unitPrice: i.unit_price,
-        notes: i.notes,
-      }));
-      return {
-        id: t.id,
-        tableId: t.table_id,
-        seatNumber: t.seat_number,
-        customerName: t.customer_name,
-        status: t.status as TicketStatus,
-        items: trackedItems,
-        overallStage: deriveOverallStage(trackedItems),
-        createdAt: t.created_at,
-      };
-    },
-    []
-  );
-
   const fetchAll = useCallback(async () => {
-    const { data, error } = await supabase
+    const { data: ticketsData, error: tErr } = await supabase
       .from('kds_tickets')
-      .select('*, kds_items(*)')
+      .select('*')
       .neq('status', 'COMPLETED')
       .order('created_at', { ascending: true });
 
-    if (error) {
-      console.error('[useRealtimeAllTickets] error:', error.message);
+    if (tErr || !ticketsData || ticketsData.length === 0) {
+      setTickets([]);
+      setIsLoading(false);
       return;
     }
 
-    const mapped = (data as (DbKdsTicket & { kds_items: DbKdsItem[] })[]).map(t =>
-      toTrackedTicket(t, t.kds_items ?? [])
-    );
+    const orderIds = ticketsData.map((t) => t.order_id).filter(Boolean);
+
+    let itemsData: any[] = [];
+    if (orderIds.length > 0) {
+      const { data: items, error: iErr } = await supabase
+        .from('order_items')
+        .select('*')
+        .in('order_id', orderIds);
+      if (!iErr && items) {
+        itemsData = items;
+      }
+    }
+
+    const mapped: TrackedTicket[] = ticketsData.map((t) => {
+      const relatedItems = itemsData.filter((i) => i.order_id === t.order_id);
+      const items: TrackedItem[] = relatedItems.map((i) => ({
+        id: i.id,
+        name: i.name,
+        quantity: i.quantity,
+        stage: (i.stage as ItemStage) || 'PLACED',
+        seatNumber: parseSeatFromItemName(i.name),
+        unitPrice: Number(i.unit_price) || 0,
+        notes: [i.prep_mode, i.selected_option].filter(Boolean).join(' • '),
+      }));
+
+      const detectedSeat = items.find((it) => it.seatNumber !== null)?.seatNumber || null;
+
+      return {
+        id: t.id,
+        tableId: t.table_number,
+        orderId: t.order_id,
+        seatNumber: detectedSeat,
+        customerName: t.server_name || 'Guest',
+        status: (t.status as TicketStatus) || 'NEW',
+        items,
+        overallStage: deriveOverallStage(items),
+        createdAt: t.created_at,
+      };
+    });
+
     setTickets(mapped);
     setIsLoading(false);
-  }, [toTrackedTicket]);
+  }, []);
 
   useEffect(() => {
     fetchAll();
@@ -209,9 +230,10 @@ export function useRealtimeAllTickets() {
     if (channelRef.current) supabase.removeChannel(channelRef.current);
 
     const channel = supabase
-      .channel('kitchen_all_tickets')
+      .channel(`kitchen_all_${Date.now()}`)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'kds_tickets' }, fetchAll)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'kds_items' }, fetchAll)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'order_items' }, fetchAll)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, fetchAll)
       .subscribe();
 
     channelRef.current = channel;

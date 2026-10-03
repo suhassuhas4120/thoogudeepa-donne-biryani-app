@@ -58,7 +58,7 @@ export const WaiterTabletLandscapeHousing: React.FC<WaiterTabletLandscapeHousing
               </span>
             </div>
             <span className="text-slate-300">|</span>
-            <span className="text-[11px] bg-slate-100 border border-slate-300 px-2 py-0.5 rounded text-slate-700 font-bold">
+            <span className="text-[11px] bg-[#FAF8F5] border border-slate-300 px-2 py-0.5 rounded text-slate-700 font-bold">
               FLOOR CAPTAIN TABLET TERMINAL
             </span>
           </div>
@@ -89,7 +89,7 @@ export const WaiterTabletLandscapeHousing: React.FC<WaiterTabletLandscapeHousing
 
         {/* Kitchen Hotline Toast Alert */}
         {kitchenCallNotice && (
-          <div className="bg-slate-900 text-white text-xs font-bold px-4 py-2 flex items-center justify-between z-30 border-b border-slate-700">
+          <div className="bg-amber-50 text-amber-900 text-xs font-bold px-4 py-2 flex items-center justify-between z-30 border-b border-slate-700">
             <span className="truncate">⚡ HOTLINE ALERT: {kitchenCallNotice}</span>
             <button
               onClick={dismissKitchenCall}

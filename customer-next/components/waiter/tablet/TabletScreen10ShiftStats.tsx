@@ -37,7 +37,7 @@ export const TabletScreen10ShiftStats: React.FC = () => {
         <div className="flex justify-between items-center border-b-2 border-slate-800 pb-3 mb-4 shrink-0">
           <button
             onClick={() => setCurrentScreen(2)}
-            className="bg-slate-900 hover:bg-black text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 text-xs shadow-2xs"
+            className="bg-[#9C3D1E] hover:bg-[#7c3018] text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 text-xs shadow-2xs"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             <span>[⬅ BACK TO ALL TABLES]</span>
@@ -45,14 +45,14 @@ export const TabletScreen10ShiftStats: React.FC = () => {
           <h3 className="font-black text-slate-950 text-sm">
             [SCREEN 10: WAITER DAILY SHIFT PERFORMANCE OVERVIEW]
           </h3>
-          <span className="border border-slate-400 bg-slate-100 px-3 py-1 rounded font-bold text-xs text-slate-700">
+          <span className="border border-slate-400 bg-[#FAF8F5] px-3 py-1 rounded font-bold text-xs text-slate-700">
             [{activeCaptain} • SHIFT ACTIVE]
           </span>
         </div>
 
         {/* CAPTAIN INFO BANNER */}
-        <div className="mb-4 flex items-center gap-4 border-2 border-slate-800 rounded-xl p-4 bg-white shadow-xs shrink-0">
-          <div className="h-12 w-12 rounded-full bg-slate-900 flex items-center justify-center text-white font-black text-lg">
+        <div className="mb-4 flex items-center gap-4 border border-[#EAE5DF] rounded-xl p-4 bg-white shadow-xs shrink-0">
+          <div className="h-12 w-12 rounded-full bg-[#9C3D1E] flex items-center justify-center text-white font-black text-lg">
             {activeCaptain.charAt(0)}
           </div>
           <div>
@@ -70,7 +70,7 @@ export const TabletScreen10ShiftStats: React.FC = () => {
           {KPI_CARDS.map((card, idx) => (
             <div
               key={idx}
-              className="bg-white border-2 border-slate-800 rounded-xl p-4 flex flex-col gap-2 shadow-xs"
+              className="bg-white border border-[#EAE5DF] rounded-xl p-4 flex flex-col gap-2 shadow-xs"
             >
               <span className="text-[10.5px] font-bold text-slate-500 uppercase leading-tight">
                 {card.label}
@@ -84,7 +84,7 @@ export const TabletScreen10ShiftStats: React.FC = () => {
         </div>
 
         {/* SHIFT ACTIVITY TIMELINE */}
-        <div className="border-2 border-slate-800 bg-white rounded-xl p-4 shadow-xs">
+        <div className="border border-[#EAE5DF] bg-white rounded-xl p-4 shadow-xs">
           <strong className="text-xs font-black text-slate-950 block mb-3">
             [TODAY'S SHIFT ACTIVITY TIMELINE]:
           </strong>
@@ -98,7 +98,7 @@ export const TabletScreen10ShiftStats: React.FC = () => {
                   {row.time} • [{row.table}]
                 </span>
                 <span className="font-bold">{row.amount} • {row.mode}</span>
-                <span className="border border-slate-300 bg-slate-100 px-2 py-0.5 rounded text-[10px] font-black text-slate-700">
+                <span className="border border-slate-300 bg-[#FAF8F5] px-2 py-0.5 rounded text-[10px] font-black text-slate-700">
                   [SETTLED]
                 </span>
               </div>
@@ -109,7 +109,7 @@ export const TabletScreen10ShiftStats: React.FC = () => {
         {/* Shift Close Button */}
         <button
           onClick={() => setCurrentScreen(1)}
-          className="mt-4 w-full py-4 border-2 border-slate-800 bg-white hover:bg-slate-100 text-slate-900 rounded-xl font-black text-xs transition flex items-center justify-center gap-2 shrink-0"
+          className="mt-4 w-full py-4 border border-[#EAE5DF] bg-white hover:bg-[#FAF8F5] text-slate-900 rounded-xl font-black text-xs transition flex items-center justify-center gap-2 shrink-0"
         >
           🔐 [CLOSE SHIFT &amp; LOG OUT OF CAPTAIN TERMINAL ➔ SCREEN 1]
         </button>

@@ -73,7 +73,7 @@ export const ScreenW9Vacate: React.FC = () => {
         <motion.button
           whileTap={{ scale: 0.98 }}
           onClick={handleVacate}
-          className="w-full py-3.5 rounded-2xl bg-slate-900 text-white font-mono text-xs font-black uppercase tracking-wider shadow-lg hover:bg-slate-800 transition"
+          className="w-full py-3.5 rounded-2xl bg-[#9C3D1E] text-white font-mono text-xs font-black uppercase tracking-wider shadow-lg hover:bg-slate-800 transition"
         >
           {cleared ? '✓ TABLE VACATED &amp; RESET!' : '[DISPATCH BUSBOY &amp; MARK VACANT]'}
         </motion.button>

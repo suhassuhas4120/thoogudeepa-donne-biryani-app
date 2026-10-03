@@ -51,7 +51,7 @@ export const TabletScreen6MergeSplit: React.FC = () => {
         <div className="flex justify-between items-center border-b-2 border-slate-800 pb-3 mb-4 shrink-0">
           <button
             onClick={() => setCurrentScreen(3)}
-            className="bg-slate-900 hover:bg-black text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 text-xs shadow-2xs"
+            className="bg-[#9C3D1E] hover:bg-[#7c3018] text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 text-xs shadow-2xs"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             <span>[⬅ BACK TO {selectedTableNumber || 'TABLE'}]</span>
@@ -59,7 +59,7 @@ export const TabletScreen6MergeSplit: React.FC = () => {
           <h3 className="font-black text-slate-950 text-sm">
             [SCREEN 6: TABLE MERGE &amp; CONSOLIDATION HUB]
           </h3>
-          <span className="border border-slate-400 bg-slate-100 px-3 py-1 rounded font-bold text-xs text-slate-700">
+          <span className="border border-slate-400 bg-[#FAF8F5] px-3 py-1 rounded font-bold text-xs text-slate-700">
             [MERGE CONTROLLER]
           </span>
         </div>
@@ -87,8 +87,8 @@ export const TabletScreen6MergeSplit: React.FC = () => {
                       disabled={isPrimary}
                       className={`py-3 px-2 border rounded-xl text-xs font-black transition ${
                         isSelected
-                          ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
-                          : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
+                          ? 'bg-[#9C3D1E] text-white border-[#9C3D1E] shadow-xs'
+                          : 'bg-white text-slate-700 border-slate-300 hover:bg-[#FAF8F5]'
                       } ${isPrimary ? 'cursor-default opacity-85 ring-2 ring-orange-500/30' : ''}`}
                     >
                       [{tbl}] {isPrimary ? '★' : ''}
@@ -115,7 +115,7 @@ export const TabletScreen6MergeSplit: React.FC = () => {
 
             <button
               onClick={() => setCurrentScreen(4)}
-              className="border border-slate-400 bg-white hover:bg-slate-100 text-slate-800 rounded-xl font-bold text-xs px-4 py-3.5 transition flex items-center justify-center gap-2 shadow-2xs"
+              className="border border-slate-400 bg-white hover:bg-[#FAF8F5] text-slate-800 rounded-xl font-bold text-xs px-4 py-3.5 transition flex items-center justify-center gap-2 shadow-2xs"
             >
               <Utensils className="h-4 w-4" />
               <span>🍽️ [OPEN MENU TO TAKE ORDERS FOR MERGED TABLE ➔]</span>
@@ -144,7 +144,7 @@ export const TabletScreen6MergeSplit: React.FC = () => {
             <button
               type="button"
               onClick={handleConfirmMerge}
-              className="w-full py-4 bg-slate-900 hover:bg-black text-white rounded-xl font-black text-xs transition shadow-sm mt-auto flex items-center justify-center gap-2"
+              className="w-full py-4 bg-[#9C3D1E] hover:bg-[#7c3018] text-white rounded-xl font-black text-xs transition shadow-sm mt-auto flex items-center justify-center gap-2"
             >
               <Users className="h-4 w-4" />
               <span>🔗 [CONFIRM TABLE MERGE ➔ UPDATE LIVE STATE]</span>

@@ -92,7 +92,7 @@ export const ScreenW6MergeSplit: React.FC = () => {
                     onClick={() => setSplitCount(cnt)}
                     className={`h-7 w-7 rounded-lg font-mono text-xs font-black transition ${
                       splitCount === cnt
-                        ? 'bg-slate-900 text-white'
+                        ? 'bg-[#9C3D1E] text-white'
                         : 'bg-white border border-slate-200 text-slate-700'
                     }`}
                   >
@@ -110,7 +110,7 @@ export const ScreenW6MergeSplit: React.FC = () => {
 
         <button
           onClick={() => setCurrentScreen(7)}
-          className="w-full py-3 rounded-xl bg-slate-900 text-white font-mono text-xs font-black hover:bg-slate-800 transition"
+          className="w-full py-3 rounded-xl bg-[#9C3D1E] text-white font-mono text-xs font-black hover:bg-[#7c3018] transition"
         >
           [PROCEED TO PAYMENT] ➔
         </button>

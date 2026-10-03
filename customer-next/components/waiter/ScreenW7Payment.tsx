@@ -104,8 +104,8 @@ export const ScreenW7Payment: React.FC = () => {
                   onClick={() => setTip(t)}
                   className={`flex-1 py-1.5 rounded-lg font-mono text-xs font-bold transition ${
                     tip === t
-                      ? 'bg-slate-900 text-white'
-                      : 'bg-stone-100 text-slate-700'
+                      ? 'bg-[#9C3D1E] text-white'
+                      : 'bg-[#FAF8F5] text-slate-700'
                   }`}
                 >
                   ₹{t}

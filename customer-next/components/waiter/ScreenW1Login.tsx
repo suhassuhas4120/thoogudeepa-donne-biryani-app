@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { useWaiterStore } from '../../store/useWaiterStore';
@@ -68,8 +68,8 @@ export const ScreenW1Login: React.FC = () => {
             {[0, 1, 2, 3].map((idx) => (
               <div
                 key={idx}
-                className={`h-3 w-3 rounded-full border-2 border-slate-900 transition ${
-                  pin.length > idx ? 'bg-slate-900' : 'bg-transparent'
+                className={`h-3 w-3 rounded-full border border-[#EAE5DF] transition ${
+                  pin.length > idx ? 'bg-[#9C3D1E]' : 'bg-transparent'
                 }`}
               />
             ))}
@@ -80,14 +80,14 @@ export const ScreenW1Login: React.FC = () => {
               <button
                 key={n}
                 onClick={() => handleNum(n)}
-                className="h-10 rounded-xl border border-slate-200 bg-white text-sm font-bold font-mono text-slate-800 hover:bg-stone-100 transition active:scale-95 shadow-2xs"
+                className="h-10 rounded-xl border border-slate-200 bg-white text-sm font-bold font-mono text-slate-800 hover:bg-[#FAF8F5] transition active:scale-95 shadow-2xs"
               >
                 {n}
               </button>
             ))}
             <button
               onClick={() => setPin('')}
-              className="h-10 rounded-xl border border-slate-200 bg-stone-100 font-mono text-[10px] font-bold text-slate-600"
+              className="h-10 rounded-xl border border-slate-200 bg-[#FAF8F5] font-mono text-[10px] font-bold text-slate-600"
             >
               CLR
             </button>
@@ -99,7 +99,7 @@ export const ScreenW1Login: React.FC = () => {
             </button>
             <button
               onClick={() => setPin((p) => p.slice(0, -1))}
-              className="h-10 rounded-xl border border-slate-200 bg-stone-100 font-mono text-[10px] font-bold text-slate-600"
+              className="h-10 rounded-xl border border-slate-200 bg-[#FAF8F5] font-mono text-[10px] font-bold text-slate-600"
             >
               DEL
             </button>

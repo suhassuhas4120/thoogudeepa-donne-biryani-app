@@ -209,7 +209,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setCurrentScreen(2)}
-              className="bg-slate-900 hover:bg-black text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 shadow-2xs"
+              className="bg-[#9C3D1E] hover:bg-[#7c3018] text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 shadow-2xs"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               <span>[⬅ BACK TO ALL TABLES (SCREEN 2)]</span>
@@ -224,7 +224,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                 ? 'bg-orange-50 text-orange-950 border-orange-300'
                 : activeTable.status === 'BILLING'
                 ? 'bg-purple-50 text-purple-950 border-purple-300'
-                : 'border-slate-900 bg-slate-100 text-slate-800'
+                : 'border-[#EAE5DF] bg-[#FAF8F5] text-slate-800'
             }`}>
               [STATUS: {activeTable.status} • {activeTable.status === 'BILLING' ? 'SETTLED' : 'DINING'}]
             </span>
@@ -276,7 +276,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                     </div>
                   )}
                 </div>
-                <span className="border-2 border-slate-900 bg-slate-100 px-3 py-1 rounded-md font-black text-slate-950 text-xs">
+                <span className="border border-[#EAE5DF] bg-[#FAF8F5] px-3 py-1 rounded-md font-black text-slate-950 text-xs">
                   [RUNNING BILL: ₹ {runningTotal.toFixed(2)}]
                 </span>
               </div>
@@ -305,7 +305,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                         <span className={`border px-2 py-0.5 rounded text-[10.5px] font-bold ${
                           item.status === 'Ready' || item.status === 'Served'
                             ? 'border-emerald-600 bg-emerald-50 text-emerald-950'
-                            : 'border-slate-900 bg-amber-50 text-amber-950'
+                            : 'border-[#D28835] bg-amber-50 text-amber-950'
                         }`}>
                           [{item.status === 'Ready' ? 'STAGE 3: READY' : item.status === 'Served' ? 'STAGE 4: SERVED' : 'STAGE 2: PREPARING'}]
                         </span>
@@ -342,7 +342,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                 className={`py-3.5 px-4 rounded-lg font-black text-xs transition flex items-center justify-center gap-2 shadow-2xs ${
                   rightPane === 'take_order' || rightPane === 'item_custom'
                     ? 'bg-orange-600 text-white border-2 border-orange-700'
-                    : 'bg-slate-900 hover:bg-black text-white'
+                    : 'bg-[#9C3D1E] hover:bg-[#7c3018] text-white'
                 }`}
               >
                 <Utensils className="h-4 w-4" />
@@ -356,7 +356,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                 className={`py-3.5 px-4 rounded-lg font-black text-xs transition flex items-center justify-center gap-2 shadow-2xs ${
                   rightPane === 'payment' || rightPane === 'bill_done'
                     ? 'bg-orange-600 text-white border-2 border-orange-700'
-                    : 'bg-slate-900 hover:bg-black text-white'
+                    : 'bg-[#9C3D1E] hover:bg-[#7c3018] text-white'
                 }`}
               >
                 <CreditCard className="h-4 w-4" />
@@ -369,8 +369,8 @@ export const TabletScreen3TableDetail: React.FC = () => {
                 onClick={() => setRightPane(rightPane === 'merge' ? 'bill_summary' : 'merge')}
                 className={`py-3.5 px-4 rounded-lg font-black text-xs transition flex items-center justify-center gap-2 border ${
                   rightPane === 'merge'
-                    ? 'bg-slate-900 text-white border-black'
-                    : 'bg-white hover:bg-slate-100 text-slate-900 border-slate-400'
+                    ? 'bg-[#9C3D1E] text-white border-[#9C3D1E]'
+                    : 'bg-white hover:bg-[#FAF8F5] text-slate-900 border-slate-400'
                 }`}
               >
                 <Users className="h-4 w-4" />
@@ -409,7 +409,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="border-2 border-slate-800 rounded-xl p-4 flex flex-col gap-2.5 bg-slate-50 shadow-xs">
+                <div className="border border-[#EAE5DF] rounded-xl p-4 flex flex-col gap-2.5 bg-slate-50 shadow-xs">
                   <strong className="text-xs font-black text-slate-900">
                     [BILL SUMMARY FOR {activeTable.number}]
                   </strong>
@@ -429,7 +429,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                     <span>[SERVICE CHARGE 5%]:</span>
                     <span>₹ {serviceCharge.toFixed(2)}</span>
                   </div>
-                  <div className="border-t-2 border-slate-900 pt-2 flex justify-between text-sm font-black text-slate-950">
+                  <div className="border-t border-[#EAE5DF] pt-2 flex justify-between text-sm font-black text-slate-950">
                     <span>[GRAND TOTAL DUE]:</span>
                     <span>₹ {runningTotal.toFixed(2)}</span>
                   </div>
@@ -439,7 +439,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setRightPane('take_order')}
-                    className="w-full py-3 bg-slate-900 hover:bg-black text-white rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 shadow-2xs"
+                    className="w-full py-3 bg-[#9C3D1E] hover:bg-[#7c3018] text-white rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 shadow-2xs"
                   >
                     <Utensils className="h-4 w-4" />
                     <span>🍽️ [OPEN ORDER TAKING MENU (SCREEN 4)]</span>
@@ -465,7 +465,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                   </span>
                   <button
                     onClick={() => setRightPane('bill_summary')}
-                    className="p-1 hover:bg-slate-100 rounded text-slate-600"
+                    className="p-1 hover:bg-[#FAF8F5] rounded text-slate-600"
                     title="Close"
                   >
                     <X className="h-4 w-4" />
@@ -474,7 +474,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
 
                 {/* Safety Check: Already ordered items lock */}
                 {activeTable.activeItems && activeTable.activeItems.length > 0 && (
-                  <div className="border border-slate-300 bg-slate-100 rounded-lg p-2.5 flex flex-col gap-1 text-[10.5px]">
+                  <div className="border border-slate-300 bg-[#FAF8F5] rounded-lg p-2.5 flex flex-col gap-1 text-[10.5px]">
                     <span className="flex items-center gap-1 font-bold text-slate-700">
                       <Lock className="h-3 w-3 text-slate-500" />
                       [ALREADY FIRED ITEMS (LOCKED AGAINST DUPLICATION)]:
@@ -498,8 +498,8 @@ export const TabletScreen3TableDetail: React.FC = () => {
                         onClick={() => setSelectedCat(cat)}
                         className={`px-2.5 py-1 rounded text-[10.5px] font-bold border whitespace-nowrap transition ${
                           selectedCat === cat
-                            ? 'bg-slate-900 text-white border-slate-900'
-                            : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
+                            ? 'bg-[#9C3D1E] text-white border-[#9C3D1E]'
+                            : 'bg-white text-slate-700 border-slate-300 hover:bg-[#FAF8F5]'
                         }`}
                       >
                         [{cat === 'ALL' ? 'ALL' : cat}]
@@ -571,7 +571,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                               className={`py-1 px-2.5 rounded font-bold text-xs transition flex items-center gap-1 shadow-2xs ${
                                 isSoldOut
                                   ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
-                                  : 'bg-slate-900 hover:bg-black text-white'
+                                  : 'bg-[#9C3D1E] hover:bg-[#7c3018] text-white'
                               }`}
                             >
                               <Plus className="h-3 w-3" />
@@ -582,7 +582,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                               <button
                                 type="button"
                                 onClick={() => handleUpdateQty(item.id, -1)}
-                                className="w-5 h-5 rounded bg-slate-100 hover:bg-slate-200 text-slate-900 font-black flex items-center justify-center text-xs"
+                                className="w-5 h-5 rounded bg-[#FAF8F5] hover:bg-slate-200 text-slate-900 font-black flex items-center justify-center text-xs"
                               >
                                 <Minus className="h-3 w-3 stroke-[2.5]" />
                               </button>
@@ -592,7 +592,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                               <button
                                 type="button"
                                 onClick={() => handleUpdateQty(item.id, 1)}
-                                className="w-5 h-5 rounded bg-slate-900 hover:bg-black text-white font-black flex items-center justify-center text-xs"
+                                className="w-5 h-5 rounded bg-[#9C3D1E] hover:bg-[#7c3018] text-white font-black flex items-center justify-center text-xs"
                               >
                                 <Plus className="h-3 w-3 stroke-[2.5]" />
                               </button>
@@ -641,7 +641,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                   </span>
                   <button
                     onClick={() => setRightPane('take_order')}
-                    className="p-1 hover:bg-slate-100 rounded text-slate-600"
+                    className="p-1 hover:bg-[#FAF8F5] rounded text-slate-600"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -668,7 +668,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                         onClick={() => setPortion(p)}
                         className={`flex-1 py-1.5 rounded text-xs font-bold border transition ${
                           portion === p
-                            ? 'bg-slate-900 text-white border-slate-900'
+                            ? 'bg-[#9C3D1E] text-white border-[#9C3D1E]'
                             : 'bg-white text-slate-700 border-slate-300'
                         }`}
                       >
@@ -759,7 +759,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                   </span>
                   <button
                     onClick={() => setRightPane('bill_summary')}
-                    className="p-1 hover:bg-slate-100 rounded text-slate-600"
+                    className="p-1 hover:bg-[#FAF8F5] rounded text-slate-600"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -780,8 +780,8 @@ export const TabletScreen3TableDetail: React.FC = () => {
                         onClick={() => setSelectedMergeChip(tbl)}
                         className={`py-2 px-1 border rounded-lg text-xs font-bold transition ${
                           selectedMergeChip === tbl
-                            ? 'bg-slate-900 text-white border-slate-900'
-                            : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
+                            ? 'bg-[#9C3D1E] text-white border-[#9C3D1E]'
+                            : 'bg-white text-slate-700 border-slate-300 hover:bg-[#FAF8F5]'
                         }`}
                       >
                         [{tbl}]
@@ -807,7 +807,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleConfirmMerge}
-                  className="w-full py-3 bg-slate-900 hover:bg-black text-white rounded-lg font-black text-xs transition shadow-2xs mt-auto flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-[#9C3D1E] hover:bg-[#7c3018] text-white rounded-lg font-black text-xs transition shadow-2xs mt-auto flex items-center justify-center gap-2"
                 >
                   <Users className="h-4 w-4" />
                   <span>🔗 [CONFIRM MERGE TABLES WITH {selectedMergeChip}]</span>
@@ -824,13 +824,13 @@ export const TabletScreen3TableDetail: React.FC = () => {
                   </span>
                   <button
                     onClick={() => setRightPane('bill_summary')}
-                    className="p-1 hover:bg-slate-100 rounded text-slate-600"
+                    className="p-1 hover:bg-[#FAF8F5] rounded text-slate-600"
                   >
                     <X className="h-4 w-4" />
                   </button>
                 </div>
 
-                <div className="border-2 border-slate-900 bg-slate-50 rounded-xl p-3 text-center">
+                <div className="border border-[#EAE5DF] bg-slate-50 rounded-xl p-3 text-center">
                   <span className="text-[10.5px] font-bold text-slate-500 block uppercase">
                     [TOTAL BILL PAYABLE]
                   </span>
@@ -847,8 +847,8 @@ export const TabletScreen3TableDetail: React.FC = () => {
                       onClick={() => setPayMode(m)}
                       className={`py-2 rounded-lg border text-[11px] font-bold transition ${
                         payMode === m
-                          ? 'bg-slate-900 text-white border-slate-900'
-                          : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
+                          ? 'bg-[#9C3D1E] text-white border-[#9C3D1E]'
+                          : 'bg-white text-slate-700 border-slate-300 hover:bg-[#FAF8F5]'
                       }`}
                     >
                       {m === 'CASH' ? '💵 CASH' : m === 'UPI' ? '📱 UPI' : '💳 POS'}
@@ -913,7 +913,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                   </span>
                   <button
                     onClick={() => setRightPane('bill_summary')}
-                    className="p-1 hover:bg-slate-100 rounded text-slate-600"
+                    className="p-1 hover:bg-[#FAF8F5] rounded text-slate-600"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -954,7 +954,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                 </div>
 
                 {printSent && (
-                  <div className="p-2 bg-slate-900 text-white rounded text-[10.5px] font-bold text-center">
+                  <div className="p-2 bg-[#1C1917] text-white rounded text-[10.5px] font-bold text-center">
                     [PRINT JOB SENT TO POS PRINTER #PRN-104]
                   </div>
                 )}
@@ -983,7 +983,7 @@ export const TabletScreen3TableDetail: React.FC = () => {
                       setPrintSent(true);
                       setTimeout(() => setPrintSent(false), 2500);
                     }}
-                    className="py-2.5 bg-slate-900 hover:bg-black text-white rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 shadow-2xs"
+                    className="py-2.5 bg-[#9C3D1E] hover:bg-[#7c3018] text-white rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 shadow-2xs"
                   >
                     <Printer className="h-3.5 w-3.5" />
                     <span>[PRINT BILL]</span>

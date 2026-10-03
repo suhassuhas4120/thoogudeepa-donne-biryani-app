@@ -45,7 +45,7 @@ export const ScreenW2TablesFeed: React.FC = () => {
       case 'BILLING': return 'bg-purple-50 text-purple-700 border-purple-200';
       case 'CLEANING': return 'bg-amber-50 text-amber-700 border-amber-200';
       case 'VACANT': return 'bg-emerald-50 text-emerald-700 border-emerald-200';
-      default: return 'bg-stone-100 text-slate-700 border-slate-200';
+      default: return 'bg-[#FAF8F5] text-slate-700 border-slate-200';
     }
   };
 
@@ -102,7 +102,7 @@ export const ScreenW2TablesFeed: React.FC = () => {
               <button
                 onClick={() => setActiveTab('PINGS')}
                 className={`px-2.5 py-1 rounded-lg font-mono text-[10px] font-black transition ${
-                  activeTab === 'PINGS' ? 'bg-orange-600 text-white shadow-2xs' : 'text-slate-600 hover:bg-stone-100'
+                  activeTab === 'PINGS' ? 'bg-orange-600 text-white shadow-2xs' : 'text-slate-600 hover:bg-[#FAF8F5]'
                 }`}
               >
                 CUSTOMER PINGS ({pings.length})
@@ -110,7 +110,7 @@ export const ScreenW2TablesFeed: React.FC = () => {
               <button
                 onClick={() => setActiveTab('KITCHEN_READY')}
                 className={`px-2.5 py-1 rounded-lg font-mono text-[10px] font-black transition ${
-                  activeTab === 'KITCHEN_READY' ? 'bg-slate-900 text-white shadow-2xs' : 'text-slate-600 hover:bg-stone-100'
+                  activeTab === 'KITCHEN_READY' ? 'bg-[#9C3D1E] text-white shadow-2xs' : 'text-slate-600 hover:bg-[#FAF8F5]'
                 }`}
               >
                 READY PICKUP ({kitchenReadyItems.length})

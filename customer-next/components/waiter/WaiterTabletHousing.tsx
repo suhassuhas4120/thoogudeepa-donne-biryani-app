@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { Wifi, Battery, Bell, UserCheck, Flame, Utensils } from 'lucide-react';
@@ -47,7 +47,7 @@ export const WaiterTabletHousing: React.FC<WaiterTabletHousingProps> = ({
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-slate-900 font-black">THOOGUDEEPA</span>
           </div>
-          <div className="h-3.5 w-16 rounded-full bg-slate-900" />
+          <div className="h-3.5 w-16 rounded-full bg-[#1C1917]" />
           <div className="flex items-center gap-1.5 text-slate-700 font-mono text-[10px]">
             <Wifi className="h-3 w-3 text-slate-800" />
             <Battery className="h-3 w-3 text-slate-800" />
@@ -55,7 +55,7 @@ export const WaiterTabletHousing: React.FC<WaiterTabletHousingProps> = ({
         </div>
 
         {/* Waiter Sub-Header with Station & Kitchen Hotline */}
-        <div className="h-8 bg-stone-100 border-b border-slate-200 px-4 flex items-center justify-between text-[10px] font-bold font-mono text-slate-600 select-none shrink-0 z-20">
+        <div className="h-8 bg-[#FAF8F5] border-b border-slate-200 px-4 flex items-center justify-between text-[10px] font-bold font-mono text-slate-600 select-none shrink-0 z-20">
           <div className="flex items-center gap-1.5 truncate">
             <UserCheck className="h-3 w-3 text-orange-600" />
             <span className="truncate">{activeCaptain}</span>
@@ -73,7 +73,7 @@ export const WaiterTabletHousing: React.FC<WaiterTabletHousingProps> = ({
 
         {/* Kitchen Hotline Toast */}
         {kitchenCallNotice && (
-          <div className="bg-slate-900 text-white text-[10.5px] font-bold px-3 py-1.5 flex items-center justify-between z-30 border-b border-slate-700">
+          <div className="bg-amber-50 text-amber-900 text-[10.5px] font-bold px-3 py-1.5 flex items-center justify-between z-30 border-b border-slate-700">
             <span className="truncate">⚡ {kitchenCallNotice}</span>
             <button
               onClick={dismissKitchenCall}

@@ -65,7 +65,7 @@ export const ScreenW4TakeOrder: React.FC = () => {
               onClick={() => setSelectedCat(c)}
               className={`px-3 py-1 rounded-lg font-mono text-[10.5px] font-black whitespace-nowrap transition ${
                 selectedCat === c
-                  ? 'bg-slate-900 text-white'
+                  ? 'bg-[#9C3D1E] text-white'
                   : 'bg-white border border-slate-200 text-slate-600'
               }`}
             >
@@ -157,7 +157,7 @@ export const ScreenW4TakeOrder: React.FC = () => {
                         addToOrderCart(item);
                         setCurrentScreen(5);
                       }}
-                      className="px-2 py-1.5 rounded-lg bg-stone-100 text-slate-700 text-[10px] font-mono font-bold"
+                      className="px-2 py-1.5 rounded-lg bg-[#FAF8F5] text-slate-700 text-[10px] font-mono font-bold"
                     >
                       Opt
                     </button>

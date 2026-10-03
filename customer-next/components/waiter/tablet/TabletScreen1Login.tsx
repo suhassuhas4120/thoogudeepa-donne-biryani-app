@@ -37,7 +37,7 @@ export const TabletScreen1Login: React.FC = () => {
     >
       <div className="flex flex-1 min-h-[700px]">
         {/* LEFT 42%: BRAND & HOTEL METADATA */}
-        <div className="w-[42%] border-r-2 border-slate-800 bg-slate-100 p-8 flex flex-col justify-between select-none">
+        <div className="w-[42%] border-r-2 border-slate-800 bg-[#FAF8F5] p-8 flex flex-col justify-between select-none">
           <div>
             {/* Hotel Logo Space */}
             <div className="w-full h-28 border-2 border-dashed border-slate-400 bg-white rounded-xl flex flex-col items-center justify-center gap-2 mb-6">
@@ -101,7 +101,7 @@ export const TabletScreen1Login: React.FC = () => {
               type="text"
               value={activeCaptain}
               onChange={(e) => setActiveCaptain(e.target.value)}
-              className="w-full border-2 border-slate-800 rounded-lg px-4 py-2.5 font-mono text-sm font-bold text-slate-900 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full border border-[#EAE5DF] rounded-lg px-4 py-2.5 font-mono text-sm font-bold text-slate-900 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-orange-500"
               placeholder="e.g. Captain Ramesh"
             />
           </div>
@@ -119,8 +119,8 @@ export const TabletScreen1Login: React.FC = () => {
                   onClick={() => setActiveSection(sec)}
                   className={`py-2 px-3 rounded-lg border text-xs font-mono font-bold transition ${
                     activeSection === sec
-                      ? 'border-slate-900 bg-slate-900 text-white shadow-xs'
-                      : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-100'
+                      ? 'border-[#9C3D1E] bg-[#9C3D1E] text-white shadow-xs'
+                      : 'border-slate-300 bg-white text-slate-700 hover:bg-[#FAF8F5]'
                   }`}
                 >
                   {sec}
@@ -137,12 +137,12 @@ export const TabletScreen1Login: React.FC = () => {
                 {pin.length === 4 ? '[PIN VERIFIED]' : `[${4 - pin.length} DIGITS REQUIRED]`}
               </span>
             </div>
-            <div className="border-2 border-slate-800 rounded-lg p-3 flex justify-center gap-4 bg-slate-100">
+            <div className="border border-[#EAE5DF] rounded-lg p-3 flex justify-center gap-4 bg-[#FAF8F5]">
               {[0, 1, 2, 3].map((idx) => (
                 <div
                   key={idx}
-                  className={`w-3.5 h-3.5 rounded-full border-2 border-slate-900 transition-all ${
-                    idx < pin.length ? 'bg-slate-900 scale-110' : 'bg-transparent'
+                  className={`w-3.5 h-3.5 rounded-full border border-[#EAE5DF] transition-all ${
+                    idx < pin.length ? 'bg-[#9C3D1E] scale-110' : 'bg-transparent'
                   }`}
                 />
               ))}
@@ -156,7 +156,7 @@ export const TabletScreen1Login: React.FC = () => {
                 key={num}
                 type="button"
                 onClick={() => handleNum(num)}
-                className="h-12 font-mono text-lg font-black bg-white border-2 border-slate-800 rounded-lg hover:bg-slate-100 active:bg-slate-200 transition shadow-2xs flex items-center justify-center text-slate-950"
+                className="h-12 font-mono text-lg font-black bg-white border border-[#EAE5DF] rounded-lg hover:bg-[#FAF8F5] active:bg-slate-200 transition shadow-2xs flex items-center justify-center text-slate-950"
               >
                 {num}
               </button>
@@ -164,21 +164,21 @@ export const TabletScreen1Login: React.FC = () => {
             <button
               type="button"
               onClick={handleDel}
-              className="h-12 font-mono text-xs font-black bg-slate-100 border-2 border-slate-800 rounded-lg hover:bg-slate-200 active:bg-slate-300 transition text-slate-800"
+              className="h-12 font-mono text-xs font-black bg-[#FAF8F5] border border-[#EAE5DF] rounded-lg hover:bg-slate-200 active:bg-slate-300 transition text-slate-800"
             >
               [⌫ DEL]
             </button>
             <button
               type="button"
               onClick={() => handleNum('0')}
-              className="h-12 font-mono text-lg font-black bg-white border-2 border-slate-800 rounded-lg hover:bg-slate-100 active:bg-slate-200 transition text-slate-950"
+              className="h-12 font-mono text-lg font-black bg-white border border-[#EAE5DF] rounded-lg hover:bg-[#FAF8F5] active:bg-slate-200 transition text-slate-950"
             >
               0
             </button>
             <button
               type="button"
               onClick={handleClear}
-              className="h-12 font-mono text-xs font-black bg-slate-100 border-2 border-slate-800 rounded-lg hover:bg-slate-200 active:bg-slate-300 transition text-slate-800"
+              className="h-12 font-mono text-xs font-black bg-[#FAF8F5] border border-[#EAE5DF] rounded-lg hover:bg-slate-200 active:bg-slate-300 transition text-slate-800"
             >
               [✕ CLR]
             </button>
@@ -189,14 +189,14 @@ export const TabletScreen1Login: React.FC = () => {
             <button
               type="button"
               onClick={() => setPin('')}
-              className="flex-1 py-3 border-2 border-slate-800 rounded-lg font-mono text-xs font-bold text-slate-800 bg-white hover:bg-slate-100 transition"
+              className="flex-1 py-3 border border-[#EAE5DF] rounded-lg font-mono text-xs font-bold text-slate-800 bg-white hover:bg-[#FAF8F5] transition"
             >
               [RESET]
             </button>
             <button
               type="button"
               onClick={handleLogin}
-              className="flex-[2] py-3 border-2 border-slate-900 rounded-lg font-mono text-xs font-black text-white bg-slate-900 hover:bg-black transition shadow-sm flex items-center justify-center gap-2"
+              className="flex-[2] py-3 border border-[#EAE5DF] rounded-lg font-mono text-xs font-black text-white bg-[#9C3D1E] hover:bg-[#7c3018] transition shadow-sm flex items-center justify-center gap-2"
             >
               <span>[GO TO DASHBOARD]</span>
               <ArrowRight className="h-4 w-4" />

@@ -53,7 +53,7 @@ export const TabletScreen2TablesFeed: React.FC = () => {
             <span className="border border-slate-300 bg-slate-50 px-2.5 py-1 rounded font-bold text-slate-700">
               [TOTAL TABLES: {tables.length}]
             </span>
-            <span className="border border-slate-900 bg-slate-900 px-2.5 py-1 rounded font-bold text-white">
+            <span className="border border-[#9C3D1E] bg-[#9C3D1E] px-2.5 py-1 rounded font-bold text-white">
               [TABLES FILLED: {occupiedCount}]
             </span>
             <span className="border border-slate-300 bg-slate-50 px-2.5 py-1 rounded font-bold text-slate-700">
@@ -68,12 +68,12 @@ export const TabletScreen2TablesFeed: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-2 font-mono text-xs">
-            <span className="border-2 border-slate-900 bg-slate-100 px-3 py-1 rounded font-black text-slate-900">
+            <span className="border border-[#EAE5DF] bg-[#FAF8F5] px-3 py-1 rounded font-black text-slate-900">
               👤 [ACTIVE: {activeCaptain}]
             </span>
             <button
               onClick={() => setCurrentScreen(10)}
-              className="border border-slate-800 bg-white hover:bg-slate-100 text-slate-900 px-3 py-1 rounded font-bold transition flex items-center gap-1 shadow-2xs"
+              className="border border-slate-800 bg-white hover:bg-[#FAF8F5] text-slate-900 px-3 py-1 rounded font-bold transition flex items-center gap-1 shadow-2xs"
             >
               <span>📊 [VIEW SHIFT STATS]</span>
             </button>
@@ -130,7 +130,7 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                           ? 'bg-purple-50 text-purple-950 border-purple-300'
                           : isOccupied 
                           ? 'bg-orange-50 text-orange-950 border-orange-300' 
-                          : 'text-slate-600 bg-slate-100 border-slate-300'
+                          : 'text-slate-600 bg-[#FAF8F5] border-slate-300'
                       }`}>
                         {isOccupied ? `⏱ ${table.seatedTime}` : `[${table.status}]`}
                       </span>
@@ -171,7 +171,7 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                       <button
                         type="button"
                         onClick={(e) => handleServedClick(e, table.number)}
-                        className="flex-1 py-1.5 px-1 bg-slate-900 hover:bg-black text-white rounded text-[10px] font-bold transition flex items-center justify-center gap-1 shadow-2xs"
+                        className="flex-1 py-1.5 px-1 bg-[#9C3D1E] hover:bg-[#7c3018] text-white rounded text-[10px] font-bold transition flex items-center justify-center gap-1 shadow-2xs"
                       >
                         ✓ [SERVED]
                       </button>
@@ -186,7 +186,7 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                             className={`flex-1 py-1.5 px-1 rounded text-[10px] font-bold transition ${
                               canVacate
                                 ? 'border border-rose-600 bg-rose-50 hover:bg-rose-100 text-rose-800 cursor-pointer shadow-2xs'
-                                : 'border border-slate-200 bg-slate-100 text-slate-400 cursor-not-allowed opacity-60'
+                                : 'border border-slate-200 bg-[#FAF8F5] text-slate-400 cursor-not-allowed opacity-60'
                             }`}
                           >
                             {canVacate ? '🧹 [VACATE]' : '🔒 [LOCKED]'}
@@ -227,7 +227,7 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                   </div>
                   <button
                     onClick={() => waiterResolvePing(ping.id)}
-                    className="bg-slate-900 hover:bg-black text-white text-[10.5px] font-bold px-3 py-1.5 rounded transition shadow-2xs shrink-0"
+                    className="bg-[#9C3D1E] hover:bg-[#7c3018] text-white text-[10.5px] font-bold px-3 py-1.5 rounded transition shadow-2xs shrink-0"
                   >
                     [RESOLVED]
                   </button>
@@ -263,7 +263,7 @@ export const TabletScreen2TablesFeed: React.FC = () => {
                     </div>
                     <button
                       onClick={() => waiterMarkKitchenItemServed(item.id, item.items[0]?.id ?? '')}
-                      className="bg-slate-900 hover:bg-black text-white text-[10.5px] font-bold px-3 py-1.5 rounded transition shadow-2xs shrink-0"
+                      className="bg-[#9C3D1E] hover:bg-[#7c3018] text-white text-[10.5px] font-bold px-3 py-1.5 rounded transition shadow-2xs shrink-0"
                     >
                       [SERVED]
                     </button>

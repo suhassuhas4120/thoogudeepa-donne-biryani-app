@@ -100,7 +100,7 @@ export function ScreenM1Login() {
         </div>
 
         {/* Hardware Status Preview */}
-        <div className="bg-slate-900 text-white rounded-xl p-4 text-xs font-mono space-y-1.5">
+        <div className="bg-[#1C1917] text-white rounded-xl p-4 text-xs font-mono space-y-1.5">
           <div className="text-slate-400 font-bold mb-2 flex items-center gap-1.5">
             <Printer className="h-3.5 w-3.5 text-emerald-400" />
             <span>PERIPHERALS READY:</span>

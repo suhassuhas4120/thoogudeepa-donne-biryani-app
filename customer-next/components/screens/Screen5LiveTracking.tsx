@@ -213,7 +213,7 @@ export const Screen5LiveTracking: React.FC = () => {
         <motion.button
           whileTap={{ scale: 0.98 }}
           onClick={() => setCurrentScreen(6)}
-          className="flex w-full items-center justify-between rounded-2xl bg-slate-900 px-4 py-3.5 text-xs font-extrabold uppercase tracking-wider text-white shadow-lg transition hover:bg-slate-800"
+          className="flex w-full items-center justify-between rounded-2xl bg-[#1C1917] px-4 py-3.5 text-xs font-extrabold uppercase tracking-wider text-white shadow-lg transition hover:bg-slate-800"
         >
           <span>Proceed to Payment</span>
           <ArrowRight className="h-4 w-4 stroke-[2.5]" />

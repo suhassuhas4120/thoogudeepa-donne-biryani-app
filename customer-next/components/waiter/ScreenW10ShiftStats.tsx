@@ -93,7 +93,7 @@ export const ScreenW10ShiftStats: React.FC = () => {
         <motion.button
           whileTap={{ scale: 0.98 }}
           onClick={() => setCurrentScreen(1)}
-          className="w-full py-3.5 rounded-2xl bg-slate-900 text-white font-mono text-xs font-black uppercase tracking-wider shadow-lg hover:bg-slate-800 flex items-center justify-center gap-2"
+          className="w-full py-3.5 rounded-2xl bg-[#9C3D1E] text-white font-mono text-xs font-black uppercase tracking-wider shadow-lg hover:bg-slate-800 flex items-center justify-center gap-2"
         >
           <LogOut className="h-4 w-4" />
           <span>[END SHIFT &amp; CLOCK OUT]</span>

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { useWaiterStore } from '../../store/useWaiterStore';
@@ -57,7 +57,7 @@ export const ScreenW5ItemCustom: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-1.5 bg-stone-100 p-1 rounded-lg border border-slate-200">
+                  <div className="flex items-center gap-1.5 bg-[#FAF8F5] p-1 rounded-lg border border-slate-200">
                     <button
                       onClick={() => updateOrderCartQty(ci.cartItemId, -1)}
                       className="h-6 w-6 rounded bg-white font-mono font-bold text-xs"

@@ -40,7 +40,7 @@ export const TabletScreen5ItemCustom: React.FC = () => {
         <div className="flex justify-between items-center border-b-2 border-slate-800 pb-3 mb-4 shrink-0">
           <button
             onClick={() => setCurrentScreen(4)}
-            className="bg-slate-900 hover:bg-black text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 text-xs shadow-2xs"
+            className="bg-[#9C3D1E] hover:bg-[#7c3018] text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 text-xs shadow-2xs"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             <span>[⬅ BACK TO MENU (SCREEN 4)]</span>
@@ -48,7 +48,7 @@ export const TabletScreen5ItemCustom: React.FC = () => {
           <h3 className="font-black text-slate-950 text-sm">
             [SCREEN 5: DETAILED ITEM CUSTOMIZATION]
           </h3>
-          <span className="border-2 border-slate-800 bg-slate-100 px-3 py-1 rounded font-black text-xs text-slate-800">
+          <span className="border border-[#EAE5DF] bg-[#FAF8F5] px-3 py-1 rounded font-black text-xs text-slate-800">
             [{selectedItem.name.toUpperCase()} SELECTED]
           </span>
         </div>
@@ -83,7 +83,7 @@ export const TabletScreen5ItemCustom: React.FC = () => {
           {/* RIGHT: CUSTOMIZATIONS & NOTES */}
           <div className="flex-[1.2] flex flex-col gap-3 overflow-y-auto">
             {/* Item Info Card */}
-            <div className="border-2 border-slate-800 rounded-xl p-4 bg-slate-50">
+            <div className="border border-[#EAE5DF] rounded-xl p-4 bg-slate-50">
               <h2 className="text-lg font-black text-slate-950">[{selectedItem.name.toUpperCase()}]</h2>
               <div className="text-[11px] font-bold text-slate-500 mt-0.5">
                 [{selectedItem.category.toUpperCase()} • PRICE: ₹ {selectedItem.price.toFixed(2)}]
@@ -103,8 +103,8 @@ export const TabletScreen5ItemCustom: React.FC = () => {
                     onClick={() => setPortion(p)}
                     className={`flex-1 py-2 rounded-lg border text-xs font-bold transition ${
                       portion === p
-                        ? 'bg-slate-900 text-white border-slate-900'
-                        : 'bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100'
+                        ? 'bg-[#9C3D1E] text-white border-[#9C3D1E]'
+                        : 'bg-slate-50 text-slate-700 border-slate-300 hover:bg-[#FAF8F5]'
                     }`}
                   >
                     [{p} PORTION ({p === 'REGULAR' ? `₹${selectedItem.price}` : `+₹60`})]
@@ -123,8 +123,8 @@ export const TabletScreen5ItemCustom: React.FC = () => {
                     onClick={() => setSpice(s)}
                     className={`flex-1 py-2 rounded-lg border text-[11px] font-bold transition ${
                       spice === s
-                        ? 'bg-slate-900 text-white border-slate-900'
-                        : 'bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100'
+                        ? 'bg-[#9C3D1E] text-white border-[#9C3D1E]'
+                        : 'bg-slate-50 text-slate-700 border-slate-300 hover:bg-[#FAF8F5]'
                     }`}
                   >
                     [{s}]
@@ -173,7 +173,7 @@ export const TabletScreen5ItemCustom: React.FC = () => {
 
             {/* Total & Fire KOT */}
             <div className="flex gap-2.5 mt-auto pt-2">
-              <div className="flex-1 border-2 border-slate-800 rounded-xl p-3 bg-slate-100 flex flex-col justify-center">
+              <div className="flex-1 border border-[#EAE5DF] rounded-xl p-3 bg-[#FAF8F5] flex flex-col justify-center">
                 <span className="text-[10px] font-bold text-slate-600">[ITEM TOTAL]:</span>
                 <span className="text-xl font-black text-slate-950 font-mono">₹ {totalItemPrice.toFixed(2)}</span>
               </div>

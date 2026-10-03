@@ -42,7 +42,7 @@ export const TabletScreen8PrintBill: React.FC = () => {
         <div className="flex justify-between items-center border-b-2 border-slate-800 pb-3 mb-4 shrink-0">
           <button
             onClick={() => setCurrentScreen(2)}
-            className="bg-slate-900 hover:bg-black text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 text-xs shadow-2xs"
+            className="bg-[#9C3D1E] hover:bg-[#7c3018] text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 text-xs shadow-2xs"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             <span>[⬅ BACK TO ALL TABLES]</span>
@@ -50,13 +50,13 @@ export const TabletScreen8PrintBill: React.FC = () => {
           <h3 className="font-black text-slate-950 text-sm">
             [SCREEN 8: BILL GENERATION &amp; MANAGER PRINT DISPATCH]
           </h3>
-          <span className="border border-slate-400 bg-slate-100 px-3 py-1 rounded font-bold text-xs text-slate-700">
+          <span className="border border-slate-400 bg-[#FAF8F5] px-3 py-1 rounded font-bold text-xs text-slate-700">
             [{invoiceNum}]
           </span>
         </div>
 
         {/* PAYMENT SUCCESSFUL BANNER */}
-        <div className="border-2 border-slate-900 bg-slate-100 rounded-xl px-5 py-3 flex justify-between items-center mb-4 shrink-0 shadow-xs">
+        <div className="border border-[#EAE5DF] bg-[#FAF8F5] rounded-xl px-5 py-3 flex justify-between items-center mb-4 shrink-0 shadow-xs">
           <div className="flex items-center gap-3">
             <CheckCircle2 className="h-6 w-6 text-emerald-600" />
             <div>
@@ -68,7 +68,7 @@ export const TabletScreen8PrintBill: React.FC = () => {
               </p>
             </div>
           </div>
-          <span className="border-2 border-slate-900 bg-white px-3 py-1 rounded font-black text-xs text-slate-900">
+          <span className="border border-[#EAE5DF] bg-white px-3 py-1 rounded font-black text-xs text-slate-900">
             [STATUS: PAID ✓]
           </span>
         </div>
@@ -174,7 +174,7 @@ export const TabletScreen8PrintBill: React.FC = () => {
                 <div className="flex justify-between text-[10px] text-slate-500">
                   <span>[SGST 2.5%]:</span><span>₹ {sgst}.00</span>
                 </div>
-                <div className="border-t-2 border-slate-900 mt-1 pt-1 flex justify-between font-black text-sm text-slate-950">
+                <div className="border-t border-[#EAE5DF] mt-1 pt-1 flex justify-between font-black text-sm text-slate-950">
                   <span>[NET TOTAL PAID]:</span><span>₹ {netTotal.toLocaleString('en-IN')}.00</span>
                 </div>
               </div>
@@ -182,7 +182,7 @@ export const TabletScreen8PrintBill: React.FC = () => {
 
             {/* Print Confirmation */}
             {printSent && (
-              <div className="p-3 bg-slate-900 text-white rounded-xl text-xs font-bold text-center font-mono">
+              <div className="p-3 bg-[#9C3D1E] text-white rounded-xl text-xs font-bold text-center font-mono">
                 [PRINT COMMAND SENT DIRECTLY TO MANAGER POS PRINTER — PRINT JOB ID: #PRN-884]
               </div>
             )}
@@ -204,7 +204,7 @@ export const TabletScreen8PrintBill: React.FC = () => {
               </button>
               <button
                 onClick={handlePrint}
-                className="flex-1 py-4 bg-slate-900 hover:bg-black text-white rounded-xl font-black text-xs transition shadow-sm flex items-center justify-center gap-2"
+                className="flex-1 py-4 bg-[#9C3D1E] hover:bg-[#7c3018] text-white rounded-xl font-black text-xs transition shadow-sm flex items-center justify-center gap-2"
               >
                 <Printer className="h-4 w-4" />
                 <span>🖨️ [PRINT PHYSICAL BILL (SENDS TO MANAGER)]</span>

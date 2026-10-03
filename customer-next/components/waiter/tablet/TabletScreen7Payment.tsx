@@ -37,7 +37,7 @@ export const TabletScreen7Payment: React.FC = () => {
         <div className="flex justify-between items-center border-b-2 border-slate-800 pb-3 mb-4 shrink-0">
           <button
             onClick={() => setCurrentScreen(3)}
-            className="bg-slate-900 hover:bg-black text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 text-xs shadow-2xs"
+            className="bg-[#9C3D1E] hover:bg-[#7c3018] text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 text-xs shadow-2xs"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             <span>[⬅ BACK TO {selectedTableNumber || 'TABLE'}]</span>
@@ -45,7 +45,7 @@ export const TabletScreen7Payment: React.FC = () => {
           <h3 className="font-black text-slate-950 text-sm">
             [SCREEN 7: PAYMENT GATEWAY &amp; SETTLEMENT]
           </h3>
-          <span className="border border-slate-400 bg-slate-100 px-3 py-1 rounded font-bold text-xs text-slate-700">
+          <span className="border border-slate-400 bg-[#FAF8F5] px-3 py-1 rounded font-bold text-xs text-slate-700">
             [{activeTable.number} SETTLEMENT]
           </span>
         </div>
@@ -70,8 +70,8 @@ export const TabletScreen7Payment: React.FC = () => {
               onClick={() => setPayMode(mode)}
               className={`flex-1 py-3 rounded-xl border-2 font-black text-xs transition flex items-center justify-center gap-2 ${
                 payMode === mode
-                  ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
-                  : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
+                  ? 'bg-[#9C3D1E] text-white border-[#9C3D1E] shadow-sm'
+                  : 'bg-white text-slate-700 border-slate-300 hover:bg-[#FAF8F5]'
               }`}
             >
               <span>{icon}</span>

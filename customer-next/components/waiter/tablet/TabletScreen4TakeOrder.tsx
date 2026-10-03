@@ -57,7 +57,7 @@ export const TabletScreen4TakeOrder: React.FC = () => {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setCurrentScreen(3)}
-              className="bg-slate-900 hover:bg-black text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 text-xs shadow-2xs"
+              className="bg-[#9C3D1E] hover:bg-[#7c3018] text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 text-xs shadow-2xs"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               <span>[⬅ BACK TO {selectedTableNumber || 'TABLE'}]</span>
@@ -69,7 +69,7 @@ export const TabletScreen4TakeOrder: React.FC = () => {
 
           <button
             onClick={() => setCurrentScreen(5)}
-            className="bg-slate-900 hover:bg-black text-white px-4 py-2 rounded-lg font-black text-xs transition flex items-center gap-2 shadow-xs"
+            className="bg-[#9C3D1E] hover:bg-[#7c3018] text-white px-4 py-2 rounded-lg font-black text-xs transition flex items-center gap-2 shadow-xs"
           >
             <ShoppingBag className="h-4 w-4 text-orange-400" />
             <span>🛒 [VIEW CART / ITEM CUSTOMIZATION (SCREEN 5) ➔]</span>
@@ -83,7 +83,7 @@ export const TabletScreen4TakeOrder: React.FC = () => {
 
         {/* ORDER SAFETY BANNER: LOCKED ACTIVE ITEMS */}
         {activeTable.activeItems && activeTable.activeItems.length > 0 && (
-          <div className="mb-3 border border-slate-300 bg-slate-100 rounded-xl p-3 flex flex-col gap-1.5 shrink-0 text-xs">
+          <div className="mb-3 border border-slate-300 bg-[#FAF8F5] rounded-xl p-3 flex flex-col gap-1.5 shrink-0 text-xs">
             <span className="flex items-center gap-1.5 font-bold text-slate-700">
               <Lock className="h-3.5 w-3.5 text-slate-500" />
               [ALREADY ORDERED &amp; FIRED DISHES (LOCKED AGAINST DUPLICATION)]:
@@ -106,8 +106,8 @@ export const TabletScreen4TakeOrder: React.FC = () => {
               onClick={() => setSelectedCat(cat)}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition border ${
                 selectedCat === cat
-                  ? 'bg-slate-900 text-white border-slate-900'
-                  : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
+                  ? 'bg-[#9C3D1E] text-white border-[#9C3D1E]'
+                  : 'bg-white text-slate-700 border-slate-300 hover:bg-[#FAF8F5]'
               }`}
             >
               [{cat === 'ALL' ? 'ALL CATEGORIES' : cat}]
@@ -187,7 +187,7 @@ export const TabletScreen4TakeOrder: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleAdd(item)}
-                    className="w-full py-2 rounded-lg font-black text-xs transition flex items-center justify-center gap-1.5 shadow-2xs mt-1 bg-slate-900 hover:bg-black text-white"
+                    className="w-full py-2 rounded-lg font-black text-xs transition flex items-center justify-center gap-1.5 shadow-2xs mt-1 bg-[#9C3D1E] hover:bg-[#7c3018] text-white"
                   >
                     <Plus className="h-3.5 w-3.5" />
                     <span>[+ ADD]</span>
@@ -197,7 +197,7 @@ export const TabletScreen4TakeOrder: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => inCart && updateOrderCartQty(inCart.cartItemId, -1)}
-                      className="w-8 h-7 rounded bg-white hover:bg-slate-100 text-slate-900 font-black flex items-center justify-center border border-slate-300 transition"
+                      className="w-8 h-7 rounded bg-white hover:bg-[#FAF8F5] text-slate-900 font-black flex items-center justify-center border border-slate-300 transition"
                     >
                       <Minus className="h-3.5 w-3.5 stroke-[2.5]" />
                     </button>
@@ -207,7 +207,7 @@ export const TabletScreen4TakeOrder: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => inCart && updateOrderCartQty(inCart.cartItemId, 1)}
-                      className="w-8 h-7 rounded bg-slate-900 hover:bg-black text-white font-black flex items-center justify-center transition"
+                      className="w-8 h-7 rounded bg-[#9C3D1E] hover:bg-[#7c3018] text-white font-black flex items-center justify-center transition"
                     >
                       <Plus className="h-3.5 w-3.5 stroke-[2.5]" />
                     </button>
@@ -219,7 +219,7 @@ export const TabletScreen4TakeOrder: React.FC = () => {
         </div>
 
         {/* BOTTOM ORDER SUMMARY BAR */}
-        <div className="mt-3 border-2 border-slate-800 bg-slate-100 rounded-xl px-5 py-3 flex justify-between items-center shrink-0 shadow-xs">
+        <div className="mt-3 border border-[#EAE5DF] bg-[#FAF8F5] rounded-xl px-5 py-3 flex justify-between items-center shrink-0 shadow-xs">
           <div>
             <strong className="text-xs font-black text-slate-950">
               [NEW ITEMS TO ORDER: {cartItemCount} ITEMS ADDED]
@@ -232,7 +232,7 @@ export const TabletScreen4TakeOrder: React.FC = () => {
           <button
             type="button"
             onClick={() => setCurrentScreen(5)}
-            className="bg-slate-900 hover:bg-black text-white px-5 py-2.5 rounded-lg font-black text-xs transition shadow-2xs"
+            className="bg-[#9C3D1E] hover:bg-[#7c3018] text-white px-5 py-2.5 rounded-lg font-black text-xs transition shadow-2xs"
           >
             [CONFIRM ORDER &amp; CUSTOMIZE ITEMS (SCREEN 5) ➔]
           </button>

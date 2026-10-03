@@ -48,7 +48,7 @@ export const TabletScreen9Vacate: React.FC = () => {
         <div className="flex justify-between items-center border-b-2 border-slate-800 pb-3 mb-4 shrink-0">
           <button
             onClick={() => setCurrentScreen(2)}
-            className="bg-slate-900 hover:bg-black text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 text-xs shadow-2xs"
+            className="bg-[#9C3D1E] hover:bg-[#7c3018] text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1.5 text-xs shadow-2xs"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             <span>[⬅ BACK TO ALL TABLES]</span>
@@ -56,7 +56,7 @@ export const TabletScreen9Vacate: React.FC = () => {
           <h3 className="font-black text-slate-950 text-sm">
             [SCREEN 9: TABLE VACATE &amp; TURNAROUND CHECKLIST]
           </h3>
-          <span className="border border-slate-400 bg-slate-100 px-3 py-1 rounded font-bold text-xs text-slate-700">
+          <span className="border border-slate-400 bg-[#FAF8F5] px-3 py-1 rounded font-bold text-xs text-slate-700">
             [{selectedTableNumber || 'TABLE A-04'} VACATE PROCESS]
           </span>
         </div>
@@ -70,7 +70,7 @@ export const TabletScreen9Vacate: React.FC = () => {
         )}
 
         {/* PROTOCOL DESCRIPTION */}
-        <div className="border-2 border-slate-800 rounded-xl p-4 mb-4 bg-white shadow-xs shrink-0">
+        <div className="border border-[#EAE5DF] rounded-xl p-4 mb-4 bg-white shadow-xs shrink-0">
           <strong className="text-xs font-black text-slate-950">
             [TABLE RESET &amp; SANITIZATION PROTOCOL]:
           </strong>
@@ -86,7 +86,7 @@ export const TabletScreen9Vacate: React.FC = () => {
           {/* Progress Bar */}
           <div className="mt-2 w-full h-2 bg-slate-200 rounded-full overflow-hidden">
             <div
-              className="h-2 bg-slate-900 rounded-full transition-all duration-300"
+              className="h-2 bg-[#9C3D1E] rounded-full transition-all duration-300"
               style={{ width: `${(completed.length / CHECKLIST.length) * 100}%` }}
             />
           </div>
@@ -102,7 +102,7 @@ export const TabletScreen9Vacate: React.FC = () => {
                 onClick={() => toggleTask(task.id)}
                 className={`p-4 border-2 rounded-xl flex flex-col gap-2 text-left transition shadow-xs hover:-translate-y-0.5 ${
                   isDone
-                    ? 'border-slate-900 bg-slate-900 text-white'
+                    ? 'border-[#9C3D1E] bg-[#9C3D1E] text-white'
                     : 'border-slate-400 bg-white hover:border-slate-800 text-slate-900'
                 }`}
               >

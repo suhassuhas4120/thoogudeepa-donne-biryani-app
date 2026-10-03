@@ -105,7 +105,7 @@ export const ItemDrawer: React.FC<ItemDrawerProps> = ({
               </p>
 
               {/* Option Group 1: Radio Choices */}
-              <div className="rounded-2xl border border-slate-200 bg-stone-50/70 p-3">
+              <div className="rounded-2xl border border-[#EAE5DF] bg-[#FAF8F5] p-3">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[11.5px] font-extrabold text-slate-900">
                     {item.optionsGroup1.title}
@@ -139,7 +139,7 @@ export const ItemDrawer: React.FC<ItemDrawerProps> = ({
               </div>
 
               {/* Option Group 2: Add-Ons Checkboxes */}
-              <div className="rounded-2xl border border-slate-200 bg-stone-50/70 p-3">
+              <div className="rounded-2xl border border-[#EAE5DF] bg-[#FAF8F5] p-3">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[11.5px] font-extrabold text-slate-900">
                     {item.optionsGroup2.title}
@@ -182,7 +182,7 @@ export const ItemDrawer: React.FC<ItemDrawerProps> = ({
                 <div className="flex items-center gap-2.5">
                   <motion.button
                     whileTap={{ scale: 0.9 }}
-                    className="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 bg-stone-50 font-bold text-slate-800 hover:bg-stone-100"
+                    className="flex h-7 w-7 items-center justify-center rounded-lg border border-[#EAE5DF] bg-[#FAF8F5] font-bold text-[#44403C] hover:bg-white"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   >
                     <Minus className="h-3 w-3" />
@@ -192,7 +192,7 @@ export const ItemDrawer: React.FC<ItemDrawerProps> = ({
                   </span>
                   <motion.button
                     whileTap={{ scale: 0.9 }}
-                    className="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 bg-stone-50 font-bold text-slate-800 hover:bg-stone-100"
+                    className="flex h-7 w-7 items-center justify-center rounded-lg border border-[#EAE5DF] bg-[#FAF8F5] font-bold text-[#44403C] hover:bg-white"
                     onClick={() => setQuantity(quantity + 1)}
                   >
                     <Plus className="h-3 w-3" />

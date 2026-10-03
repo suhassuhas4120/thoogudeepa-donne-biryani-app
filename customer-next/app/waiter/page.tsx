@@ -68,7 +68,7 @@ export default function WaiterTabletPage() {
   };
 
   return (
-    <main className={`min-h-screen flex flex-col ${viewMode === 'tablet' ? 'bg-[#0b0f19]' : 'bg-stone-100'}`}>
+    <main className={`min-h-screen flex flex-col ${viewMode === 'tablet' ? 'bg-[#0b0f19]' : 'bg-[#FAF8F5]'}`}>
       {/* ── Top Console Header ─────────────────────────────────────── */}
       <header className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 bg-white/95 px-6 py-3 shadow-xs backdrop-blur-md">
         <div className="flex items-center gap-3">
@@ -127,7 +127,7 @@ export default function WaiterTabletPage() {
               onClick={() => setViewMode('single')}
               className={`flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-xs font-bold transition ${
                 viewMode === 'single'
-                  ? 'bg-slate-900 text-white shadow-sm'
+                  ? 'bg-[#9C3D1E] text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -153,7 +153,7 @@ export default function WaiterTabletPage() {
               onClick={() => setViewMode('all')}
               className={`flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-xs font-bold transition ${
                 viewMode === 'all'
-                  ? 'bg-slate-900 text-white shadow-sm'
+                  ? 'bg-[#9C3D1E] text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >

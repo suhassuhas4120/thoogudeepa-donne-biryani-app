@@ -77,11 +77,11 @@ export default function CustomerJourneyPage() {
   };
 
   return (
-    <main className="min-h-screen bg-stone-100 flex flex-col">
+    <main className="min-h-screen bg-[#FAF8F5] flex flex-col">
       {/* Top Console Header */}
-      <header className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 bg-white/95 px-6 py-3 shadow-xs backdrop-blur-md">
+      <header className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-4 border-b border-[#EAE5DF] bg-white/95 px-6 py-3 shadow-xs backdrop-blur-md">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-orange-600 text-white shadow-sm shadow-orange-500/30">
+          <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-[#9C3D1E] text-white shadow-sm shadow-[#9C3D1E]/25">
             <UtensilsCrossed className="h-5 w-5" />
           </div>
           <div>
@@ -98,28 +98,28 @@ export default function CustomerJourneyPage() {
 
         {/* Multi-Portal Switcher */}
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1 rounded-2xl border border-slate-200 bg-stone-50 p-1 shadow-xs font-mono text-xs font-bold">
-            <span className="rounded-xl bg-orange-600 text-white px-3 py-1.5 shadow-xs flex items-center gap-1">
+          <div className="flex items-center gap-1 rounded-2xl border border-[#EAE5DF] bg-[#FAF8F5] p-1 shadow-xs font-mono text-xs font-bold">
+            <span className="rounded-xl bg-[#9C3D1E] text-white px-3 py-1.5 shadow-xs flex items-center gap-1">
               <Utensils className="h-3.5 w-3.5" />
               <span>CUSTOMER (10)</span>
             </span>
             <Link
               href="/kitchen"
-              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-slate-600 hover:text-slate-900 transition"
+              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-[#44403C] hover:text-[#1C1917] transition"
             >
               <Flame className="h-3.5 w-3.5" />
               <span>KITCHEN (3)</span>
             </Link>
             <Link
               href="/waiter"
-              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-slate-600 hover:text-slate-900 transition"
+              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-[#44403C] hover:text-[#1C1917] transition"
             >
               <UserCheck className="h-3.5 w-3.5" />
               <span>WAITER (10)</span>
             </Link>
             <Link
               href="/manager"
-              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-slate-600 hover:text-slate-900 transition"
+              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-[#44403C] hover:text-[#1C1917] transition"
             >
               <Briefcase className="h-3.5 w-3.5" />
               <span>MANAGER (16)</span>
@@ -127,12 +127,12 @@ export default function CustomerJourneyPage() {
           </div>
 
           {/* View Mode Switcher */}
-          <div className="flex items-center gap-1 rounded-2xl border border-slate-200 bg-stone-50 p-1 shadow-xs">
+          <div className="flex items-center gap-1 rounded-2xl border border-[#EAE5DF] bg-[#FAF8F5] p-1 shadow-xs">
             <button
               onClick={() => setViewMode('single')}
               className={`flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-xs font-bold transition ${
                 viewMode === 'single'
-                  ? 'bg-slate-900 text-white shadow-sm'
+                  ? 'bg-[#9C3D1E] text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -143,7 +143,7 @@ export default function CustomerJourneyPage() {
               onClick={() => setViewMode('all')}
               className={`flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-xs font-bold transition ${
                 viewMode === 'all'
-                  ? 'bg-slate-900 text-white shadow-sm'
+                  ? 'bg-[#9C3D1E] text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >

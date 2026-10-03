@@ -27,14 +27,9 @@ import {
   Briefcase,
   LayoutGrid,
   Tablet,
-  Users,
   Utensils,
   Flame,
   UserCheck,
-  Clock,
-  ShieldCheck,
-  CheckCircle2,
-  Lock,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -46,7 +41,6 @@ export default function ManagerPortalPage() {
     setViewMode,
     activeManager,
     activeShift,
-    logout,
   } = useManagerStore();
 
   const [timeString, setTimeString] = useState('');
@@ -91,30 +85,30 @@ export default function ManagerPortalPage() {
   };
 
   return (
-    <main className="min-h-screen bg-stone-100 flex flex-col font-sans">
+    <main className="min-h-screen bg-[#FAF8F5] flex flex-col font-sans">
       {/* Top Header Console */}
-      <header className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/90 bg-white/95 px-6 py-3 shadow-xs backdrop-blur-md">
+      <header className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-4 border-b border-[#EAE5DF] bg-white/95 px-6 py-3 shadow-xs backdrop-blur-md">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-sm shadow-slate-900/30">
-            <Briefcase className="h-5 w-5 fill-white" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#9C3D1E] text-white shadow-sm shadow-[#9C3D1E]/25">
+            <Briefcase className="h-5 w-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[10px] font-black uppercase tracking-wider text-slate-900 bg-stone-100 border border-slate-300 rounded-md px-1.5 py-0.5">
+              <span className="font-mono text-[10px] font-black uppercase tracking-wider text-[#9C3D1E] bg-orange-50 border border-orange-200 rounded-md px-1.5 py-0.5">
                 MANAGER COMMAND DESK • 16 SCREENS • REACT 19
               </span>
-              <span className="font-mono text-[10px] font-bold text-slate-400">
+              <span className="font-mono text-[10px] font-bold text-[#78716C]">
                 THOOGUDEEPA DONNE BIRYANI MANE
               </span>
             </div>
             <div className="flex items-center gap-2 mt-0.5">
-              <h1 className="text-sm font-black tracking-tight text-slate-900 font-mono">
+              <h1 className="text-sm font-black tracking-tight text-[#1C1917] font-mono">
                 {activeManager.name}
               </h1>
-              <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded">
+              <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">
                 [{activeShift.name}]
               </span>
-              <span className="text-[10px] font-mono text-slate-400">
+              <span className="text-[10px] font-mono text-[#78716C]">
                 • {timeString} IST
               </span>
             </div>
@@ -123,42 +117,42 @@ export default function ManagerPortalPage() {
 
         {/* Global Multi-Portal Switcher */}
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1 rounded-2xl border border-slate-200 bg-stone-50 p-1 shadow-xs font-mono text-xs font-bold">
+          <div className="flex items-center gap-1 rounded-2xl border border-[#EAE5DF] bg-[#FAF8F5] p-1 shadow-xs font-mono text-xs font-bold">
             <Link
               href="/"
-              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-slate-600 hover:text-slate-900 transition"
+              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-[#44403C] hover:text-[#1C1917] transition"
             >
               <Utensils className="h-3.5 w-3.5" />
               <span>CUSTOMER (10)</span>
             </Link>
             <Link
               href="/kitchen"
-              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-slate-600 hover:text-slate-900 transition"
+              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-[#44403C] hover:text-[#1C1917] transition"
             >
               <Flame className="h-3.5 w-3.5 text-orange-500" />
               <span>KITCHEN (3)</span>
             </Link>
             <Link
               href="/waiter"
-              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-slate-600 hover:text-slate-900 transition"
+              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-[#44403C] hover:text-[#1C1917] transition"
             >
               <UserCheck className="h-3.5 w-3.5 text-emerald-600" />
               <span>WAITER (10)</span>
             </Link>
-            <span className="rounded-xl bg-slate-900 text-white px-3 py-1.5 shadow-xs flex items-center gap-1">
-              <Briefcase className="h-3.5 w-3.5 fill-white" />
+            <span className="rounded-xl bg-[#9C3D1E] text-white px-3 py-1.5 shadow-xs flex items-center gap-1">
+              <Briefcase className="h-3.5 w-3.5" />
               <span>MANAGER (16)</span>
             </span>
           </div>
 
           {/* View Mode Switcher */}
-          <div className="flex items-center gap-1 rounded-2xl border border-slate-200 bg-stone-50 p-1 shadow-xs">
+          <div className="flex items-center gap-1 rounded-2xl border border-[#EAE5DF] bg-[#FAF8F5] p-1 shadow-xs">
             <button
               onClick={() => setViewMode('single')}
               className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-mono font-bold transition ${
                 viewMode === 'single'
-                  ? 'bg-slate-900 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-[#9C3D1E] text-white shadow-sm'
+                  : 'text-[#44403C] hover:text-[#1C1917]'
               }`}
             >
               <Tablet className="h-3.5 w-3.5" />
@@ -168,8 +162,8 @@ export default function ManagerPortalPage() {
               onClick={() => setViewMode('all')}
               className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-mono font-bold transition ${
                 viewMode === 'all'
-                  ? 'bg-slate-900 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-[#9C3D1E] text-white shadow-sm'
+                  : 'text-[#44403C] hover:text-[#1C1917]'
               }`}
             >
               <LayoutGrid className="h-3.5 w-3.5" />
@@ -180,7 +174,7 @@ export default function ManagerPortalPage() {
       </header>
 
       {/* Screen Tabs Bar (1 to 16) */}
-      <nav className="w-full max-w-7xl mx-auto flex gap-1.5 overflow-x-auto px-6 py-2.5 scrollbar-none font-mono">
+      <nav className="w-full max-w-7xl mx-auto flex gap-1.5 overflow-x-auto px-6 py-2.5 scrollbar-none font-mono border-b border-[#EAE5DF]">
         {screens.map((sc) => {
           const isActive = viewMode === 'single' && currentScreen === sc.id;
           return (
@@ -192,8 +186,8 @@ export default function ManagerPortalPage() {
               }}
               className={`flex items-center gap-1.5 whitespace-nowrap rounded-lg border px-2.5 py-1.5 text-xs font-bold transition ${
                 isActive
-                  ? 'border-slate-900 bg-slate-900 text-white shadow-xs'
-                  : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-stone-50'
+                  ? 'border-[#9C3D1E] bg-[#9C3D1E] text-white shadow-xs'
+                  : 'border-[#EAE5DF] bg-white text-[#44403C] hover:border-[#D28835] hover:bg-[#FAF8F5]'
               }`}
             >
               <span>{sc.name}</span>
@@ -220,25 +214,25 @@ export default function ManagerPortalPage() {
             </AnimatePresence>
           </div>
         ) : (
-          <div className="mx-auto w-full max-w-7xl px-2 space-y-12 pb-24">
+          <div className="mx-auto w-full max-w-7xl px-2 space-y-8 pb-24">
             {screens.map((sc) => (
               <div
                 key={sc.id}
-                className="bg-white border-2 border-slate-900 rounded-2xl shadow-[6px_6px_0px_#0f172a] overflow-hidden"
+                className="bg-white border border-[#EAE5DF] rounded-2xl shadow-sm overflow-hidden"
               >
-                <div className="bg-slate-900 text-white px-5 py-3 flex items-center justify-between font-mono">
-                  <span className="font-bold text-sm">SCREEN {sc.name.toUpperCase()}</span>
+                <div className="bg-[#FAF8F5] border-b border-[#EAE5DF] px-5 py-3 flex items-center justify-between font-mono">
+                  <span className="font-bold text-sm text-[#1C1917]">SCREEN {sc.name.toUpperCase()}</span>
                   <button
                     onClick={() => {
                       setCurrentScreen(sc.id);
                       setViewMode('single');
                     }}
-                    className="bg-white text-slate-900 px-3 py-1 rounded text-xs font-bold hover:bg-stone-100 transition"
+                    className="bg-[#9C3D1E] text-white px-3 py-1 rounded-lg text-xs font-bold hover:bg-[#7c3018] transition"
                   >
                     OPEN STAGE ➔
                   </button>
                 </div>
-                <div className="p-4 bg-stone-50">
+                <div className="p-4 bg-white">
                   {sc.comp}
                 </div>
               </div>

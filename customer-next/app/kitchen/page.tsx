@@ -70,11 +70,11 @@ export default function KitchenKDSPage() {
   };
 
   return (
-    <main className="min-h-screen bg-stone-100 flex flex-col">
+    <main className="min-h-screen bg-[#FAF8F5] flex flex-col">
       {/* Top Console Header */}
-      <header className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 bg-white/95 px-6 py-3 shadow-xs backdrop-blur-md">
+      <header className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-4 border-b border-[#EAE5DF] bg-white/95 px-6 py-3 shadow-xs backdrop-blur-md">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-orange-600 text-white shadow-sm shadow-orange-500/30">
+          <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-[#9C3D1E] text-white shadow-sm shadow-[#9C3D1E]/25">
             <Flame className="h-5 w-5 fill-white" />
           </div>
           <div>
@@ -97,28 +97,28 @@ export default function KitchenKDSPage() {
 
         {/* Global Multi-Portal Switcher */}
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1 rounded-2xl border border-slate-200 bg-stone-50 p-1 shadow-xs font-mono text-xs font-bold">
+          <div className="flex items-center gap-1 rounded-2xl border border-[#EAE5DF] bg-[#FAF8F5] p-1 shadow-xs font-mono text-xs font-bold">
             <Link
               href="/"
-              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-slate-600 hover:text-slate-900 transition"
+              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-[#44403C] hover:text-[#1C1917] transition"
             >
               <Utensils className="h-3.5 w-3.5" />
               <span>CUSTOMER (10)</span>
             </Link>
-            <span className="rounded-xl bg-orange-600 text-white px-3 py-1.5 shadow-xs flex items-center gap-1">
+            <span className="rounded-xl bg-[#9C3D1E] text-white px-3 py-1.5 shadow-xs flex items-center gap-1">
               <Flame className="h-3.5 w-3.5 fill-white" />
               <span>KITCHEN (3)</span>
             </span>
             <Link
               href="/waiter"
-              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-slate-600 hover:text-slate-900 transition"
+              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-[#44403C] hover:text-[#1C1917] transition"
             >
               <UserCheck className="h-3.5 w-3.5" />
               <span>WAITER (10)</span>
             </Link>
             <Link
               href="/manager"
-              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-slate-600 hover:text-slate-900 transition"
+              className="flex items-center gap-1 rounded-xl px-3 py-1.5 text-[#44403C] hover:text-[#1C1917] transition"
             >
               <Briefcase className="h-3.5 w-3.5" />
               <span>MANAGER (16)</span>
@@ -126,13 +126,13 @@ export default function KitchenKDSPage() {
           </div>
 
           {/* View Mode Switcher */}
-          <div className="flex items-center gap-1 rounded-2xl border border-slate-200 bg-stone-50 p-1 shadow-xs">
+          <div className="flex items-center gap-1 rounded-2xl border border-[#EAE5DF] bg-[#FAF8F5] p-1 shadow-xs">
             <button
               onClick={() => setViewMode('single')}
               className={`flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-xs font-bold transition ${
                 viewMode === 'single'
-                  ? 'bg-slate-900 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-[#9C3D1E] text-white shadow-sm'
+                  : 'text-[#44403C] hover:text-[#1C1917]'
               }`}
             >
               <Tablet className="h-3.5 w-3.5" />
@@ -142,8 +142,8 @@ export default function KitchenKDSPage() {
               onClick={() => setViewMode('all')}
               className={`flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-xs font-bold transition ${
                 viewMode === 'all'
-                  ? 'bg-slate-900 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-[#9C3D1E] text-white shadow-sm'
+                  : 'text-[#44403C] hover:text-[#1C1917]'
               }`}
             >
               <LayoutGrid className="h-3.5 w-3.5" />
@@ -155,7 +155,7 @@ export default function KitchenKDSPage() {
 
       {/* Screen Navigation Bar (Single Mode) */}
       {viewMode === 'single' && (
-        <nav className="sticky top-[61px] z-30 flex items-center gap-1.5 overflow-x-auto border-b border-slate-200 bg-white px-6 py-2 shadow-xs scrollbar-none">
+        <nav className="sticky top-[61px] z-30 flex items-center gap-1.5 overflow-x-auto border-b border-[#EAE5DF] bg-white px-6 py-2 shadow-xs scrollbar-none">
           {screens.map((screen) => {
             const isActive = currentScreen === screen.id;
             return (
@@ -164,8 +164,8 @@ export default function KitchenKDSPage() {
                 onClick={() => setCurrentScreen(screen.id)}
                 className={`flex shrink-0 items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-bold transition ${
                   isActive
-                    ? 'bg-orange-600 text-white shadow-sm shadow-orange-600/20'
-                    : 'bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                    ? 'bg-[#9C3D1E] text-white shadow-sm shadow-[#9C3D1E]/20'
+                    : 'bg-[#FAF8F5] text-[#44403C] hover:bg-white hover:text-[#1C1917]'
                 }`}
               >
                 {screen.icon}

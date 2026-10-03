@@ -46,7 +46,7 @@ export const Screen5LiveTracking: React.FC = () => {
   const currentIdx = stageKeyToIdx[currentStage] ?? 0;
 
   const itemStageConfig: Record<string, { label: string; color: string; pulse: boolean }> = {
-    PLACED: { label: 'ORDER PLACED', color: 'bg-stone-100 text-slate-700 border-slate-200', pulse: false },
+    PLACED: { label: 'ORDER PLACED', color: 'bg-[#FAF8F5] text-slate-700 border-slate-200', pulse: false },
     PREP:   { label: 'PREPARING',    color: 'bg-amber-50 text-amber-800 border-amber-200',  pulse: true  },
     PLATED: { label: 'READY TO RUN', color: 'bg-blue-50 text-blue-800 border-blue-200',     pulse: true  },
     SERVED: { label: 'SERVED ✓',     color: 'bg-emerald-50 text-emerald-800 border-emerald-200', pulse: false },
@@ -185,7 +185,7 @@ export const Screen5LiveTracking: React.FC = () => {
                   <span className="text-xs font-bold">Connecting to kitchen...</span>
                 </div>
               ) : (
-                <div className="flex flex-col items-center justify-center p-6 text-center text-slate-400 bg-stone-50/50 rounded-2xl border border-dashed border-slate-200">
+                <div className="flex flex-col items-center justify-center p-6 text-center text-slate-400 bg-[#FAF8F5]/60 rounded-2xl border border-dashed border-slate-200">
                   <Clock className="h-8 w-8 text-slate-300 mb-2 stroke-[1.5]" />
                   <p className="text-xs font-bold text-slate-700">Waiting for kitchen update</p>
                   <p className="text-[10.5px] text-slate-400 mt-0.5">
